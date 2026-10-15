@@ -1,10 +1,8 @@
 --!strict
--- Bouwt map 1 "The Golden Wheel" (Polderdam, §10.1–10.2) uit code, zodat het level als tekst in Git staat.
--- De onderdelen staan in src/server/Map/: Quay (kade + gracht), GoldenWheel (winkel, beveiliging, binnenkoer),
--- Warehouse (rijpingshal, kooi, camera's, kantoor) en Atmosphere (nachtlicht).
+-- Bouwt een heist (map) uit code, zodat het level als tekst in Git staat.
+-- Welke heists er zijn, staat in src/server/Map/Registry; elke heist heeft een eigen map in Map/Heists/
+-- (map 1: Heists/GoldenWheel). Gedeelde bouwstenen (Builder, CanalHouse, Atmosphere) staan in Map/Common/.
 -- Props (AI-modellen) staan in ServerStorage.Props; ontbreken ze, dan bouwt Builder eenvoudige vervangers.
---
--- Assen (studs, grond = y 0): noord = -X. Gracht x -72..-54, kade x -54..-22, winkel/koer x -22..0, hal x 0..60.
 
 local PhysicsService = game:GetService("PhysicsService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -12,45 +10,49 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Signal = require(ReplicatedStorage.Shared.Signal)
 
 local Map = script.Parent.Parent:WaitForChild("Map")
-local Atmosphere = require(Map.Atmosphere)
-local GoldenWheel = require(Map.GoldenWheel)
-local Quay = require(Map.Quay)
-local Warehouse = require(Map.Warehouse)
+local Atmosphere = require(Map.Common.Atmosphere)
+local Builder = require(Map.Common.Builder)
+local Registry = require(Map.Registry)
+
+local defaultHeist = Registry.get(Registry.DefaultHeist)
+assert(defaultHeist, `[MapService] DefaultHeist "{Registry.DefaultHeist}" staat niet in de Registry`)
 
 local MapService = {}
 MapService.LevelBuilt = Signal.new() :: Signal.Signal<Folder>
 MapService.Level = nil :: Folder?
-MapService.GadgetColors = Quay.GadgetColors
+-- De definitie van de heist die nu gebouwd is (nil tot de eerste Build).
+MapService.CurrentHeist = nil :: Registry.Heist?
+MapService.GadgetColors = Builder.GadgetColors
 
--- Belangrijke posities die andere services gebruiken.
-MapService.Points = {
-	Spawn = Vector3.new(-36, 3, -10),
-	GuardStart = Vector3.new(8, 3, -18),
-	GuardRoute = {
-		Vector3.new(8, 0, -18),
-		Vector3.new(48, 0, -18),
-		Vector3.new(48, 0, 18),
-		Vector3.new(8, 0, 18),
-	},
-}
+-- Belangrijke posities die andere services gebruiken (Spawn, GuardStart, GuardRoute).
+-- Vóór de eerste Build die van de standaard-heist; Build zet ze op die van de gebouwde heist.
+MapService.Points = defaultHeist.Points
 
--- Vaste seed: elke build ziet er hetzelfde uit (gevelkleuren, verlichte ramen).
-local SEED = 1854
+-- Bouwt (of herbouwt) een heist in Workspace.Level en zet de sfeer van die heist.
+-- Zonder heistId: dezelfde heist opnieuw (de eerste keer de standaard-heist uit de Registry).
+function MapService:Build(heistId: string?): Folder
+	local current = MapService.CurrentHeist
+	local id = heistId or (if current then current.Id else Registry.DefaultHeist)
+	local heist = Registry.get(id)
+	assert(heist, `[MapService] Onbekende heist "{id}"`)
 
--- Bouwt (of herbouwt) het hele level in Workspace.Level.
-function MapService:Build(): Folder
 	local old = workspace:FindFirstChild("Level")
 	if old then
 		old:Destroy()
 	end
+	if current and current.Id ~= heist.Id then
+		-- Andere heist: het water (Terrain) van de vorige weghalen. Elke heist vult zijn eigen Terrain.
+		workspace.Terrain:Clear()
+	end
+	Atmosphere.apply(heist.Atmosphere)
+
 	local level = Instance.new("Folder")
 	level.Name = "Level"
-	local rng = Random.new(SEED)
-	Quay.build(level, rng)
-	GoldenWheel.build(level, rng)
-	Warehouse.build(level, rng)
+	heist.Build(level, Random.new(heist.Seed))
 	level.Parent = workspace
 	MapService.Level = level
+	MapService.CurrentHeist = heist
+	MapService.Points = heist.Points
 	MapService.LevelBuilt:Fire(level)
 	return level
 end
@@ -79,7 +81,6 @@ end
 function MapService:Init()
 	setupCollisionGroups()
 	placeBaseplate()
-	Atmosphere.apply()
 	self:Build()
 end
 

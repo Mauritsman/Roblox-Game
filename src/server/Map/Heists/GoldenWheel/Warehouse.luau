@@ -11,7 +11,8 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
 local Tags = require(ReplicatedStorage.Shared.Tags)
 
-local Builder = require(script.Parent.Builder)
+local Common = script.Parent.Parent.Parent.Common
+local Builder = require(Common.Builder)
 
 local C = Builder.Colors
 

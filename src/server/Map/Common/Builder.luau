@@ -1,5 +1,5 @@
 --!strict
--- Bouwhulpjes voor de map: blokken, cilinders, ramen, labels en props.
+-- Bouwhulpjes voor alle heists: blokken, cilinders, ramen, labels en props.
 -- Props komen uit ServerStorage.Props (AI-gegenereerde modellen, opgeslagen in de place).
 -- Ontbreekt een prop, dan bouwen we een eenvoudige vervanger, zodat de map altijd werkt.
 
@@ -39,6 +39,15 @@ Builder.Colors = {
 }
 
 local C = Builder.Colors
+
+-- Kleur per gadget (sokkels van de gadgetrek): in elke heist dezelfde, zodat spelers ze herkennen.
+Builder.GadgetColors = {
+	Drone = Color3.fromRGB(70, 160, 255),
+	Noisemaker = Color3.fromRGB(255, 210, 60),
+	EMP = Color3.fromRGB(80, 220, 255),
+	BubbleBlaster = Color3.fromRGB(255, 140, 220),
+	Crowbar = Color3.fromRGB(255, 90, 80),
+}
 
 -- Hoogte van de stoep langs de gevels (x -28..-22).
 Builder.SIDEWALK = 0.3

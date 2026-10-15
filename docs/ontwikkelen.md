@@ -35,6 +35,11 @@ Daarna kan Claude zelf testen, fouten lezen en schermafbeeldingen nemen.
 
 ## De kaart (map 1, "The Golden Wheel")
 
+- **Code:** elke heist (map) heeft een eigen map in `src/server/Map/Heists/`. Map 1 staat in
+  `src/server/Map/Heists/GoldenWheel/`: `init.luau` (naam, seed, sfeer, spawn- en bewakerspunten), `Quay` (kade),
+  `Shop` (winkel) en `Warehouse` (hal). Gedeelde bouwstenen (`Builder`, `CanalHouse`, `Atmosphere`) staan in
+  `src/server/Map/Common/`, de lijst van heists in `src/server/Map/Registry.luau`. `MapService` bouwt de gekozen heist.
+  Een nieuwe heist toevoegen: zie `src/server/Map/README.md`.
 - **Kade en gracht** (noord = −X): grachtenpanden aan de overkant, iepen, lantaarns, paaltjes, fietsen, sloepjes, een woonboot
   en bruggen aan beide uiteinden. Het oranje busje met de gadgetrek (kratten met een oplichtende plaat) staat op de klinkerweg.
 - **Kaaswinkel** met luifel, etalage, toonbank, kaasrekken, krijtbord en het hok van Karel; ernaast de **beveiligingsruimte**

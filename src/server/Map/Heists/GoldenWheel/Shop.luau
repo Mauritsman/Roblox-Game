@@ -1,5 +1,5 @@
 --!strict
--- "The Golden Wheel" aan de kade (§10.1): kaaswinkel (A), beveiligingsruimte (B) en binnenkoer (C).
+-- De winkel "The Golden Wheel" aan de kade (§10.1): kaaswinkel (A), beveiligingsruimte (B) en binnenkoer (C).
 -- A: x -22..0, z -40..-14   B: x -22..0, z -14..4   C: x -22..0, z 4..40 (buiten)
 -- De gevels staan op x = -22 en kijken naar de gracht (-X).
 
@@ -9,11 +9,12 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
 local Tags = require(ReplicatedStorage.Shared.Tags)
 
-local Builder = require(script.Parent.Builder)
+local Common = script.Parent.Parent.Parent.Common
+local Builder = require(Common.Builder)
 
 local C = Builder.Colors
 
-local GoldenWheel = {}
+local Shop = {}
 
 local GROUND_H = 14 -- hoogte van de benedenverdieping (plafond)
 
@@ -866,11 +867,12 @@ local function buildCourtyard(parent: Instance, rng: Random)
 	Builder.prop(yard, "TulipBoxTall", Vector3.new(-20.2, 0.15, 33), 90, { collide = false })
 end
 
-function GoldenWheel.build(level: Folder, rng: Random)
+function Shop.build(level: Folder, rng: Random)
+	-- De Folder in Workspace.Level heet (zoals vroeger) "GoldenWheel".
 	local building = Builder.folder(level, "GoldenWheel")
 	buildShop(building, rng)
 	buildSecurityRoom(building, rng)
 	buildCourtyard(building, rng)
 end
 
-return GoldenWheel
+return Shop

@@ -1,7 +1,10 @@
 -- Uitvoeren via de Studio MCP: execute_luau, datamodel "Edit".
 -- 1) Bouwt het level opnieuw met verse kopieën van de servermodules (geen require-cache).
+--    MapService:Init() bouwt de standaard-heist (src/server/Map/Registry); zet HEIST voor een andere heist.
 -- 2) Stuurt alle zichtbare parts, lichten en de AI-meshes (met kleuren uit hun textuur)
 --    naar tools/preview/receiver.py op 127.0.0.1:35001. HttpEnabled staat alleen even aan.
+local HEIST: string? = nil -- bv. "GoldenWheel"; nil = de standaard-heist
+
 local ServerStorage = game:GetService("ServerStorage")
 local HttpService = game:GetService("HttpService")
 local AssetService = game:GetService("AssetService")
@@ -15,7 +18,11 @@ for _, d in tmp:GetDescendants() do
 end
 tmp.Parent = ServerStorage
 local okB, errB = pcall(function()
-	require(tmp.Services.MapService):Init()
+	local MapService = require(tmp.Services.MapService)
+	MapService:Init()
+	if HEIST then
+		MapService:Build(HEIST)
+	end
 end)
 tmp:Destroy()
 if not okB then

@@ -10,20 +10,13 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
 local Tags = require(ReplicatedStorage.Shared.Tags)
 
-local Builder = require(script.Parent.Builder)
-local CanalHouse = require(script.Parent.CanalHouse)
+local Common = script.Parent.Parent.Parent.Common
+local Builder = require(Common.Builder)
+local CanalHouse = require(Common.CanalHouse)
 
 local C = Builder.Colors
 
 local Quay = {}
-
-Quay.GadgetColors = {
-	Drone = Color3.fromRGB(70, 160, 255),
-	Noisemaker = Color3.fromRGB(255, 210, 60),
-	EMP = Color3.fromRGB(80, 220, 255),
-	BubbleBlaster = Color3.fromRGB(255, 140, 220),
-	Crowbar = Color3.fromRGB(255, 90, 80),
-}
 
 local function lamp(parent: Instance, ground: Vector3, name: string)
 	-- Grachtlantaarn: AI-prop als die er is, anders paal + lantaarn uit blokken.
@@ -73,7 +66,7 @@ local function gadgetRack(parent: Instance)
 	-- De gadgetrek achter het busje: per gadget een kist met een oplichtende plaat erbovenop.
 	for index, gadgetName in Config.GadgetOrder do
 		local z = -16 + (index - 1) * 8
-		local color = Quay.GadgetColors[gadgetName] or Color3.new(1, 1, 1)
+		local color = Builder.GadgetColors[gadgetName] or Color3.new(1, 1, 1)
 		local crate = Builder.prop(parent, "Crate", Vector3.new(-30, 0, z), (index - 1) * 6, {
 			scale = 0.7,
 			fallback = function(p, g)
