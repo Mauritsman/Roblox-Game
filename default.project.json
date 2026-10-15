@@ -3,7 +3,6 @@
   "servePort": 34872,
   "tree": {
     "$className": "DataModel",
-
     "ReplicatedStorage": {
       "Shared": {
         "$path": "src/shared"
@@ -12,13 +11,11 @@
         "$className": "Folder"
       }
     },
-
     "ServerScriptService": {
       "Server": {
         "$path": "src/server"
       }
     },
-
     "StarterPlayer": {
       "StarterPlayerScripts": {
         "Client": {
@@ -26,7 +23,6 @@
         }
       }
     },
-
     "Workspace": {
       "$properties": {
         "FilteringEnabled": true
@@ -35,24 +31,48 @@
         "$className": "Part",
         "$properties": {
           "Anchored": true,
-          "Color": [0.38823, 0.37254, 0.38823],
+          "Color": [
+            0.38823,
+            0.37254,
+            0.38823
+          ],
           "Locked": true,
-          "Position": [0, -10, 0],
-          "Size": [512, 20, 512]
+          "Size": [
+            512,
+            20,
+            512
+          ],
+          "CFrame": [
+            0,
+            -10,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1,
+            0,
+            0,
+            0,
+            1
+          ],
+          "Material": "Concrete"
         }
       }
     },
-
     "Lighting": {
       "$properties": {
-        "Ambient": [0, 0, 0],
+        "Ambient": [
+          0,
+          0,
+          0
+        ],
         "Brightness": 2,
         "GlobalShadows": true,
         "Outlines": false,
         "Technology": "Future"
       }
     },
-
     "SoundService": {
       "$properties": {
         "RespectFilteringEnabled": true

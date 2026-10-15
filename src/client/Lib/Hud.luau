@@ -264,7 +264,7 @@ function Hud.setLoadout(
 	if #entries == 0 then
 		text({
 			Size = UDim2.new(1, 0, 0, 40),
-			Text = "Walk into a glowing\npedestal at the van",
+			Text = "Press E at a glowing\npedestal by the van",
 			TextColor3 = Hud.Colors.Warn,
 			LayoutOrder = 1,
 		}, loadoutFrame)

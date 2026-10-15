@@ -104,6 +104,16 @@ local function togglePedestal(pedestal: BasePart, player: Player)
 	publish()
 end
 
+-- Nemen of teruglegen op naam (gebruikt door de sokkelknop en door DevService in Studio).
+function LoadoutService:Toggle(player: Player, gadgetName: string)
+	for _, pedestal in CollectionService:GetTagged(Tags.GadgetPedestal) do
+		if pedestal:IsA("BasePart") and pedestal:GetAttribute("Gadget") == gadgetName then
+			togglePedestal(pedestal, player)
+			return
+		end
+	end
+end
+
 -- Een knop per sokkel ("Take / Return"): werkt met E, controller-X en tikken, en gaat niet per ongeluk af.
 local function hookPedestal(pedestal: Instance)
 	if not pedestal:IsA("BasePart") or pedestal:FindFirstChild("TakePrompt") then
@@ -115,7 +125,7 @@ local function hookPedestal(pedestal: Instance)
 	prompt.ActionText = "Take / Return"
 	prompt.ObjectText = if typeof(gadgetName) == "string" then gadgetName:upper() else "Gadget"
 	prompt.HoldDuration = 0
-	prompt.MaxActivationDistance = 7
+	prompt.MaxActivationDistance = 4.5
 	prompt.RequiresLineOfSight = false
 	prompt.KeyboardKeyCode = Enum.KeyCode.E
 	prompt.GamepadKeyCode = Enum.KeyCode.ButtonX

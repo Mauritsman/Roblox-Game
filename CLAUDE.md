@@ -25,8 +25,13 @@ Gebruiker: Maurits, beginner. Antwoord in het Nederlands (Vlaams); spelerteksten
 
 ## Studio (via de officiële Roblox Studio-plugin / Studio MCP)
 - Vereist: Studio open met een place, en Assistant → ⋯ → Settings → MCP Servers → "Enable Studio as MCP server" aan.
-- Code in Studio zetten zonder Rojo-klik: `python3 tools/gen_studio_sync.py` en de inhoud van
-  `build/studio_sync.luau` uitvoeren met `execute_luau` (in edit-modus, niet tijdens een playtest).
+- Code in Studio zetten zonder Rojo-klik: `python3 tools/studio_sync.py` (bouwt build/studio_payload.json en start een
+  server op 127.0.0.1:34999), daarna de inhoud van `tools/studio_sync_apply.luau` uitvoeren met `execute_luau`
+  (datamodel Edit, niet tijdens een playtest). Het script zet HttpEnabled even aan en meteen weer uit.
+- In Studio-playtests bestaat `DevService` (alleen als RunService:IsStudio()): vanaf de Client-datamodel
+  `Remotes.ToServer:FireServer("DevTake", "EMP")` en `FireServer("DevPry")` om zonder knoppen te testen.
+  ProximityPrompts en screen_capture werken alleen als het Studio-venster vooraan staat (macOS).
+- Wat in Studio staat is pas live na File → Publish door Maurits (Claude kan niet publiceren).
 - Testen: `start_stop_play`, `get_console_output`, `screen_capture`, `character_navigation`, `user_keyboard_input`.
 - Start of registreer geen tweede StudioMCP-proces (poort 13469); de plugin beheert het.
 - Sluit Studio nooit zelf af en pas geen instellingenbestanden van Studio aan (officiële Roblox-regel).

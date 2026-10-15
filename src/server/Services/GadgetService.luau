@@ -591,13 +591,27 @@ local function hookPryable(inst: Instance)
 	prompt.GamepadKeyCode = Enum.KeyCode.ButtonX
 	prompt.Parent = inst
 	prompt.Triggered:Connect(function(player)
-		if not LoadoutService:Has(player, "Crowbar") then
-			Net.send(player, "Toast", "Needs the CROWBAR")
-			return
-		end
-		prompt:Destroy()
-		openPryable(inst, player)
+		GadgetService:Pry(player, inst)
 	end)
+end
+
+-- De Crowbar gebruiken op een Pryable-object (knop, of DevService in Studio).
+function GadgetService:Pry(player: Player, target: BasePart)
+	local prompt = target:FindFirstChild("PryPrompt")
+	if not prompt or not prompt:IsA("ProximityPrompt") or not prompt.Enabled then
+		return
+	end
+	if not LoadoutService:Has(player, "Crowbar") then
+		Net.send(player, "Toast", "Needs the CROWBAR")
+		return
+	end
+	-- Niet meteen vernietigen: dan blijft de prompt-weergave bij de speler hangen
+	-- en verschijnen er geen andere knoppen meer. Eerst uitzetten, later opruimen.
+	prompt.Enabled = false
+	task.delay(1, function()
+		prompt:Destroy()
+	end)
+	openPryable(target, player)
 end
 
 --------------------------------------------------------------------------------

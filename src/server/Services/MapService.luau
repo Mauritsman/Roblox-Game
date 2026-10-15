@@ -161,7 +161,7 @@ local function buildOutside(level: Folder)
 
 	-- Gadgetrek: bij een sokkel op E (of de knop op het scherm) om het gadget te nemen of terug te leggen.
 	for index, gadgetName in Config.GadgetOrder do
-		local z = -7.5 + (index - 1) * 5
+		local z = -16 + (index - 1) * 8 -- ver genoeg uit elkaar zodat de juiste knop verschijnt
 		local pedestal = block(
 			"Pedestal_" .. gadgetName,
 			Vector3.new(3, 1.2, 3),
@@ -335,8 +335,17 @@ local function setupCollisionGroups()
 	PhysicsService:CollisionGroupSetCollidable("Drone", "Guards", false)
 end
 
+-- De grondplaat moet met de bovenkant op y = 0 liggen (het level is daarop gebouwd).
+local function placeBaseplate()
+	local baseplate = workspace:FindFirstChild("Baseplate")
+	if baseplate and baseplate:IsA("BasePart") then
+		baseplate.CFrame = CFrame.new(0, -baseplate.Size.Y / 2, 0)
+	end
+end
+
 function MapService:Init()
 	setupCollisionGroups()
+	placeBaseplate()
 	setupLighting()
 	self:Build()
 end
