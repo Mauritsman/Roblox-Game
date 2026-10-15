@@ -273,7 +273,7 @@ local function buildShop(parent: Instance, rng: Random)
 			shop,
 			"Awning",
 			Vector3.new(4, 0.15, 2.5),
-			CFrame.new(-24.4, 11.7, z) * CFrame.Angles(0, 0, math.rad(25)),
+			CFrame.new(-24.4, 10.45, z) * CFrame.Angles(0, 0, math.rad(25)),
 			stripe,
 			{ material = Enum.Material.Fabric, collide = false }
 		)
@@ -281,7 +281,7 @@ local function buildShop(parent: Instance, rng: Random)
 			shop,
 			"AwningValance",
 			Vector3.new(0.12, 0.7, 2.5),
-			CFrame.new(-26.2, 10.5, z),
+			CFrame.new(-26.2, 9.3, z),
 			stripe,
 			{ material = Enum.Material.Fabric, collide = false }
 		)
@@ -289,20 +289,34 @@ local function buildShop(parent: Instance, rng: Random)
 	-- Uithangbord.
 	Builder.sign(
 		shop,
-		CFrame.lookAt(Vector3.new(-22.8, 12.6, -27), Vector3.new(-40, 12.6, -27)),
-		Vector3.new(16, 2.4, 0.4),
+		CFrame.lookAt(Vector3.new(-22.8, 12.9, -27), Vector3.new(-40, 12.9, -27)),
+		Vector3.new(16, 2.2, 0.4),
 		"THE GOLDEN WHEEL",
 		C.DoorGreen,
-		C.Gold
+		C.Gold,
+		Enum.Font.FredokaOne,
+		{ frame = C.Gold }
+	)
+	-- Uithangbord haaks op de gevel (aan de noordkant van de winkel): leesbaar als je langs de straat loopt.
+	Builder.box(
+		shop,
+		"BladeBracket",
+		Vector3.new(-25.9, 13.85, -15.3),
+		Vector3.new(-22.6, 14.05, -15.1),
+		C.Metal,
+		{
+			material = Enum.Material.Metal,
+		}
 	)
 	Builder.sign(
 		shop,
-		CFrame.lookAt(Vector3.new(-22.8, 9.6, -26), Vector3.new(-40, 9.6, -26)),
-		Vector3.new(3.6, 0.9, 0.2),
-		"KAAS · CHEESE",
-		C.Trim,
+		CFrame.lookAt(Vector3.new(-24.5, 12.9, -15.2), Vector3.new(-24.5, 12.9, 0)),
+		Vector3.new(2.6, 1.6, 0.2),
+		"CHEESE",
+		C.Gold,
 		C.DoorGreen,
-		Enum.Font.GothamBold
+		Enum.Font.FredokaOne,
+		{ doubleSided = true, frame = C.DoorGreen }
 	)
 
 	-- Zijmuren en achtermuur van de winkel (met personeelsdeur naar de hal).
@@ -463,7 +477,7 @@ local function buildShop(parent: Instance, rng: Random)
 		shop,
 		CFrame.lookAt(Vector3.new(-12, 6.8, -14.75), Vector3.new(-12, 6.8, -30)),
 		Vector3.new(7, 3.4, 0.2),
-		"GOUDA\nYoung · Aged · Extra old",
+		"TODAY\nYoung Gouda\nAged Gouda\nExtra Old",
 		Color3.fromRGB(30, 34, 32),
 		Color3.fromRGB(235, 235, 225),
 		Enum.Font.PatrickHand
@@ -693,9 +707,13 @@ local function buildCourtyard(parent: Instance, rng: Random)
 		C.Gold,
 		{ material = Enum.Material.Foil, collide = false }
 	)
+	-- Balk tussen de poortpalen waar het bord aan hangt (niet tegen de muurkap: anders valt de tekst half weg).
+	Builder.box(yard, "GateBeam", Vector3.new(-22.6, 11, 15.2), Vector3.new(-21.4, 11.4, 24.8), C.Stone, {
+		material = Enum.Material.Granite,
+	})
 	Builder.sign(
 		yard,
-		CFrame.lookAt(Vector3.new(-22.8, 10.6, 20), Vector3.new(-40, 10.6, 20)),
+		CFrame.lookAt(Vector3.new(-22.9, 12, 20), Vector3.new(-40, 12, 20)),
 		Vector3.new(7, 1.2, 0.3),
 		"DELIVERIES",
 		C.Trim,

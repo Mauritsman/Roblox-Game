@@ -284,7 +284,14 @@ function Builder.label(adornee: BasePart, text: string, color: Color3, offsetY: 
 	gui.Parent = adornee
 end
 
--- Een uithangbord / opschrift op een vlak (SurfaceGui).
+export type SignOpts = {
+	doubleSided: boolean?, -- tekst op voor- én achterkant (uithangbord haaks op de gevel)
+	frame: Color3?, -- dunne rand rond het bord
+	material: Enum.Material?,
+}
+
+-- Een bord met tekst. Leesbaar in het donker (LightInfluence 0), met marge rond de tekst zodat niets wordt
+-- afgesneden, en een donkere rand rond de letters voor contrast.
 function Builder.sign(
 	parent: Instance,
 	cf: CFrame,
@@ -292,23 +299,64 @@ function Builder.sign(
 	text: string,
 	bg: Color3,
 	fg: Color3,
-	font: Enum.Font?
+	font: Enum.Font?,
+	opts: SignOpts?
 ): Part
-	local board = Builder.block(parent, "Sign", size, cf, bg, { material = Enum.Material.Wood })
-	local gui = Instance.new("SurfaceGui")
-	gui.Face = Enum.NormalId.Front
-	gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
-	gui.PixelsPerStud = 40
-	gui.LightInfluence = 0.4
-	local t = Instance.new("TextLabel")
-	t.Size = UDim2.fromScale(1, 1)
-	t.BackgroundTransparency = 1
-	t.Text = text
-	t.TextColor3 = fg
-	t.TextScaled = true
-	t.Font = font or Enum.Font.Fondamento
-	t.Parent = gui
-	gui.Parent = board
+	local board = Builder.block(parent, "Sign", size, cf, bg, {
+		material = (opts and opts.material) or Enum.Material.Wood,
+	})
+	local faces = { Enum.NormalId.Front }
+	if opts and opts.doubleSided then
+		table.insert(faces, Enum.NormalId.Back)
+	end
+	for _, face in faces do
+		local gui = Instance.new("SurfaceGui")
+		gui.Name = "SignText"
+		gui.Face = face
+		gui.SizingMode = Enum.SurfaceGuiSizingMode.PixelsPerStud
+		gui.PixelsPerStud = 50
+		gui.LightInfluence = 0
+		gui.MaxDistance = 250
+		local t = Instance.new("TextLabel")
+		t.Size = UDim2.fromScale(1, 1)
+		t.BackgroundTransparency = 1
+		t.Text = text
+		t.TextColor3 = fg
+		t.TextScaled = true
+		t.TextWrapped = false
+		t.Font = font or Enum.Font.FredokaOne
+		t.TextStrokeColor3 = bg:Lerp(Color3.new(0, 0, 0), 0.65)
+		t.TextStrokeTransparency = 0.45
+		local pad = Instance.new("UIPadding")
+		pad.PaddingLeft = UDim.new(0.06, 0)
+		pad.PaddingRight = UDim.new(0.06, 0)
+		pad.PaddingTop = UDim.new(0.12, 0)
+		pad.PaddingBottom = UDim.new(0.12, 0)
+		pad.Parent = t
+		t.Parent = gui
+		gui.Parent = board
+	end
+	if opts and opts.frame then
+		local w, h = size.X, size.Y
+		local depth = size.Z + 0.08
+		for _, edge in
+			{
+				{ Vector3.new(w + 0.24, 0.12, depth), Vector3.new(0, h / 2 + 0.06, 0) },
+				{ Vector3.new(w + 0.24, 0.12, depth), Vector3.new(0, -h / 2 - 0.06, 0) },
+				{ Vector3.new(0.12, h, depth), Vector3.new(w / 2 + 0.06, 0, 0) },
+				{ Vector3.new(0.12, h, depth), Vector3.new(-w / 2 - 0.06, 0, 0) },
+			}
+		do
+			Builder.block(
+				parent,
+				"SignFrame",
+				edge[1],
+				cf * CFrame.new(edge[2]),
+				opts.frame,
+				{ shadow = false }
+			)
+		end
+	end
 	return board
 end
 
