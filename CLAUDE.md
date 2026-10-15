@@ -1,62 +1,64 @@
-# Crowbar Crew — werkafspraken voor Claude
+# Crowbar Crew — working agreements for Claude
 
-Roblox co-op stealth-heist. Ontwerp: `docs/gameplan-roblox.md` (bron van alle getallen en regels).
-Gebruiker: Maurits, beginner. Antwoord in het Nederlands (Vlaams); spelerteksten in het spel in het Engels.
+Roblox co-op stealth heist. Design: `docs/gameplan-roblox.md` and the beta spec (`docs/beta-spec*.md`, once written).
+Owner: Maurits, a beginner. **Everything in this project is in English**: player-facing text, code, comments, docs,
+commit messages and reports (owner's instruction, 16 Oct 2026).
 
-## Structuur
-- `default.project.json` — Rojo-project. Code in `src/`:
-  - `src/server/` → ServerScriptService.Server (bootstrap laadt `Services/*` : Init() dan Start())
-  - `src/client/` → StarterPlayerScripts.Client (bootstrap laadt `Controllers/*`; helpers in `Lib/`)
-  - `src/shared/` → ReplicatedStorage.Shared (`Config`, `Net`, `Tags`, `Signal`)
-- Het level wordt in code gebouwd: `MapService:Build(heistId?)` bouwt een heist uit `src/server/Map/Registry.luau`.
-  Per heist een map in `src/server/Map/Heists/` (map 1 "The Golden Wheel": `Heists/GoldenWheel/` met `init.luau` =
-  definitie, `Quay`, `Shop`, `Warehouse`); gedeelde bouwstenen in `src/server/Map/Common/` (`Builder`, `CanalHouse`,
-  `Atmosphere`). Nieuwe heist: `src/server/Map/README.md`. Pas het daar aan, niet in Studio.
-- AI-props (busje, lantaarn, kaaswiel, …) staan als modellen in `ServerStorage.Props` van de place; `Builder.prop` kloont ze
-  en valt terug op eenvoudige blokken als een prop ontbreekt. ID's en prompts: `tools/props.json`; herstellen:
-  `tools/restore_props.luau`. Gameplay-tags en -attributen (Lamp, Pryable, Goal, GadgetPedestal, camera's) niet weghalen.
-- Genereer meshes alleen in Edit-modus (niet tijdens Play) en hooguit 2 tegelijk (anders "Too Many Requests").
-- Alle afstelbare getallen staan in `src/shared/Config.luau`.
+## Structure
+- `default.project.json` — Rojo project. Code in `src/`:
+  - `src/server/` → ServerScriptService.Server (bootstrap loads `Services/*`: Init() then Start())
+  - `src/client/` → StarterPlayerScripts.Client (bootstrap loads `Controllers/*`; helpers in `Lib/`)
+  - `src/shared/` → ReplicatedStorage.Shared (`Config`, `Net`, `Tags`, `Signal`, `Logic/*`)
+- The level is built in code: `MapService:Build(heistId?)` builds a heist from `src/server/Map/Registry.luau`.
+  One folder per heist in `src/server/Map/Heists/` (map 1 "The Golden Wheel": `Heists/GoldenWheel/` with `init.luau` =
+  definition, `Quay`, `Shop`, `Warehouse`); shared building blocks in `src/server/Map/Common/` (`Builder`, `CanalHouse`,
+  `Atmosphere`). New heist: `src/server/Map/README.md`. Change the level there, never in Studio.
+- AI props (van, street lamp, cheese wheel, …) are models in the place's `ServerStorage.Props`; `Builder.prop` clones them
+  and falls back to simple blocks if a prop is missing. IDs and prompts: `tools/props.json`; rebuild:
+  `tools/restore_props.luau`. Do not remove gameplay tags/attributes (Lamp, Pryable, Goal, GadgetPedestal, cameras).
+- Signs use `Builder.sign` (self-lit text, padding, outline). Every sign must be fully readable from where players stand.
+- Generate meshes only in Edit mode (not during Play) and at most 2 at a time (otherwise "Too Many Requests").
+- All tunable numbers live in `src/shared/Config.luau`.
 
-## Regels
-- Server is gezaghebbend: de client vraagt (`Net.request`), de server controleert en voert uit.
-- Netwerk alleen via `Net` (één RemoteEvent-paar). Nieuwe verzoeken: `Net.onRequest` op de server.
-- Geen vrije chat bouwen; pings zijn vaste woorden/iconen (zie gameplan §3.5 over preset-regels).
-- Alleen grappige, niet-dodelijke wapens die één bewaker een venster lang uitschakelen (gameplan §4.8); geen echte wapens, geen bloed (label Mild, §5).
-- Code aanpassen in de bestanden, nooit rechtstreeks in Studio (anders overschrijft sync het).
+## Rules
+- The server is authoritative: the client asks (`Net.request`), the server validates and acts.
+- Networking only through `Net` (one RemoteEvent pair). New requests: `Net.onRequest` on the server.
+- No free chat; pings are fixed words/icons (gameplan §3.5 on preset rules).
+- Only funny, non-lethal "weapons" that disable one guard for a window (gameplan §4.8); no real weapons, no blood (rating Mild, §5).
+- Change code in the files, never directly in Studio (sync would overwrite it).
 
 ## Team
-Er is een agent-team (advisor, mechanics, map, ux, meta, tester): zie `docs/team/README.md` en `.claude/agents/`.
-Maurits wordt niets gevraagd; ontwerpvragen gaan naar de advisor. Doel: beta-klaar met meerdere maps.
+There is an agent team (advisor, mechanics, map, ux, meta, tester): see `docs/team/README.md` and `.claude/agents/`.
+Maurits is not asked anything; design questions go to the advisor. Goal: beta-ready with multiple maps.
 
-## Controleren en bouwen
-- `sh tools/check.sh` — typecheck (luau-lsp), lint (selene), opmaak (stylua), unit-tests (Lune: `lune run tests/run`). Moet groen zijn voor een commit.
-- Pure logica in `src/shared/Logic/` (geen Roblox-API's) met tests in `tests/**/*.spec.luau`.
-- `export PATH="$HOME/.rokit/bin:$PATH"; stylua src` — opmaak toepassen.
-- `rojo build default.project.json -o build/CrowbarCrew.rbxl` — place-bestand bouwen.
+## Checking and building
+- `sh tools/check.sh` — typecheck (luau-lsp), lint (selene), formatting (stylua), unit tests (Lune: `lune run tests/run`). Must be green before a commit.
+- Pure logic in `src/shared/Logic/` (no Roblox APIs) with tests in `tests/**/*.spec.luau`.
+- `export PATH="$HOME/.rokit/bin:$PATH"; stylua src tests` — apply formatting.
+- `rojo build default.project.json -o build/CrowbarCrew.rbxl` — build a place file.
 
-## Studio (via de officiële Roblox Studio-plugin / Studio MCP)
-- Vereist: Studio open met een place, en Assistant → ⋯ → Settings → MCP Servers → "Enable Studio as MCP server" aan.
-- Code in Studio zetten zonder Rojo-klik: `python3 tools/studio_sync.py` (bouwt build/studio_payload.json en start een
-  server op 127.0.0.1:34999), daarna de inhoud van `tools/studio_sync_apply.luau` uitvoeren met `execute_luau`
-  (datamodel Edit, niet tijdens een playtest). Het script zet HttpEnabled even aan en meteen weer uit.
-- In Studio-playtests bestaat `DevService` (alleen als RunService:IsStudio()): vanaf de Client-datamodel
-  `Remotes.ToServer:FireServer("DevTake", "EMP")` en `FireServer("DevPry", "CageDoor")` (of "StaffDoor", "DeliveryGate")
-  om zonder knoppen te testen.
-  ProximityPrompts en screen_capture werken alleen als het Studio-venster vooraan staat (macOS).
-- Wat in Studio staat is pas live na File → Publish door Maurits (Claude kan niet publiceren).
-- Testen: `start_stop_play`, `get_console_output`, `screen_capture`, `character_navigation`, `user_keyboard_input`.
-- Start of registreer geen tweede StudioMCP-proces (poort 13469); de plugin beheert het.
-- Sluit Studio nooit zelf af en pas geen instellingenbestanden van Studio aan (officiële Roblox-regel).
+## Studio (through the official Roblox Studio plugin / Studio MCP)
+- Requires Studio open with a place, and Assistant → ⋯ → Settings → MCP Servers → "Enable Studio as MCP server" on.
+- Code into Studio without a Rojo click: `python3 tools/studio_sync.py` (builds build/studio_payload.json and starts a
+  server on 127.0.0.1:34999), then run the contents of `tools/studio_sync_apply.luau` with `execute_luau`
+  (datamodel Edit, not during a playtest). The script turns HttpEnabled on briefly and off again.
+- In Studio playtests a `DevService` exists (only when RunService:IsStudio()): from the Client datamodel
+  `Remotes.ToServer:FireServer("DevTake", "EMP")` and `FireServer("DevPry", "CageDoor")` (or "StaffDoor", "DeliveryGate")
+  to test without buttons. Test scenarios: `tools/studio_tests/`.
+  ProximityPrompts and screen_capture only work while the Studio window is visible and rendering (macOS).
+- What is in Studio only goes live after Maurits does File → Publish (Claude cannot publish).
+- Testing: `start_stop_play`, `get_console_output`, `screen_capture`, `character_navigation`, `user_keyboard_input`.
+- Never start or register a second StudioMCP process (port 13469); the plugin manages it.
+- Never close Studio yourself and never edit Studio's settings files (official Roblox rule).
 
-## Kijken zonder Studio-scherm (Blender-preview)
-Als `screen_capture` blijft hangen (Studio tekent niet als het venster niet zichtbaar is), gebruik de preview in Blender:
-1. `python3 -I tools/preview/receiver.py <map> 35001 &` (luistert alleen op 127.0.0.1).
-2. `tools/preview/studio_dump.luau` uitvoeren met `execute_luau` (Edit): bouwt het level en stuurt parts, lichten en meshes.
-3. `python3 -I tools/preview/to_gltf.py <map> level.glb`, daarna in Blender importeren (glTF) en renderen.
-Ruim daarna op: receiver stoppen; geen DevTools in ServerStorage laten staan.
+## Looking without a Studio screen (Blender preview)
+If `screen_capture` hangs (Studio does not render when its window is not visible), use the Blender preview:
+1. `python3 -I tools/preview/receiver.py <dir> 35001 &` (listens on 127.0.0.1 only).
+2. Run `tools/preview/studio_dump.luau` with `execute_luau` (Edit): builds the level and sends parts, lights and meshes.
+3. `python3 -I tools/preview/to_gltf.py <dir> level.glb`, then import into Blender (glTF) and render.
+Clean up afterwards: stop the receiver; leave no DevTools in ServerStorage.
 
-## Tools op deze Mac
-Rokit (`~/.rokit/bin`): rojo 7.7.1, selene, stylua, luau-lsp. Blender 5.2 + Blender MCP (telemetrie uit, safe mode),
-RBXMonkey-add-on (Blender) + plugin (Roblox-inventaris), Roblox Blender Plugin (inloggen gestart op 16/10; Maurits moet in de
-browser nog op Authorize klikken).
+## Tools on this Mac
+Rokit (`~/.rokit/bin`): rojo 7.7.1, selene, stylua, luau-lsp, lune 0.11. Blender 5.2 + Blender MCP (telemetry off, safe mode),
+RBXMonkey add-on (Blender) + plugin (Roblox inventory), Roblox Blender Plugin (login started on 16 Oct; Maurits still has to
+click Authorize in the browser).
