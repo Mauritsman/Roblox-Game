@@ -1,6 +1,6 @@
 # Advisor brief: from prototype to beta
 
-*Advisor, 16/10/2026. Based on gameplan v1.3, `docs/ontwikkelen.md` and web research (sources at the bottom).
+*Advisor, 16/10/2026. Based on gameplan v1.3, `docs/development.md` and web research (sources at the bottom).
 Direction: **"Sneak in, grab as much cheese as you dare, get out."** This brief overrides the gameplan; the mandatory
 chain and the 10 s window are dropped. All numbers are starting values and belong in `src/shared/Config.luau`.*
 
