@@ -8,8 +8,10 @@ Gebruiker: Maurits, beginner. Antwoord in het Nederlands (Vlaams); spelerteksten
   - `src/server/` → ServerScriptService.Server (bootstrap laadt `Services/*` : Init() dan Start())
   - `src/client/` → StarterPlayerScripts.Client (bootstrap laadt `Controllers/*`; helpers in `Lib/`)
   - `src/shared/` → ReplicatedStorage.Shared (`Config`, `Net`, `Tags`, `Signal`)
-- Het level (map 1 "The Golden Wheel") wordt in code gebouwd: `MapService` roept de modules in `src/server/Map/` aan
-  (`Builder` hulpjes, `CanalHouse`, `Quay`, `GoldenWheel`, `Warehouse`, `Atmosphere`). Pas het daar aan, niet in Studio.
+- Het level wordt in code gebouwd: `MapService:Build(heistId?)` bouwt een heist uit `src/server/Map/Registry.luau`.
+  Per heist een map in `src/server/Map/Heists/` (map 1 "The Golden Wheel": `Heists/GoldenWheel/` met `init.luau` =
+  definitie, `Quay`, `Shop`, `Warehouse`); gedeelde bouwstenen in `src/server/Map/Common/` (`Builder`, `CanalHouse`,
+  `Atmosphere`). Nieuwe heist: `src/server/Map/README.md`. Pas het daar aan, niet in Studio.
 - AI-props (busje, lantaarn, kaaswiel, …) staan als modellen in `ServerStorage.Props` van de place; `Builder.prop` kloont ze
   en valt terug op eenvoudige blokken als een prop ontbreekt. ID's en prompts: `tools/props.json`; herstellen:
   `tools/restore_props.luau`. Gameplay-tags en -attributen (Lamp, Pryable, Goal, GadgetPedestal, camera's) niet weghalen.

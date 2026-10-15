@@ -11,3 +11,6 @@ tools/defs/
 
 # macOS
 .DS_Store
+
+# Tijdelijke worktrees van agents
+.claude/worktrees/
