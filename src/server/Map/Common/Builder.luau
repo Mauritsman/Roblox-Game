@@ -323,7 +323,6 @@ function Builder.sign(
 		t.Text = text
 		t.TextColor3 = fg
 		t.TextScaled = true
-		t.TextWrapped = false
 		t.Font = font or Enum.Font.FredokaOne
 		t.TextStrokeColor3 = bg:Lerp(Color3.new(0, 0, 0), 0.65)
 		t.TextStrokeTransparency = 0.45
