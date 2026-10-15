@@ -1,0 +1,5 @@
+std = "roblox"
+
+[lints]
+# Roblox-code gebruikt vaak bewust ongebruikte parameters in callbacks.
+unused_variable = "warn"

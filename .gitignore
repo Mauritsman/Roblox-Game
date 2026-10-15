@@ -1,0 +1,13 @@
+# Build-uitvoer van Rojo
+*.rbxl
+*.rbxlx
+*.rbxl.lock
+*.rbxlx.lock
+build/
+
+# Gegenereerd door Rojo / luau-lsp
+sourcemap.json
+tools/defs/
+
+# macOS
+.DS_Store
