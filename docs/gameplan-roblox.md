@@ -1,6 +1,6 @@
 # Crowbar Crew — gameplan voor Roblox
 
-*Versie 1.2 — 15 oktober 2026 (grappige wapens toegevoegd). Opdracht: [`docs/roblox-prompt.md`](roblox-prompt.md). Titel en rol van Karel bevestigd door Maurits op 15/10/2026.*
+*Versie 1.3 — 15 oktober 2026 (grappige wapens; verdienmodel uitgebreid met Crew Pass, winkel en Glovebox). Opdracht: [`docs/roblox-prompt.md`](roblox-prompt.md). Titel en rol van Karel bevestigd door Maurits op 15/10/2026.*
 
 **Bron van het concept.** Het volledige oude plan (`unpaid-gameplan.md`) zat niet bij de opdracht en staat niet in deze repo. Dit plan gaat daarom uit van de samenvatting in de prompt. Waar die samenvatting iets openliet, staat er een voorstel. De rol van Karel (§9.6) en de titel (§14) zijn intussen bevestigd.
 
@@ -596,7 +596,8 @@ Dat is langer dan een gemiddelde Roblox-sessie (de helft van de sessies per spel
 2. **Wat met Robux gekocht is, raak je nooit kwijt.** Een drone-skin hoort bij je account, niet bij een gadget. Word je gepakt met een "geskinde" drone, dan verlies je hooguit het gadget (als het een gekocht extra gadget was), nooit de skin.
 3. **Spelgeld (Cash) is nooit te koop met Robux**, ook niet via een 2× Cash-pas. Anders koopt echt geld indirect gadgets die je kunt verliezen (zie tegenstrijdigheid 4 in §2).
 4. **Samen spelen met vrienden kost nooit iets.** Het "Private Van"-busje is gratis, en private servers ook.
-5. **Geen willekeurige betaalde items** (loot boxes). Zie §8.6.
+5. **Geen willekeurige betaalde items** (loot boxes). Toeval mag alleen in **gratis** beloningen, zoals de Glovebox (§8.7). Zie ook §8.10.
+6. **Alles wat je koopt, zie je vooraf.** Geen verrassingen voor geld, geen "laatste kans"-druk.
 
 ### 8.2 Hoe Roblox jou betaalt (stand 15/10/2026)
 
@@ -628,15 +629,66 @@ Dat is langer dan een gemiddelde Roblox-sessie (de helft van de sessies per spel
 | Uitbetalingsdansje (emote op het eindscherm) | 49 Robux | Blijvend |
 | **"Crew Fireworks"** | 25 Robux | Eenmalig vuurwerk boven het busje voor de hele crew na een geslaagde run. Sociaal en onschuldig. |
 
-**Later (fase 4):** een **"Crew Pass"** per seizoen van 2 maanden, met een gratis rij beloningen voor iedereen en een betaalde rij (399 Robux), **alleen met cosmetica**. Pas zinvol als er minstens 3 maps zijn.
+### 8.5 De Crew Pass (seizoenspas) — je sterkste verdienmotor
 
-### 8.5 Private servers: gratis
+*(Een seizoenspas — "battle pass" — is een lijst beloningen die je vrijspeelt door te spelen; een deel is gratis, een deel alleen met de betaalde pas. Er is geen toeval: je ziet vooraf precies wat je krijgt.)*
+
+| Onderdeel | Afspraak |
+|---|---|
+| Duur | Seizoen van **8 weken**, met een eigen thema. S1 "Cheese Season" (The Golden Wheel), S2 "Tulip Night", S3 "Canal Lights" … |
+| Treden | **30 treden van 600 Crew XP** (samen 18.000). Je verdient Crew XP met elke run (±150 per geslaagde run, 60 bij falen) en met 3 wekelijkse opdrachten van 500 XP ("Bubble 3 guards", "Finish a Quiet Job", "Free a teammate"). Met ±6 runs per week plus de opdrachten is de pas vol in 8 weken: ongeveer 1,5 uur spelen per week, haalbaar voor wie regelmatig speelt. |
+| Gratis rij | **10 beloningen** (elke 3e trede): Cash, Clean Sprays, 3 cosmetica en een seizoensbadge. Ook wie niets betaalt, heeft een reden om te spelen. |
+| Betaalde rij | **399 Robux** voor **alle 30 beloningen**, alleen uiterlijk: 4 drone-skins, 3 busjeswraps, 3 outfits, 2 Bubble Blaster-skins, emotes, een naamtitel ("Golden Wheel Veteran") en een eindbeloning (bijvoorbeeld een geanimeerde gouden busjeswrap). |
+| Laat kopen | Wie halverwege koopt, krijgt **meteen alle al behaalde treden**. Niemand verliest iets door later te beslissen. |
+| Wat niet | Geen treden overslaan voor Robux, geen wapens of gadgets in de pas, geen "nog 2 uur"-meldingen. Beloningen blijven voor altijd van jou. |
+| Wanneer | **Seizoen 1 start ±2 maanden na de release**, zodra spelers terugkomen. Eerst moet er genoeg te doen zijn: minstens 2 jobs of 3 varianten. |
+
+### 8.6 Winkel met wisselend aanbod en bundels
+
+- **"Van Shop"** (de winkel in de Depot): elke dag **4 items** en elke week **2 uitgelichte bundels**.
+- **Losse items 49–249 Robux** (drone-skins, wraps, outfits, wapenskins, emotes). Een paar items per dag kosten alleen **Cash**, zodat wie niet betaalt ook iets te kiezen heeft.
+- **Bundels 349–499 Robux**: een set in één stijl (busje + outfit + drone + Bubble Blaster-skin), ongeveer 30% goedkoper dan los. Voorbeelden: "Cheese Crew Bundle", "Night Shift Bundle", "Tulip Bundle".
+- **Eerlijke regels:** er staat alleen een klein labeltje "Refreshes in 14 h", geen aftelling met knipperende knoppen. **Elk item komt later terug**, er is dus geen "nu of nooit".
+- *(Een **bundel** is een set van meerdere items voor één prijs; technisch een developer product dat meerdere skins tegelijk aan je account toevoegt.)*
+
+### 8.7 De Glovebox: spanning zonder gokken
+
+Het spannende gevoel van een loot box, maar **gratis en verdiend**. Daardoor is het geen gokken en mag het overal, ook in België en Nederland.
+
+- Na elke **geslaagde run** open je het **dashboardkastje van het busje** met een korte animatie: het klepje springt open met een *klonk*.
+- Wat erin zit, is willekeurig, en de kansen staan altijd zichtbaar bij het kastje:
+
+| Inhoud | Kans |
+|---|---|
+| 50–200 Cash | 70% |
+| 1 Clean Spray of Dog Treat | 15% |
+| Gewone cosmetica (sticker, ping-kader, kleurvariant) | 12% |
+| Zeldzame cosmetica (bijvoorbeeld een glanzende drone-skin) | 3% |
+
+- Maximaal **3 Gloveboxes per dag** met cosmetica-kans; daarna zit er alleen nog Cash in.
+- **Gouden regel, voor altijd:** een Glovebox is **nooit** te koop, niet te versnellen met Robux, en Cash is nooit te koop met Robux. Verandert één van die drie, dan wordt het een betaald willekeurig item. Dat is verboden in België en Nederland, en dan moet de vragenlijst aangepast worden.
+
+### 8.8 Wat het kan opleveren (ruwe schatting)
+
+Een eerlijk rekenvoorbeeld. De aannames zijn **schattingen**, geen beloftes: een beginnend spel haalt deze aantallen niet vanzelf.
+
+| Aanname | Waarde |
+|---|---|
+| Verschillende spelers per seizoen van 8 weken | 10.000 |
+| Deel dat de Crew Pass koopt | 3% → 300 × 399 Robux |
+| Deel dat iets in de winkel koopt | 2% → 200 × gemiddeld 150 Robux |
+| Game passes | 100 × gemiddeld 200 Robux |
+
+Samen geven spelers ±170.000 Robux uit. Jij krijgt 70%, dus ±119.000 Robux, en via DevEx is dat **ongeveer US$ 450 per seizoen** (±US$ 225 per maand), plus kleine bedragen uit Creator Rewards. Met 100.000 spelers per seizoen wordt dat ongeveer tien keer zoveel. Het verschil maak je dus niet met loot boxes, maar met **meer spelers die terugkomen**: daarom staan de eerste minuut en de keten centraal in dit plan.
+
+
+### 8.9 Private servers: gratis
 
 - Roblox laat je kiezen: private servers gratis of tegen een maandprijs in Robux.
 - **Advies: gratis.** Samen spelen met vrienden is de kern van je spel, en de "Private Van" maakt een private server voor de gewone speler toch al overbodig. Gratis private servers zijn een reden voor YouTubers en vriendengroepen om je spel te kiezen. Bovendien telt het aanbevelingsalgoritme van Roblox sinds juni 2026 "intentional co-play days" mee: dagen waarop iemand terugkomt om met vrienden te spelen (via uitnodiging, meejoinen of een private server). Samen spelen makkelijk maken, helpt dus je zichtbaarheid.
 - Weet: als je later toch een prijs instelt en die nog eens wijzigt, vervallen alle lopende abonnementen.
 
-### 8.6 Wat je bewust níét verkoopt
+### 8.10 Wat je bewust níét verkoopt
 
 | Niet verkopen | Waarom niet |
 |---|---|
@@ -646,11 +698,11 @@ Dat is langer dan een gemiddelde Roblox-sessie (de helft van de sessies per spel
 | **"Get out of jail"** of herleven voor Robux | Dat maakt het bevrijden door je teamgenoten, een kernmoment, waardeloos. |
 | **Verzekering** tegen verlies | Kopen dat je niets verliest = de inzet afkopen. |
 | **Betaalde maps of jobs** | Entry Point verkoopt missies als game passes (750–1.200 Robux). Met weinig spelers splitst dat je publiek: wie een betaalde map wil, vindt geen crew. |
-| **Willekeurige betaalde items** (loot boxes) | Roblox eist dat je vooraf de exacte kansen toont en een gratis route aanbiedt, en in België en Nederland werden spellen om die reden geblokkeerd. Niet doen. |
+| **Willekeurige betaalde items** (loot boxes) | In België zijn betaalde loot boxes sinds 2018 verboden (de Kansspelcommissie ziet ze als gokken); in Nederland werden Roblox-spellen er in 2022 om geblokkeerd. Roblox schakelt ze daar uit, dus jij en je vrienden zouden ze niet eens kunnen kopen. Roblox eist bovendien vooraf exacte kansen en een gratis route. Gebruik in de plaats de gratis Glovebox (§8.7) en de Crew Pass (§8.5). Besproken en bevestigd op 15/10/2026. |
 | **Beloonde advertenties** ("kijk een advertentie voor Cash") | Roblox verbiedt beloningen om spelers onder 13 naar advertenties te laten kijken. Je kernpubliek is jong; sla advertenties dus volledig over. |
 | **Tijdsdruk-aanbiedingen** ("nog 5 minuten!") | Druk op kinderen. Slecht voor het vertrouwen van ouders. |
 
-### 8.7 Technische zorg bij aankopen
+### 8.11 Technische zorg bij aankopen
 
 - Elke aankoop van een developer product verwerk je met **ProcessReceipt** (*de Roblox-functie die bevestigt dat een aankoop goed is aangekomen*). Pas als je de aankoop veilig hebt opgeslagen, meld je "gelukt" aan Roblox. Anders betaalt een speler voor niets.
 - Bewaar gekochte items apart van gewone voortgang.
@@ -916,7 +968,7 @@ Het terrein is ongeveer 120 × 80 studs. Noord ligt boven.
 
 | | |
 |---|---|
-| **Wat erin zit** | Opslag van voortgang (*een **DataStore** is de Roblox-database waarin je per speler gegevens bewaart, zoals Cash en gekochte skins*). Cash, Rep en niveaus. De Gear Wall met de 3 extra gadgets en de inzet ("Confiscated"). Cosmetica, game passes en developer products (§8). De Practice Yard (§11). Rookie en Normal. Karel (eenvoudig). Matchmaking met instappen in de eerste 3 minuten, en de stemming om iemand eruit te zetten. Quick Words ingesteld (§5.4). Kunstronde: het gestileerde Polderdam (§10.5). Geluid en muziek. De volledige vragenlijst voor het leeftijdslabel. Icoon en 3–5 thumbnails. Meetpunten (analytics) voor de eerste 5 minuten. Eerst een **gesloten bèta** (20–50 testers), daarna openbaar voor 16+. |
+| **Wat erin zit** | Opslag van voortgang (*een **DataStore** is de Roblox-database waarin je per speler gegevens bewaart, zoals Cash en gekochte skins*). Cash, Rep en niveaus. De Gear Wall met de 3 extra gadgets en de inzet ("Confiscated"). Cosmetica, game passes, developer products, de Van Shop en de gratis Glovebox (§8). De Practice Yard (§11). Rookie en Normal. Karel (eenvoudig). Matchmaking met instappen in de eerste 3 minuten, en de stemming om iemand eruit te zetten. Quick Words ingesteld (§5.4). Kunstronde: het gestileerde Polderdam (§10.5). Geluid en muziek. De volledige vragenlijst voor het leeftijdslabel. Icoon en 3–5 thumbnails. Meetpunten (analytics) voor de eerste 5 minuten. Eerst een **gesloten bèta** (20–50 testers), daarna openbaar voor 16+. |
 | **Tools** | Alles van hiervoor, plus **RBXMonkey / Blender Animations** voor eigen animaties (bewaker, hond, Karel, hurken). Een bibliotheek voor veilige opslag (§15.2). |
 | **Klaar als** | (1) Twee weken gesloten bèta zonder één geval van verloren voortgang of verloren aankoop. (2) Alle aankopen getest met testaankopen in Studio (die kosten geen echte Robux). (3) Minstens 70% van de nieuwe spelers komt door de Practice Yard (af te lezen uit je meetpunten). (4) Het label is Minimal of Mild. (5) Het spel loopt vloeiend op een goedkope Android-telefoon. |
 
@@ -935,7 +987,7 @@ Volgorde op basis van wat spelers het meest vasthoudt:
 1. **Asset Recovery** (de Signal-meter, §9.7) en **Pro**-moeilijkheid.
 2. **Cover Story** (dekmantel, §9.7) en de jobvarianten "Night Shift" en "Rush Job".
 3. **Een nieuwe map** ongeveer elke 2 maanden. Ideeën die in Polderdam passen: de fietsenwinkel (fietsen als buit, de Winch over de gracht), de bloemenveiling (koelcellen, transportbanden), de stroopwafelfabriek (lawaaierige machines dekken je CRACK), het grachtenpand-kantoor (verticaal: pas als je de drone goed onder de knie hebt).
-4. Een **cosmetisch seizoen** ("Crew Pass", §8) zodra er minstens 3 maps zijn.
+4. **Crew Pass seizoen 1** (§8.5), ±2 maanden na de release, daarna elke 8 weken een nieuw seizoen.
 5. Vertalingen, wekelijkse uitdagingen, evenementen.
 
 **Wat realistisch is voor een beginner, eerlijk gezegd:** NPC-gedrag (bewakers die zien, zoeken en volgen) en multiplayer (gadgets die bij alle spelers tegelijk werken) zijn de twee moeilijkste delen. Daarom zit allebei al in fase 1, zodat je vroeg weet of het lukt. Kunst, geld en opslag zijn veel voorspelbaarder en komen later.
@@ -955,7 +1007,7 @@ De vijf grootste redenen waarom dit op Roblox zou kunnen mislukken, van groot na
 | 5 | **Niemand vindt of onthoudt het spel**: het verdwijnt tussen ROB IT, Notoriety en tientallen kleine "X Heist"-spellen, of spelers haken af in de eerste minuut. | Roblox telt tegenwoordig de "first play bounce rate" (spelers die binnen 60 s of 3 minuten weer vertrekken) als negatief signaal. Een stealthgame begint van nature traag. Wie "heist" zoekt, vindt eerst spellen met jaren content. | De EMP-grap binnen 60 s (§11). Geen tekstschermen. Rookie zonder Karel en Asset Recovery. Meetpunten op elke stap van de eerste 5 minuten. Het verschil overal tonen: alleen grappige wapens, niemand kan het alleen, een vrolijke speelgoedstad in plaats van een grijze bank (§1, §10.5). Een titel met een eigen merknaam en "heist" als tag (§14). Meerdere thumbnails met Thumbnail Personalization. |
 
 **Twee kleinere risico's om in het oog te houden:**
-- **Verloren gegevens of aankopen.** Eén verhaal over "ik verloor mijn gekochte skin" kost je het vertrouwen van ouders. Gebruik een bewezen opslagbibliotheek, test met testaankopen, en bewaar Robux-aankopen apart van gewone voortgang (§8.7).
+- **Verloren gegevens of aankopen.** Eén verhaal over "ik verloor mijn gekochte skin" kost je het vertrouwen van ouders. Gebruik een bewezen opslagbibliotheek, test met testaankopen, en bewaar Robux-aankopen apart van gewone voortgang (§8.11).
 - **Prestaties op goedkope telefoons.** Veel kinderen spelen op oudere toestellen. Houd modellen eenvoudig, maximaal 8 NPC's per map, en zet *StreamingEnabled* aan (*een Roblox-instelling die alleen het deel van de wereld laadt dat dicht bij de speler is*).
 
 ---
