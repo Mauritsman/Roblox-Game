@@ -1,5 +1,5 @@
 #!/bin/sh
-# Controleert alle Luau-code: typecheck (luau-lsp), lint (selene) en opmaak (stylua).
+# Controleert alle Luau-code: typecheck (luau-lsp), lint (selene), opmaak (stylua) en unit-tests (Lune).
 # Gebruik: sh tools/check.sh   (vanuit de projectmap)
 set -e
 export PATH="$HOME/.rokit/bin:$PATH"
@@ -16,5 +16,7 @@ luau-lsp analyze --platform roblox --sourcemap sourcemap.json \
 echo "== lint"
 selene src
 echo "== opmaak"
-stylua --check src
+stylua --check src tests
+echo "== unit-tests"
+lune run tests/run
 echo "Alles in orde."

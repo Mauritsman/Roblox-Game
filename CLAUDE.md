@@ -23,8 +23,13 @@ Gebruiker: Maurits, beginner. Antwoord in het Nederlands (Vlaams); spelerteksten
 - Alleen grappige, niet-dodelijke wapens die één bewaker een venster lang uitschakelen (gameplan §4.8); geen echte wapens, geen bloed (label Mild, §5).
 - Code aanpassen in de bestanden, nooit rechtstreeks in Studio (anders overschrijft sync het).
 
+## Team
+Er is een agent-team (advisor, mechanics, map, ux, meta, tester): zie `docs/team/README.md` en `.claude/agents/`.
+Maurits wordt niets gevraagd; ontwerpvragen gaan naar de advisor. Doel: beta-klaar met meerdere maps.
+
 ## Controleren en bouwen
-- `sh tools/check.sh` — typecheck (luau-lsp), lint (selene), opmaak (stylua). Moet groen zijn voor een commit.
+- `sh tools/check.sh` — typecheck (luau-lsp), lint (selene), opmaak (stylua), unit-tests (Lune: `lune run tests/run`). Moet groen zijn voor een commit.
+- Pure logica in `src/shared/Logic/` (geen Roblox-API's) met tests in `tests/**/*.spec.luau`.
 - `export PATH="$HOME/.rokit/bin:$PATH"; stylua src` — opmaak toepassen.
 - `rojo build default.project.json -o build/CrowbarCrew.rbxl` — place-bestand bouwen.
 
