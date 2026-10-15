@@ -5,6 +5,12 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage.Shared.Config)
+local Actions = require(script:WaitForChild("Lib"):WaitForChild("Actions"))
+local Hud = require(script.Lib:WaitForChild("Hud"))
+
+-- Eerst de gedeelde UI en invoer, daarna de controllers die ze gebruiken.
+Hud.init()
+Actions.init()
 
 local controllersFolder = script:WaitForChild("Controllers")
 
