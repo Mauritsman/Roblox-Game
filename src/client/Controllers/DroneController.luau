@@ -104,6 +104,7 @@ local function stopDrone(reason: string?)
 	end
 	Hud.setCrosshair(Actions.preferredInput() ~= "KeyboardAndMouse")
 	table.clear(seenSince)
+	table.clear(lastAutoSpot)
 	if reason and reason ~= "" then
 		Hud.toast(reason, Hud.Colors.Warn)
 	end
@@ -182,7 +183,12 @@ local function spotFromDrone()
 end
 
 function DroneController:Start()
-	Net.on("DroneStarted", function(drone: BasePart)
+	Net.on("DroneStarted", function(drone: BasePart?)
+		if not drone then
+			-- Kan gebeuren met StreamingEnabled: land meteen, anders staat de speler vast.
+			Net.request("Drone", "recall")
+			return
+		end
 		ClientState.set("aiming", false)
 		ClientState.set("drone", drone)
 		camera.CameraSubject = drone
@@ -194,7 +200,8 @@ function DroneController:Start()
 	end)
 
 	Actions.on("DroneRecall", function(phase)
-		if phase == "Begin" and ClientState.drone then
+		local operating = player.Character ~= nil and player.Character:GetAttribute(Tags.Operating) == true
+		if phase == "Begin" and (ClientState.drone or operating) then
 			Net.request("Drone", "recall")
 		end
 	end)

@@ -27,7 +27,7 @@ local aimDisc: Part
 local aimRing: Part
 local droneWarning: BillboardGui
 
-local THROWABLE = { Noisemaker = true, EMP = true }
+local THROWABLE = { Noisemaker = true, EMP = true, BubbleBlaster = true }
 
 local function gadgets(): { string }
 	local raw = player:GetAttribute(Tags.Gadgets)
@@ -57,6 +57,7 @@ local function refreshHud()
 		local charges = player:GetAttribute(Tags.Charges .. name)
 		table.insert(entries, {
 			name = name,
+			label = Config.Gadgets[name].Label or name,
 			charges = if typeof(charges) == "number" then charges else nil,
 			selected = name == selected,
 			step = Config.Gadgets[name].Step,
@@ -121,6 +122,9 @@ end
 
 local function setAiming(on: boolean)
 	ClientState.set("aiming", on)
+	if not on then
+		ClientState.aimPoint = nil
+	end
 	aimFolder.Parent = if on then camera else nil
 	if not on then
 		droneWarning.Enabled = false
@@ -187,11 +191,15 @@ local function updateAimVisual()
 	end
 	local radius = if gadgetName == "EMP"
 		then Config.Gadgets.EMP.Radius
+		elseif gadgetName == "BubbleBlaster" then Config.Gadgets.BubbleBlaster.HitRadius
 		else Config.Gadgets.Noisemaker.HearRadius
 	aimDisc.CFrame = CFrame.new(point + Vector3.new(0, 0.15, 0)) * CFrame.Angles(0, 0, math.rad(90))
 	aimRing.Size = Vector3.new(0.12, radius * 2, radius * 2)
 	aimRing.CFrame = CFrame.new(point + Vector3.new(0, 0.1, 0)) * CFrame.Angles(0, 0, math.rad(90))
-	aimRing.Color = if gadgetName == "EMP" then Color3.fromRGB(80, 220, 255) else Color3.fromRGB(255, 210, 60)
+	aimRing.Color = if gadgetName == "EMP"
+		then Color3.fromRGB(80, 220, 255)
+		elseif gadgetName == "BubbleBlaster" then Color3.fromRGB(255, 150, 225)
+		else Color3.fromRGB(255, 210, 60)
 
 	-- §4.4: laat zien dat je eigen drone (of die van een teamgenoot) in de straal hangt.
 	local warned = false
@@ -253,12 +261,7 @@ local function buildAimVisuals()
 end
 
 local function setCrouch(on: boolean)
-	local character = player.Character
-	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-	if humanoid then
-		humanoid.CameraOffset = if on then Vector3.new(0, -1.6, 0) else Vector3.zero
-	end
-	Net.request("Crouch", on)
+	Net.request("Crouch", on) -- de camera volgt zodra de server het attribuut zet
 end
 
 function GadgetController:Init()
@@ -328,17 +331,31 @@ function GadgetController:Start()
 		end
 	end)
 
-	local crouching = false
+	-- Hurken volgt het attribuut van de server (dat ook uitgaat na gepakt worden of na de drone).
+	local function isCrouching(): boolean
+		local character = player.Character
+		return character ~= nil and character:GetAttribute(Tags.Crouching) == true
+	end
 	Actions.on("Crouch", function(phase)
 		if phase == "Begin" and not ClientState.drone then
-			crouching = not crouching
-			setCrouch(crouching)
+			setCrouch(not isCrouching())
 		end
 	end)
-	player.CharacterAdded:Connect(function()
-		crouching = false
+	local function watchCharacter(character: Model)
 		setAiming(false)
-	end)
+		character:GetAttributeChangedSignal(Tags.Crouching):Connect(function()
+			local humanoid = character:FindFirstChildOfClass("Humanoid")
+			if humanoid and not ClientState.drone then
+				humanoid.CameraOffset = if character:GetAttribute(Tags.Crouching) == true
+					then Vector3.new(0, -1.6, 0)
+					else Vector3.zero
+			end
+		end)
+	end
+	player.CharacterAdded:Connect(watchCharacter)
+	if player.Character then
+		watchCharacter(player.Character)
+	end
 
 	-- Chain Call: op NOW gaat een klaargezette EMP of Noisemaker automatisch af (§3.4).
 	ClientState.Changed:Connect(function(key)

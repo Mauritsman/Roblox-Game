@@ -198,11 +198,16 @@ local function onNoisemakerLanded(player: Player, position: Vector3)
 
 	local seconds = Config.windowSeconds(crewSize())
 	spawnNoisemaker(position, cfg.RingSeconds)
-	local heard = GuardService:HearNoise(position, cfg.HearRadius, seconds, "noisemaker")
 	if repeated then
-		AlarmService:Add("NoisemakerRepeat")
-		Net.broadcast("Toast", 'Guard: "Again?!"')
+		-- §4.3: zelfde truc twee keer = geen afleiding, wel achterdocht en alarmpunten.
+		local noticed = GuardService:HearNoise(position, cfg.HearRadius, Config.Guard.SearchSeconds, "repeat")
+		if noticed > 0 then
+			AlarmService:Add("NoisemakerRepeat")
+			Net.broadcast("Toast", 'Guard: "Again?! Not falling for that."')
+		end
+		return
 	end
+	local heard = GuardService:HearNoise(position, cfg.HearRadius, seconds, "noisemaker")
 	if heard > 0 then
 		Net.broadcast("Window", "GUARD AWAY", seconds, position)
 	else
@@ -218,7 +223,9 @@ local function onEmpLanded(player: Player, position: Vector3)
 	local hitDrones: { string } = {}
 	for _, inst in CollectionService:GetTagged(Tags.Electronic) do
 		local instPosition = positionOf(inst)
-		if instPosition and (instPosition - position).Magnitude <= cfg.Radius then
+		-- Horizontale afstand (zoals de cirkel op de grond), tot 16 studs hoog: camera's hangen hoog.
+		local delta = if instPosition then instPosition - position else nil
+		if delta and Vector3.new(delta.X, 0, delta.Z).Magnitude <= cfg.Radius and math.abs(delta.Y) <= 16 then
 			GadgetService:DisableElectronic(inst, seconds)
 			if CollectionService:HasTag(inst, Tags.SecurityCamera) then
 				hitCameras += 1
@@ -242,8 +249,124 @@ local function onEmpLanded(player: Player, position: Vector3)
 	local _ = player
 end
 
+--------------------------------------------------------------------------------
+-- Bubble Blaster (grappig wapen, §4.8)
+--------------------------------------------------------------------------------
+
+local function bubbleTeammate(victim: Player, shooter: Player, seconds: number)
+	local character = victim.Character
+	local root = character and character:FindFirstChild("HumanoidRootPart")
+	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
+	if
+		not character
+		or not root
+		or not root:IsA("BasePart")
+		or not humanoid
+		or character:GetAttribute("Bubbled")
+	then
+		return
+	end
+	character:SetAttribute("Bubbled", true)
+	local previousSpeed = humanoid.WalkSpeed
+	humanoid.WalkSpeed = 0
+	local bubble = Instance.new("Part")
+	bubble.Name = "Bubble"
+	bubble.Shape = Enum.PartType.Ball
+	bubble.Size = Vector3.new(6, 6, 6)
+	bubble.Material = Enum.Material.Glass
+	bubble.Transparency = 0.55
+	bubble.Color = Color3.fromRGB(255, 190, 240)
+	bubble.CanCollide = false
+	bubble.CanQuery = false
+	bubble.Massless = true
+	bubble.CFrame = root.CFrame
+	local weld = Instance.new("WeldConstraint")
+	weld.Part0 = root
+	weld.Part1 = bubble
+	weld.Parent = bubble
+	bubble.Parent = character
+	Net.broadcast("Toast", `{shooter.DisplayName} bubbled {victim.DisplayName}! Oops.`)
+	task.delay(seconds, function()
+		bubble:Destroy()
+		if character.Parent then
+			character:SetAttribute("Bubbled", nil)
+			if
+				humanoid.WalkSpeed == 0
+				and not character:GetAttribute(Tags.Operating)
+				and not character:GetAttribute("Caught")
+			then
+				humanoid.WalkSpeed = if previousSpeed > 0 then previousSpeed else Config.Player.WalkSpeed
+			end
+		end
+	end)
+end
+
+local function shootBubble(player: Player, from: Vector3, target: Vector3)
+	local cfg = Config.Gadgets.BubbleBlaster
+	local direction = target - from
+	if direction.Magnitude < 0.5 then
+		return
+	end
+	if direction.Magnitude > cfg.ThrowRange then
+		direction = direction.Unit * cfg.ThrowRange
+	end
+	-- Waar botst de bel tegen? (muren stoppen hem)
+	local params = RaycastParams.new()
+	params.FilterType = Enum.RaycastFilterType.Exclude
+	local shooterIgnore: { Instance } = {}
+	if player.Character then
+		table.insert(shooterIgnore, player.Character)
+	end
+	params.FilterDescendantsInstances = shooterIgnore
+	local hit = workspace:Raycast(from, direction, params)
+	local endPoint = if hit then hit.Position else from + direction
+
+	local ball = Instance.new("Part")
+	ball.Name = "BubbleShot"
+	ball.Shape = Enum.PartType.Ball
+	ball.Size = Vector3.new(1.4, 1.4, 1.4)
+	ball.Material = Enum.Material.Glass
+	ball.Transparency = 0.4
+	ball.Color = Color3.fromRGB(255, 170, 230)
+	ball.Anchored = true
+	ball.CanCollide = false
+	ball.CanQuery = false
+	ball.CFrame = CFrame.new(from)
+	ball.Parent = workspace
+	local travel = (endPoint - from).Magnitude / cfg.ProjectileSpeed
+	local tween = TweenService:Create(
+		ball,
+		TweenInfo.new(travel, Enum.EasingStyle.Linear),
+		{ CFrame = CFrame.new(endPoint) }
+	)
+	tween:Play()
+	tween.Completed:Connect(function()
+		ball:Destroy()
+		-- Wie staat er bij aankomst dichtbij? Een bewaker, of (oeps) een teamgenoot.
+		local overlap = OverlapParams.new()
+		overlap.FilterType = Enum.RaycastFilterType.Exclude
+		overlap.FilterDescendantsInstances = shooterIgnore
+		local seconds = Config.windowSeconds(crewSize()) - 2
+		for _, part in workspace:GetPartBoundsInRadius(endPoint, cfg.HitRadius, overlap) do
+			local model = part:FindFirstAncestorOfClass("Model")
+			if model and CollectionService:HasTag(model, Tags.Guard) then
+				if GuardService:Bubble(model, math.max(seconds, cfg.BubbleSeconds)) then
+					Net.broadcast("Window", "GUARD BUBBLED", math.max(seconds, cfg.BubbleSeconds), endPoint)
+				end
+				return
+			end
+			local victim = model and Players:GetPlayerFromCharacter(model)
+			if victim and victim ~= player then
+				bubbleTeammate(victim, player, cfg.FriendlySeconds)
+				return
+			end
+		end
+		Net.send(player, "Toast", "*pop* Missed!")
+	end)
+end
+
 local function handleThrow(player: Player, gadgetName: any, target: any)
-	if gadgetName ~= "Noisemaker" and gadgetName ~= "EMP" then
+	if gadgetName ~= "Noisemaker" and gadgetName ~= "EMP" and gadgetName ~= "BubbleBlaster" then
 		return
 	end
 	if typeof(target) ~= "Vector3" then
@@ -274,6 +397,10 @@ local function handleThrow(player: Player, gadgetName: any, target: any)
 	end
 	if gadgetName == "EMP" then
 		empCooldownUntil[player] = os.clock() + cfg.Cooldown
+	end
+	if gadgetName == "BubbleBlaster" then
+		shootBubble(player, from, target)
+		return
 	end
 	local color = if gadgetName == "EMP" then Color3.fromRGB(80, 220, 255) else Color3.fromRGB(255, 210, 60)
 	flyProjectile(from, target, color, function(landed)
@@ -340,6 +467,7 @@ local function launchDrone(player: Player)
 	part.Material = Enum.Material.Metal
 	part.CFrame = root.CFrame * CFrame.new(0, 4, -2)
 	part.CustomPhysicalProperties = PhysicalProperties.new(0.3, 0.3, 0.2)
+	part.CollisionGroup = "Drone" -- botst niet met spelers en bewakers
 	local attachment = Instance.new("Attachment")
 	attachment.Name = "Center"
 	attachment.Parent = part
@@ -347,13 +475,13 @@ local function launchDrone(player: Player)
 	velocity.Attachment0 = attachment
 	velocity.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
 	velocity.RelativeTo = Enum.ActuatorRelativeTo.World
-	velocity.MaxForce = 20000
+	velocity.MaxForce = 800 -- genoeg om te vliegen, te weinig om iemand weg te duwen
 	velocity.VectorVelocity = Vector3.zero
 	velocity.Parent = part
 	local orientation = Instance.new("AlignOrientation")
 	orientation.Attachment0 = attachment
 	orientation.Mode = Enum.OrientationAlignmentMode.OneAttachment
-	orientation.MaxTorque = 20000
+	orientation.MaxTorque = 800
 	orientation.Responsiveness = 40
 	orientation.CFrame = CFrame.new()
 	orientation.Parent = part
@@ -404,8 +532,8 @@ local function updateDrones(dt: number)
 			level = math.min(cfg.BatterySeconds, level + dt * cfg.BatterySeconds / cfg.RechargeSeconds)
 		end
 		battery[player] = level
-		-- Alleen bij een verschil van 1% doorsturen, anders herbouwt de HUD elke frame.
-		local rounded = math.floor(level / cfg.BatterySeconds * 100) / 100
+		-- Alleen per 5% doorsturen, anders herbouwt de HUD elke frame.
+		local rounded = math.floor(level / cfg.BatterySeconds * 20) / 20
 		if player:GetAttribute("DroneBattery") ~= rounded then
 			player:SetAttribute("DroneBattery", rounded)
 		end
@@ -480,7 +608,12 @@ function GadgetService:Start()
 	Net.onRequest("Crouch", function(player: Player, crouching: any)
 		local character = player.Character
 		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-		if not character or not humanoid or character:GetAttribute(Tags.Operating) then
+		if
+			not character
+			or not humanoid
+			or character:GetAttribute(Tags.Operating)
+			or character:GetAttribute("Caught")
+		then
 			return
 		end
 		local on = crouching == true
@@ -499,6 +632,7 @@ function GadgetService:Start()
 		end
 		table.clear(empCooldownUntil)
 		table.clear(recentNoisemakers)
+		table.clear(disableTokens)
 		table.clear(battery)
 	end)
 

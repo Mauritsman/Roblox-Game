@@ -35,6 +35,7 @@ function AlarmService:Add(reason: string, basePoints: number?)
 	local changed = newLevel ~= AlarmService.Level
 	AlarmService.Level = newLevel
 	Net.broadcast("Alarm", AlarmService.Points, AlarmService.Level, reason, points)
+	ReplicatedStorage:SetAttribute("AlarmLevel", AlarmService.Level)
 	if changed then
 		AlarmService.LevelChanged:Fire(newLevel)
 	end
@@ -44,6 +45,7 @@ function AlarmService:Reset()
 	AlarmService.Points = 0
 	AlarmService.Level = 0
 	Net.broadcast("Alarm", 0, 0, "Reset", 0)
+	ReplicatedStorage:SetAttribute("AlarmLevel", 0)
 	AlarmService.LevelChanged:Fire(0)
 end
 

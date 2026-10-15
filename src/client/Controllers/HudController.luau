@@ -24,6 +24,10 @@ local REASON_TEXT: { [string]: string } = {
 
 function HudController:Start()
 	Hud.setCrosshair(Actions.preferredInput() ~= "KeyboardAndMouse")
+	local startLevel = ReplicatedStorage:GetAttribute("AlarmLevel")
+	if typeof(startLevel) == "number" then
+		Hud.setAlarm(startLevel, Config.Alarm.LevelNames[startLevel] or "")
+	end
 
 	Net.on("Toast", function(message: string)
 		Hud.toast(message)
@@ -129,7 +133,10 @@ function HudController:Start()
 
 	task.delay(1.5, function()
 		Hud.toast("Grab gadgets at the glowing pedestals, then break into the hall.", Hud.Colors.Accent)
-		Hud.toast("Goal: the GOLDEN GOUDA in the cage. No weapons, no fighting.", Hud.Colors.Text)
+		Hud.toast(
+			"Goal: the GOLDEN GOUDA in the cage. Only silly weapons, nobody gets hurt.",
+			Hud.Colors.Text
+		)
 	end)
 end
 

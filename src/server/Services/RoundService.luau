@@ -25,7 +25,17 @@ local runId = 0
 local runStartedAt = os.clock()
 local ending = false
 
+local function setPlayerGroup(part: Instance)
+	if part:IsA("BasePart") then
+		part.CollisionGroup = "Players"
+	end
+end
+
 local function setupCharacter(character: Model)
+	for _, part in character:GetDescendants() do
+		setPlayerGroup(part)
+	end
+	character.DescendantAdded:Connect(setPlayerGroup)
 	local humanoid = character:WaitForChild("Humanoid") :: Humanoid
 	humanoid.WalkSpeed = Config.Player.WalkSpeed
 	humanoid.UseJumpPower = false
@@ -122,7 +132,22 @@ function RoundService:Start()
 			Net.broadcast("Lockdown", Config.Alarm.LockdownSeconds)
 			task.delay(Config.Alarm.LockdownSeconds, function()
 				if runId == thisRun and not ending then
-					endRun("BUSTED", "The police arrived")
+					-- §9.5: alleen wie dan nog binnen is, is gepakt.
+					local inside = {}
+					for _, player in Players:GetPlayers() do
+						local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
+						if root and root:IsA("BasePart") then
+							local p = root.Position
+							if p.X > 0 and p.X < 60 and math.abs(p.Z) < 25 then
+								table.insert(inside, player.DisplayName)
+							end
+						end
+					end
+					if #inside > 0 then
+						endRun("BUSTED", `The police caught {table.concat(inside, ", ")}`)
+					else
+						endRun("ESCAPED", "Everyone got out, but empty-handed")
+					end
 				end
 			end)
 		end

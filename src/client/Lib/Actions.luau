@@ -27,8 +27,8 @@ local BINDINGS: { [string]: { Enum.KeyCode } } = {
 	Now = { Enum.KeyCode.Z, Enum.KeyCode.DPadUp },
 	Wait = { Enum.KeyCode.X, Enum.KeyCode.DPadDown },
 	DroneRecall = { Enum.KeyCode.F, Enum.KeyCode.DPadLeft },
-	DroneUp = { Enum.KeyCode.Space },
-	DroneDown = { Enum.KeyCode.LeftControl, Enum.KeyCode.LeftShift },
+	DroneUp = { Enum.KeyCode.Space, Enum.KeyCode.ButtonA },
+	DroneDown = { Enum.KeyCode.LeftControl, Enum.KeyCode.ButtonB },
 	Restart = { Enum.KeyCode.P },
 }
 

@@ -1,6 +1,6 @@
 # Crowbar Crew — gameplan voor Roblox
 
-*Versie 1.1 — 15 oktober 2026. Opdracht: [`docs/roblox-prompt.md`](roblox-prompt.md). Titel en rol van Karel bevestigd door Maurits op 15/10/2026.*
+*Versie 1.2 — 15 oktober 2026 (grappige wapens toegevoegd). Opdracht: [`docs/roblox-prompt.md`](roblox-prompt.md). Titel en rol van Karel bevestigd door Maurits op 15/10/2026.*
 
 **Bron van het concept.** Het volledige oude plan (`unpaid-gameplan.md`) zat niet bij de opdracht en staat niet in deze repo. Dit plan gaat daarom uit van de samenvatting in de prompt. Waar die samenvatting iets openliet, staat er een voorstel. De rol van Karel (§9.6) en de titel (§14) zijn intussen bevestigd.
 
@@ -12,11 +12,11 @@
 
 ## 1. Samenvatting in vijf zinnen
 
-1. **Crowbar Crew** is een co-op stealth-heist voor 1 tot 4 spelers op Roblox, waarin een crew met een busje kleine, slimme inbraken pleegt in een speelse, Nederlands aanvoelende stad, zonder één wapen.
+1. **Crowbar Crew** is een co-op stealth-heist voor 1 tot 4 spelers op Roblox, waarin een crew met een busje kleine, slimme inbraken pleegt in een speelse, Nederlands aanvoelende stad, met alleen grappige wapens die nooit iemand pijn doen.
 2. Elke hindernis vraagt drie stappen — **zien → vrijmaken → openen** — binnen een venster van 10 seconden, en elk gadget doet maar één van die stappen: je wint alleen als je samenwerkt.
 3. Het is gemaakt voor spelers van 9 tot 15 jaar (bereikbaar na Roblox' extra keuring, §5.5) op telefoon, tablet, pc en console: runs van ongeveer 12 minuten, één knop per gadget, en een ping- en aftelsysteem dat werkt zonder voice- of tekstchat.
-4. Het leeftijdslabel wordt Minimal of Mild, allebei speelbaar vanaf 5 jaar: geen bloed, geweld nooit als oplossing, alleen slapstick als gevolg — zoals je eigen drone die door de EMP van je vriend op het hoofd van een bewaker valt.
-5. In Entry Point en Notoriety kan één goede speler alles alleen en ligt er altijd een geweer klaar als stealth mislukt; hier is niemand compleet en is er geen plan B met geweld, dus het samen falen, samen lachen en elkaar komen bevrijden ís het spel.
+4. Het leeftijdslabel wordt Mild, speelbaar vanaf 5 jaar: geen bloed, alleen slapstick — een bewaker die 8 seconden in een zeepbel zweeft, of je eigen drone die door de EMP van je vriend op zijn hoofd valt.
+5. In Entry Point en Notoriety kan één goede speler alles alleen en ligt er altijd een echt geweer klaar; hier is niemand compleet en koopt een grap hooguit 10 seconden, dus het samen falen, samen lachen en elkaar komen bevrijden ís het spel.
 
 ### Anders dan Entry Point, Notoriety en ROB IT
 
@@ -25,7 +25,7 @@ Je noemde Entry Point en Notoriety. Er is ondertussen een derde, directere concu
 | | **Entry Point** | **Notoriety** | **ROB IT** | **Jouw spel** |
 |---|---|---|---|---|
 | Wat is het | Stealth- en actie-shooter, 15 missies + PvP | Officiële PAYDAY-heist: co-op shooter, stil of luid | Inbreken, alles stelen, niet gezien worden door de bewaker | Co-op stealth met gadgets en een verplichte keten |
-| Wapens | Ja | Ja | Nee | **Nee, nooit** |
+| Wapens | Ja (echte) | Ja (echte) | Nee | **Alleen grappige**: bellen, kaas, een rubberen kip (§4.8) |
 | Kan één speler alles alleen? (inschatting op basis van de spelbeschrijvingen) | Ja | Grotendeels | Ja | **Nee**: elk gadget doet één stap |
 | Label | Moderate | Mild | Minimal | Minimal/Mild |
 | Runlengte | ⚠️ niet gevonden | ⚠️ niet gevonden | ongeveer 6–7 min | ~11 min (cyclus 14 min) |
@@ -33,17 +33,17 @@ Je noemde Entry Point en Notoriety. Er is ondertussen een derde, directere concu
 | Verdienen | Missies als game passes (750–1.200 Robux) | 14 passes (49–599 Robux), o.a. 2× XP/Cash | Geen game passes | Alleen uiterlijk en gemak (§8) |
 
 **Wat dit je zegt:**
-- De twee grote heistspellen zijn **shooters voor oudere spelers**. Een heist **zonder geweren, met een verplichte crew-keten**, is nog een lege plek.
+- De twee grote heistspellen zijn **shooters voor oudere spelers**. Een heist **zonder echte geweren, met grappige wapens en een verplichte crew-keten**, is nog een lege plek.
 - **ROB IT bewijst dat er veel vraag is** naar een kindvriendelijk inbraakspel met label Minimal (een piek van 35.000 spelers tegelijk). Maar het is een simpel, solo speelbaar concept.
 - **Je verschil met ROB IT** is precies je kern: in ROB IT ben je een slimme inbreker, hier ben je **een crew die elkaar nodig heeft**. De EMP die je eigen drone neerhaalt en het moment dat je een vriend uit de beveiligingsruimte haalt, kan ROB IT niet bieden.
 - **Je risico:** ROB IT kan co-op toevoegen, en er komt in 2026 een tweede PAYDAY-spel op Roblox (Gamefam). Daarom moet je verschil in de eerste minuut te zien zijn (§11), niet pas na een uur.
 
 **De eerste minuut moet drie dingen tonen:**
-1. **Geen geweer in beeld.** Wel een drone, een wekker en een breekijzer.
+1. **Geen echt geweer in beeld.** Wel een drone, een wekker, een breekijzer en een Bubble Blaster.
 2. **De EMP-grap**: je eigen drone valt "BZZT" uit de lucht. In de Practice Yard binnen 60 seconden (§11).
 3. **Een deur die alleen opengaat als iemand anders je het venster geeft**: de ring "CAMS OFF 10" en de Chain Call.
 
-Op de spelpagina (icoon, thumbnails, eerste zin van de beschrijving) laat je hetzelfde zien: *"No guns. No boss. Just your crew, a van and an EMP that hits your own drone."*
+Op de spelpagina (icoon, thumbnails, eerste zin van de beschrijving) laat je hetzelfde zien: *"No real guns. No boss. Just your crew, a van, a bubble blaster and an EMP that hits your own drone."*
 
 ---
 
@@ -52,12 +52,12 @@ Op de spelpagina (icoon, thumbnails, eerste zin van de beschrijving) laat je het
 | Onderdeel van het concept | Oordeel | Reden |
 |---|---|---|
 | Vier vrienden met een busje, zonder werkgever | **Blijft** | Sterke, simpele fantasie. Het busje krijgt drie functies: wachtrij in de lobby, gadgetkast tijdens de run, en uitgang (buit in het busje = binnen). |
-| Pijler: voorbereiding, niet vechten | **Blijft** (strenger) | Geen enkel wapen, ook geen verdoving. Dit is je grootste verschil met Entry Point en Notoriety. |
+| Pijler: voorbereiding, niet vechten | **Past aan** (bevestigd 15/10/2026) | Wel wapens, maar alleen grappige en niet-dodelijke (§4.8). Een wapen koopt een venster van ±10 s op één bewaker, nooit een oplossing. Geen echte geweren: dat blijft je verschil met Entry Point en Notoriety. |
 | De keten *zien → vrijmaken → openen* | **Blijft** | Dit is de kern. Alles in dit plan draait eromheen. |
 | Venster van 8–12 seconden | **Past aan** | Standaard **10 s** voor iedereen in de server (Rookie 12 s, Pro 8 s). Een apart, langer venster voor mobiel kan niet, want het venster is één gedeelde toestand van de wereld (zie §3.3). |
 | Elk gadget opent alleen een venster, nooit een pad | **Blijft** | Wordt een harde ontwerpregel: elektronische sloten gaan bij een EMP níét open. |
 | Niemand kan een stap alleen zetten | **Past aan** | Klopt bij 3–4 spelers. Bij 1–2 spelers vervangen timers en automatische camera's de ontbrekende teamgenoten (§3.7). Zonder solo is je spel bij de lancering leeg. |
-| De zes gadgets | **Blijft** | Elk gadget hoort bij één stap: 2× zien, 2× vrijmaken, 2× openen. Per gadget één knop. |
+| De zes gadgets | **Blijft** (+1) | Elk gadget hoort bij één stap: 2× zien, 2× vrijmaken, 2× openen. Per gadget één knop. Erbij: de Bubble Blaster als 7e standaardgadget (CLEAR, §4.8). |
 | EMP raakt ook je eigen drone en camera's | **Blijft** | Hét comedy-moment. Het bereik wordt zichtbaar vóór je gooit, zodat het een gevolg van slecht overleg is en geen willekeurige straf. |
 | Standaardgadgets + zijwaartse extra gadgets | **Blijft** | Ideaal voor Roblox: een nieuwe speler is meteen even sterk. |
 | Inzet: gepakt = gadget kwijt | **Past aan** | Alleen gadgets die je met spelgeld kocht, kun je definitief verliezen. Standaardgadgets ben je alleen voor de rest van die run kwijt. Met Robux gekochte dingen verlies je nooit (§7.3). |
@@ -72,7 +72,7 @@ Op de spelpagina (icoon, thumbnails, eerste zin van de beschrijving) laat je het
 | Sporen (voetstappen, glas, verplaatste spullen) | **Blijft** (minder soorten) | Vijf soorten sporen, allemaal zichtbaar en leesbaar, zonder bloed (§5). |
 | Sporen wissen kost een verbruiksspul | **Blijft** | De "Clean Spray", alleen met spelgeld te koop, nooit met Robux. |
 | NPC Karel | **Past aan** | Zijn rol stond niet in de samenvatting. Karel wordt de conciërge die alles opruimt en verklikt (§9.6, bevestigd). |
-| Geweld als gevolg, nooit als oplossing | **Blijft** (als slapstick) | Vallen, botsen, sterretjes rond het hoofd. Niemand raakt gewond. |
+| Geweld als gevolg, nooit als oplossing | **Past aan** | Nieuwe regel: "een grap koopt tijd, geen oplossing". Slapstick (zeepbel, kaas, sterretjes), niemand raakt gewond, en elke bewaker komt na het venster bozer terug. |
 | Bloed als informatie (spoor) | **Vervalt** | Vervangen door een scheurtje van je werkvest aan prikkeldraad: hetzelfde idee ("hier is iemand geweest"), zonder bloed. Zo hoef je bij bloed nooit te twijfelen in de vragenlijst voor het leeftijdslabel (§5). |
 | Werktitel UNPAID | **Vervalt** | Past niet meer. De nieuwe titel is **Crowbar Crew** (§14). |
 | Overleg via voice (pc-ontwerp) | **Past aan** | Wordt een ping-systeem plus de "Chain Call": een gedeelde 3-2-1-aftelling (§3.4). |
@@ -341,6 +341,33 @@ Extra gadgets koop je met spelgeld (Cash). Ze lossen dezelfde stap op, maar met 
 
 **Waarom dit werkt voor nieuwe spelers:** wie net begint, heeft het standaardgadget voor dezelfde stap. Dat is even nuttig, alleen anders. Een crew zonder één extra gadget kan elke map uitspelen.
 
+
+### 4.8 Grappige wapens — "Prank Arsenal" (toegevoegd 15/10/2026)
+
+Maurits koos voor wapens, "maar leuk verwerkt en grappig". Zo past dat in de keten zonder er een schietspel van te maken:
+
+**De regel: een grap koopt tijd, geen oplossing.**
+- Elk wapen is een **CLEAR**-gadget dat op **één bewaker** een venster opent (Normal 8–10 s). Nooit dodelijk, nooit blijvend.
+- Daarna komt de bewaker **bozer terug**: hij gaat meteen naar Search (§9.1) en er komen **+10 alarmpunten** bij. Wie alleen schiet, eindigt in LOCKDOWN.
+- **Weinig munitie** (1–3 per run), en elk wapen is **zichtbaar of hoorbaar**. Sluipen blijft beter.
+- Het **raakt ook je eigen crew** (zoals de EMP): een teamgenoot in een zeepbel zweeft 3 s rond. Onschuldig, en precies het soort grap waar vrienden om lachen.
+- **Niet op Karel** ("Karel has seen worse") en **niet op de hond** (die lok je met een Dog Treat). Bewakers gebruiken zelf **geen** wapens.
+
+| Wapen (spelernaam) | Wat het doet (venster) | Het grappige nadeel | Hoe je het krijgt |
+|---|---|---|---|
+| **"Bubble Blaster"** | Schiet een zeepbel: de bewaker zweeft 8 s ingesloten rond en kan niet zien of roepen. | De bel moet raken (vliegtijd), en klapt eerder als hij tegen een muur of speler botst. | **Standaard** (het 7e gadget, ook in de tutorial) |
+| **"Fondue Cannon"** | Een plas kleverige kaas: de bewaker staat 10 s vast. | Hij **ziet en roept nog**: zonder EYES loop je er recht in (+40 als hij je ziet). | Extra, 900 Cash |
+| **"Tickle Ray"** | De bewaker ligt 6 s in een deuk van het lachen. | Het lachen is **luid**: andere bewakers binnen 20 studs komen kijken. | Extra, 1.000 Cash |
+| **"Klomp Boomerang"** | Een houten klomp: *bonk*, 5 s sterretjes. Komt terug naar je hand. | Vang je hem niet op, dan ligt er een klomp op de vloer: een **spoor** (§5.3). | Extra, 800 Cash |
+| **"Confetti Popper"** | Verblindt een bewaker **of camera** 8 s met confetti. | De confetti blijft liggen: een spoor, en Karel komt het opruimen én verklikken. | Extra, 700 Cash |
+| **"Rubber Chicken"** | Van dichtbij: *PIEP*, de bewaker is 4 s duizelig. | Supersterk geluid (25 studs): +20 als iemand het hoort. Wel gratis te herladen. | Extra, 500 Cash |
+
+**Bediening** (zoals Noisemaker en EMP, §3.6): richten en schieten met de gadgetknop. Op mobiel tik je op GADGET (richten) en THROW (vuren); de straal of boog is zichtbaar.
+
+**Cosmetica voor Robux** (§8): alleen uiterlijk, bijvoorbeeld regenboogbellen, een gouden rubberen kip of een klomp met tulpjes. Nooit een sterker wapen of extra munitie.
+
+**Bouwvolgorde:** de Bubble Blaster zit al in het fase 1-prototype (zodat je hem meteen kunt testen). De extra wapens volgen bij de eerste release en de updates. Let er bij het testen op dat spelers nog sluipen in plaats van alleen te schieten; anders: minder munitie of meer alarmpunten.
+
 ---
 
 ## 5. Geweld, bloed en leeftijdslabel
@@ -349,10 +376,10 @@ Extra gadgets koop je met spelgeld (Cash). Ze lossen dezelfde stap op, maar met 
 
 ### 5.1 Advies in het kort
 
-**Mik op het label Minimal, aanvaard Mild. Geen bloed. Geweld alleen als slapstick-gevolg, nooit als oplossing.**
+**Mik op het label Mild. Geen bloed. Grappige wapens en slapstick, nooit echt geweld.**
 
 - **Minimal en Mild bereiken allebei de jongste groepen**: Roblox Kids (5–8 jaar) en Roblox Select (9–15 jaar), na de keuring uit §5.5. Moderate bereikt Kids niet meer.
-- Een stealthgame is van nature spannend. Roblox noemt "suspense-building gameplay" letterlijk een vorm van **milde angst**: af en toe = Minimal, herhaaldelijk = Mild. Je spel komt dus waarschijnlijk op **Mild** uit door de spanning, niet door geweld. Dat is geen probleem: je bereikt nog altijd 5–15 jaar.
+- Een stealthgame is van nature spannend (Roblox noemt "suspense-building gameplay" letterlijk **milde angst**), en de grappige wapens zijn **herhaaldelijk mild, onrealistisch geweld** (een bewaker even uitschakelen met een zeepbel of kaas). Samen geeft dat **Mild**. Dat is geen probleem: Mild bereikt nog altijd Kids (5–8) en Select (9–15).
 - **Bloed zou zelfs mogen**: Minimal laat "light unrealistic blood" toe (zelden, onrealistisch van kleur of vorm). Toch raad ik **geen bloed** aan. Een inbraakspel met bloed voelt voor ouders snel "fout", ook al past het in de regels, en het voegt niets toe wat een scheurtje van je vest niet ook vertelt. Zo hoef je ook nooit te twijfelen bij het invullen van de vragenlijst.
 
 ### 5.2 Wat de labels zeggen (stand 15/10/2026)
@@ -372,10 +399,11 @@ Extra gadgets koop je met spelgeld (Cash). Ze lossen dezelfde stap op, maar met 
 
 **Geweld als gevolg (slapstick, niemand raakt gewond):**
 - Je drone valt door een EMP op het hoofd van een bewaker: sterretjes, en de bewaker is Alert (het is dus slecht voor jou).
+- Een bewaker zweeft 8 s in een zeepbel van de Bubble Blaster, of staat vast in kaasfondue (§4.8). Daarna komt hij bozer terug.
 - Een bewaker die je achtervolgt, botst tegen een deur die net dichtvalt en blijft even suf staan.
 - Een gepakte speler krijgt plastic polsbandjes en wordt met een overgangseffect naar de beveiligingsruimte gebracht.
 
-**Wat er nooit in komt:** wapens (ook geen verdovingswapens), slaan of duwen door spelers, een hond die bijt, politie die geweld gebruikt, bloed, echte merken of echte plekken.
+**Wat er nooit in komt:** echte of realistische wapens (geen pistolen, geen messen, geen verdovingspijltjes), wapens die bewakers gebruiken, slaan of duwen door spelers, een hond die bijt, politie die geweld gebruikt, bloed, echte merken of echte plekken.
 
 ### 5.3 Hoe de sporen werken (zonder bloed)
 
@@ -820,7 +848,7 @@ Het terrein is ongeveer 120 × 80 studs. Noord ligt boven.
 **Voor de spelpagina:**
 - **Icoon** (512 × 512, wordt getoond op ongeveer 150 × 150): één beeld dat je verschil toont, bijvoorbeeld een drone die met vonken en "BZZT" uit de lucht valt, boven een kaaswiel. Geen kleine tekst.
 - **Thumbnails** (1920 × 1080, maximaal 10): maak er 3 tot 5 en zet **Thumbnail Personalization** aan (Roblox toont elke speler de thumbnail die bij hem het best werkt; in Roblox' eigen tests gaf dat gemiddeld +8,5% meer spelers die doorklikken). Geen belangrijke tekst onderaan, want daar zet Roblox het aantal spelers.
-- **Eerste zin van de beschrijving** = het genre: "Co-op stealth heist for 1–4 players. No guns."
+- **Eerste zin van de beschrijving** = het genre: "Co-op stealth heist for 1–4 players. No real guns, only silly ones."
 - Het spel moet ook **tieners van 16+** aanspreken, want zij spelen het eerst (§5.5). "Speels" werkt voor alle leeftijden, "kinderachtig" niet.
 
 ---
@@ -831,7 +859,7 @@ Het terrein is ongeveer 120 × 80 studs. Noord ligt boven.
 
 | Klok | Wat de speler doet | Wat het spel toont |
 |---|---|---|
-| **0:00** | Komt binnen in de Depot, naast de **Practice Yard** (een omheind oefenkoertje). | Eén zin over de hele breedte: "No boss. One van. Zero weapons." Een pijl naar de Practice Yard. |
+| **0:00** | Komt binnen in de Depot, naast de **Practice Yard** (een omheind oefenkoertje). | Eén zin over de hele breedte: "No boss. One van. Silly weapons only." Een pijl naar de Practice Yard. |
 | **0:10** | Krijgt automatisch de Drone. | Hint: "Fly the drone. Find the guard." De speler vliegt over een muurtje en ziet een **kartonnen bewaker** op wieltjes die heen en weer rijdt. Na 0,5 s kijken: rood icoon. "Spotted!" |
 | **0:40** | Krijgt de EMP; de drone hangt nog boven de camera. | Hint: "EMP the camera." De blauwe straal raakt ook de drone (rood icoon "YOUR DRONE!"), maar de speler gooit toch. **BZZT** — camera uit, en de drone valt op het hoofd van de kartonnen bewaker. Sterretjes. Tekst: "Oops. EMP hits YOUR stuff too." Dit is de eerste lach. |
 | **1:10** | Krijgt de Crowbar; een ring telt af ("CAMS OFF 10"). | Hint: "Open the door now." De speler wrikt de deur open in het venster. Achter de deur ligt een kaasje (kleine buit). "Chain complete: EYES → CLEAR → OPEN." Drie icoontjes klikken op hun plek. |
@@ -843,7 +871,7 @@ Het terrein is ongeveer 120 × 80 studs. Noord ligt boven.
 
 **Wat hier bewust níét in zit:** geen uitleg over Cash, Rep, de winkel of de alarmladder. Die leer je na je eerste run, op het uitbetalingsscherm (één tip per run, maximaal drie runs).
 
-**Wat de eerste minuut doet tegen de concurrentie:** in 60 seconden ziet de speler wat Entry Point en Notoriety niet hebben: geen geweer in beeld, een gadget dat je eigen drone neerhaalt, en een deur die alleen opengaat als iemand anders je het venster geeft.
+**Wat de eerste minuut doet tegen de concurrentie:** in 60 seconden ziet de speler wat Entry Point en Notoriety niet hebben: geen echt geweer maar een Bubble Blaster, een gadget dat je eigen drone neerhaalt, en een deur die alleen opengaat als iemand anders je het venster geeft.
 
 ---
 
@@ -924,7 +952,7 @@ De vijf grootste redenen waarom dit op Roblox zou kunnen mislukken, van groot na
 | 2 | **Je doelgroep (9–15) kan je spel niet spelen tot het de Kids & Select-keuring haalt.** | Sinds juni 2026 is een nieuw spel eerst alleen voor spelers van 16+ met een leeftijdscheck. Je hebt 250 unieke plays van betrokken spelers in 60 dagen nodig (§5.5). Een kinderspel dat 16-plussers niet aanspreekt, komt nooit bij de kinderen. | Een stijl en humor die voor alle leeftijden werken (§10.5). Release in twee stappen (fase 3a en 3b). Al in fase 2 een testgroep van 16+ opbouwen (Discord, vrienden, DevForum). Het dashboard Audience Reach wekelijks bekijken. De borg op tijd regelen. |
 | 3 | **Lege servers.** Een nieuw spel heeft in het begin weinig spelers tegelijk online; een busje van 4 vreemden vult dan niet. | Wie 2 minuten op medespelers wacht, vertrekt. Een spel dat alleen met 4 werkt, sterft in de eerste week. | Solo en duo zijn volwaardig (§3.7). Busjes vertrekken na 45 s met wie er is. Instappen kan nog in de eerste 3 minuten van een run. Toon "X crews playing now" pas vanaf 20 spelers. Lanceer met een vaste testgroep die op afgesproken avonden speelt. |
 | 4 | **Samenwerken zonder voice is te moeilijk; vreemden werken niet samen.** | De keten draait om timing. Kinderen onder 13 hebben geen voice, tekstchat werkt alleen na een leeftijdscheck en binnen leeftijdsgroepen (§5.4). Eén speler die niet meewerkt, verpest het voor drie anderen. | De Chain Call (§3.4) en icoon-pings. Automatisch markeren door Drone en Spy Cams. Quick Words. Rookie-vensters van 12 s. Timers die een ontbrekende teamgenoot vervangen. Een stemming om een speler uit de run te zetten. Een alarm dat trapsgewijs oploopt in plaats van meteen "game over". **Test dit al in fase 1** met vrienden die níét mogen praten. |
-| 5 | **Niemand vindt of onthoudt het spel**: het verdwijnt tussen ROB IT, Notoriety en tientallen kleine "X Heist"-spellen, of spelers haken af in de eerste minuut. | Roblox telt tegenwoordig de "first play bounce rate" (spelers die binnen 60 s of 3 minuten weer vertrekken) als negatief signaal. Een stealthgame begint van nature traag. Wie "heist" zoekt, vindt eerst spellen met jaren content. | De EMP-grap binnen 60 s (§11). Geen tekstschermen. Rookie zonder Karel en Asset Recovery. Meetpunten op elke stap van de eerste 5 minuten. Het verschil overal tonen: geen wapens, niemand kan het alleen, een vrolijke speelgoedstad in plaats van een grijze bank (§1, §10.5). Een titel met een eigen merknaam en "heist" als tag (§14). Meerdere thumbnails met Thumbnail Personalization. |
+| 5 | **Niemand vindt of onthoudt het spel**: het verdwijnt tussen ROB IT, Notoriety en tientallen kleine "X Heist"-spellen, of spelers haken af in de eerste minuut. | Roblox telt tegenwoordig de "first play bounce rate" (spelers die binnen 60 s of 3 minuten weer vertrekken) als negatief signaal. Een stealthgame begint van nature traag. Wie "heist" zoekt, vindt eerst spellen met jaren content. | De EMP-grap binnen 60 s (§11). Geen tekstschermen. Rookie zonder Karel en Asset Recovery. Meetpunten op elke stap van de eerste 5 minuten. Het verschil overal tonen: alleen grappige wapens, niemand kan het alleen, een vrolijke speelgoedstad in plaats van een grijze bank (§1, §10.5). Een titel met een eigen merknaam en "heist" als tag (§14). Meerdere thumbnails met Thumbnail Personalization. |
 
 **Twee kleinere risico's om in het oog te houden:**
 - **Verloren gegevens of aankopen.** Eén verhaal over "ik verloor mijn gekochte skin" kost je het vertrouwen van ouders. Gebruik een bewezen opslagbibliotheek, test met testaankopen, en bewaar Robux-aankopen apart van gewone voortgang (§8.7).
@@ -938,7 +966,7 @@ Alle tien opgezocht in de Roblox-zoekfunctie op 15/10/2026: **geen enkele is in 
 
 | # | Titel | Waarom |
 |---|---|---|
-| 1 | **Crowbar Crew** | Kort, alliteratie, blijft hangen. Zegt meteen "samen inbreken" zonder wapen. Geen botsingen gevonden. ⚠️ Mist het zoekwoord "heist", dus zet het in een tag (zie onder). |
+| 1 | **Crowbar Crew** | Kort, alliteratie, blijft hangen. Zegt meteen "samen inbreken", met een gereedschap in plaats van een geweer. Geen botsingen gevonden. ⚠️ Mist het zoekwoord "heist", dus zet het in een tag (zie onder). |
 | 2 | **Gadget Heist** | Het best vindbaar ("heist") en het noemt meteen je verschil met de shooters: gadgets in plaats van geweren. |
 | 3 | **Heist Buddies** | Het warmst en jongst: "buddies" zegt co-op en vriendschap. Past bij een publiek van 9–15, maar is minder sterk voor de 16+-proefperiode. |
 | 4 | **Heist Van** | Het busje als icoon. Vindbaar en eenvoudig te tekenen in een icoon. |

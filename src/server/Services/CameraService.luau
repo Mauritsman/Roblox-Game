@@ -110,6 +110,9 @@ local function update(cam: Cam, dt: number)
 	local yaw = math.rad(C.SweepDegrees / 2) * phase
 	local look = CFrame.fromAxisAngle(Vector3.yAxis, yaw):VectorToWorldSpace(cam.baseLook)
 	cam.body.CFrame = CFrame.lookAt(cam.mount, cam.mount + look)
+	if cam.led then
+		cam.led.CFrame = cam.body.CFrame * CFrame.new(0, 0.3, -1.25)
+	end
 
 	local tracking = false
 	local fillSeconds = C.FillSeconds[Config.Difficulty] or 2

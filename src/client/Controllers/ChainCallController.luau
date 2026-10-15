@@ -26,7 +26,9 @@ local function tick(pitch: number)
 	sound.PlaybackSpeed = pitch
 	sound.Volume = 0.7
 	SoundService:PlayLocalSound(sound)
-	sound:Destroy()
+	task.delay(3, function()
+		sound:Destroy()
+	end)
 end
 
 local function amIn(snapshot: { [string]: any }): boolean

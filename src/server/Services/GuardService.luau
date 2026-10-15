@@ -20,7 +20,7 @@ local MapService = require(script.Parent.MapService)
 
 local GuardService = {}
 
-type GuardState = "Patrol" | "Suspicious" | "Alert" | "Search"
+type GuardState = "Patrol" | "Suspicious" | "Alert" | "Search" | "Stunned"
 
 type Guard = {
 	model: Model,
@@ -36,6 +36,9 @@ type Guard = {
 	lastSeenAt: number,
 	droneSeenFor: number,
 	distractedUntil: number,
+	walkDeadline: number,
+	stunUntil: number,
+	bubble: BasePart?,
 	icon: TextLabel,
 	meterFill: Frame,
 	walkTrack: AnimationTrack?,
@@ -52,6 +55,7 @@ local STATE_ICONS: { [GuardState]: { text: string, color: Color3 } } = {
 	Suspicious = { text = "?", color = Color3.fromRGB(255, 220, 60) },
 	Alert = { text = "!", color = Color3.fromRGB(255, 60, 60) },
 	Search = { text = "?!", color = Color3.fromRGB(255, 150, 40) },
+	Stunned = { text = "◎", color = Color3.fromRGB(150, 220, 255) },
 }
 
 -- Wordt door RoundService ingevuld: wat er gebeurt als een bewaker iemand pakt.
@@ -176,8 +180,9 @@ local function setState(guard: Guard, state: GuardState)
 	local style = STATE_ICONS[state]
 	guard.icon.Text = style.text
 	guard.icon.TextColor3 = style.color
-	guard.humanoid.WalkSpeed = if state == "Alert"
-		then G.ChaseSpeed
+	guard.humanoid.WalkSpeed = if state == "Stunned"
+		then 0
+		elseif state == "Alert" then G.ChaseSpeed
 		elseif state == "Patrol" then G.PatrolSpeed
 		else G.InvestigateSpeed
 	if state == "Alert" then
@@ -201,6 +206,11 @@ local function spawnGuard(level: Folder, position: Vector3)
 	local icon, fill = addBillboard(model)
 	model:SetAttribute(Tags.SpotKind, "guard")
 	model:SetAttribute(Tags.GuardState, "Patrol")
+	for _, part in model:GetDescendants() do
+		if part:IsA("BasePart") then
+			part.CollisionGroup = "Guards"
+		end
+	end
 	model.Parent = level
 	CollectionService:AddTag(model, Tags.Guard)
 	CollectionService:AddTag(model, Tags.Spottable)
@@ -236,6 +246,9 @@ local function spawnGuard(level: Folder, position: Vector3)
 		lastSeenAt = 0,
 		droneSeenFor = 0,
 		distractedUntil = 0,
+		walkDeadline = 0,
+		stunUntil = 0,
+		bubble = nil,
 		icon = icon,
 		meterFill = fill,
 		walkTrack = walkTrack,
@@ -296,7 +309,7 @@ local function canSee(guard: Guard, point: Vector3, targetModel: Instance?, rang
 	if result == nil then
 		return true, distance
 	end
-	if targetModel and result.Instance:IsDescendantOf(targetModel) then
+	if targetModel and (result.Instance == targetModel or result.Instance:IsDescendantOf(targetModel)) then
 		return true, distance
 	end
 	return false, distance
@@ -307,13 +320,15 @@ local function goTo(guard: Guard, position: Vector3)
 end
 
 local function investigate(guard: Guard, position: Vector3, searchSeconds: number)
-	if guard.state == "Alert" then
+	if guard.state == "Alert" or guard.state == "Stunned" then
 		return
 	end
 	setState(guard, "Suspicious")
 	guard.targetPos = position
 	guard.arrived = false
 	guard.stateUntil = searchSeconds
+	-- Kan hij er niet geraken (muur ertussen), dan geeft hij het na deze tijd op en zoekt hij waar hij staat.
+	guard.walkDeadline = os.clock() + (position - guard.root.Position).Magnitude / G.InvestigateSpeed + 3
 end
 
 -- Geluid (Noisemaker, CRACK, BZZT). Geeft het aantal bewakers terug dat het hoorde.
@@ -327,14 +342,26 @@ function GuardService:HearNoise(
 ): number
 	local heard = 0
 	local now = os.clock()
+	local isNoisemaker = kind == "noisemaker"
+	local isRepeat = kind == "repeat"
 	for _, guard in guards do
-		if guard.state ~= "Alert" and (guard.root.Position - position).Magnitude <= radius then
+		if
+			guard.state ~= "Alert"
+			and guard.state ~= "Stunned"
+			and (guard.root.Position - position).Magnitude <= radius
+		then
 			local distracted = guard.distractedUntil > now
-			if distracted and kind ~= "noisemaker" then
+			if distracted and not isNoisemaker then
 				continue
 			end
-			investigate(guard, position, searchSeconds or G.SearchSeconds)
-			if kind == "noisemaker" then
+			if isRepeat then
+				-- "Again?!": hij trapt er niet meer in, wordt achterdochtig en kijkt rond waar hij staat.
+				investigate(guard, guard.root.Position, searchSeconds or G.SearchSeconds)
+				guard.arrived = true
+			else
+				investigate(guard, position, searchSeconds or G.SearchSeconds)
+			end
+			if isNoisemaker then
 				guard.distractedUntil = now + (searchSeconds or G.SearchSeconds)
 			end
 			heard += 1
@@ -343,10 +370,44 @@ function GuardService:HearNoise(
 	return heard
 end
 
+-- Bubble Blaster (§4.8): sluit deze bewaker een venster lang in een zeepbel. Geeft true bij succes.
+function GuardService:Bubble(model: Instance, seconds: number): boolean
+	for _, guard in guards do
+		if guard.model == model or model:IsDescendantOf(guard.model) then
+			if guard.state == "Stunned" then
+				guard.stunUntil = os.clock() + seconds
+				return true
+			end
+			guard.target = nil
+			guard.stunUntil = os.clock() + seconds
+			setState(guard, "Stunned")
+			local bubble = Instance.new("Part")
+			bubble.Name = "Bubble"
+			bubble.Shape = Enum.PartType.Ball
+			bubble.Size = Vector3.new(7, 7, 7)
+			bubble.Material = Enum.Material.Glass
+			bubble.Transparency = 0.55
+			bubble.Color = Color3.fromRGB(190, 230, 255)
+			bubble.CanCollide = false
+			bubble.CanQuery = false
+			bubble.Massless = true
+			bubble.CFrame = guard.root.CFrame * CFrame.new(0, 0.5, 0)
+			local weld = Instance.new("WeldConstraint")
+			weld.Part0 = guard.root
+			weld.Part1 = bubble
+			weld.Parent = bubble
+			bubble.Parent = guard.model
+			guard.bubble = bubble
+			return true
+		end
+	end
+	return false
+end
+
 -- Een camera zag iemand: de bewakers komen kijken.
 function GuardService:ReportPosition(position: Vector3)
 	for _, guard in guards do
-		if guard.state ~= "Alert" then
+		if guard.state ~= "Alert" and guard.state ~= "Stunned" then
 			investigate(guard, position, G.SearchSeconds)
 		end
 	end
@@ -364,6 +425,15 @@ local function nearestRouteIndex(guard: Guard): number
 end
 
 local function updateVision(guard: Guard, dt: number)
+	if guard.state == "Stunned" then
+		-- In een zeepbel ziet hij niets: de meters zakken langzaam.
+		for player, meter in guard.meters do
+			guard.meters[player] = math.max(0, meter - G.DecayPerSecond * dt)
+		end
+		local bar = guard.meterFill.Parent :: Frame
+		bar.Visible = false
+		return
+	end
 	local maxMeter = 0
 	local bestPlayer: Player? = nil
 	for _, player in Players:GetPlayers() do
@@ -447,9 +517,38 @@ local function updateVision(guard: Guard, dt: number)
 	local _ = bestPlayer
 end
 
+local function popBubble(guard: Guard)
+	if guard.bubble then
+		guard.bubble:Destroy()
+		guard.bubble = nil
+	end
+	local pop = Instance.new("Sound")
+	pop.SoundId = "rbxasset://sounds/swoosh.wav"
+	pop.Volume = 0.8
+	pop.Parent = guard.root
+	pop:Play()
+	task.delay(2, function()
+		pop:Destroy()
+	end)
+	-- Boos uit de bel: meteen zoeken waar hij staat, en het alarm stijgt een beetje (§4.8).
+	guard.targetPos = guard.root.Position
+	guard.arrived = true
+	guard.stateUntil = G.AlertSearchSeconds
+	setState(guard, "Search")
+	AlarmService:Add("PrankUsed")
+	Net.broadcast("Toast", 'Guard: "Who did that?!"')
+end
+
 local function updateBehaviour(guard: Guard, dt: number)
 	local state = guard.state
-	if state == "Patrol" then
+	if state == "Stunned" then
+		guard.humanoid:MoveTo(guard.root.Position)
+		guard.root.CFrame = guard.root.CFrame * CFrame.Angles(0, math.rad(40) * dt, 0)
+		if os.clock() >= guard.stunUntil then
+			popBubble(guard)
+		end
+		return
+	elseif state == "Patrol" then
 		local route = MapService.Points.GuardRoute
 		local point = route[guard.routeIndex]
 		local flat = Vector3.new(guard.root.Position.X, 0, guard.root.Position.Z)
@@ -463,7 +562,7 @@ local function updateBehaviour(guard: Guard, dt: number)
 		if targetPos and not guard.arrived then
 			goTo(guard, targetPos)
 			local flat = Vector3.new(guard.root.Position.X, targetPos.Y, guard.root.Position.Z)
-			if (flat - targetPos).Magnitude < 3 then
+			if (flat - targetPos).Magnitude < 3 or os.clock() > guard.walkDeadline then
 				guard.arrived = true
 			end
 		else
@@ -484,6 +583,7 @@ local function updateBehaviour(guard: Guard, dt: number)
 			guard.target = nil
 			guard.stateUntil = G.AlertSearchSeconds
 			guard.arrived = false
+			guard.walkDeadline = os.clock() + 6
 			setState(guard, "Search")
 			return
 		end
@@ -502,6 +602,7 @@ local function updateBehaviour(guard: Guard, dt: number)
 			guard.target = nil
 			guard.stateUntil = G.AlertSearchSeconds
 			guard.arrived = false
+			guard.walkDeadline = os.clock() + 6
 			setState(guard, "Search")
 		end
 	end

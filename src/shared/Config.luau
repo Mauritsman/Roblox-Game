@@ -48,6 +48,17 @@ Config.Gadgets = {
 		Cooldown = 30,
 		BzztRadius = 10,
 	},
+	-- Grappig wapen (§4.8): een zeepbel koopt een venster op één bewaker, geen oplossing.
+	BubbleBlaster = {
+		Step = "CLEAR",
+		Label = "BUBBLE",
+		Charges = 3,
+		ThrowRange = 50, -- maximale schietafstand
+		ProjectileSpeed = 45,
+		HitRadius = 3.5,
+		BubbleSeconds = 8,
+		FriendlySeconds = 3, -- als je per ongeluk een teamgenoot raakt
+	},
 	Crowbar = {
 		Step = "OPEN",
 		Charges = math.huge,
@@ -56,7 +67,7 @@ Config.Gadgets = {
 		CrackRadius = 25,
 	},
 }
-Config.GadgetOrder = { "Drone", "Noisemaker", "EMP", "Crowbar" }
+Config.GadgetOrder = { "Drone", "Noisemaker", "EMP", "BubbleBlaster", "Crowbar" }
 
 -- Bewakers (§9.1).
 Config.Guard = {
@@ -94,6 +105,7 @@ Config.Alarm = {
 		GuardAlert = 40,
 		CrackHeard = 20,
 		NoisemakerRepeat = 15,
+		PrankUsed = 10, -- een bewaker komt boos uit zijn zeepbel
 		TraceFound = 20,
 	},
 	LevelThresholds = { 100, 200, 300 }, -- trede 1, 2, 3

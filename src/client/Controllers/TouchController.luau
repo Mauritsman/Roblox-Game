@@ -84,7 +84,7 @@ local function refresh()
 	local flying = ClientState.drone ~= nil
 	local selected = list[math.clamp(ClientState.selectedSlot, 1, math.max(1, #list))]
 	local gadget = buttons.Gadget
-	gadget.Text = if selected then selected:upper() else "NO GADGET"
+	gadget.Text = if selected then (Config.Gadgets[selected].Label or selected):upper() else "NO GADGET"
 	if selected then
 		local step = Config.Gadgets[selected].Step
 		gadget.BackgroundColor3 = if step == "EYES"
@@ -150,17 +150,17 @@ local function build()
 	)
 	for index = 1, 3 do
 		addButton(
-			{ name = "Slot" .. index, text = "", size = 52, x = 40, y = 150 + (index - 1) * 60 },
+			{ name = "Slot" .. index, text = "", size = 52, x = 150 + (index - 1) * 60, y = 300 },
 			function()
 				Actions.fire("Slot" .. index, "Begin")
 			end
 		)
 	end
 	-- Dronemodus.
-	addButton({ name = "Up", text = "▲", size = 60, x = 40, y = 160 }, nil, function(down)
+	addButton({ name = "Up", text = "▲", size = 60, x = 246, y = 100 }, nil, function(down)
 		Actions.setHeld("DroneUp", down)
 	end)
-	addButton({ name = "Down", text = "▼", size = 60, x = 40, y = 228 }, nil, function(down)
+	addButton({ name = "Down", text = "▼", size = 64, x = 160, y = 24 }, nil, function(down)
 		Actions.setHeld("DroneDown", down)
 	end)
 	addButton(

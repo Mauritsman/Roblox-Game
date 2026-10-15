@@ -14,7 +14,6 @@ local LoadoutService = {}
 
 local owners: { [string]: Player? } = {} -- gadget -> speler
 local charges: { [string]: number } = {}
-local lastTouch: { [Player]: number } = {}
 
 local function gadgetsOf(player: Player): { string }
 	local list = {}
@@ -76,20 +75,13 @@ function LoadoutService:ResetRun()
 	publish()
 end
 
-local function onPedestalTouched(pedestal: BasePart, hit: BasePart)
-	local character = hit:FindFirstAncestorOfClass("Model")
-	local player = character and Players:GetPlayerFromCharacter(character)
-	if not player then
-		return
-	end
-	local now = os.clock()
-	if lastTouch[player] and now - lastTouch[player] < 1.5 then
-		return
-	end
-	lastTouch[player] = now
-
+local function togglePedestal(pedestal: BasePart, player: Player)
 	local gadgetName = pedestal:GetAttribute("Gadget")
 	if typeof(gadgetName) ~= "string" then
+		return
+	end
+	local character = player.Character
+	if character and (character:GetAttribute("Caught") or character:GetAttribute(Tags.Operating)) then
 		return
 	end
 
@@ -112,12 +104,25 @@ local function onPedestalTouched(pedestal: BasePart, hit: BasePart)
 	publish()
 end
 
+-- Een knop per sokkel ("Take / Return"): werkt met E, controller-X en tikken, en gaat niet per ongeluk af.
 local function hookPedestal(pedestal: Instance)
-	if pedestal:IsA("BasePart") then
-		pedestal.Touched:Connect(function(hit)
-			onPedestalTouched(pedestal, hit)
-		end)
+	if not pedestal:IsA("BasePart") or pedestal:FindFirstChild("TakePrompt") then
+		return
 	end
+	local gadgetName = pedestal:GetAttribute("Gadget")
+	local prompt = Instance.new("ProximityPrompt")
+	prompt.Name = "TakePrompt"
+	prompt.ActionText = "Take / Return"
+	prompt.ObjectText = if typeof(gadgetName) == "string" then gadgetName:upper() else "Gadget"
+	prompt.HoldDuration = 0
+	prompt.MaxActivationDistance = 7
+	prompt.RequiresLineOfSight = false
+	prompt.KeyboardKeyCode = Enum.KeyCode.E
+	prompt.GamepadKeyCode = Enum.KeyCode.ButtonX
+	prompt.Parent = pedestal
+	prompt.Triggered:Connect(function(player)
+		togglePedestal(pedestal, player)
+	end)
 end
 
 function LoadoutService:Init()
@@ -143,7 +148,6 @@ function LoadoutService:Start()
 				owners[gadgetName] = nil
 			end
 		end
-		lastTouch[player] = nil
 		task.defer(publish)
 	end)
 	publish()

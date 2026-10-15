@@ -15,7 +15,7 @@ Gebruiker: Maurits, beginner. Antwoord in het Nederlands (Vlaams); spelerteksten
 - Server is gezaghebbend: de client vraagt (`Net.request`), de server controleert en voert uit.
 - Netwerk alleen via `Net` (één RemoteEvent-paar). Nieuwe verzoeken: `Net.onRequest` op de server.
 - Geen vrije chat bouwen; pings zijn vaste woorden/iconen (zie gameplan §3.5 over preset-regels).
-- Geen wapens, geen bloed (label Minimal/Mild, gameplan §5).
+- Alleen grappige, niet-dodelijke wapens die één bewaker een venster lang uitschakelen (gameplan §4.8); geen echte wapens, geen bloed (label Mild, §5).
 - Code aanpassen in de bestanden, nooit rechtstreeks in Studio (anders overschrijft sync het).
 
 ## Controleren en bouwen

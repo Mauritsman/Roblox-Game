@@ -210,7 +210,15 @@ function Hud.showWindow(kind: string, seconds: number)
 end
 
 function Hud.setLoadout(
-	entries: { { name: string, charges: number?, selected: boolean, step: string } },
+	entries: {
+		{
+			name: string,
+			label: string?,
+			charges: number?,
+			selected: boolean,
+			step: string,
+		}
+	},
 	slots: number,
 	battery: number?
 )
@@ -248,7 +256,7 @@ function Hud.setLoadout(
 		text({
 			Size = UDim2.new(1, -12, 1, -6),
 			Position = UDim2.fromOffset(6, 3),
-			Text = `{index}  {entry.name:upper()}{chargeText}{extra}`,
+			Text = `{index}  {(entry.label or entry.name):upper()}{chargeText}{extra}`,
 			TextXAlignment = Enum.TextXAlignment.Left,
 			TextColor3 = if entry.selected then Hud.Colors.Text else Hud.Colors.Muted,
 		}, row)

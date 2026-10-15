@@ -42,7 +42,9 @@ local function playPing(pitch: number)
 	sound.PlaybackSpeed = pitch
 	sound.Volume = 0.5
 	SoundService:PlayLocalSound(sound)
-	sound:Destroy()
+	task.delay(3, function()
+		sound:Destroy()
+	end)
 end
 
 local function adorneeFor(target: Instance?): BasePart?

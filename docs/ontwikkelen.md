@@ -27,7 +27,7 @@ Daarna kan Claude zelf testen, fouten lezen en schermafbeeldingen nemen.
 
 1. Open `build/CrowbarCrew.rbxl` in Studio (Claude houdt dit bestand bij; `rojo build` maakt het opnieuw).
 2. Klik **Play** (alleen) of **Test → Server & Clients** met 2–4 spelers (nepspelers op je eigen computer).
-3. Loop bij het oranje busje in een **gekleurde sokkel** om een gadget te nemen. Opnieuw erin lopen = teruglegen.
+3. Ga bij het oranje busje naar een **gekleurde sokkel** en druk op **E** (of de knop op het scherm) om het gadget te nemen. Nog eens = teruglegen.
 4. Doel: de **Golden Gouda** in de kooi achteraan de hal. De bewaker loopt een vaste ronde; twee camera's bewaken de kooi.
 
 ### Besturing
@@ -35,7 +35,7 @@ Daarna kan Claude zelf testen, fouten lezen en schermafbeeldingen nemen.
 | Actie | Pc | Controller | Telefoon/tablet |
 |---|---|---|---|
 | Gadget kiezen | 1 / 2 / 3 | L1 | kleine knoppen rechts |
-| Richten + gooien (EMP, Noisemaker) | linkermuisknop indrukken, loslaten = gooien | L2 richten, R2 gooien | GADGET (richten aan/uit), THROW |
+| Richten + gooien/schieten (EMP, Noisemaker, Bubble Blaster) | linkermuisknop indrukken, loslaten = gooien | L2 richten, R2 gooien | GADGET (richten aan/uit), THROW |
 | Drone starten / landen | klik met Drone geselecteerd / F | R2 / D-pad links | GADGET / BACK |
 | Drone vliegen | WASD + muis, spatie omhoog, Ctrl omlaag | sticks | joystick + ▲▼ |
 | Kooi openbreken (Crowbar) | E vasthouden bij de kooideur | X vasthouden | knop op het scherm vasthouden |
@@ -50,13 +50,14 @@ Daarna kan Claude zelf testen, fouten lezen en schermafbeeldingen nemen.
 - **Bewaker:** geen icoon = patrouille, gele **?** = komt kijken, rode **!** = achtervolgt je, oranje **?!** = zoekt. Het balkje toont hoe vol zijn "ik zie iemand"-meter is. In het donker en gehurkt zie hij je later.
 - **Camera's:** rode lichtkegel = waar ze kijken. Ziet een camera je 2 s, dan stijgt het alarm en komt de bewaker kijken.
 - **EMP:** blauwe cirkel tijdens het richten. Camera's en lampen erin liggen 10 s plat ("CAMS OFF 10"). Hangt er een drone in, dan zie je "DRONE IN RANGE!", en gooi je toch: "Oops. EMP hits YOUR stuff too."
+- **Bubble Blaster** (grappig wapen, gameplan §4.8): raak je de bewaker, dan zit hij ±8 s in een zeepbel ("GUARD BUBBLED"): hij ziet en hoort niets. Daarna komt hij boos terug (+10 alarm). Raak je een teamgenoot, dan zweeft die 3 s in een roze bel.
 - **Noisemaker:** de bewaker loopt ernaartoe ("GUARD AWAY 10"). Tijdens die afleiding hoort hij de CRACK van de Crowbar niet.
 - **Alarm** linksboven: QUIET → SUSPICIOUS → SEARCHING → LOCKDOWN (90 s om weg te raken).
 
 ## Bekende beperkingen van fase 1
 
 - Gepakt = terug naar het busje (de beveiligingsruimte komt in fase 2).
-- Geen buit dragen, geen Winch, geen Spy Cams, geen hond, geen Karel, geen opslag.
+- Geen buit dragen, geen Winch, geen Spy Cams, geen hond, geen Karel, geen opslag. Van de grappige wapens zit alleen de Bubble Blaster erin.
 - De bewaker heeft alleen een loopanimatie; eigen animaties komen in fase 3 (RBXMonkey).
 - Solo-timers (Noisemaker/EMP met vertraging) komen in fase 2.
 

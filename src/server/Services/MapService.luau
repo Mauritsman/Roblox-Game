@@ -10,6 +10,7 @@
 
 local CollectionService = game:GetService("CollectionService")
 local Lighting = game:GetService("Lighting")
+local PhysicsService = game:GetService("PhysicsService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage.Shared.Config)
@@ -48,6 +49,7 @@ local GADGET_COLORS: { [string]: Color3 } = {
 	Drone = Color3.fromRGB(70, 160, 255),
 	Noisemaker = Color3.fromRGB(255, 210, 60),
 	EMP = Color3.fromRGB(80, 220, 255),
+	BubbleBlaster = Color3.fromRGB(255, 140, 220),
 	Crowbar = Color3.fromRGB(255, 90, 80),
 }
 MapService.GadgetColors = GADGET_COLORS
@@ -157,7 +159,7 @@ local function buildOutside(level: Folder)
 	local van = block("Van", Vector3.new(6, 6, 12), CFrame.new(-25, 3, -12), COLORS.Van, outside)
 	label(van, "THE VAN", Color3.new(1, 1, 1), 5)
 
-	-- Gadgetrek: loop in een sokkel om dat gadget te nemen (of terug te leggen).
+	-- Gadgetrek: bij een sokkel op E (of de knop op het scherm) om het gadget te nemen of terug te leggen.
 	for index, gadgetName in Config.GadgetOrder do
 		local z = -7.5 + (index - 1) * 5
 		local pedestal = block(
@@ -170,7 +172,12 @@ local function buildOutside(level: Folder)
 		)
 		pedestal:SetAttribute("Gadget", gadgetName)
 		CollectionService:AddTag(pedestal, Tags.GadgetPedestal)
-		label(pedestal, gadgetName:upper(), GADGET_COLORS[gadgetName], 2.5)
+		label(
+			pedestal,
+			(Config.Gadgets[gadgetName].Label or gadgetName):upper(),
+			GADGET_COLORS[gadgetName],
+			2.5
+		)
 	end
 end
 
@@ -317,7 +324,19 @@ function MapService:Build(): Folder
 	return level
 end
 
+local function setupCollisionGroups()
+	-- De drone botst met muren, maar niet met spelers of bewakers (hij mag niemand wegduwen).
+	for _, group in { "Players", "Guards", "Drone" } do
+		if not PhysicsService:IsCollisionGroupRegistered(group) then
+			PhysicsService:RegisterCollisionGroup(group)
+		end
+	end
+	PhysicsService:CollisionGroupSetCollidable("Drone", "Players", false)
+	PhysicsService:CollisionGroupSetCollidable("Drone", "Guards", false)
+end
+
 function MapService:Init()
+	setupCollisionGroups()
 	setupLighting()
 	self:Build()
 end
