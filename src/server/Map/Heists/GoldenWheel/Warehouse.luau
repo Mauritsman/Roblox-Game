@@ -1,9 +1,9 @@
 --!strict
--- De rijpingshal (D) met kooi, camera's, lampen, stellingen en het kantoor op de tussenverdieping (E).
--- Hal: x 0..60, z -25..25, muren 16 hoog. Gameplay-posities blijven gelijk aan het prototype:
--- rekken op z ±9 (x 12..38), kooi x 50..58, camera's (44, 9, ±10), lampen op dezelfde plekken.
--- Westmuur (x = 0) heeft drie openingen: personeelsdeur winkel (z -22..-18), beveiligingsruimte (z -4..4),
--- achterdeur binnenkoer (z 14..20).
+-- The ripening hall (D) with cage, cameras, lamps, racks and the office on the mezzanine (E).
+-- Hall: x 0..60, z -25..25, walls 16 high. Gameplay positions stay the same as in the prototype:
+-- racks at z ±9 (x 12..38), cage x 50..58, cameras (44, 9, ±10), lamps in the same spots.
+-- The west wall (x = 0) has three openings: shop staff door (z -22..-18), security room (z -4..4),
+-- courtyard back door (z 14..20).
 
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -18,8 +18,8 @@ local C = Builder.Colors
 
 local Warehouse = {}
 
--- 20 hoog: genoeg vrije ruimte boven én onder de tussenverdieping, ook voor de padzoeker van Roblox
--- (die rekent in blokjes van 4 studs; met 16 of 18 vond hij de kantoorvloer niet).
+-- 20 high: enough clearance above and below the mezzanine, also for Roblox's pathfinder
+-- (which works in 4-stud cells; with 16 or 18 it could not find the office floor).
 local WALL_H = 20
 
 local function walls(hall: Instance)
@@ -27,7 +27,7 @@ local function walls(hall: Instance)
 	Builder.box(hall, "WallNorth", Vector3.new(-0.5, 0, 25), Vector3.new(61, WALL_H, 26), C.BrickRed, opts)
 	Builder.box(hall, "WallSouth", Vector3.new(-0.5, 0, -26), Vector3.new(61, WALL_H, -25), C.BrickRed, opts)
 	Builder.box(hall, "WallEast", Vector3.new(60, 0, -26), Vector3.new(61, WALL_H, 26), C.BrickRed, opts)
-	-- Westmuur in stukken rond de drie openingen.
+	-- West wall in pieces around the three openings.
 	local segments = { { -26, -22.5 }, { -17.5, -4 }, { 4, 14 }, { 20, 26 } }
 	for i, seg in segments do
 		Builder.box(
@@ -49,7 +49,7 @@ local function walls(hall: Instance)
 	)
 	Builder.box(hall, "LintelSecurity", Vector3.new(-1, 10, -4), Vector3.new(0, WALL_H, 4), C.BrickRed, opts)
 	Builder.box(hall, "LintelBack", Vector3.new(-1, 8, 14), Vector3.new(0, WALL_H, 20), C.BrickRed, opts)
-	-- Kantoorraam boven de achterdeur (uitzicht op de binnenkoer).
+	-- Office window above the back door (view of the courtyard).
 	Builder.box(
 		hall,
 		"OfficeWindowGlass",
@@ -61,7 +61,7 @@ local function walls(hall: Instance)
 			transparency = 0.5,
 		}
 	)
-	-- Lichte binnenband zodat de hal minder somber is.
+	-- Light inner band so the hall is less gloomy.
 	Builder.box(
 		hall,
 		"WainscotN",
@@ -93,7 +93,7 @@ local function floorAndRoof(hall: Instance)
 		material = Enum.Material.Concrete,
 		variant = "CC_Concrete",
 	})
-	-- Gele veiligheidslijnen rond de looproute en de kooi.
+	-- Yellow safety lines around the walkway and the cage.
 	local lineOpts: Builder.PartOpts = { collide = false, shadow = false }
 	for _, z in { -20.5, 20.5 } do
 		Builder.box(
@@ -113,7 +113,7 @@ local function floorAndRoof(hall: Instance)
 		C.Safety,
 		lineOpts
 	)
-	-- Dak: donker metaal met een lichtstraat in het midden.
+	-- Roof: dark metal with a skylight strip in the middle.
 	Builder.box(
 		hall,
 		"RoofA",
@@ -145,7 +145,7 @@ local function floorAndRoof(hall: Instance)
 			transparency = 0.55,
 		}
 	)
-	-- Spanten.
+	-- Trusses.
 	for x = 5, 55, 10 do
 		Builder.box(
 			hall,
@@ -173,7 +173,7 @@ local function floorAndRoof(hall: Instance)
 end
 
 local function racks(hall: Instance, rng: Random)
-	-- Stellingen met kaaswielen. De dichte achterwand blokkeert het zicht van de bewaker (dekking).
+	-- Racks with cheese wheels. The solid back wall blocks the guard's view (cover).
 	for _, z in { -9, 9 } do
 		local rack = Builder.folder(hall, "Rack")
 		local back = Builder.box(
@@ -248,7 +248,7 @@ local function racks(hall: Instance, rng: Random)
 							end,
 						}
 					)
-					-- Soms ligt er een tweede kaas bovenop: volle rekken ogen echt.
+					-- Sometimes a second cheese lies on top: full racks look real.
 					local top = Builder.topOf(wheel)
 					if top and level < 3 and rng:NextNumber() < 0.45 then
 						Builder.prop(
@@ -269,7 +269,7 @@ local function racks(hall: Instance, rng: Random)
 end
 
 local function lamps(hall: Instance)
-	-- Hanglampen. Het "Lamp"-onderdeel is de gloeilamp: die gaat uit door een EMP.
+	-- Pendant lamps. The "Lamp" part is the bulb: an EMP switches it off.
 	local positions = {
 		Vector3.new(10, 13, 0),
 		Vector3.new(26, 13, -17),
@@ -361,7 +361,7 @@ local function cage(level: Folder)
 		collide = false,
 	})
 
-	-- De Golden Gouda op een sokkel. Het onzichtbare "Goal"-blok is wat je moet aanraken.
+	-- The Golden Gouda on a plinth. The invisible "Goal" block is what you have to touch.
 	Builder.box(
 		cageFolder,
 		"GoudaPlinth",
@@ -385,7 +385,7 @@ local function cage(level: Folder)
 			return w
 		end,
 	})
-	-- De AI-textuur is eerder oranje dan goud: echt goudfolie maakt de buit meteen herkenbaar.
+	-- The AI texture is more orange than gold: real gold foil makes the loot instantly recognisable.
 	if gouda then
 		for _, d in gouda:GetDescendants() do
 			if d:IsA("MeshPart") then
@@ -406,7 +406,7 @@ local function cage(level: Folder)
 	CollectionService:AddTag(goal, Tags.Spottable)
 	Builder.label(goal, "GOLDEN GOUDA", C.Gold, 2.4)
 	Builder.pointLight(goal, 13, 2.2, C.Gold)
-	-- Gouden gloeirand op de sokkel: de buit moet van ver opvallen.
+	-- Golden glowing rim on the plinth: the loot must stand out from far away.
 	Builder.box(
 		cageFolder,
 		"PlinthGlow",
@@ -434,7 +434,7 @@ local function securityCamera(parent: Instance, name: string, mount: Vector3, lo
 			material = Enum.Material.Metal,
 		}
 	)
-	-- Body draait (CameraService); de rest is eraan vastgelast en draait mee.
+	-- Body rotates (CameraService); the rest is welded to it and rotates along.
 	local body = Builder.block(
 		model,
 		"Body",
@@ -472,7 +472,7 @@ local function securityCamera(parent: Instance, name: string, mount: Vector3, lo
 	)
 	lens.CFrame = body.CFrame * CFrame.new(0, -0.2, -1.3) * CFrame.Angles(0, math.rad(90), 0)
 	attach(lens)
-	-- CameraService zet de LED elke frame op body * (0, 0.3, -1.25); hier dezelfde plek.
+	-- CameraService puts the LED at body * (0, 0.3, -1.25) every frame; same spot here.
 	local led = Builder.block(
 		model,
 		"Led",
@@ -504,13 +504,13 @@ local function securityCamera(parent: Instance, name: string, mount: Vector3, lo
 end
 
 local function office(hall: Instance)
-	-- Tussenverdieping boven de achterdeur: x 0..18, z 11..25, vloer op y 9.
+	-- Mezzanine above the back door: x 0..18, z 11..25, floor at y 9.
 	local o = Builder.folder(hall, "Office")
 	Builder.box(o, "MezzanineFloor", Vector3.new(0, 8.6, 11), Vector3.new(18, 9.2, 25), C.Wood, {
 		material = Enum.Material.WoodPlanks,
 		variant = "CC_Planks",
 	})
-	-- Kolommen staan uit de looproute van de bewaker (x = 8) en laten de trap vrij.
+	-- Columns stand clear of the guard's route (x = 8) and leave the stairs free.
 	for _, p in
 		{
 			Vector3.new(17.5, 0, 11.5),
@@ -528,7 +528,7 @@ local function office(hall: Instance)
 			{ material = Enum.Material.Metal }
 		)
 	end
-	-- Reling.
+	-- Railing.
 	Builder.box(o, "RailFront", Vector3.new(0, 9.2, 11), Vector3.new(18, 12.4, 11.3), C.Metal, {
 		material = Enum.Material.Metal,
 		transparency = 0.3,
@@ -537,8 +537,8 @@ local function office(hall: Instance)
 		material = Enum.Material.Metal,
 		transparency = 0.3,
 	})
-	-- Trap van de hal naar boven (langs de noordmuur): 16 treden van x 30 omhoog naar x 18.
-	-- Een onzichtbare helling over de trapneuzen laat spelers (en padzoekers) soepel lopen.
+	-- Stairs from the hall up (along the north wall): 16 steps from x 30 up to x 18.
+	-- An invisible ramp over the step noses lets players (and pathfinders) walk smoothly.
 	local steps, run, rise = 16, 0.75, 9 / 16
 	for i = 0, steps - 1 do
 		Builder.box(
@@ -558,7 +558,7 @@ local function office(hall: Instance)
 		C.Metal
 	)
 	ramp.Transparency = 1
-	-- Bureau, archiefkast, lamp.
+	-- Desk, filing cabinet, lamp.
 	Builder.box(
 		o,
 		"Desk",
@@ -639,7 +639,7 @@ local function decor(hall: Instance, rng: Random)
 			end,
 		})
 	end
-	-- Hoge ramen (maanlicht), leidingen langs de muren, een inpaktafel en nooduitgangbordjes.
+	-- High windows (moonlight), pipes along the walls, a packing table and emergency exit signs.
 	for _, x in { 8, 16, 44, 52 } do
 		Builder.window(
 			hall,

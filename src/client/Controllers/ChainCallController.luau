@@ -1,7 +1,7 @@
 --!strict
--- De Chain Call aan de kant van de speler (§3.4).
--- G / Y / CALL-knop: geen call actief → start een call op wat je aanwijst;
--- jij bent de beller → GO; iemand anders belde → I'M IN.
+-- The Chain Call on the player's side (§3.4).
+-- G / Y / CALL button: no call active → start a call on what you point at;
+-- you are the caller → GO; someone else called → I'M IN.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")

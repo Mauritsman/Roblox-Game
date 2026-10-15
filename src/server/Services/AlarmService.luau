@@ -1,5 +1,5 @@
 --!strict
--- De alarmladder (§9.5): punten gaan alleen omhoog; trede 3 = LOCKDOWN met een ontsnappingstimer.
+-- The alarm ladder (§9.5): points only go up; step 3 = LOCKDOWN with an escape timer.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 

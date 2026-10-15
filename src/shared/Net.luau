@@ -1,8 +1,8 @@
 --!strict
--- Eén paar RemoteEvents voor alle netwerkverkeer.
--- (Een RemoteEvent is het Roblox-kanaal waarmee client en server berichten uitwisselen.)
+-- One pair of RemoteEvents for all network traffic.
+-- (A RemoteEvent is the Roblox channel through which client and server exchange messages.)
 --
--- Client → server: Net.request(name, ...)  (de server controleert alles opnieuw)
+-- Client → server: Net.request(name, ...)  (the server re-checks everything)
 -- Server → client: Net.send(player, name, ...) / Net.broadcast(name, ...)
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -58,7 +58,7 @@ if IS_SERVER then
 		if handler then
 			local ok, err = pcall(handler :: any, player, ...)
 			if not ok then
-				warn(`[Net] fout in handler {name}: {err}`)
+				warn(`[Net] error in handler {name}: {err}`)
 			end
 		end
 	end)
@@ -73,31 +73,31 @@ else
 	end)
 end
 
--- Server: registreer een handler voor verzoeken van clients.
+-- Server: register a handler for requests from clients.
 function Net.onRequest(name: string, handler: (player: Player, ...any) -> ())
-	assert(IS_SERVER, "Net.onRequest alleen op de server")
+	assert(IS_SERVER, "Net.onRequest only on the server")
 	serverHandlers[name] = handler
 end
 
--- Client: stuur een verzoek naar de server.
+-- Client: send a request to the server.
 function Net.request(name: string, ...: any)
-	assert(not IS_SERVER, "Net.request alleen op de client")
+	assert(not IS_SERVER, "Net.request only on the client")
 	toServer:FireServer(name, ...)
 end
 
--- Server: stuur een bericht naar één speler.
+-- Server: send a message to one player.
 function Net.send(player: Player, name: string, ...: any)
 	toClient:FireClient(player, name, ...)
 end
 
--- Server: stuur een bericht naar alle spelers.
+-- Server: send a message to all players.
 function Net.broadcast(name: string, ...: any)
 	toClient:FireAllClients(name, ...)
 end
 
--- Client: luister naar berichten van de server.
+-- Client: listen for messages from the server.
 function Net.on(name: string, handler: Handler)
-	assert(not IS_SERVER, "Net.on alleen op de client")
+	assert(not IS_SERVER, "Net.on only on the client")
 	local list = clientHandlers[name]
 	if not list then
 		list = {}

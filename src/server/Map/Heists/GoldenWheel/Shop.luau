@@ -1,7 +1,7 @@
 --!strict
--- De winkel "The Golden Wheel" aan de kade (§10.1): kaaswinkel (A), beveiligingsruimte (B) en binnenkoer (C).
--- A: x -22..0, z -40..-14   B: x -22..0, z -14..4   C: x -22..0, z 4..40 (buiten)
--- De gevels staan op x = -22 en kijken naar de gracht (-X).
+-- The shop "The Golden Wheel" on the quay (§10.1): cheese shop (A), security room (B) and courtyard (C).
+-- A: x -22..0, z -40..-14   B: x -22..0, z -14..4   C: x -22..0, z 4..40 (outdoors)
+-- The facades stand at x = -22 and face the canal (-X).
 
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -16,7 +16,7 @@ local C = Builder.Colors
 
 local Shop = {}
 
-local GROUND_H = 14 -- hoogte van de benedenverdieping (plafond)
+local GROUND_H = 14 -- height of the ground floor (ceiling)
 
 local function lamp(parent: Instance, name: string, pos: Vector3, range: number, color: Color3?)
 	local bulb =
@@ -29,7 +29,7 @@ local function lamp(parent: Instance, name: string, pos: Vector3, range: number,
 	bulb:SetAttribute(Tags.Disabled, false)
 	CollectionService:AddTag(bulb, Tags.Lamp)
 	CollectionService:AddTag(bulb, Tags.Electronic)
-	-- Ophangsnoer.
+	-- Hanging cord.
 	Builder.block(
 		parent,
 		"Cord",
@@ -59,7 +59,7 @@ local function upperFacade(
 	gableStyle: string,
 	rng: Random
 )
-	-- Bovenverdiepingen (decor, massief) boven de benedenverdieping.
+	-- Upper floors (scenery, solid) above the ground floor.
 	local width = zMax - zMin
 	local zMid = (zMin + zMax) / 2
 	local top = GROUND_H + 14
@@ -99,7 +99,7 @@ local function upperFacade(
 			Builder.window(parent, cf, 2.6, 4, rng:NextNumber() < 0.5)
 		end
 	end
-	-- Topgevel: trap- of halsgevel, uitgelijnd met de gevel.
+	-- Gable: step or neck gable, aligned with the facade.
 	if gableStyle == "step" then
 		for i = 1, 3 do
 			local w = width - (i - 1) * width * 0.27
@@ -161,7 +161,7 @@ local function buildShop(parent: Instance, rng: Random)
 	local shop = Builder.folder(parent, "Shop")
 	local floorOpts: Builder.PartOpts = { material = Enum.Material.WoodPlanks, variant = "CC_Planks" }
 	Builder.box(shop, "ShopFloor", Vector3.new(-22, 0, -40), Vector3.new(0, 0.2, -14), C.Wood, floorOpts)
-	-- Gevel benedenverdieping: grote etalage, deur, tweede raam.
+	-- Ground-floor facade: large display window, door, second window.
 	local wallOpts: Builder.PartOpts = { material = Enum.Material.Brick, variant = "CC_Brick" }
 	Builder.box(
 		shop,
@@ -262,10 +262,10 @@ local function buildShop(parent: Instance, rng: Random)
 			CFrame.new(-22.6, 2.5, zMid),
 			C.Stone
 		)
-		-- Tulpenbak onder de etalage.
+		-- Tulip box under the display window.
 		Builder.prop(shop, "TulipBox", Vector3.new(-23.4, Builder.SIDEWALK, zMid), 90, { collide = false })
 	end
-	-- Luifel in crew-oranje en wit (gestreept): schuine banen die van de gevel naar de straat zakken.
+	-- Awning in crew orange and white (striped): sloping strips that drop from the facade towards the street.
 	for i = 0, 9 do
 		local z = -39 + i * 2.5 + 1.25
 		local stripe = if i % 2 == 0 then C.CrewOrange else C.Trim
@@ -286,7 +286,7 @@ local function buildShop(parent: Instance, rng: Random)
 			{ material = Enum.Material.Fabric, collide = false }
 		)
 	end
-	-- Uithangbord.
+	-- Shop sign.
 	Builder.sign(
 		shop,
 		CFrame.lookAt(Vector3.new(-22.8, 12.9, -27), Vector3.new(-40, 12.9, -27)),
@@ -297,7 +297,7 @@ local function buildShop(parent: Instance, rng: Random)
 		Enum.Font.FredokaOne,
 		{ frame = C.Gold }
 	)
-	-- Uithangbord haaks op de gevel (aan de noordkant van de winkel): leesbaar als je langs de straat loopt.
+	-- Hanging sign at right angles to the facade (north side of the shop): readable from along the street.
 	Builder.box(
 		shop,
 		"BladeBracket",
@@ -319,7 +319,7 @@ local function buildShop(parent: Instance, rng: Random)
 		{ doubleSided = true, frame = C.DoorGreen }
 	)
 
-	-- Zijmuren en achtermuur van de winkel (met personeelsdeur naar de hal).
+	-- Side walls and back wall of the shop (with a staff door to the hall).
 	Builder.box(
 		shop,
 		"ShopWallSouth",
@@ -375,7 +375,7 @@ local function buildShop(parent: Instance, rng: Random)
 		Enum.Font.GothamBold
 	)
 
-	-- Inrichting: toonbank, kassa, kaasrekken, kaaspiramide.
+	-- Furnishing: counter, till, cheese shelves, cheese pyramid.
 	Builder.box(
 		shop,
 		"Counter",
@@ -442,7 +442,7 @@ local function buildShop(parent: Instance, rng: Random)
 		C.WoodDark,
 		{ material = Enum.Material.Wood }
 	)
-	-- Kaaspiramide: drie onderaan, één erbovenop (precies op de bovenkant gestapeld).
+	-- Cheese pyramid: three at the bottom, one on top (stacked exactly on their top).
 	local stackTop = 2.6
 	for i, offset in { Vector3.new(-1, 0, -1), Vector3.new(1, 0, -1), Vector3.new(0, 0, 1) } do
 		local wheel = Builder.prop(shop, "CheeseWheel", Vector3.new(-17, 2.6, -33.5) + offset, i * 40, {
@@ -458,7 +458,7 @@ local function buildShop(parent: Instance, rng: Random)
 		20,
 		{ scale = 0.75, collide = false }
 	)
-	-- Etalagetrap met kazen, zichtbaar vanaf de straat.
+	-- Display stand with cheeses, visible from the street.
 	Builder.box(
 		shop,
 		"WindowStand",
@@ -472,7 +472,7 @@ local function buildShop(parent: Instance, rng: Random)
 	for i = 0, 2 do
 		Builder.prop(shop, "CheeseWheel", Vector3.new(-20.6, 2.2, -36 + i * 2.6), i * 50, { collide = false })
 	end
-	-- Krijtbord met het aanbod.
+	-- Chalkboard with today's offer.
 	Builder.sign(
 		shop,
 		CFrame.lookAt(Vector3.new(-12, 6.8, -14.75), Vector3.new(-12, 6.8, -30)),
@@ -484,7 +484,7 @@ local function buildShop(parent: Instance, rng: Random)
 	)
 	lamp(shop, "ShopLamp1", Vector3.new(-11, 11, -32), 22)
 	lamp(shop, "ShopLamp2", Vector3.new(-11, 11, -20), 22)
-	-- Karels hok achterin (bezem en emmer).
+	-- Karel's closet at the back (broom and bucket).
 	Builder.box(
 		shop,
 		"ClosetWall",
@@ -536,7 +536,7 @@ local function buildSecurityRoom(parent: Instance, rng: Random)
 		C.StoneDark,
 		{ material = Enum.Material.Slate }
 	)
-	-- Gevel met getralied raam.
+	-- Facade with a barred window.
 	Builder.box(
 		room,
 		"Front",
@@ -598,7 +598,7 @@ local function buildSecurityRoom(parent: Instance, rng: Random)
 		C.Plaster,
 		{ material = Enum.Material.Plaster }
 	)
-	-- Bureau met monitoren (koud blauw licht).
+	-- Desk with monitors (cold blue light).
 	Builder.box(
 		room,
 		"Desk",
@@ -654,7 +654,7 @@ local function buildCourtyard(parent: Instance, rng: Random)
 		material = Enum.Material.Cobblestone,
 		variant = "CC_Cobble",
 	})
-	-- Muur aan de kade met de leveringspoort (ketenpunt 1).
+	-- Wall on the quay with the delivery gate (chain point 1).
 	Builder.box(
 		yard,
 		"YardWallA",
@@ -707,7 +707,7 @@ local function buildCourtyard(parent: Instance, rng: Random)
 		C.Gold,
 		{ material = Enum.Material.Foil, collide = false }
 	)
-	-- Balk tussen de poortpalen waar het bord aan hangt (niet tegen de muurkap: anders valt de tekst half weg).
+	-- Beam between the gate posts that holds the sign (not against the wall cap: half the text would vanish).
 	Builder.box(yard, "GateBeam", Vector3.new(-22.6, 11, 15.2), Vector3.new(-21.4, 11.4, 24.8), C.Stone, {
 		material = Enum.Material.Granite,
 	})
@@ -738,7 +738,7 @@ local function buildCourtyard(parent: Instance, rng: Random)
 		{ material = Enum.Material.Granite }
 	)
 
-	-- Inrichting: hondenhok, kratten, vaten, pallets, modderplas.
+	-- Furnishing: dog kennel, crates, barrels, pallets, mud puddle.
 	Builder.prop(yard, "Kennel", Vector3.new(-4, 0.15, 35), 180, {
 		fallback = function(p, g)
 			return Builder.block(
@@ -798,9 +798,9 @@ local function buildCourtyard(parent: Instance, rng: Random)
 			collide = false,
 		}
 	)
-	-- Lamp boven de achterdeur van de hal.
+	-- Lamp above the back door of the hall.
 	lamp(yard, "YardLamp", Vector3.new(-1.5, 9.5, 17), 24)
-	-- Muurlantaarn bij de poort en een slinger lampjes boven de koer: gezellig, en je ziet waar je loopt.
+	-- Wall lantern by the gate and a string of lights above the yard: cosy, and you can see where you walk.
 	local gateLamp = Builder.block(
 		yard,
 		"GateLantern",
@@ -847,7 +847,7 @@ local function buildCourtyard(parent: Instance, rng: Random)
 			shadow = false,
 		}
 	)
-	-- Klimop op de koermuren.
+	-- Ivy on the yard walls.
 	local ivy = { Color3.fromRGB(44, 82, 46), Color3.fromRGB(56, 96, 52), Color3.fromRGB(36, 70, 42) }
 	for i = 0, 9 do
 		local z = 25 + rng:NextNumber(0, 14)
@@ -879,14 +879,14 @@ local function buildCourtyard(parent: Instance, rng: Random)
 			}
 		)
 	end
-	-- Wasrek, fiets en plantenbakken: de koer is van mensen, niet van een fabriek.
+	-- Drying rack, bike and planters: the yard belongs to people, not to a factory.
 	Builder.prop(yard, "Bicycle", Vector3.new(-19.5, 0.15, 9), 0, { collide = false })
 	Builder.prop(yard, "TulipBoxTall", Vector3.new(-20.2, 0.15, 27), 90, { collide = false })
 	Builder.prop(yard, "TulipBoxTall", Vector3.new(-20.2, 0.15, 33), 90, { collide = false })
 end
 
 function Shop.build(level: Folder, rng: Random)
-	-- De Folder in Workspace.Level heet (zoals vroeger) "GoldenWheel".
+	-- The Folder in Workspace.Level is called "GoldenWheel" (as before).
 	local building = Builder.folder(level, "GoldenWheel")
 	buildShop(building, rng)
 	buildSecurityRoom(building, rng)

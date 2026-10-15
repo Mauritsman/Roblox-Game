@@ -1,7 +1,7 @@
 --!strict
--- De HUD: alles wat de speler op het scherm ziet. Gebouwd in code, zodat het in Git staat.
--- Ontwerpregels: grote knoppen (≥ 48 px, hoofdknoppen ≥ 64 px), hoog contrast, kleur + vorm,
--- Engelse spelerteksten, niets in de hoeken die Roblox zelf gebruikt (joystick, springknop).
+-- The HUD: everything the player sees on screen. Built in code, so it lives in Git.
+-- Design rules: big buttons (≥ 48 px, main buttons ≥ 64 px), high contrast, colour + shape,
+-- English player text, nothing in the corners Roblox itself uses (joystick, jump button).
 
 local Players = game:GetService("Players")
 local TweenService = game:GetService("TweenService")
@@ -14,7 +14,7 @@ Hud.Colors = {
 	Panel = Color3.fromRGB(16, 18, 26),
 	Text = Color3.fromRGB(245, 245, 250),
 	Muted = Color3.fromRGB(170, 175, 190),
-	Accent = Color3.fromRGB(255, 128, 32), -- crew-oranje
+	Accent = Color3.fromRGB(255, 128, 32), -- crew orange
 	Danger = Color3.fromRGB(255, 70, 70),
 	Warn = Color3.fromRGB(255, 200, 60),
 	Good = Color3.fromRGB(90, 210, 120),
@@ -134,7 +134,7 @@ function Hud.toast(message: string, color: Color3?)
 		tween.Completed:Wait()
 		label:Destroy()
 	end)
-	-- Hoogstens 5 meldingen tegelijk.
+	-- At most 5 messages at a time.
 	local children = {}
 	for _, child in toastList:GetChildren() do
 		if child:IsA("TextLabel") then
@@ -171,7 +171,7 @@ function Hud.setAlarm(level: number, name: string)
 	alarmLabel.TextColor3 = ALARM_COLORS[level] or Hud.Colors.Text
 end
 
--- Het venster (§3.3): krimpende ring met seconden, voor de hele crew.
+-- The window (§3.3): shrinking ring with seconds, for the whole crew.
 function Hud.showWindow(kind: string, seconds: number)
 	windowToken += 1
 	local token = windowToken
@@ -275,7 +275,7 @@ function Hud.setCrosshair(visible: boolean)
 	crosshair.Visible = visible
 end
 
--- Chain Call-paneel (§3.4).
+-- Chain Call panel (§3.4).
 function Hud.showChain(snapshot: { [string]: any }?, mode: string?)
 	if not snapshot then
 		chainFrame.Visible = false
@@ -349,7 +349,7 @@ function Hud.init()
 		ZIndexBehavior = Enum.ZIndexBehavior.Sibling,
 	}, nil)
 
-	-- Alarmladder linksboven.
+	-- Alarm ladder at the top left.
 	alarmFrame = panel({
 		Size = UDim2.fromOffset(190, 46),
 		Position = UDim2.fromOffset(12, 12),
@@ -372,7 +372,7 @@ function Hud.init()
 		TextColor3 = Hud.Colors.Good,
 	}, alarmFrame)
 
-	-- Venster-ring bovenaan in het midden.
+	-- Window ring at the top centre.
 	windowFrame = make("Frame", {
 		Size = UDim2.fromOffset(150, 150),
 		AnchorPoint = Vector2.new(0.5, 0),
@@ -397,7 +397,7 @@ function Hud.init()
 		TextStrokeTransparency = 0,
 	}, windowFrame)
 
-	-- Chain Call-paneel onder de ring.
+	-- Chain Call panel below the ring.
 	chainFrame = panel({
 		Size = UDim2.fromOffset(360, 120),
 		AnchorPoint = Vector2.new(0.5, 0),
@@ -444,7 +444,7 @@ function Hud.init()
 		Visible = false,
 	}, gui)
 
-	-- Gadgets rechtsboven.
+	-- Gadgets at the top right.
 	loadoutFrame = make("Frame", {
 		Size = UDim2.fromOffset(210, 160),
 		AnchorPoint = Vector2.new(1, 0),
@@ -456,7 +456,7 @@ function Hud.init()
 		SortOrder = Enum.SortOrder.LayoutOrder,
 	}, loadoutFrame)
 
-	-- Meldingen en grote banner.
+	-- Messages and big banner.
 	toastList = make("Frame", {
 		Size = UDim2.fromOffset(520, 190),
 		AnchorPoint = Vector2.new(0.5, 0),
@@ -486,7 +486,7 @@ function Hud.init()
 		Visible = false,
 	}, gui)
 
-	-- Richtpunt in het midden (touch, controller en drone).
+	-- Crosshair in the centre (touch, controller and drone).
 	crosshair = make("Frame", {
 		Size = UDim2.fromOffset(10, 10),
 		AnchorPoint = Vector2.new(0.5, 0.5),

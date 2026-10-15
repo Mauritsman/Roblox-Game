@@ -1,9 +1,9 @@
 --!strict
--- Het verloop van een run in fase 1:
---   * Gepakt door een bewaker = terug naar het busje (in fase 2 komt de beveiligingsruimte).
---   * De Golden Gouda aanraken = run geslaagd.
---   * Alarm op trede 3 = LOCKDOWN: 90 s om weg te raken, daarna mislukt.
--- Na afloop wordt het level opnieuw gebouwd.
+-- How a run plays out in phase 1:
+--   * Caught by a guard = back to the van (phase 2 adds the security room).
+--   * Touching the Golden Gouda = run succeeded.
+--   * Alarm at step 3 = LOCKDOWN: 90 s to get away, then the run fails.
+-- Afterwards the level is rebuilt.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -132,7 +132,7 @@ function RoundService:Start()
 			Net.broadcast("Lockdown", Config.Alarm.LockdownSeconds)
 			task.delay(Config.Alarm.LockdownSeconds, function()
 				if runId == thisRun and not ending then
-					-- §9.5: alleen wie dan nog binnen is, is gepakt.
+					-- §9.5: only whoever is still inside at that point is caught.
 					local inside = {}
 					for _, player in Players:GetPlayers() do
 						local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
@@ -154,7 +154,7 @@ function RoundService:Start()
 	end)
 
 	Net.onRequest("RestartRun", function()
-		-- Handig tijdens het testen: elke speler mag een run herstarten.
+		-- Handy while testing: any player may restart a run.
 		if not ending then
 			endRun("RESTART", "Run restarted")
 		end

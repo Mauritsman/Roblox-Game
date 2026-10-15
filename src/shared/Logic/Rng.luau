@@ -1,6 +1,6 @@
 --!strict
--- Kleine, deterministische randomgenerator (LCG) die in Roblox én in Lune werkt.
--- Gebruik dezelfde seed → dezelfde ronde (handig om bugs na te spelen).
+-- Small, deterministic random generator (LCG) that works in both Roblox and Lune.
+-- Same seed → same round (handy for reproducing bugs).
 local Rng = {}
 Rng.__index = Rng
 
@@ -10,18 +10,18 @@ function Rng.new(seed: number): Rng
 	return setmetatable({ state = math.floor(math.abs(seed)) % 2147483647 + 1 }, Rng)
 end
 
--- Getal in [0, 1).
+-- Number in [0, 1).
 function Rng.next(self: Rng): number
 	self.state = (self.state * 48271) % 2147483647
 	return (self.state - 1) / 2147483646
 end
 
--- Geheel getal in [min, max].
+-- Integer in [min, max].
 function Rng.int(self: Rng, min: number, max: number): number
 	return min + math.floor(self:next() * (max - min + 1))
 end
 
--- Willekeurige volgorde (Fisher-Yates), geeft een nieuwe lijst terug.
+-- Random order (Fisher-Yates), returns a new list.
 function Rng.shuffle<T>(self: Rng, list: { T }): { T }
 	local copy = table.clone(list)
 	for i = #copy, 2, -1 do
@@ -31,7 +31,7 @@ function Rng.shuffle<T>(self: Rng, list: { T }): { T }
 	return copy
 end
 
--- Kies één item volgens gewichten: { {item, gewicht}, ... }.
+-- Pick one item by weight: { {item, weight}, ... }.
 function Rng.weighted<T>(self: Rng, entries: { { any } }): T
 	local total = 0
 	for _, e in entries do

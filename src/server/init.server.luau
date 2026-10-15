@@ -1,6 +1,6 @@
 --!strict
--- Server-bootstrap voor Crowbar Crew.
--- Laadt elke ModuleScript in Services, roept eerst Init() en daarna Start() aan.
+-- Server bootstrap for Crowbar Crew.
+-- Loads every ModuleScript in Services, calls Init() first and then Start().
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -27,7 +27,7 @@ for name, service in services do
 			(service :: any):Init()
 		end)
 		if not ok then
-			warn(`[Server] Init van {name} faalde: {err}`)
+			warn(`[Server] Init of {name} failed: {err}`)
 		end
 	end
 end
@@ -39,10 +39,10 @@ for name, service in services do
 				(service :: any):Start()
 			end)
 			if not ok then
-				warn(`[Server] Start van {name} faalde: {err}`)
+				warn(`[Server] Start of {name} failed: {err}`)
 			end
 		end)
 	end
 end
 
-print(`[Server] Crowbar Crew {Config.Version} gestart met {#servicesFolder:GetChildren()} services`)
+print(`[Server] Crowbar Crew {Config.Version} started with {#servicesFolder:GetChildren()} services`)

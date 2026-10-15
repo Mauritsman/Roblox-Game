@@ -1,9 +1,9 @@
--- Uitvoeren via de Studio MCP: execute_luau, datamodel "Edit".
--- 1) Bouwt het level opnieuw met verse kopieën van de servermodules (geen require-cache).
---    MapService:Init() bouwt de standaard-heist (src/server/Map/Registry); zet HEIST voor een andere heist.
--- 2) Stuurt alle zichtbare parts, lichten en de AI-meshes (met kleuren uit hun textuur)
---    naar tools/preview/receiver.py op 127.0.0.1:35001. HttpEnabled staat alleen even aan.
-local HEIST: string? = nil -- bv. "GoldenWheel"; nil = de standaard-heist
+-- Run via the Studio MCP: execute_luau, datamodel "Edit".
+-- 1) Rebuilds the level with fresh copies of the server modules (no require cache).
+--    MapService:Init() builds the default heist (src/server/Map/Registry); set HEIST for another heist.
+-- 2) Sends all visible parts, lights and the AI meshes (with colours from their texture)
+--    to tools/preview/receiver.py on 127.0.0.1:35001. HttpEnabled is only on briefly.
+local HEIST: string? = nil -- e.g. "GoldenWheel"; nil = the default heist
 
 local ServerStorage = game:GetService("ServerStorage")
 local HttpService = game:GetService("HttpService")
@@ -26,7 +26,7 @@ local okB, errB = pcall(function()
 end)
 tmp:Destroy()
 if not okB then
-	return "build faalde: " .. tostring(errB)
+	return "build failed: " .. tostring(errB)
 end
 local level = workspace.Level
 
@@ -152,7 +152,7 @@ for _, p in posts do
 end
 HttpService.HttpEnabled = wasEnabled
 return string.format(
-	"parts=%d (zichtbaar %d) lights=%d meshes=%d posts=%d mislukt=[%s] fouten=[%s] Http=%s",
+	"parts=%d (visible %d) lights=%d meshes=%d posts=%d failed=[%s] errors=[%s] Http=%s",
 	partCount,
 	#parts,
 	#lights,

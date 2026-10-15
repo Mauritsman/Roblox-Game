@@ -1,8 +1,8 @@
 --!strict
--- De Chain Call (§3.4): aftellen zonder voice.
--- 1. Iemand roept een Chain Call op een ketenpunt.
--- 2. Teamgenoten tikken "I'M IN"; hun gadget vult automatisch EYES, CLEAR of OPEN.
--- 3. Alles gevuld (of de beller tikt GO) → 3-2-1 bij iedereen tegelijk → NOW.
+-- The Chain Call (§3.4): a countdown without voice.
+-- 1. Someone calls a Chain Call on a chain point.
+-- 2. Teammates tap "I'M IN"; their gadget automatically fills EYES, CLEAR or OPEN.
+-- 3. Everything filled (or the caller taps GO) → 3-2-1 for everyone at once → NOW.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -19,7 +19,7 @@ type Call = {
 	caller: Player,
 	target: Instance?,
 	position: Vector3?,
-	slots: { [string]: any }, -- stap -> Player
+	slots: { [string]: any }, -- step -> Player
 	expiresAt: number,
 	counting: boolean,
 }
@@ -50,7 +50,7 @@ local function occupiedBy(call: Call, player: Player): string?
 	return nil
 end
 
--- Zet de speler in een vrij vakje dat bij een van zijn gadgets past.
+-- Puts the player in a free slot that matches one of their gadgets.
 local function assign(call: Call, player: Player): string?
 	local existing = occupiedBy(call, player)
 	if existing then
@@ -143,7 +143,7 @@ function ChainCallService:Start()
 		end
 		task.delay(Config.ChainCall.JoinSeconds, function()
 			if active == call and not call.counting then
-				-- Niet iedereen deed mee: toch aftellen als er minstens twee mensen in zitten.
+				-- Not everyone joined: count down anyway if at least two people are in.
 				local count = 0
 				for _ in call.slots do
 					count += 1

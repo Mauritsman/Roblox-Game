@@ -1,12 +1,14 @@
-# WAAR HET WERK KOMT
+Translated from the original Dutch brief.
 
-Dit spel heeft een eigen GitHub-repo: `Mauritsman/Roblox-Game`. Deze prompt staat daar als `docs/roblox-prompt.md`. Alles wat je voor het spel maakt (dit gameplan, latere documenten, later de code) hoort in die repo, en nergens anders. De repo `brouwersstraat-21` is mijn huisapp en heeft niets met het spel te maken: zet daar niets in.
+# WHERE THE WORK GOES
 
-Zet het document dat je maakt in de repo als `docs/gameplan-roblox.md`. Lukt dat niet omdat je geen toegang hebt, zeg dat dan, geef me de stap om het op te lossen (via https://claude.ai/connect-github de Claude GitHub-app toegang geven tot `Roblox-Game`), en schrijf het document zolang in de chat, zodat ik het niet kwijtraak.
+This game has its own GitHub repo: `Mauritsman/Roblox-Game`. This prompt is stored there as `docs/roblox-prompt.md`. Everything you make for the game (this gameplan, later documents, later the code) belongs in that repo, and nowhere else. The repo `brouwersstraat-21` is my house app and has nothing to do with the game: do not put anything in it.
 
-# MIJN TOOLS EN PLUGINS
+Put the document you make in the repo as `docs/gameplan-roblox.md`. If that does not work because you do not have access, say so, give me the step to fix it (give the Claude GitHub app access to `Roblox-Game` via https://claude.ai/connect-github), and in the meantime write the document in the chat so I do not lose it.
 
-Dit zijn de tools en plugins die ik wil gebruiken om het spel te bouwen. Ik heb nog niets ervan geïnstalleerd of ingesteld.
+# MY TOOLS AND PLUGINS
+
+These are the tools and plugins I want to use to build the game. I have not installed or set up any of them yet.
 
 1. Rojo
 2. Roblox Studio MCP
@@ -20,90 +22,90 @@ Dit zijn de tools en plugins die ik wil gebruiken om het spel te bouwen. Ik heb 
 10. Blender Animations Plugin
 11. RBXMonkey
 
-Houd in je hele ontwerp rekening met deze toolset, vooral in de bouwvolgorde. Controleer per tool wat hij precies doet. Ken je een tool niet, of weet je niet zeker of het de tool is die ik bedoel, zeg dat dan in plaats van te gokken. Geef ook aan als twee tools hetzelfde doen, zodat ik er één kan laten vallen, en als er voor mijn spel iets belangrijks ontbreekt.
+Take this toolset into account throughout your design, especially in the build order. Check for each tool exactly what it does. If you do not know a tool, or are not sure it is the tool I mean, say so instead of guessing. Also point out when two tools do the same thing, so I can drop one, and when something important for my game is missing.
 
-# ROL
+# ROLE
 
-Je bent een ervaren Roblox-gamedesigner. Je hebt meerdere succesvolle co-op-games op Roblox uitgebracht en kent het platform door en door: het publiek, de leeftijdslabels, de verdienregels, de beperkingen van mobiel spelen en wat spelers wel en niet pikken. Je bent eerlijk en kritisch. Als iets uit mijn concept niet werkt op Roblox, zeg je dat en geef je een betere oplossing in plaats van het weg te poetsen.
+You are an experienced Roblox game designer. You have released several successful co-op games on Roblox and know the platform inside out: the audience, the age ratings, the monetisation rules, the limitations of mobile play and what players will and will not put up with. You are honest and critical. If something in my concept does not work on Roblox, you say so and give a better solution instead of glossing over it.
 
-# TAAK
+# TASK
 
-Zet mijn bestaande gameconcept om naar een volledig gameplan voor Roblox. Het concept is ontworpen als gewone pc-game. Ik wil dat de kern (wat het spel uniek en leuk maakt) overeind blijft, en dat alles eromheen wordt aangepast aan Roblox. Er wordt nu nog niets gebouwd: ik wil alleen het ontwerp, geen code.
+Turn my existing game concept into a complete gameplan for Roblox. The concept was designed as a regular PC game. I want the core (what makes the game unique and fun) to stay intact, and everything around it to be adapted to Roblox. Nothing is being built yet: I only want the design, no code.
 
-Ik ben beginner. Leg elk technisch Roblox-begrip dat je voor het eerst noemt in één korte zin uit (bijvoorbeeld: private server, game pass, developer product, TeleportService, leeftijdslabel, server/client).
+I am a beginner. Explain every technical Roblox term the first time you mention it in one short sentence (for example: private server, game pass, developer product, TeleportService, age rating, server/client).
 
-Schrijf in het Nederlands. Teksten die spelers in het spel zien (knoppen, meldingen, namen van gadgets) schrijf je in het Engels, omdat het spel internationaal moet werken.
+Write in Dutch. Text that players see in the game (buttons, notifications, gadget names) you write in English, because the game has to work internationally.
 
-# HET CONCEPT (zoals het nu is)
+# THE CONCEPT (as it stands now)
 
-Als het volledige gameplan (unpaid-gameplan.md) is bijgevoegd, is dat de bron. Hieronder staat de samenvatting van de kern; als het document en deze samenvatting elkaar tegenspreken, wint deze samenvatting, want die is nieuwer.
+If the full gameplan (unpaid-gameplan.md) is attached, that is the source. Below is the summary of the core; if the document and this summary contradict each other, this summary wins, because it is newer.
 
-**Wie ben je:** vier vrienden met een busje, zonder werkgever. Jullie plegen kleine, slimme inbraken (stealth-heists) in herkenbare, Nederlands aanvoelende plekken.
+**Who you are:** four friends with a van, without an employer. You pull off small, clever break-ins (stealth heists) in recognisable, Dutch-feeling places.
 
-**Pijler:** voorbereiding is je enige wapen. Je wint door te plannen en samen te werken, niet door te vechten.
+**Pillar:** preparation is your only weapon. You win by planning and working together, not by fighting.
 
-**De spil, de keten:** elke hindernis wordt opgelost in drie stappen: *zien → vrijmaken → openen*, binnen een venster van 8 tot 12 seconden. Elk gadget opent alleen een venster, nooit een heel pad. Niemand kan één stap alleen zetten. Voorbeeld: de EMP legt camera's 8 seconden plat, maar de EMP-speler ziet niet of de gang vrij is. Dat ziet de drone-operator, die moet stilstaan om te kijken. De drone ziet de bewaker, maar krijgt hem niet weg; dat doet de afleidingsspeler. De deur erachter gaat alleen open met het breekijzer, en dat maakt lawaai, dus het moet precies tijdens de afleiding gebeuren.
+**The core, the chain:** every obstacle is solved in three steps: *see → clear → open*, within a window of 8 to 12 seconds. Each gadget only opens a window, never a whole path. Nobody can take one step alone. Example: the EMP knocks out cameras for 8 seconds, but the EMP player cannot see whether the corridor is clear. The drone operator sees that, and has to stand still to look. The drone sees the guard, but cannot get rid of him; the distraction player does that. The door behind it only opens with the crowbar, and that makes noise, so it has to happen exactly during the distraction.
 
-**De zes gadgets:**
-1. LAN-drone: verkennen, bewakers en camera's zien.
-2. Camera-set: vaste camera's die je zelf ophangt om een gebied in de gaten te houden.
-3. Afleidingskit: geluid of beweging die bewakers weglokt.
-4. EMP: legt elektronica een paar seconden plat. Ook je eigen drone en camera's! Dat is bewust: het is het belangrijkste comedy-moment van het spel.
-5. Breekijzer: opent deuren, kasten en luiken, maar maakt lawaai.
-6. Haspel: (kabel/lijn) om buit en spelers over obstakels of naar het busje te krijgen.
+**The six gadgets:**
+1. LAN drone: scouting, seeing guards and cameras.
+2. Camera set: fixed cameras you hang up yourself to keep an eye on an area.
+3. Distraction kit: sound or movement that lures guards away.
+4. EMP: knocks out electronics for a few seconds. Including your own drone and cameras! That is deliberate: it is the most important comedy moment of the game.
+5. Crowbar: opens doors, cabinets and hatches, but makes noise.
+6. Winch: (cable/line) to get loot and players over obstacles or to the van.
 
-**Gear:** er zijn standaardgadgets die de crew aan het begin van een run onderling verdeelt, en extra gadgets die je met spelgeld koopt. Extra gadgets zijn zijwaarts, niet sterker: ze lossen dezelfde drie stappen op een andere manier op. Een nieuwe speler mag daardoor nooit nutteloos zijn.
+**Gear:** there are standard gadgets that the crew divides among themselves at the start of a run, and extra gadgets you buy with in-game money. Extra gadgets are sideways, not stronger: they solve the same three steps in a different way. As a result a new player must never be useless.
 
-**De inzet:** word je gepakt, dan raak je het gadget kwijt dat je op dat moment draagt. Een teamgenoot bevrijden betekent dus ook zijn dure gadget terughalen.
+**The stake:** if you get caught, you lose the gadget you are carrying at that moment. Rescuing a teammate therefore also means getting back their expensive gadget.
 
-**Buit dragen:** wie buit draagt, valt uit de keten (kan zijn gadget niet gebruiken). Dragen en nuttig zijn sluiten elkaar uit.
+**Carrying loot:** whoever carries loot drops out of the chain (cannot use their gadget). Carrying and being useful exclude each other.
 
-**Tegenstanders:** bewakers (NPC's), camera's, een hond die op de drone jaagt, en Asset Recovery, een dreiging die op actieve elektronica afkomt. Je eigen gadgets verraden je dus; uitzetten betekent blind gaan. Er is een alarmladder die oploopt naarmate je meer opvalt.
+**Opponents:** guards (NPCs), cameras, a dog that hunts the drone, and Asset Recovery, a threat that homes in on active electronics. So your own gadgets give you away; switching them off means going blind. There is an alarm ladder that rises the more you stand out.
 
-**Dekmantel:** je draagt werkkleding. De informatie uit de verkenning helpt je een aanspreking door een NPC te overleven.
+**Cover:** you wear work clothes. The information from scouting helps you survive being questioned by an NPC.
 
-**Sporen:** je laat sporen achter (voetstappen, kapot glas, verplaatste spullen) die bewakers kunnen vinden. Sporen wissen kost een verbruiksspul. Er is een NPC Karel die hierin een rol speelt.
+**Traces:** you leave traces (footprints, broken glass, moved objects) that guards can find. Wiping traces costs a consumable. There is an NPC Karel who plays a role in this.
 
-**Geweld:** er is een klein beetje geweld en bloed waar het past, onder één regel: geweld is nooit een oplossing, altijd een gevolg. Bloed is informatie (een spoor), geen spektakel.
+**Violence:** there is a little violence and blood where it fits, under one rule: violence is never a solution, always a consequence. Blood is information (a trace), not spectacle.
 
-# ROBLOX-VOORWAARDEN WAAR JE REKENING MEE MOET HOUDEN
+# ROBLOX CONDITIONS YOU HAVE TO TAKE INTO ACCOUNT
 
-Controleer elk punt hieronder zelf; als iets niet meer klopt met de huidige Roblox-regels, zeg dat.
+Check every point below yourself; if something no longer matches the current Roblox rules, say so.
 
-- **Publiek:** veel spelers zijn 9 tot 15 jaar. Kies een leeftijdslabel (Minimal, Mild, Moderate of Restricted) en leg uit wat dat betekent voor het geweld en het bloed. Mijn voorkeur: zo jong mogelijk publiek, met bloed als cartoonachtig spoor of helemaal geen bloed. Zeg wat de beste keuze is.
-- **Geen voicechat voor iedereen:** spelers onder 13 hebben geen voicechat. De keten draait om overleg, dus ontwerp een uitgebreid ping- en snelcommunicatiesysteem (bijvoorbeeld op een bewaker tikken, knoppen als "NOW!" en "WAIT").
-- **Mobiel eerst:** meer dan de helft speelt op telefoon of tablet. Ontwerp de besturing voor touchscreen, met per gadget één duidelijke knop. Geef aan of het venster van 8 tot 12 seconden op mobiel langer moet worden.
-- **Korte sessies:** runs van ongeveer 10 tot 15 minuten.
-- **Vrienden en vreemden:** het spel moet werken met vier vrienden in een private server, maar ook met vreemden via matchmaking en met minder dan vier spelers (1, 2 of 3). Hoe vang je dat op zonder de keten te breken?
-- **Verdienen:** spullen die met Robux (echt geld) zijn gekocht mogen nooit kwijtraken. Ontwerp de inzet zo dat alleen gear die met spelgeld is gekocht verloren kan gaan. Geen pay-to-win: met Robux verkoop je bij voorkeur uiterlijk (skins voor drone, busje, outfits) en gemak. Houd je aan de Roblox-regels over betaalde willekeurige items.
-- **Concurrentie:** Entry Point en Notoriety zijn bestaande stealth-heistgames op Roblox. Leg uit waarin mijn spel duidelijk anders moet zijn en hoe je dat in de eerste minuut laat zien.
-- **Roblox-stijl:** wat moet er aan de art-stijl, de sfeer en de Nederlandse setting veranderen om in de Roblox-catalogus op te vallen?
-- **Haalbaarheid:** ik ben beginner en werk (bijna) alleen. Geef aan wat realistisch is om eerst te bouwen en wat later kan.
+- **Audience:** many players are 9 to 15 years old. Choose an age rating (Minimal, Mild, Moderate or Restricted) and explain what that means for the violence and the blood. My preference: the youngest possible audience, with blood as a cartoonish trace or no blood at all. Say what the best choice is.
+- **No voice chat for everyone:** players under 13 do not have voice chat. The chain revolves around coordination, so design an extensive ping and quick-communication system (for example tapping a guard, buttons like "NOW!" and "WAIT").
+- **Mobile first:** more than half play on phone or tablet. Design the controls for touchscreen, with one clear button per gadget. Say whether the window of 8 to 12 seconds should be longer on mobile.
+- **Short sessions:** runs of about 10 to 15 minutes.
+- **Friends and strangers:** the game must work with four friends in a private server, but also with strangers via matchmaking and with fewer than four players (1, 2 or 3). How do you handle that without breaking the chain?
+- **Earning:** items bought with Robux (real money) must never be lost. Design the stake so that only gear bought with in-game money can be lost. No pay-to-win: with Robux you preferably sell cosmetics (skins for drone, van, outfits) and convenience. Follow the Roblox rules on paid random items.
+- **Competition:** Entry Point and Notoriety are existing stealth heist games on Roblox. Explain how my game must be clearly different and how you show that in the first minute.
+- **Roblox style:** what needs to change about the art style, the atmosphere and the Dutch setting to stand out in the Roblox catalogue?
+- **Feasibility:** I am a beginner and work (almost) alone. Say what is realistic to build first and what can come later.
 
-# WAT IK VAN JE TERUG WIL
+# WHAT I WANT BACK FROM YOU
 
-Lever één samenhangend document met deze onderdelen, in deze volgorde:
+Deliver one coherent document with these parts, in this order:
 
-1. **Samenvatting in vijf zinnen:** wat is dit spel op Roblox, voor wie, en waarom zou iemand het spelen in plaats van Entry Point.
-2. **Wat blijft, wat verandert, wat vervalt:** een tabel met elk onderdeel van het concept en per onderdeel: blijft / past aan / vervalt, met reden.
-3. **De keten op Roblox:** hoe de drie stappen werken met touchscreen, zonder voice, en met 1 tot 4 spelers. Inclusief het ping-systeem.
-4. **De zes gadgets op Roblox:** per gadget hoe je het gebruikt (pc, mobiel, controller), wat het doet in de keten, en hoe het kan falen. Plus twee of drie voorbeelden van extra gadgets die zijwaarts zijn.
-5. **Geweld, bloed en leeftijdslabel:** jouw advies, en hoe de sporen dan werken.
-6. **Spellus en sessie:** van lobby naar busje naar run naar terug, met tijden in minuten.
-7. **Inzet, progressie en economie:** wat je verdient, wat je kunt verliezen, hoe een nieuwe speler meteen nuttig is.
-8. **Verdienmodel:** game passes en developer products met voorbeeldprijzen in Robux, en wat je bewust niet verkoopt.
-9. **Tegenstanders en alarmladder:** bewakers, camera's, de hond, Asset Recovery, aangepast aan korte runs.
-10. **Eerste map:** één concrete eerste locatie met plattegrond in woorden, zodat de keten er drie keer in voorkomt.
-11. **De eerste 5 minuten van een nieuwe speler:** stap voor stap, inclusief hoe het spel de keten uitlegt zonder lange tutorial.
-12. **Bouwvolgorde voor een beginner:** fases (prototype → speelbare test met vrienden → eerste release → updates), met per fase wat erin zit, welke tools uit mijn lijst ik daarvoor gebruik, en hoe je weet dat de fase klaar is.
-13. **Risico's:** de vijf grootste redenen waarom dit op Roblox zou kunnen mislukken, en per risico wat je eraan doet.
-14. **Titelopties:** tien namen die werken op Roblox (kort, Engels, goed zoekbaar), met per naam één zin waarom. De werktitel UNPAID past niet meer bij het concept.
-15. **Opzetplan voor mijn tools:** een tabel met per tool uit de lijst bovenaan: wat hij doet, waarvoor ik hem in dit spel gebruik, in welke bouwfase ik hem nodig heb, en of ik hem kan overslaan. Daarna de installatievolgorde in stappen voor een beginner: wat eerst moet (bijvoorbeeld Roblox Studio en Blender zelf), welke tools van elkaar afhangen, en hoe ik per tool controleer of hij werkt. Zet bij elke plugin die ik uit de Roblox Creator Store of van internet haal hoe ik controleer of hij betrouwbaar is: plugins kunnen schadelijke scripts bevatten.
+1. **Summary in five sentences:** what is this game on Roblox, who is it for, and why would someone play it instead of Entry Point.
+2. **What stays, what changes, what goes:** a table with every part of the concept and for each part: stays / adapted / goes, with a reason.
+3. **The chain on Roblox:** how the three steps work with a touchscreen, without voice, and with 1 to 4 players. Including the ping system.
+4. **The six gadgets on Roblox:** for each gadget how you use it (PC, mobile, controller), what it does in the chain, and how it can fail. Plus two or three examples of extra gadgets that are sideways.
+5. **Violence, blood and age rating:** your advice, and how the traces then work.
+6. **Game loop and session:** from lobby to van to run to back, with times in minutes.
+7. **Stake, progression and economy:** what you earn, what you can lose, how a new player is immediately useful.
+8. **Monetisation:** game passes and developer products with example prices in Robux, and what you deliberately do not sell.
+9. **Opponents and alarm ladder:** guards, cameras, the dog, Asset Recovery, adapted to short runs.
+10. **First map:** one concrete first location with a floor plan in words, so that the chain occurs in it three times.
+11. **The first 5 minutes of a new player:** step by step, including how the game explains the chain without a long tutorial.
+12. **Build order for a beginner:** phases (prototype → playable test with friends → first release → updates), with for each phase what is in it, which tools from my list I use for it, and how you know the phase is done.
+13. **Risks:** the five biggest reasons why this could fail on Roblox, and for each risk what you do about it.
+14. **Title options:** ten names that work on Roblox (short, English, easy to search), with one sentence per name on why. The working title UNPAID no longer fits the concept.
+15. **Setup plan for my tools:** a table with, for each tool from the list at the top: what it does, what I use it for in this game, in which build phase I need it, and whether I can skip it. Then the installation order in steps for a beginner: what has to come first (for example Roblox Studio and Blender themselves), which tools depend on each other, and how I check for each tool that it works. For every plugin I get from the Roblox Creator Store or from the internet, state how I check whether it is trustworthy: plugins can contain malicious scripts.
 
-# REGELS VOOR JE ANTWOORD
+# RULES FOR YOUR ANSWER
 
-- Wees concreet: getallen, seconden, prijzen, voorbeelden. Geen vage zinnen als "zorg voor een goede balans".
-- Zoek actief naar tegenstrijdigheden in mijn concept en benoem ze.
-- Als je iets niet zeker weet over de huidige Roblox-regels, zeg dat en geef aan waar ik het kan controleren.
-- Schrijf geen code.
-- Stel aan het eind maximaal drie vragen aan mij over keuzes die jij niet voor mij kunt maken.
+- Be concrete: numbers, seconds, prices, examples. No vague sentences like "make sure there is a good balance".
+- Actively look for contradictions in my concept and name them.
+- If you are not sure about something in the current Roblox rules, say so and say where I can check it.
+- Do not write code.
+- At the end, ask me at most three questions about choices you cannot make for me.

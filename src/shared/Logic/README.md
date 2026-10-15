@@ -1,6 +1,6 @@
 # Logic (pure Luau)
 
-Modules hier zijn **puur**: geen `game`, geen `script`, geen Roblox-services, geen `require` van andere modules.
-Ze krijgen alles via argumenten (getallen, tabellen, een seed) en geven een resultaat terug.
-Daardoor kunnen ze zonder Studio getest worden met Lune: `lune run tests/run` (tests in `tests/**/*.spec.luau`).
-Server- en clientcode roepen ze aan via `require(ReplicatedStorage.Shared.Logic.<Naam>)`.
+Modules here are **pure**: no `game`, no `script`, no Roblox services, no `require` of other modules.
+They get everything through arguments (numbers, tables, a seed) and return a result.
+That means they can be tested without Studio using Lune: `lune run tests/run` (tests in `tests/**/*.spec.luau`).
+Server and client code call them through `require(ReplicatedStorage.Shared.Logic.<Name>)`.

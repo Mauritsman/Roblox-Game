@@ -1,6 +1,6 @@
 --!strict
--- Eén invoerlaag voor toetsenbord, controller en aanraakscherm.
--- Code luistert naar acties ("Fire", "Crouch"...) in plaats van naar knoppen; zo werkt alles op elk toestel.
+-- One input layer for keyboard, controller and touchscreen.
+-- Code listens to actions ("Fire", "Crouch"...) instead of buttons, so everything works on every device.
 
 local ContextActionService = game:GetService("ContextActionService")
 local UserInputService = game:GetService("UserInputService")
@@ -12,7 +12,7 @@ type Listener = (phase: Phase) -> ()
 
 local listeners: { [string]: { Listener } } = {}
 
--- Toetsen per actie (§3.6). Muisknop 1 wordt apart afgehandeld (niet boven de UI).
+-- Keys per action (§3.6). Mouse button 1 is handled separately (not over the UI).
 local BINDINGS: { [string]: { Enum.KeyCode } } = {
 	Slot1 = { Enum.KeyCode.One },
 	Slot2 = { Enum.KeyCode.Two },
@@ -50,7 +50,7 @@ function Actions.fire(name: string, phase: Phase)
 	end
 end
 
--- Houdt bij welke acties nu ingedrukt zijn (voor de drone: omhoog/omlaag vasthouden).
+-- Tracks which actions are currently held down (for the drone: holding up/down).
 local held: { [string]: boolean } = {}
 function Actions.isHeld(name: string): boolean
 	return held[name] == true
@@ -65,7 +65,7 @@ function Actions.preferredInput(): string
 		return (UserInputService :: any).PreferredInput
 	end)
 	if ok and value then
-		return value.Name -- "Touch", "Gamepad" of "KeyboardAndMouse"
+		return value.Name -- "Touch", "Gamepad" or "KeyboardAndMouse"
 	end
 	if UserInputService.TouchEnabled and not UserInputService.KeyboardEnabled then
 		return "Touch"
@@ -86,12 +86,12 @@ function Actions.init()
 				held[name] = false
 				Actions.fire(name, "End")
 			end
-			-- Laat spatie/shift door naar Roblox (springen) als de drone niet vliegt.
+			-- Pass space/shift through to Roblox (jumping) when the drone is not flying.
 			return Enum.ContextActionResult.Pass
 		end, false, table.unpack(keys))
 	end
 
-	-- Linkermuisknop: richten bij indrukken, gooien bij loslaten (alleen buiten de UI).
+	-- Left mouse button: aim on press, throw on release (only outside the UI).
 	UserInputService.InputBegan:Connect(function(input, processed)
 		if processed then
 			return

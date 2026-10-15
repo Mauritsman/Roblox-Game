@@ -1,27 +1,27 @@
 --!strict
--- Namen van CollectionService-tags en attributen, zodat server en client dezelfde spelling gebruiken.
--- (Een tag is een label dat je aan een object hangt, zodat code alle objecten met dat label kan vinden.)
+-- Names of CollectionService tags and attributes, so server and client use the same spelling.
+-- (A tag is a label you attach to an object, so code can find all objects with that label.)
 
 return table.freeze({
 	-- Tags
-	Electronic = "Electronic", -- valt uit door een EMP (camera's, lampen, drones)
+	Electronic = "Electronic", -- knocked out by an EMP (cameras, lamps, drones)
 	SecurityCamera = "SecurityCamera",
 	Lamp = "Lamp",
 	Guard = "Guard",
-	Pryable = "Pryable", -- kan open met de Crowbar
+	Pryable = "Pryable", -- can be opened with the Crowbar
 	GadgetPedestal = "GadgetPedestal",
 	Goal = "Goal",
 	Drone = "Drone",
 	Spottable = "Spottable",
 
-	-- Attributen
-	Disabled = "Disabled", -- boolean op Electronic-objecten
+	-- Attributes
+	Disabled = "Disabled", -- boolean on Electronic objects
 	GuardState = "GuardState",
 	Crouching = "Crouching",
-	Operating = "Operating", -- speler bestuurt drone of kijkt naar camerabeelden
-	Gadgets = "Gadgets", -- komma-lijst van gadgetnamen op de speler
+	Operating = "Operating", -- player is flying a drone or watching camera feeds
+	Gadgets = "Gadgets", -- comma-separated list of gadget names on the player
 	Slots = "Slots",
-	Charges = "Charges_", -- prefix: Charges_EMP enz.
-	Owner = "Owner", -- UserId van de eigenaar (drone)
-	SpotKind = "SpotKind", -- soort ping-icoon voor dit object
+	Charges = "Charges_", -- prefix: Charges_EMP etc.
+	Owner = "Owner", -- UserId of the owner (drone)
+	SpotKind = "SpotKind", -- kind of ping icon for this object
 })

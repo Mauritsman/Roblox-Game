@@ -1,10 +1,10 @@
 --!strict
--- Bewakers (§9.1): vier toestanden met een icoon boven het hoofd.
---   Patrol      vaste route
---   Suspicious  loopt naar iets wat hij zag of hoorde en zoekt even ("?")
---   Alert       achtervolgt een speler en pakt hem bij aanraking ("!")
---   Search      zoekt rond de laatste plek na een achtervolging ("?!")
--- Bewakers hebben geen wapens: een zaklamp en een radio.
+-- Guards (§9.1): four states with an icon above the head.
+--   Patrol      fixed route
+--   Suspicious  walks to something he saw or heard and searches for a moment ("?")
+--   Alert       chases a player and catches them on touch ("!")
+--   Search      searches around the last known spot after a chase ("?!")
+-- Guards have no weapons: a flashlight and a radio.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -58,13 +58,13 @@ local STATE_ICONS: { [GuardState]: { text: string, color: Color3 } } = {
 	Stunned = { text = "◎", color = Color3.fromRGB(150, 220, 255) },
 }
 
--- Wordt door RoundService ingevuld: wat er gebeurt als een bewaker iemand pakt.
+-- Filled in by RoundService: what happens when a guard catches someone.
 function GuardService:OnCapture(callback: (player: Player, guard: Model) -> ())
 	captureCallback = callback
 end
 
 local function createRig(): Model
-	-- Probeer een echt Roblox-personage; lukt dat niet, dan een eenvoudig blok met Humanoid.
+	-- Try a real Roblox character; if that fails, a simple block with a Humanoid.
 	local ok, model = pcall(function()
 		local description = Instance.new("HumanoidDescription")
 		local navy = Color3.fromRGB(40, 52, 90)
@@ -80,7 +80,7 @@ local function createRig(): Model
 	if ok and model then
 		return model
 	end
-	warn("[GuardService] CreateHumanoidModelFromDescription faalde, gebruik blok-bewaker:", model)
+	warn("[GuardService] CreateHumanoidModelFromDescription failed, using block guard:", model)
 	local fallback = Instance.new("Model")
 	local root = Instance.new("Part")
 	root.Name = "HumanoidRootPart"
@@ -214,7 +214,7 @@ local function spawnGuard(level: Folder, position: Vector3)
 	model.Parent = level
 	CollectionService:AddTag(model, Tags.Guard)
 	CollectionService:AddTag(model, Tags.Spottable)
-	-- Servereigendom: alle spelers zien dezelfde bewaker op dezelfde plek.
+	-- Server ownership: all players see the same guard in the same place.
 	pcall(function()
 		root:SetNetworkOwner(nil)
 	end)
@@ -223,7 +223,7 @@ local function spawnGuard(level: Folder, position: Vector3)
 	local animator = humanoid:FindFirstChildOfClass("Animator")
 	if animator and humanoid.RigType == Enum.HumanoidRigType.R15 and model:FindFirstChild("UpperTorso") then
 		local walk = Instance.new("Animation")
-		walk.AnimationId = "rbxassetid://507777826" -- standaard R15-loopanimatie van Roblox
+		walk.AnimationId = "rbxassetid://507777826" -- Roblox's default R15 walk animation
 		local okTrack, track = pcall(function()
 			return animator:LoadAnimation(walk)
 		end)
@@ -277,7 +277,7 @@ local function visionParams(guard: Guard, extra: { Instance }): RaycastParams
 	if level then
 		local cage = level:FindFirstChild("Cage")
 		if cage then
-			table.insert(ignore, cage) -- door het hekwerk van de kooi kan je kijken
+			table.insert(ignore, cage) -- you can see through the cage's fencing
 		end
 	end
 	for _, other in guards do
@@ -290,7 +290,7 @@ local function visionParams(guard: Guard, extra: { Instance }): RaycastParams
 	return params
 end
 
--- Ziet deze bewaker dit punt? Geeft ook de afstand terug.
+-- Does this guard see this point? Also returns the distance.
 local function canSee(guard: Guard, point: Vector3, targetModel: Instance?, range: number): (boolean, number)
 	local eye = guard.root.Position + Vector3.new(0, G.HeadHeight, 0)
 	local offset = point - eye
@@ -327,13 +327,13 @@ local function investigate(guard: Guard, position: Vector3, searchSeconds: numbe
 	guard.targetPos = position
 	guard.arrived = false
 	guard.stateUntil = searchSeconds
-	-- Kan hij er niet geraken (muur ertussen), dan geeft hij het na deze tijd op en zoekt hij waar hij staat.
+	-- If he cannot get there (wall in between), he gives up after this time and searches where he stands.
 	guard.walkDeadline = os.clock() + (position - guard.root.Position).Magnitude / G.InvestigateSpeed + 3
 end
 
--- Geluid (Noisemaker, CRACK, BZZT). Geeft het aantal bewakers terug dat het hoorde.
--- Een bewaker die door een Noisemaker is afgeleid, hoort tijdens dat venster geen CRACK of BZZT:
--- precies daarom moet de Crowbar tijdens de afleiding (§3.1).
+-- Noise (Noisemaker, CRACK, BZZT). Returns the number of guards that heard it.
+-- A guard distracted by a Noisemaker hears no CRACK or BZZT during that window:
+-- that is exactly why the Crowbar has to happen during the distraction (§3.1).
 function GuardService:HearNoise(
 	position: Vector3,
 	radius: number,
@@ -355,7 +355,7 @@ function GuardService:HearNoise(
 				continue
 			end
 			if isRepeat then
-				-- "Again?!": hij trapt er niet meer in, wordt achterdochtig en kijkt rond waar hij staat.
+				-- "Again?!": he no longer falls for it, becomes suspicious and looks around where he stands.
 				investigate(guard, guard.root.Position, searchSeconds or G.SearchSeconds)
 				guard.arrived = true
 			else
@@ -370,7 +370,7 @@ function GuardService:HearNoise(
 	return heard
 end
 
--- Bubble Blaster (§4.8): sluit deze bewaker een venster lang in een zeepbel. Geeft true bij succes.
+-- Bubble Blaster (§4.8): traps this guard in a bubble for one window. Returns true on success.
 function GuardService:Bubble(model: Instance, seconds: number): boolean
 	for _, guard in guards do
 		if guard.model == model or model:IsDescendantOf(guard.model) then
@@ -404,7 +404,7 @@ function GuardService:Bubble(model: Instance, seconds: number): boolean
 	return false
 end
 
--- Een camera zag iemand: de bewakers komen kijken.
+-- A camera saw someone: the guards come to look.
 function GuardService:ReportPosition(position: Vector3)
 	for _, guard in guards do
 		if guard.state ~= "Alert" and guard.state ~= "Stunned" then
@@ -426,7 +426,7 @@ end
 
 local function updateVision(guard: Guard, dt: number)
 	if guard.state == "Stunned" then
-		-- In een zeepbel ziet hij niets: de meters zakken langzaam.
+		-- Inside a bubble he sees nothing: the meters drop slowly.
 		for player, meter in guard.meters do
 			guard.meters[player] = math.max(0, meter - G.DecayPerSecond * dt)
 		end
@@ -489,7 +489,7 @@ local function updateVision(guard: Guard, dt: number)
 		guard.meters[player] = meter
 	end
 
-	-- Drone gezien? (§4.1: na 1,5 s "What's that?" en hij komt kijken)
+	-- Drone seen? (§4.1: after 1.5 s "What's that?" and he comes to look)
 	local sawDrone = false
 	for _, drone in CollectionService:GetTagged(Tags.Drone) do
 		if drone:IsA("BasePart") and guard.state ~= "Alert" then
@@ -530,7 +530,7 @@ local function popBubble(guard: Guard)
 	task.delay(2, function()
 		pop:Destroy()
 	end)
-	-- Boos uit de bel: meteen zoeken waar hij staat, en het alarm stijgt een beetje (§4.8).
+	-- Angry out of the bubble: searches right where he stands, and the alarm rises a little (§4.8).
 	guard.targetPos = guard.root.Position
 	guard.arrived = true
 	guard.stateUntil = G.AlertSearchSeconds
@@ -566,7 +566,7 @@ local function updateBehaviour(guard: Guard, dt: number)
 				guard.arrived = true
 			end
 		else
-			-- Rondkijken: langzaam draaien terwijl de zoektijd afloopt.
+			-- Look around: turn slowly while the search time runs out.
 			guard.root.CFrame = guard.root.CFrame * CFrame.Angles(0, math.rad(70) * dt, 0)
 			guard.stateUntil -= dt
 			if guard.stateUntil <= 0 then
@@ -598,7 +598,7 @@ local function updateBehaviour(guard: Guard, dt: number)
 				captureCallback(target, guard.model)
 			end
 		elseif os.clock() - guard.lastSeenAt > 3 then
-			-- Speler kwijt: zoek rond de laatste plek.
+			-- Lost the player: search around the last known spot.
 			guard.target = nil
 			guard.stateUntil = G.AlertSearchSeconds
 			guard.arrived = false

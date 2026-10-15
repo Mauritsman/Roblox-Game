@@ -1,5 +1,5 @@
 --!strict
--- Gedeelde toestand aan de kant van de speler (welk gadget geselecteerd, richten, drone...).
+-- Shared state on the player's side (which gadget is selected, aiming, drone...).
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 

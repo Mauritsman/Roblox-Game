@@ -1,7 +1,7 @@
 --!strict
--- Testhulp, ALLEEN actief in Roblox Studio (RunService:IsStudio()).
--- Laat Claude via de Studio MCP gadgets geven en deuren openen zonder dat er
--- knoppen op het scherm moeten verschijnen. In de gepubliceerde game doet dit niets.
+-- Test helper, ONLY active in Roblox Studio (RunService:IsStudio()).
+-- Lets Claude hand out gadgets and open doors through the Studio MCP without any
+-- buttons having to appear on screen. It does nothing in the published game.
 
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -19,13 +19,13 @@ function DevService:Start()
 	if not RunService:IsStudio() then
 		return
 	end
-	-- Gadget nemen/teruglegen alsof de speler de sokkelknop indrukte.
+	-- Take/return a gadget as if the player pressed the pedestal button.
 	Net.onRequest("DevTake", function(player: Player, gadgetName: any)
 		if typeof(gadgetName) == "string" then
 			LoadoutService:Toggle(player, gadgetName)
 		end
 	end)
-	-- Een Pryable-object openen alsof de speler de Crowbar-knop vasthield (optioneel op naam, bv. "CageDoor").
+	-- Open a Pryable object as if the player held the Crowbar button (optionally by name, e.g. "CageDoor").
 	Net.onRequest("DevPry", function(player: Player, targetName: any)
 		for _, target in CollectionService:GetTagged(Tags.Pryable) do
 			local nameOk = typeof(targetName) ~= "string" or target.Name == targetName

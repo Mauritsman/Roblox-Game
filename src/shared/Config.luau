@@ -1,13 +1,13 @@
 --!strict
--- Alle afstelbare getallen op één plek (bron: docs/gameplan-roblox.md).
--- Pas waarden hier aan na speeltests, niet verspreid door de code.
--- Afstanden in studs, tijden in seconden.
+-- All tunable numbers in one place (source: docs/gameplan-roblox.md).
+-- Adjust values here after playtests, not scattered through the code.
+-- Distances in studs, times in seconds.
 
 local Config = {}
 
-Config.Version = "0.2.0-fase1"
+Config.Version = "0.2.0-phase1"
 
--- Het venster (§3.3): gedeelde toestand op de server, voor iedereen even lang.
+-- The window (§3.3): shared state on the server, equally long for everyone.
 Config.Difficulty = "Normal" -- "Rookie" | "Normal" | "Pro"
 Config.WindowSeconds = {
 	Rookie = 12,
@@ -16,15 +16,15 @@ Config.WindowSeconds = {
 }
 Config.SoloExtraWindow = 2
 
--- Gadgetvakken per crewgrootte (§3.7).
+-- Gadget slots per crew size (§3.7).
 Config.SlotsByCrewSize = { 3, 2, 2, 1 }
 
--- Gadgets (§4). Step = welke stap van de keten.
+-- Gadgets (§4). Step = which step of the chain.
 Config.Gadgets = {
 	Drone = {
 		Step = "EYES",
 		Charges = 1,
-		Range = 45, -- maximale afstand tot het lichaam van de bestuurder
+		Range = 45, -- maximum distance from the pilot's body
 		BatterySeconds = 40,
 		RechargeSeconds = 20,
 		Speed = 18,
@@ -37,7 +37,7 @@ Config.Gadgets = {
 		ThrowRange = 40,
 		RingSeconds = 6,
 		HearRadius = 20,
-		RepeatWindow = 30, -- tweede worp op dezelfde plek binnen deze tijd = verdacht
+		RepeatWindow = 30, -- second throw at the same spot within this time = suspicious
 		RepeatDistance = 8,
 	},
 	EMP = {
@@ -48,16 +48,16 @@ Config.Gadgets = {
 		Cooldown = 30,
 		BzztRadius = 10,
 	},
-	-- Grappig wapen (§4.8): een zeepbel koopt een venster op één bewaker, geen oplossing.
+	-- Funny weapon (§4.8): a bubble buys a window on one guard, not a solution.
 	BubbleBlaster = {
 		Step = "CLEAR",
 		Label = "BUBBLE",
 		Charges = 3,
-		ThrowRange = 50, -- maximale schietafstand
+		ThrowRange = 50, -- maximum shooting distance
 		ProjectileSpeed = 45,
 		HitRadius = 3.5,
 		BubbleSeconds = 8,
-		FriendlySeconds = 3, -- als je per ongeluk een teamgenoot raakt
+		FriendlySeconds = 3, -- if you accidentally hit a teammate
 	},
 	Crowbar = {
 		Step = "OPEN",
@@ -69,9 +69,9 @@ Config.Gadgets = {
 }
 Config.GadgetOrder = { "Drone", "Noisemaker", "EMP", "BubbleBlaster", "Crowbar" }
 
--- Bewakers (§9.1).
+-- Guards (§9.1).
 Config.Guard = {
-	ConeHalfAngle = 35, -- graden (kegel van 70°)
+	ConeHalfAngle = 35, -- degrees (70° cone)
 	RangeLit = 35,
 	RangeDark = 18,
 	FillSecondsNear = 0.6,
@@ -89,7 +89,7 @@ Config.Guard = {
 	HeadHeight = 2.5,
 }
 
--- Beveiligingscamera's (§9.3).
+-- Security cameras (§9.3).
 Config.SecurityCamera = {
 	SweepDegrees = 90,
 	SweepSeconds = 6,
@@ -98,35 +98,35 @@ Config.SecurityCamera = {
 	FillSeconds = { Rookie = 3, Normal = 2, Pro = 2 },
 }
 
--- Alarmladder (§9.5).
+-- Alarm ladder (§9.5).
 Config.Alarm = {
 	Points = {
 		CameraSpotted = 40,
 		GuardAlert = 40,
 		CrackHeard = 20,
 		NoisemakerRepeat = 15,
-		PrankUsed = 10, -- een bewaker komt boos uit zijn zeepbel
+		PrankUsed = 10, -- a guard comes out of his bubble angry
 		TraceFound = 20,
 	},
-	LevelThresholds = { 100, 200, 300 }, -- trede 1, 2, 3
+	LevelThresholds = { 100, 200, 300 }, -- rung 1, 2, 3
 	LevelNames = { [0] = "QUIET", [1] = "SUSPICIOUS", [2] = "SEARCHING", [3] = "LOCKDOWN" },
 	LockdownSeconds = 90,
 	RookieMultiplier = 0.5,
 }
 
--- Spelers.
+-- Players.
 Config.Player = {
 	WalkSpeed = 16,
 	CrouchSpeed = 8,
 }
 
--- Pings en Chain Call (§3.4–3.5).
+-- Pings and Chain Call (§3.4–3.5).
 Config.Ping = {
 	SpotMaxPerWindow = 3,
 	SpotWindowSeconds = 2,
 	SpotDurationDefault = 8,
 	SpotDurationTracked = 5,
-	QuickCooldown = 2, -- verhoog naar 10 als Roblox dit als preset-bericht beschouwt
+	QuickCooldown = 2, -- raise to 10 if Roblox treats this as a preset message
 	QuickPresets = { "NOW", "WAIT" },
 	MaxRange = 300,
 }

@@ -1,8 +1,8 @@
 --!strict
--- De kade en de gracht van Polderdam (§10.1): grond, water, kaaimuren, grachtenpanden aan de overkant,
--- buurhuizen aan onze kant, lantaarns, paaltjes, fietsen, het busje met de gadgetrek en de spawn.
+-- The quay and canal of Polderdam (§10.1): ground, water, quay walls, canal houses on the far side,
+-- neighbouring houses on our side, lanterns, bollards, bikes, the van with the gadget rack, and the spawn.
 --
--- Assen: noord = -X (richting gracht). Gracht x -72..-54, kade x -54..-22, gevels van onze rij op x -22.
+-- Axes: north = -X (towards the canal). Canal x -72..-54, quay x -54..-22, facades of our row at x -22.
 
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -19,7 +19,7 @@ local C = Builder.Colors
 local Quay = {}
 
 local function lamp(parent: Instance, ground: Vector3, name: string)
-	-- Grachtlantaarn: AI-prop als die er is, anders paal + lantaarn uit blokken.
+	-- Canal lantern: the AI prop if it exists, otherwise a post + lantern made of blocks.
 	local post = Builder.prop(parent, "StreetLamp", ground, 0, {
 		fallback = function(p, g)
 			return Builder.cylinder(
@@ -35,8 +35,8 @@ local function lamp(parent: Instance, ground: Vector3, name: string)
 			)
 		end,
 	})
-	-- De lichtbron zelf is een apart "Lamp"-onderdeel: dat kan een EMP uitzetten.
-	-- Bij de AI-lantaarn zit het glas op 9,1–10,2 studs hoog; een neon cilinder schijnt door de ruitjes.
+	-- The light source itself is a separate "Lamp" part: an EMP can switch that off.
+	-- On the AI lantern the glass sits 9.1–10.2 studs high; a neon cylinder shines through the panes.
 	local isMesh = post ~= nil and post.Name == "StreetLamp"
 	local bulb = if isMesh
 		then Builder.cylinder(parent, name, 1.5, 1.1, ground + Vector3.new(0, 9.65, 0), C.LampWarm, {
@@ -63,7 +63,7 @@ local function lamp(parent: Instance, ground: Vector3, name: string)
 end
 
 local function gadgetRack(parent: Instance)
-	-- De gadgetrek achter het busje: per gadget een kist met een oplichtende plaat erbovenop.
+	-- The gadget rack behind the van: one crate per gadget with a glowing plate on top.
 	for index, gadgetName in Config.GadgetOrder do
 		local z = -16 + (index - 1) * 8
 		local color = Builder.GadgetColors[gadgetName] or Color3.new(1, 1, 1)
@@ -101,7 +101,7 @@ local function gadgetRack(parent: Instance)
 end
 
 local function bridge(parent: Instance, z: number)
-	-- Een Amsterdamse grachtbrug: dek, twee bogen en lage leuningen. Sluit de gracht visueel af.
+	-- An Amsterdam canal bridge: deck, two arches and low railings. Visually closes off the canal.
 	local deckY = 0.6
 	Builder.box(
 		parent,
@@ -137,7 +137,7 @@ local function bridge(parent: Instance, z: number)
 			}
 		)
 	end
-	-- Boog onder het dek (blokken die naar het midden toe dunner worden).
+	-- Arch under the deck (blocks that get thinner towards the middle).
 	for i = 0, 8 do
 		local x = -72 + i * 2
 		local depth = 1.2 + math.abs(i - 4) * 0.9
@@ -153,7 +153,7 @@ local function bridge(parent: Instance, z: number)
 			}
 		)
 	end
-	-- Lantaarn in het midden van de brug, met fietsen ertegen.
+	-- Lantern in the middle of the bridge, with bikes leaning against it.
 	lamp(parent, Vector3.new(-63, deckY, z + 4.2), `BridgeLamp{z}`)
 	Builder.prop(parent, "Bicycle", Vector3.new(-60, deckY, z + 3.6), 90, { collide = false })
 end
@@ -162,12 +162,12 @@ function Quay.build(level: Folder, rng: Random)
 	local quay = Builder.folder(level, "Quay")
 	local terrain = workspace.Terrain
 
-	-- Grond: west-oever en ons land, met de gracht ertussen.
+	-- Ground: the west bank and our land, with the canal in between.
 	Builder.box(quay, "GroundWest", Vector3.new(-160, -8, -130), Vector3.new(-72, 0, 130), C.Cobble, {
 		material = Enum.Material.Cobblestone,
 		variant = "CC_Cobble",
 	})
-	-- Kade in drie stroken: kasseien aan het water, klinkerweg, en een verhoogde stoep langs de gevels.
+	-- Quay in three strips: cobbles by the water, a brick road, and a raised pavement along the facades.
 	Builder.box(quay, "GroundQuayEdge", Vector3.new(-54, -8, -130), Vector3.new(-46, 0, 130), C.Cobble, {
 		material = Enum.Material.Cobblestone,
 		variant = "CC_Cobble",
@@ -218,7 +218,7 @@ function Quay.build(level: Folder, rng: Random)
 			material = Enum.Material.Mud,
 		}
 	)
-	-- Kaaimuren in baksteen met een granieten rand.
+	-- Brick quay walls with a granite edge.
 	for _, x in { -54, -72 } do
 		local inward = if x == -54 then 0.3 else -0.3
 		Builder.box(
@@ -243,7 +243,7 @@ function Quay.build(level: Folder, rng: Random)
 			}
 		)
 	end
-	-- Water (Terrain): leegmaken en vullen.
+	-- Water (Terrain): clear and fill.
 	terrain:FillBlock(CFrame.new(-63, -3, 0), Vector3.new(18, 12, 260), Enum.Material.Air)
 	terrain:FillBlock(CFrame.new(-63, -5.5, 0), Vector3.new(18, 5, 260), Enum.Material.Water)
 	terrain.WaterColor = Color3.fromRGB(28, 54, 62)
@@ -252,7 +252,7 @@ function Quay.build(level: Folder, rng: Random)
 	terrain.WaterWaveSize = 0.08
 	terrain.WaterWaveSpeed = 6
 
-	-- Grachtenpanden aan de overkant (achtergrond) en aan onze kant buiten het perceel.
+	-- Canal houses on the far side (background) and on our side outside the plot.
 	CanalHouse.row(
 		quay,
 		Vector3.new(-75, 0, -126),
@@ -277,7 +277,7 @@ function Quay.build(level: Folder, rng: Random)
 		rng,
 		{ depth = 40 }
 	)
-	-- Huizen aan het eind van de straat en bruggen over de gracht: zo eindigt de wereld niet in het niets.
+	-- Houses at the end of the street and bridges over the canal: so the world does not end in nothing.
 	for _, z in { -127, 127 } do
 		local facing = Vector3.new(0, 0, -math.sign(z))
 		CanalHouse.row(quay, Vector3.new(-54, 0, z), Vector3.new(-22, 0, z), facing, rng, { depth = 14 })
@@ -295,7 +295,7 @@ function Quay.build(level: Folder, rng: Random)
 			}
 		)
 	end
-	-- Buurpakhuis achter onze hal, zodat de horizon dicht is.
+	-- Neighbouring warehouse behind our hall, so the horizon is closed.
 	Builder.box(quay, "NeighbourWarehouse", Vector3.new(62, 0, -60), Vector3.new(110, 22, 60), C.BrickDark, {
 		material = Enum.Material.Brick,
 		variant = "CC_Brick",
@@ -309,7 +309,7 @@ function Quay.build(level: Folder, rng: Random)
 		variant = "CC_Brick",
 	})
 
-	-- Lantaarns langs de gracht en paaltjes (Amsterdammertjes).
+	-- Lanterns along the canal and bollards (Amsterdammertjes).
 	local lampIndex = 0
 	for z = -108, 108, 24 do
 		lampIndex += 1
@@ -331,7 +331,7 @@ function Quay.build(level: Folder, rng: Random)
 		end
 	end
 
-	-- Iepen langs de gracht (niet bij het busje), en sloepjes aangemeerd in het water.
+	-- Elms along the canal (not by the van), and small boats moored in the water.
 	for z = -96, 96, 24 do
 		if z < -6 or z > 14 then
 			Builder.tree(quay, Vector3.new(-48.6, 0, z), rng)
@@ -342,7 +342,7 @@ function Quay.build(level: Folder, rng: Random)
 	Builder.boat(quay, Vector3.new(-68.6, -2.6, -4), Color3.fromRGB(40, 60, 110))
 	Builder.boat(quay, Vector3.new(-68.6, -2.6, 78), Color3.fromRGB(150, 50, 40))
 
-	-- Fietsen tegen de gevel naast de winkel, een bankje aan het water en bloembakken.
+	-- Bikes against the facade next to the shop, a bench by the water and flower boxes.
 	for i = 0, 3 do
 		Builder.prop(quay, "Bicycle", Vector3.new(-25.2, Builder.SIDEWALK, -52 + i * 3.4), 90 + (i % 2) * 6, {
 			fallback = function(p, g)
@@ -376,7 +376,7 @@ function Quay.build(level: Folder, rng: Random)
 		{ material = Enum.Material.WoodPlanks }
 	)
 
-	-- Woonboot in de gracht (decor).
+	-- Houseboat in the canal (scenery).
 	Builder.box(
 		quay,
 		"HouseboatHull",
@@ -414,7 +414,7 @@ function Quay.build(level: Folder, rng: Random)
 		C.StoneDark
 	)
 
-	-- Het busje van de crew en de gadgetrek.
+	-- The crew's van and the gadget rack.
 	Builder.prop(quay, "Van", Vector3.new(-40, 0, 4), 0, {
 		fallback = function(p, g)
 			local van = Builder.block(
@@ -446,7 +446,7 @@ function Quay.build(level: Folder, rng: Random)
 	Builder.label(vanLabelAnchor, "THE VAN", Color3.new(1, 1, 1), 0, 80)
 	gadgetRack(quay)
 
-	-- Spawn naast het busje.
+	-- Spawn next to the van.
 	local spawn = Instance.new("SpawnLocation")
 	spawn.Name = "CrewSpawn"
 	spawn.Size = Vector3.new(6, 0.4, 6)
@@ -458,7 +458,7 @@ function Quay.build(level: Folder, rng: Random)
 	spawn.CanCollide = false
 	spawn.Parent = quay
 
-	-- Onzichtbare grenzen: niet in de gracht, niet de straat uit.
+	-- Invisible boundaries: not into the canal, not out of the street.
 	Builder.box(quay, "BarrierCanal", Vector3.new(-55.5, 0, -130), Vector3.new(-54.5, 14, 130), C.Stone, {
 		transparency = 1,
 		query = false,
@@ -471,7 +471,7 @@ function Quay.build(level: Folder, rng: Random)
 		transparency = 1,
 		query = false,
 	})
-	-- Wegafzetting als zichtbare reden waarom de straat ophoudt.
+	-- Roadblock as a visible reason why the street ends.
 	for _, z in { -114, 114 } do
 		for i = 0, 3 do
 			Builder.box(

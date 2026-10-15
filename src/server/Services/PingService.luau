@@ -1,6 +1,6 @@
 --!strict
--- Pings (§3.5): icoon-markeringen in de wereld ("SPOT") en vaste snelberichten (NOW / WAIT).
--- Geen vrije tekst: spelers kunnen niets zelf typen, dus iedereen mag ze gebruiken.
+-- Pings (§3.5): icon markers in the world ("SPOT") and fixed quick messages (NOW / WAIT).
+-- No free text: players cannot type anything themselves, so everyone may use them.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -12,7 +12,7 @@ local Tags = require(ReplicatedStorage.Shared.Tags)
 
 local PingService = {}
 
--- Kleurenblind-vriendelijke spelerkleuren (blauw, oranje, groen, roze); elke ping heeft ook een vorm.
+-- Colour-blind-friendly player colours (blue, orange, green, pink); every ping also has a shape.
 local PLAYER_COLORS = {
 	Color3.fromRGB(80, 160, 255),
 	Color3.fromRGB(255, 150, 40),
@@ -81,7 +81,7 @@ local function rateLimited(player: Player): boolean
 	return false
 end
 
--- Plaats een SPOT-ping. auto = automatisch door drone/camera (telt niet mee voor de limiet).
+-- Places a SPOT ping. auto = automatic, by drone/camera (does not count towards the limit).
 function PingService:Spot(player: Player, target: Instance?, position: Vector3?, auto: boolean?)
 	if not auto and rateLimited(player) then
 		return
@@ -130,7 +130,7 @@ function PingService:Start()
 		PingService:Spot(player, inst, pos, false)
 	end)
 
-	-- Automatische markering door de drone: de server controleert zelf of de drone het doel echt ziet.
+	-- Automatic marking by the drone: the server checks for itself whether the drone really sees the target.
 	Net.onRequest("DroneSpot", function(player: Player, target: any)
 		if typeof(target) ~= "Instance" then
 			return

@@ -1,5 +1,5 @@
 --!strict
--- Een eenvoudig signaal: andere code kan zich "abonneren" en wordt verwittigd bij Fire().
+-- A simple signal: other code can "subscribe" and is notified on Fire().
 
 export type Connection = { Disconnect: (self: Connection) -> () }
 export type Signal<T...> = {

@@ -1,6 +1,6 @@
 --!strict
--- Beveiligingscamera's (§9.3): zwaaien heen en weer, een meter loopt vol als ze je zien.
--- Volle meter = alarmpunten en de bewakers komen kijken. Een EMP zet ze een venster lang uit.
+-- Security cameras (§9.3): they sweep back and forth, and a meter fills up while they see you.
+-- Full meter = alarm points and the guards come to look. An EMP switches them off for one window.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -99,7 +99,7 @@ end
 local function update(cam: Cam, dt: number)
 	local disabled = cam.model:GetAttribute(Tags.Disabled) == true
 	if disabled then
-		cam.clock = 0 -- na het herstarten kijkt hij eerst weer naar zijn beginpunt
+		cam.clock = 0 -- after restarting it first looks back at its starting point
 		table.clear(cam.meters)
 		setVisual(cam, true, false)
 		return

@@ -1,6 +1,6 @@
 --!strict
--- Gadgets gebruiken aan de kant van de speler: selecteren, richten, gooien, drone starten, hurken.
--- Alles wat telt, beslist de server; hier tonen we alleen een richtpunt en sturen we een verzoek.
+-- Using gadgets on the player's side: selecting, aiming, throwing, launching the drone, crouching.
+-- The server decides everything that matters; here we only show an aim point and send a request.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -90,7 +90,7 @@ local function screenRay(): Ray
 	return camera:ViewportPointToRay(size.X / 2, size.Y / 2)
 end
 
--- Waar wijst de speler naar? Gedeeld met de ping- en Chain Call-controllers.
+-- What is the player pointing at? Shared with the ping and Chain Call controllers.
 function GadgetController.pointerHit(maxDistance: number?): RaycastResult?
 	local ray = screenRay()
 	local params = RaycastParams.new()
@@ -143,7 +143,7 @@ local function throw()
 	end
 end
 
--- "Gebruiken" zonder richten: drone starten, of uitleg bij de Crowbar.
+-- "Use" without aiming: launch the drone, or a hint for the Crowbar.
 local function useSelected()
 	local gadgetName = selectedGadget()
 	if not gadgetName then
@@ -201,7 +201,7 @@ local function updateAimVisual()
 		elseif gadgetName == "BubbleBlaster" then Color3.fromRGB(255, 150, 225)
 		else Color3.fromRGB(255, 210, 60)
 
-	-- §4.4: laat zien dat je eigen drone (of die van een teamgenoot) in de straal hangt.
+	-- §4.4: show that your own drone (or a teammate's) is inside the radius.
 	local warned = false
 	if gadgetName == "EMP" then
 		for _, drone in CollectionService:GetTagged(Tags.Drone) do
@@ -261,7 +261,7 @@ local function buildAimVisuals()
 end
 
 local function setCrouch(on: boolean)
-	Net.request("Crouch", on) -- de camera volgt zodra de server het attribuut zet
+	Net.request("Crouch", on) -- the camera follows once the server sets the attribute
 end
 
 function GadgetController:Init()
@@ -285,10 +285,10 @@ function GadgetController:Start()
 		end
 	end)
 
-	-- Muis: indrukken = richten (of gebruiken), loslaten = gooien.
+	-- Mouse: press = aim (or use), release = throw.
 	Actions.on("MouseAim", function(phase)
 		if ClientState.drone then
-			return -- in dronemodus is klikken = SPOT (DroneController)
+			return -- in drone mode a click = SPOT (DroneController)
 		end
 		local gadgetName = selectedGadget()
 		if phase == "Begin" then
@@ -302,7 +302,7 @@ function GadgetController:Start()
 		end
 	end)
 
-	-- Controller: L2 richten, R2 gooien/gebruiken.
+	-- Controller: L2 aims, R2 throws/uses.
 	Actions.on("Aim", function(phase)
 		local gadgetName = selectedGadget()
 		if gadgetName and THROWABLE[gadgetName] and not ClientState.drone then
@@ -319,7 +319,7 @@ function GadgetController:Start()
 			useSelected()
 		end
 	end)
-	-- Aanraakscherm: gadgetknop = richten aan/uit (of gebruiken); THROW-knop = gooien.
+	-- Touchscreen: gadget button = aim on/off (or use); THROW button = throw.
 	Actions.on("TouchGadget", function(phase)
 		if phase == "Begin" and not ClientState.drone then
 			useSelected()
@@ -331,7 +331,7 @@ function GadgetController:Start()
 		end
 	end)
 
-	-- Hurken volgt het attribuut van de server (dat ook uitgaat na gepakt worden of na de drone).
+	-- Crouching follows the server's attribute (which also turns off after being caught or after the drone).
 	local function isCrouching(): boolean
 		local character = player.Character
 		return character ~= nil and character:GetAttribute(Tags.Crouching) == true
@@ -357,7 +357,7 @@ function GadgetController:Start()
 		watchCharacter(player.Character)
 	end
 
-	-- Chain Call: op NOW gaat een klaargezette EMP of Noisemaker automatisch af (§3.4).
+	-- Chain Call: on NOW, a readied EMP or Noisemaker goes off automatically (§3.4).
 	ClientState.Changed:Connect(function(key)
 		if key == "ChainNow" and ClientState.aiming then
 			throw()

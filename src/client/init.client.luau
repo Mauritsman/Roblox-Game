@@ -1,6 +1,6 @@
 --!strict
--- Client-bootstrap voor Crowbar Crew.
--- Laadt elke ModuleScript in Controllers, roept eerst Init() en daarna Start() aan.
+-- Client bootstrap for Crowbar Crew.
+-- Loads every ModuleScript in Controllers, calls Init() first and then Start().
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -8,7 +8,7 @@ local Config = require(ReplicatedStorage.Shared.Config)
 local Actions = require(script:WaitForChild("Lib"):WaitForChild("Actions"))
 local Hud = require(script.Lib:WaitForChild("Hud"))
 
--- Eerst de gedeelde UI en invoer, daarna de controllers die ze gebruiken.
+-- First the shared UI and input, then the controllers that use them.
 Hud.init()
 Actions.init()
 
@@ -33,7 +33,7 @@ for name, controller in controllers do
 			(controller :: any):Init()
 		end)
 		if not ok then
-			warn(`[Client] Init van {name} faalde: {err}`)
+			warn(`[Client] Init of {name} failed: {err}`)
 		end
 	end
 end
@@ -45,10 +45,10 @@ for name, controller in controllers do
 				(controller :: any):Start()
 			end)
 			if not ok then
-				warn(`[Client] Start van {name} faalde: {err}`)
+				warn(`[Client] Start of {name} failed: {err}`)
 			end
 		end)
 	end
 end
 
-print(`[Client] Crowbar Crew {Config.Version} gestart`)
+print(`[Client] Crowbar Crew {Config.Version} started`)

@@ -1,7 +1,7 @@
 --!strict
--- Knoppen voor telefoon en tablet (§3.6). Alleen zichtbaar als aanraken de voorkeursinvoer is.
--- De standaard Roblox-joystick (linksonder) en springknop (rechtsonder) blijven vrij;
--- onze knoppen staan in een boog erboven en ernaast. Hoofdknoppen ≥ 64 px, kleine ≥ 52 px.
+-- Buttons for phone and tablet (§3.6). Only visible when touch is the preferred input.
+-- The standard Roblox joystick (bottom left) and jump button (bottom right) stay clear;
+-- our buttons sit in an arc above and beside them. Main buttons ≥ 64 px, small ones ≥ 52 px.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -23,8 +23,8 @@ type ButtonSpec = {
 	name: string,
 	text: string,
 	size: number,
-	x: number, -- afstand van de rechterrand tot de rechterkant van de knop
-	y: number, -- afstand van de onderrand tot de onderkant van de knop
+	x: number, -- distance from the right edge to the right side of the button
+	y: number, -- distance from the bottom edge to the bottom of the button
 	color: Color3?,
 }
 
@@ -120,7 +120,7 @@ local function build()
 	container.Parent = Hud.gui()
 
 	local function fire(action: string): () -> ()
-		-- (tap = Begin gevolgd door End)
+		-- (tap = Begin followed by End)
 		return function()
 			Actions.fire(action, "Begin")
 			task.defer(function()
@@ -156,7 +156,7 @@ local function build()
 			end
 		)
 	end
-	-- Dronemodus.
+	-- Drone mode.
 	addButton({ name = "Up", text = "▲", size = 60, x = 246, y = 100 }, nil, function(down)
 		Actions.setHeld("DroneUp", down)
 	end)

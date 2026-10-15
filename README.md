@@ -1,13 +1,13 @@
 # Crowbar Crew (Roblox-Game)
 
-Een co-op stealth-heistgame voor Roblox: vier vrienden met een busje, zes gadgets en één regel — niemand kan een stap alleen zetten.
+A co-op stealth heist game for Roblox: four friends with a van, six gadgets and one rule — nobody can take a step alone.
 
-Titel: **Crowbar Crew** (gekozen op 15 oktober 2026).
+Title: **Crowbar Crew** (chosen on 15 October 2026).
 
-## Inhoud
+## Contents
 
-- `docs/roblox-prompt.md` — de opdracht om het gameconcept om te zetten naar een volledig Roblox-gameplan.
-- `docs/gameplan-roblox.md` — het volledige gameplan voor Roblox (versie 1.1, 15 oktober 2026): keten, gadgets, economie, eerste map, bouwvolgorde en het opzetplan voor de tools.
-- `docs/ontwikkelen.md` — wat er geïnstalleerd is, hoe je het prototype speelt en test, en hoe map 1 in elkaar zit.
-- `tools/` — controle (`check.sh`), code naar Studio (`studio_sync.py`), props herstellen (`restore_props.luau`) en een Blender-preview (`preview/`).
-- `src/` — de code (Rojo-project `default.project.json`); `tools/check.sh` controleert alles.
+- `docs/roblox-prompt.md` — the brief to turn the game concept into a complete Roblox gameplan.
+- `docs/gameplan-roblox.md` — the complete gameplan for Roblox (version 1.1, 15 October 2026): chain, gadgets, economy, first map, build order and the setup plan for the tools.
+- `docs/development.md` — what is installed, how to play and test the prototype, and how map 1 is put together.
+- `tools/` — checks (`check.sh`), code to Studio (`studio_sync.py`), restoring props (`restore_props.luau`) and a Blender preview (`preview/`).
+- `src/` — the code (Rojo project `default.project.json`); `tools/check.sh` checks everything.

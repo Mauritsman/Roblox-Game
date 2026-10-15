@@ -1,212 +1,212 @@
-# Crowbar Crew — gameplan voor Roblox
+# Crowbar Crew — gameplan for Roblox
 
-*Versie 1.3 — 15 oktober 2026 (grappige wapens; verdienmodel uitgebreid met Crew Pass, winkel en Glovebox). Opdracht: [`docs/roblox-prompt.md`](roblox-prompt.md). Titel en rol van Karel bevestigd door Maurits op 15/10/2026.*
+*Version 1.3 — 15 October 2026 (funny weapons; monetisation extended with Crew Pass, shop and Glovebox). Brief: [`docs/roblox-prompt.md`](roblox-prompt.md). Title and Karel's role confirmed by Maurits on 15/10/2026.*
 
-**Bron van het concept.** Het volledige oude plan (`unpaid-gameplan.md`) zat niet bij de opdracht en staat niet in deze repo. Dit plan gaat daarom uit van de samenvatting in de prompt. Waar die samenvatting iets openliet, staat er een voorstel. De rol van Karel (§9.6) en de titel (§14) zijn intussen bevestigd.
+**Source of the concept.** The full old plan (`unpaid-gameplan.md`) was not included with the brief and is not in this repo. This plan is therefore based on the summary in the prompt. Where that summary left something open, there is a proposal. Karel's role (§9.6) and the title (§14) have since been confirmed.
 
-**Feiten over Roblox** (regels, prijzen, tools) zijn op 15 oktober 2026 nagekeken. De bronnen staan in de bijlage onderaan. Roblox verandert zijn regels vaak: controleer de punten met ⚠️ opnieuw vlak voor je publiceert.
+**Facts about Roblox** (rules, prices, tools) were checked on 15 October 2026. The sources are in the appendix at the bottom. Roblox changes its rules often: check the points marked ⚠️ again just before you publish.
 
-**Leeswijzer.** Een Roblox-begrip dat voor het eerst opduikt, krijgt meteen een uitleg van één zin, *in cursief tussen haakjes*. Teksten die spelers in het spel zien, staan in het Engels en tussen aanhalingstekens, bijvoorbeeld "CAMS OFF 8".
+**Reading guide.** A Roblox term that appears for the first time gets a one-sentence explanation right away, *in italics between brackets*. Text that players see in the game is in English and in quotes, for example "CAMS OFF 8".
 
 ---
 
-## 1. Samenvatting in vijf zinnen
+## 1. Summary in five sentences
 
-1. **Crowbar Crew** is een co-op stealth-heist voor 1 tot 4 spelers op Roblox, waarin een crew met een busje kleine, slimme inbraken pleegt in een speelse, Nederlands aanvoelende stad, met alleen grappige wapens die nooit iemand pijn doen.
-2. Elke hindernis vraagt drie stappen — **zien → vrijmaken → openen** — binnen een venster van 10 seconden, en elk gadget doet maar één van die stappen: je wint alleen als je samenwerkt.
-3. Het is gemaakt voor spelers van 9 tot 15 jaar (bereikbaar na Roblox' extra keuring, §5.5) op telefoon, tablet, pc en console: runs van ongeveer 12 minuten, één knop per gadget, en een ping- en aftelsysteem dat werkt zonder voice- of tekstchat.
-4. Het leeftijdslabel wordt Mild, speelbaar vanaf 5 jaar: geen bloed, alleen slapstick — een bewaker die 8 seconden in een zeepbel zweeft, of je eigen drone die door de EMP van je vriend op zijn hoofd valt.
-5. In Entry Point en Notoriety kan één goede speler alles alleen en ligt er altijd een echt geweer klaar; hier is niemand compleet en koopt een grap hooguit 10 seconden, dus het samen falen, samen lachen en elkaar komen bevrijden ís het spel.
+1. **Crowbar Crew** is a co-op stealth heist for 1 to 4 players on Roblox, in which a crew with a van pulls off small, clever break-ins in a playful, Dutch-feeling town, with only funny weapons that never hurt anyone.
+2. Every obstacle takes three steps — **see → clear → open** — within a 10-second window, and each gadget does only one of those steps: you only win if you work together.
+3. It is made for players aged 9 to 15 (reachable after Roblox's extra review, §5.5) on phone, tablet, PC and console: runs of about 12 minutes, one button per gadget, and a ping and countdown system that works without voice or text chat.
+4. The age rating will be Mild, playable from age 5: no blood, only slapstick — a guard floating in a soap bubble for 8 seconds, or your own drone dropping on your head because of your friend's EMP.
+5. In Entry Point and Notoriety one good player can do everything alone and there is always a real gun lying ready; here nobody is complete and a prank buys 10 seconds at most, so failing together, laughing together and coming to rescue each other *is* the game.
 
-### Anders dan Entry Point, Notoriety en ROB IT
+### Different from Entry Point, Notoriety and ROB IT
 
-Je noemde Entry Point en Notoriety. Er is ondertussen een derde, directere concurrent: **ROB IT** (december 2025). Die zit qua publiek en label het dichtst bij jouw idee.
+You mentioned Entry Point and Notoriety. There is now a third, more direct competitor: **ROB IT** (December 2025). In terms of audience and rating it is the closest to your idea.
 
-| | **Entry Point** | **Notoriety** | **ROB IT** | **Jouw spel** |
+| | **Entry Point** | **Notoriety** | **ROB IT** | **Your game** |
 |---|---|---|---|---|
-| Wat is het | Stealth- en actie-shooter, 15 missies + PvP | Officiële PAYDAY-heist: co-op shooter, stil of luid | Inbreken, alles stelen, niet gezien worden door de bewaker | Co-op stealth met gadgets en een verplichte keten |
-| Wapens | Ja (echte) | Ja (echte) | Nee | **Alleen grappige**: bellen, kaas, een rubberen kip (§4.8) |
-| Kan één speler alles alleen? (inschatting op basis van de spelbeschrijvingen) | Ja | Grotendeels | Ja | **Nee**: elk gadget doet één stap |
-| Label | Moderate | Mild | Minimal | Minimal/Mild |
-| Runlengte | ⚠️ niet gevonden | ⚠️ niet gevonden | ongeveer 6–7 min | ~11 min (cyclus 14 min) |
-| Status (15/10/2026) | 348 mln. bezoeken, ~150 spelers nu, laatste update juli 2025 (onderhoudsmodus) | 555 mln. bezoeken, ~2.500 nu, piek 18.500 (juli 2026), actief | 300 mln. bezoeken, ~3.300 nu, piek ~35.000 (januari 2026) | — |
-| Verdienen | Missies als game passes (750–1.200 Robux) | 14 passes (49–599 Robux), o.a. 2× XP/Cash | Geen game passes | Alleen uiterlijk en gemak (§8) |
+| What it is | Stealth and action shooter, 15 missions + PvP | Official PAYDAY heist: co-op shooter, quiet or loud | Break in, steal everything, don't get seen by the guard | Co-op stealth with gadgets and a mandatory chain |
+| Weapons | Yes (real ones) | Yes (real ones) | No | **Only funny ones**: bubbles, cheese, a rubber chicken (§4.8) |
+| Can one player do everything alone? (estimate based on the game descriptions) | Yes | Mostly | Yes | **No**: each gadget does one step |
+| Rating | Moderate | Mild | Minimal | Minimal/Mild |
+| Run length | ⚠️ not found | ⚠️ not found | about 6–7 min | ~11 min (cycle 14 min) |
+| Status (15/10/2026) | 348 M visits, ~150 players now, last update July 2025 (maintenance mode) | 555 M visits, ~2,500 now, peak 18,500 (July 2026), active | 300 M visits, ~3,300 now, peak ~35,000 (January 2026) | — |
+| Earning | Missions as game passes (750–1,200 Robux) | 14 passes (49–599 Robux), incl. 2× XP/Cash | No game passes | Only looks and convenience (§8) |
 
-**Wat dit je zegt:**
-- De twee grote heistspellen zijn **shooters voor oudere spelers**. Een heist **zonder echte geweren, met grappige wapens en een verplichte crew-keten**, is nog een lege plek.
-- **ROB IT bewijst dat er veel vraag is** naar een kindvriendelijk inbraakspel met label Minimal (een piek van 35.000 spelers tegelijk). Maar het is een simpel, solo speelbaar concept.
-- **Je verschil met ROB IT** is precies je kern: in ROB IT ben je een slimme inbreker, hier ben je **een crew die elkaar nodig heeft**. De EMP die je eigen drone neerhaalt en het moment dat je een vriend uit de beveiligingsruimte haalt, kan ROB IT niet bieden.
-- **Je risico:** ROB IT kan co-op toevoegen, en er komt in 2026 een tweede PAYDAY-spel op Roblox (Gamefam). Daarom moet je verschil in de eerste minuut te zien zijn (§11), niet pas na een uur.
+**What this tells you:**
+- The two big heist games are **shooters for older players**. A heist **without real guns, with funny weapons and a mandatory crew chain**, is still an empty spot.
+- **ROB IT proves there is a lot of demand** for a kid-friendly break-in game with a Minimal rating (a peak of 35,000 concurrent players). But it is a simple concept you can play solo.
+- **Your difference from ROB IT** is exactly your core: in ROB IT you are a clever burglar, here you are **a crew that needs each other**. The EMP that takes down your own drone and the moment you get a friend out of the security room are things ROB IT cannot offer.
+- **Your risk:** ROB IT can add co-op, and a second PAYDAY game is coming to Roblox in 2026 (Gamefam). That is why your difference has to be visible in the first minute (§11), not only after an hour.
 
-**De eerste minuut moet drie dingen tonen:**
-1. **Geen echt geweer in beeld.** Wel een drone, een wekker, een breekijzer en een Bubble Blaster.
-2. **De EMP-grap**: je eigen drone valt "BZZT" uit de lucht. In de Practice Yard binnen 60 seconden (§11).
-3. **Een deur die alleen opengaat als iemand anders je het venster geeft**: de ring "CAMS OFF 10" en de Chain Call.
+**The first minute has to show three things:**
+1. **No real gun on screen.** Instead a drone, an alarm clock, a crowbar and a Bubble Blaster.
+2. **The EMP joke**: your own drone drops out of the air with a "BZZT". In the Practice Yard within 60 seconds (§11).
+3. **A door that only opens when someone else gives you the window**: the ring "CAMS OFF 10" and the Chain Call.
 
-Op de spelpagina (icoon, thumbnails, eerste zin van de beschrijving) laat je hetzelfde zien: *"No real guns. No boss. Just your crew, a van, a bubble blaster and an EMP that hits your own drone."*
-
----
-
-## 2. Wat blijft, wat verandert, wat vervalt
-
-| Onderdeel van het concept | Oordeel | Reden |
-|---|---|---|
-| Vier vrienden met een busje, zonder werkgever | **Blijft** | Sterke, simpele fantasie. Het busje krijgt drie functies: wachtrij in de lobby, gadgetkast tijdens de run, en uitgang (buit in het busje = binnen). |
-| Pijler: voorbereiding, niet vechten | **Past aan** (bevestigd 15/10/2026) | Wel wapens, maar alleen grappige en niet-dodelijke (§4.8). Een wapen koopt een venster van ±10 s op één bewaker, nooit een oplossing. Geen echte geweren: dat blijft je verschil met Entry Point en Notoriety. |
-| De keten *zien → vrijmaken → openen* | **Blijft** | Dit is de kern. Alles in dit plan draait eromheen. |
-| Venster van 8–12 seconden | **Past aan** | Standaard **10 s** voor iedereen in de server (Rookie 12 s, Pro 8 s). Een apart, langer venster voor mobiel kan niet, want het venster is één gedeelde toestand van de wereld (zie §3.3). |
-| Elk gadget opent alleen een venster, nooit een pad | **Blijft** | Wordt een harde ontwerpregel: elektronische sloten gaan bij een EMP níét open. |
-| Niemand kan een stap alleen zetten | **Past aan** | Klopt bij 3–4 spelers. Bij 1–2 spelers vervangen timers en automatische camera's de ontbrekende teamgenoten (§3.7). Zonder solo is je spel bij de lancering leeg. |
-| De zes gadgets | **Blijft** (+1) | Elk gadget hoort bij één stap: 2× zien, 2× vrijmaken, 2× openen. Per gadget één knop. Erbij: de Bubble Blaster als 7e standaardgadget (CLEAR, §4.8). |
-| EMP raakt ook je eigen drone en camera's | **Blijft** | Hét comedy-moment. Het bereik wordt zichtbaar vóór je gooit, zodat het een gevolg van slecht overleg is en geen willekeurige straf. |
-| Standaardgadgets + zijwaartse extra gadgets | **Blijft** | Ideaal voor Roblox: een nieuwe speler is meteen even sterk. |
-| Inzet: gepakt = gadget kwijt | **Past aan** | Alleen gadgets die je met spelgeld kocht, kun je definitief verliezen. Standaardgadgets ben je alleen voor de rest van die run kwijt. Met Robux gekochte dingen verlies je nooit (§7.3). |
-| Teamgenoot bevrijden = zijn gadget terughalen | **Blijft** (+ extra) | Gepakte spelers zitten in de beveiligingsruimte en kijken via de camera's van het gebouw mee. Zo blijven ze nuttig in plaats van 5 minuten toe te kijken. |
-| Buit dragen = uit de keten | **Blijft** (+ uitzondering) | Grote buit (zakken, kaaswielen) blokkeert je gadget; kleine buit (sleutel, USB-stick, kasgeld) gaat in je zak en blokkeert niets. |
-| Bewakers (NPC's) | **Blijft** (eenvoudiger) | Vier duidelijke toestanden met icoontjes boven hun hoofd. Haalbaar voor een beginner. |
-| Camera's | **Blijft** | |
-| Hond die op de drone jaagt | **Blijft** (aangepast) | De hond bijt nooit spelers. Hij blaft (lokt bewakers) en pakt je drone af als die te laag vliegt. |
-| Asset Recovery (komt af op actieve elektronica) | **Past aan, later** | Werkt met een gedeelde "Signal"-meter die na ongeveer 90 s onafgebroken elektronica volloopt. Een traag opbouwende dreiging moet in runs van 12 minuten sneller gaan. Komt pas na de eerste release (§12). |
-| Alarmladder | **Past aan** | Vier treden. De laatste trede is geen politie met wapens maar een ontsnappingstimer van 90 s. |
-| Dekmantel (werkkleding, aanspreking door een NPC) | **Past aan, later** | Gesprekken met tekst werken niet voor 9-jarigen op een telefoon in een internationaal spel. Het wordt een keuze uit 3 icoontjes, waarbij je het juiste antwoord tijdens de verkenning hebt gezien (§9). |
-| Sporen (voetstappen, glas, verplaatste spullen) | **Blijft** (minder soorten) | Vijf soorten sporen, allemaal zichtbaar en leesbaar, zonder bloed (§5). |
-| Sporen wissen kost een verbruiksspul | **Blijft** | De "Clean Spray", alleen met spelgeld te koop, nooit met Robux. |
-| NPC Karel | **Past aan** | Zijn rol stond niet in de samenvatting. Karel wordt de conciërge die alles opruimt en verklikt (§9.6, bevestigd). |
-| Geweld als gevolg, nooit als oplossing | **Past aan** | Nieuwe regel: "een grap koopt tijd, geen oplossing". Slapstick (zeepbel, kaas, sterretjes), niemand raakt gewond, en elke bewaker komt na het venster bozer terug. |
-| Bloed als informatie (spoor) | **Vervalt** | Vervangen door een scheurtje van je werkvest aan prikkeldraad: hetzelfde idee ("hier is iemand geweest"), zonder bloed. Zo hoef je bij bloed nooit te twijfelen in de vragenlijst voor het leeftijdslabel (§5). |
-| Werktitel UNPAID | **Vervalt** | Past niet meer. De nieuwe titel is **Crowbar Crew** (§14). |
-| Overleg via voice (pc-ontwerp) | **Past aan** | Wordt een ping-systeem plus de "Chain Call": een gedeelde 3-2-1-aftelling (§3.4). |
-| Pc-besturing | **Past aan** | Eerst ontworpen voor touchscreen, daarna pc en controller (§3.6). |
-
-### Tegenstrijdigheden in het concept
-
-Dit zijn de plekken waar het concept zichzelf tegenspreekt, en hoe dit plan ze oplost:
-
-1. **"Niemand kan een stap alleen zetten"** tegenover **"het moet ook werken met 1 speler"**. Beide kunnen niet volledig waar zijn. *Oplossing:* solo is een volwaardige maar andere modus, waarin je eigen timers en automatische camera's je teamgenoten vervangen. De keten blijft, alleen speel je hem tegen de klok in plaats van met mensen (§3.7).
-2. **De EMP legt je eigen drone plat**, maar de drone moet juist tíjdens het EMP-venster zien of de gang vrij is. Zonder regel zou elk EMP-venster je eigen ogen uitschakelen. *Oplossing:* de EMP heeft een zichtbare straal van 14 studs (*een stud is de Roblox-lengte-eenheid, ongeveer 28 cm*). De drone moet buiten die straal blijven kijken. Plaatsing wordt zo een vaardigheid, en de comedy komt als je dat verkeerd inschat.
-3. **Een langer venster op mobiel** kan niet als pc- en mobielspelers in dezelfde server zitten: een camera die uit ligt, ligt voor iedereen even lang uit. *Oplossing:* één venster voor de hele server, afgesteld op mobiel (10 s), plus hulpmiddelen die vooral mobiel helpen: aftelling, automatisch markeren en grote knoppen.
-4. **"Robux-aankopen gaan nooit verloren"** botst met een gangbaar Roblox-verdienmodel: wie spelgeld verkoopt voor Robux (of een 2× Cash-pas), laat spelers indirect met echt geld gadgets kopen die ze daarna kwijtraken. *Oplossing:* je verkoopt géén spelgeld en geen versneller voor spelgeld (§8).
-5. **"Bloed als informatie"** botst met **"zo jong mogelijk publiek"**. *Oplossing:* geen bloed. Een scheurtje van je vest vertelt hetzelfde verhaal.
-6. **"Wie buit draagt, valt uit de keten"** betekent in solo en duo dat je bijna nooit kunt dragen. *Oplossing:* kleine buit in je zak blokkeert niets, en de Winch (haspel) stuurt grote buit over een kabel naar het busje zonder dat iemand hem draagt.
-7. **"Camera-set = vaste camera's die een gebied bewaken"** gaat tegen de regel "elk gadget opent alleen een venster", want camera's geven blijvende informatie. *Oplossing:* wie naar de beelden kijkt, moet stilstaan, en actieve camera's vullen de Signal-meter van Asset Recovery. Informatie kost dus iets.
-8. **Een langzaam aanzwellende dreiging (Asset Recovery)** past niet in runs van 12 minuten. *Oplossing:* ze komt na ongeveer 90 seconden onafgebroken elektronica, niet na een kwartier.
-9. **"Vier vrienden"** als fantasie tegenover de werkelijkheid van matchmaking: vreemden die halverwege vertrekken. *Oplossing:* gadgetvakken schuiven automatisch bij als iemand vertrekt, en tijdens de eerste minuten kunnen nieuwe spelers aansluiten bij het busje (§3.7).
-10. **Karel** heeft een rol "in de sporen", maar welke stond er niet. *Opgelost:* hij is de conciërge die sporen opruimt én ze luid verklikt (§9.6).
+On the game page (icon, thumbnails, first sentence of the description) you show the same thing: *"No real guns. No boss. Just your crew, a van, a bubble blaster and an EMP that hits your own drone."*
 
 ---
 
-## 3. De keten op Roblox
+## 2. What stays, what changes, what goes
 
-### 3.1 De regel
-
-Elke hindernis (een camera plus een bewaker plus een gesloten deur) is een **ketenpunt**. Je lost het op in drie stappen, in deze volgorde:
-
-| Stap | Spelernaam in het spel | Wat je doet | Gadgets |
-|---|---|---|---|
-| 1. Zien | "EYES" | Ontdekken waar bewakers, camera's en de hond zijn, en dat aan de crew tonen | Drone, Spy Cams |
-| 2. Vrijmaken | "CLEAR" | Een venster openen: camera's uit, of bewakers weg | Noisemaker (afleidingskit), EMP |
-| 3. Openen | "OPEN" | Door de deur, het hek of het luik geraken | Crowbar (breekijzer), Winch (haspel) |
-
-Ontwerpregel: **elk gadget doet precies één stap, en geen enkel gadget doet een stap volledig zonder hulp.** De Drone ziet de bewaker maar krijgt hem niet weg. De Noisemaker lokt hem weg, maar de gooier ziet niet of het gelukt is. De Crowbar opent de deur, maar maakt lawaai, dus het moet tijdens de afleiding.
-
-### 3.2 Hoe een ketenpunt eruitziet (leesbaarheid voor kinderen)
-
-- Als de Drone of een Spy Cam een hindernis 1 seconde bekijkt, verschijnt bij iedereen een **ketenkaartje** boven die plek, met icoontjes van wat er nodig is: bijvoorbeeld 📷 + 👮 + 🔒 ("1 camera, 1 guard, locked door").
-- In de makkelijkste moeilijkheidsgraad (Rookie) staan op die kaartjes ook de drie stappen in kleur: blauw = EYES, geel = CLEAR, rood = OPEN. Op Normal en Pro alleen de icoontjes.
-- Op een ketenpunt staan altijd **twee mogelijke routes**, bijvoorbeeld de camera uitschakelen met de EMP óf de bewaker weglokken met de Noisemaker. Zo werkt elke combinatie van gadgets in je crew.
-
-### 3.3 Het venster: 10 seconden voor iedereen
-
-*(Server/client: de **server** is de computer van Roblox waarop de spelwereld voor alle spelers tegelijk draait; de **client** is het toestel van één speler, dat toont wat de server zegt en invoer terugstuurt.)*
-
-Een camera die door een EMP uitvalt, valt op de **server** uit, dus voor alle spelers tegelijk en even lang. Een langer venster alleen voor mobiele spelers kan daarom niet zolang pc- en mobielspelers samen spelen, en op Roblox doen ze dat bijna altijd. Daarom:
-
-| Moeilijkheid | EMP-venster | Afleiding (bewaker weg) | Voor wie |
-|---|---|---|---|
-| Rookie | 12 s | 12 s | Eerste uren, de eerste map |
-| Normal | 10 s | 10 s | Standaard |
-| Pro | 8 s | 8 s | Ervaren crews die samen spelen (vrienden met voice) |
-
-**Advies: houd 10 s als standaard en verander die waarde nooit per apparaat.** Spelers leren het ritme ("tien tellen") en dat ritme is de kern. Wat mobiel wél helpt:
-
-- Een **krimpende ring met seconden** midden boven in beeld, voor de hele crew: "CAMS OFF 8".
-- Een **tik-geluid** in de laatste 3 seconden en de melding "CLOSING".
-- De Crowbar telt pas vanaf het moment dat je hem vasthoudt. Je hoeft niet perfect te mikken; op het juiste moment indrukken volstaat.
-- Vertraging (lag) telt niet tegen je: het venster begint op het moment dat de EMP op de server afgaat, en de ring toont bij iedereen hetzelfde aantal seconden.
-
-> **Tip voor het testen:** meet in je eerste test hoeveel van de 10 seconden mobiele spelers gebruiken. Blijft er gemiddeld minder dan 2 seconden over, ga dan naar 11 s. Pas het getal één keer aan, niet elke week.
-
-### 3.4 De Chain Call: aftellen zonder voice
-
-Dit is de belangrijkste uitvinding van het plan. Zonder voice moet een crew afspreken *wie wat doet en wanneer*. De Chain Call doet dat met twee tikken.
-
-1. Een speler richt op een ketenpunt en **houdt de ping-knop 0,5 s ingedrukt** → "CHAIN CALL".
-2. Bovenaan ieders scherm verschijnt een balk met drie vakjes: **[EYES] [CLEAR] [OPEN]** en het icoon van het ketenpunt.
-3. Elke teamgenoot krijgt 6 seconden lang een grote knop **"I'M IN"**. Tik je erop, dan vult je gadget automatisch het juiste vakje: wie de Drone heeft, komt in EYES, enzovoort.
-4. Zijn alle drie de vakjes gevuld (of tikt de beller op **"GO"**), dan start bij iedereen tegelijk een **aftelling 3-2-1** met geluid.
-5. Op **0** gaat het venster open: een EMP of Noisemaker die al gericht klaarstond, gaat automatisch af. Wie een Crowbar heeft, ziet zijn gadgetknop groen pulseren.
-6. Tijdens het venster zien alle spelers de krimpende ring (§3.3).
-
-Belangrijk:
-- Een vakje mag ook gevuld worden door een **ding in plaats van een mens**: een Spy Cam die de gang bekijkt, telt als EYES, en een Noisemaker met timer als CLEAR. Zo werkt de Chain Call ook met 1 of 2 spelers.
-- Leeg vakje = de knop "GO" wordt oranje met "MISSING: OPEN". Je mag toch gaan; het spel waarschuwt alleen.
-- De Chain Call kan maar door één speler tegelijk gestart worden, en heeft 5 s afkoeltijd (zodat niemand de crew spamt).
-
-### 3.5 Het ping-systeem
-
-**Waarom dit nodig is.** Voicechat is op Roblox alleen voor spelers vanaf 13 jaar met een leeftijdscheck. Sinds januari 2026 moet ook iedereen die wil **tekstchatten** eerst een leeftijdscheck doen, en dan chat je alleen met spelers uit je eigen of een aangrenzende leeftijdsgroep (§5.4). In een busje met vreemden kan dus vaak niemand met elkaar praten of typen. Alles wat nodig is om te winnen, moet werken **zonder één getypt woord**.
-
-**De Roblox-regels voor vaste berichten** (de pagina "Preset system guidelines", ⚠️ controleer vóór de release):
-- Systemen die alleen **acties, bevestigingen of eenvoudige reacties** doorgeven, mag iedereen gebruiken, ook spelers zonder leeftijdscheck.
-- Vaste **tekst**berichten (zoals "Follow me") mogen als ze over het spel gaan. Maar: maximaal **12** per spel, maximaal **één bericht per 10 seconden** per speler, ze moeten door het Roblox-filter (`TextService:FilterStringAsync`), ze krijgen het label "system preset" als ze in de chat verschijnen, en ze bevatten **geen leestekens aan het einde** (dus "NOW", niet "NOW!"). Vragen, begroetingen en combinaties die samen een geheime boodschap vormen, mogen niet.
-- Of pings zonder tekst (een icoon in de wereld) onder die tekstregels vallen, zegt de pagina niet duidelijk. Vraag het na op het Roblox DevForum voor je bouwt.
-
-**Daarom zit de timing níét in berichten**, maar in het spel zelf. De Chain Call (§3.4) is een spelmechaniek: een gedeelde aftelling die het spel start. Zelfs als Roblox de snelberichten hieronder aan 1 per 10 s bindt, blijft de keten werken.
-
-**A. De slimme ping ("SPOT")** — één tik op de ping-knop zet een **icoon in de wereld** op wat in het midden van je scherm staat. Het spel kiest zelf welk icoon:
-
-| Waar je op richt | Wat de crew ziet | Hoe lang |
+| Part of the concept | Verdict | Reason |
 |---|---|---|
-| Bewaker | Rood bewaker-icoon dat met hem meeloopt | 5 s, verlengd zolang Drone of camera hem ziet |
-| Camera | Camera-icoon + zijn zichtkegel op de vloer | 5 s |
-| Hond | Pootafdruk-icoon dat meeloopt | 5 s |
-| Deur, kast, hek, luik | Slot-icoon | 10 s |
-| Buit | Zak-icoon | 10 s |
-| Vloer of muur | Speld met pijl | 8 s |
-| Gepakte teamgenoot | Polsband-icoon boven zijn stoel | tot hij bevrijd is |
+| Four friends with a van, without an employer | **Stays** | Strong, simple fantasy. The van gets three functions: queue in the lobby, gadget cupboard during the run, and exit (loot in the van = secured). |
+| Pillar: preparation, not fighting | **Adjusted** (confirmed 15/10/2026) | Weapons yes, but only funny and non-lethal ones (§4.8). A weapon buys a window of ±10 s on one guard, never a solution. No real guns: that remains your difference from Entry Point and Notoriety. |
+| The chain *see → clear → open* | **Stays** | This is the core. Everything in this plan revolves around it. |
+| Window of 8–12 seconds | **Adjusted** | Default **10 s** for everyone in the server (Rookie 12 s, Pro 8 s). A separate, longer window for mobile is not possible, because the window is one shared state of the world (see §3.3). |
+| Each gadget only opens a window, never a path | **Stays** | Becomes a hard design rule: electronic locks do *not* open with an EMP. |
+| Nobody can take a step alone | **Adjusted** | True with 3–4 players. With 1–2 players, timers and automatic cameras replace the missing teammates (§3.7). Without solo, your game will be empty at launch. |
+| The six gadgets | **Stays** (+1) | Each gadget belongs to one step: 2× see, 2× clear, 2× open. One button per gadget. Added: the Bubble Blaster as the 7th default gadget (CLEAR, §4.8). |
+| EMP also hits your own drone and cameras | **Stays** | *The* comedy moment. The range becomes visible before you throw, so it is a consequence of bad coordination and not a random punishment. |
+| Default gadgets + sidegrade extra gadgets | **Stays** | Ideal for Roblox: a new player is immediately just as strong. |
+| Stake: caught = gadget lost | **Adjusted** | Only gadgets you bought with in-game money can be lost for good. Default gadgets are only lost for the rest of that run. Things bought with Robux are never lost (§7.3). |
+| Rescuing a teammate = getting their gadget back | **Stays** (+ extra) | Caught players sit in the security room and watch along through the building's cameras. That way they stay useful instead of watching for 5 minutes. |
+| Carrying loot = out of the chain | **Stays** (+ exception) | Big loot (bags, cheese wheels) blocks your gadget; small loot (key, USB stick, petty cash) goes in your pocket and blocks nothing. |
+| Guards (NPCs) | **Stays** (simpler) | Four clear states with icons above their heads. Doable for a beginner. |
+| Cameras | **Stays** | |
+| Dog that hunts the drone | **Stays** (adjusted) | The dog never bites players. It barks (draws guards) and takes your drone if it flies too low. |
+| Asset Recovery (comes for active electronics) | **Adjusted, later** | Works with a shared "Signal" meter that fills after about 90 s of uninterrupted electronics. A slowly building threat has to move faster in 12-minute runs. Only comes after the first release (§12). |
+| Alarm ladder | **Adjusted** | Four steps. The last step is not police with weapons but a 90 s escape timer. |
+| Cover (work clothes, being addressed by an NPC) | **Adjusted, later** | Text conversations do not work for 9-year-olds on a phone in an international game. It becomes a choice of 3 icons, where you saw the right answer during the scouting (§9). |
+| Traces (footprints, glass, moved items) | **Stays** (fewer kinds) | Five kinds of traces, all visible and readable, without blood (§5). |
+| Wiping traces costs a consumable | **Stays** | The "Clean Spray", only for sale with in-game money, never with Robux. |
+| NPC Karel | **Adjusted** | His role was not in the summary. Karel becomes the caretaker who cleans everything up and snitches (§9.6, confirmed). |
+| Violence as a consequence, never as a solution | **Adjusted** | New rule: "a prank buys time, not a solution". Slapstick (soap bubble, cheese, stars), nobody gets hurt, and every guard comes back angrier after the window. |
+| Blood as information (trace) | **Goes** | Replaced by a small tear from your work vest on barbed wire: the same idea ("someone has been here"), without blood. That way you never have to hesitate about blood in the age rating questionnaire (§5). |
+| Working title UNPAID | **Goes** | No longer fits. The new title is **Crowbar Crew** (§14). |
+| Coordination by voice (PC design) | **Adjusted** | Becomes a ping system plus the "Chain Call": a shared 3-2-1 countdown (§3.4). |
+| PC controls | **Adjusted** | Designed for touchscreen first, then PC and controller (§3.6). |
 
-Dit zijn markeringen van dingen in het spel, geen zinnen. Maximaal 3 per 2 seconden per speler.
+### Contradictions in the concept
 
-**B. Het snelwiel** — de ping-knop ingedrukt houden opent een wiel met **8 vaste snelberichten** (ruim onder de grens van 12), elk met een icoon:
+These are the places where the concept contradicts itself, and how this plan resolves them:
+
+1. **"Nobody can take a step alone"** versus **"it must also work with 1 player"**. Both cannot be fully true. *Solution:* solo is a full but different mode, in which your own timers and automatic cameras replace your teammates. The chain stays; you just play it against the clock instead of with people (§3.7).
+2. **The EMP knocks out your own drone**, but the drone needs to see whether the corridor is clear precisely *during* the EMP window. Without a rule, every EMP window would switch off your own eyes. *Solution:* the EMP has a visible radius of 14 studs (*a stud is the Roblox unit of length, about 28 cm*). The drone has to keep watching from outside that radius. Placement thus becomes a skill, and the comedy comes when you misjudge it.
+3. **A longer window on mobile** is not possible when PC and mobile players are in the same server: a camera that is off is off for everyone for the same length of time. *Solution:* one window for the whole server, tuned for mobile (10 s), plus aids that mainly help mobile: countdown, automatic marking and big buttons.
+4. **"Robux purchases are never lost"** clashes with a common Roblox monetisation model: whoever sells in-game money for Robux (or a 2× Cash pass) indirectly lets players buy gadgets with real money that they then lose. *Solution:* you do *not* sell in-game money, and no booster for in-game money either (§8).
+5. **"Blood as information"** clashes with **"as young an audience as possible"**. *Solution:* no blood. A small tear from your vest tells the same story.
+6. **"Whoever carries loot drops out of the chain"** means that in solo and duo you can almost never carry. *Solution:* small loot in your pocket blocks nothing, and the Winch sends big loot along a cable to the van without anyone carrying it.
+7. **"Camera set = fixed cameras that guard an area"** goes against the rule "each gadget only opens a window", because cameras give lasting information. *Solution:* whoever watches the footage has to stand still, and active cameras fill Asset Recovery's Signal meter. So information costs something.
+8. **A slowly swelling threat (Asset Recovery)** does not fit in 12-minute runs. *Solution:* it comes after about 90 seconds of uninterrupted electronics, not after a quarter of an hour.
+9. **"Four friends"** as a fantasy versus the reality of matchmaking: strangers who leave halfway. *Solution:* gadget slots shift automatically when someone leaves, and during the first minutes new players can join at the van (§3.7).
+10. **Karel** has a role "in the traces", but which one was not stated. *Resolved:* he is the caretaker who cleans up traces *and* loudly snitches about them (§9.6).
+
+---
+
+## 3. The chain on Roblox
+
+### 3.1 The rule
+
+Every obstacle (a camera plus a guard plus a closed door) is a **chain point**. You solve it in three steps, in this order:
+
+| Step | Player-facing name in the game | What you do | Gadgets |
+|---|---|---|---|
+| 1. See | "EYES" | Discover where guards, cameras and the dog are, and show that to the crew | Drone, Spy Cams |
+| 2. Clear | "CLEAR" | Open a window: cameras off, or guards away | Noisemaker (distraction kit), EMP |
+| 3. Open | "OPEN" | Get through the door, gate or hatch | Crowbar, Winch |
+
+Design rule: **each gadget does exactly one step, and no gadget completes a step entirely without help.** The Drone sees the guard but cannot get him away. The Noisemaker lures him away, but the thrower cannot see whether it worked. The Crowbar opens the door, but makes noise, so it has to happen during the distraction.
+
+### 3.2 What a chain point looks like (readability for children)
+
+- When the Drone or a Spy Cam looks at an obstacle for 1 second, a **chain card** appears above that spot for everyone, with icons of what is needed: for example 📷 + 👮 + 🔒 ("1 camera, 1 guard, locked door").
+- On the easiest difficulty (Rookie) those cards also show the three steps in colour: blue = EYES, yellow = CLEAR, red = OPEN. On Normal and Pro only the icons.
+- A chain point always has **two possible routes**, for example switching off the camera with the EMP *or* luring the guard away with the Noisemaker. That way every combination of gadgets in your crew works.
+
+### 3.3 The window: 10 seconds for everyone
+
+*(Server/client: the **server** is the Roblox computer on which the game world runs for all players at once; the **client** is one player's device, which shows what the server says and sends input back.)*
+
+A camera that goes down because of an EMP goes down on the **server**, so for all players at the same time and for the same length of time. A longer window just for mobile players is therefore not possible as long as PC and mobile players play together, and on Roblox they almost always do. That is why:
+
+| Difficulty | EMP window | Distraction (guard away) | For whom |
+|---|---|---|---|
+| Rookie | 12 s | 12 s | First hours, the first map |
+| Normal | 10 s | 10 s | Default |
+| Pro | 8 s | 8 s | Experienced crews who play together (friends with voice) |
+
+**Advice: keep 10 s as the default and never change that value per device.** Players learn the rhythm ("ten counts") and that rhythm is the core. What *does* help mobile:
+
+- A **shrinking ring with seconds** at the top centre of the screen, for the whole crew: "CAMS OFF 8".
+- A **ticking sound** in the last 3 seconds and the message "CLOSING".
+- The Crowbar only starts counting from the moment you hold it. You do not have to aim perfectly; pressing at the right moment is enough.
+- Delay (lag) does not count against you: the window starts the moment the EMP goes off on the server, and the ring shows the same number of seconds for everyone.
+
+> **Testing tip:** in your first test, measure how many of the 10 seconds mobile players use. If on average less than 2 seconds are left over, go to 11 s. Adjust the number once, not every week.
+
+### 3.4 The Chain Call: counting down without voice
+
+This is the most important invention in the plan. Without voice, a crew has to agree on *who does what and when*. The Chain Call does that with two taps.
+
+1. A player aims at a chain point and **holds the ping button for 0.5 s** → "CHAIN CALL".
+2. A bar with three slots appears at the top of everyone's screen: **[EYES] [CLEAR] [OPEN]** and the icon of the chain point.
+3. Each teammate gets a big **"I'M IN"** button for 6 seconds. If you tap it, your gadget automatically fills the right slot: whoever has the Drone goes into EYES, and so on.
+4. When all three slots are filled (or the caller taps **"GO"**), a **3-2-1 countdown** with sound starts for everyone at the same time.
+5. On **0** the window opens: an EMP or Noisemaker that was already aimed and ready goes off automatically. Whoever has a Crowbar sees their gadget button pulse green.
+6. During the window all players see the shrinking ring (§3.3).
+
+Important:
+- A slot may also be filled by **a thing instead of a person**: a Spy Cam watching the corridor counts as EYES, and a Noisemaker with a timer as CLEAR. That way the Chain Call also works with 1 or 2 players.
+- Empty slot = the "GO" button turns orange with "MISSING: OPEN". You may still go; the game only warns you.
+- The Chain Call can only be started by one player at a time, and has a 5 s cooldown (so nobody spams the crew).
+
+### 3.5 The ping system
+
+**Why this is needed.** On Roblox, voice chat is only for players aged 13 and up with an age check. Since January 2026, everyone who wants to **text chat** must also do an age check first, and then you only chat with players from your own or an adjacent age group (§5.4). So in a van with strangers, often nobody can talk or type to each other. Everything needed to win has to work **without a single typed word**.
+
+**The Roblox rules for preset messages** (the "Preset system guidelines" page, ⚠️ check before the release):
+- Systems that only pass on **actions, confirmations or simple reactions** may be used by everyone, including players without an age check.
+- Preset **text** messages (such as "Follow me") are allowed if they are about the game. But: at most **12** per game, at most **one message per 10 seconds** per player, they must go through the Roblox filter (`TextService:FilterStringAsync`), they get the "system preset" label when they appear in the chat, and they contain **no punctuation at the end** (so "NOW", not "NOW!"). Questions, greetings and combinations that together form a secret message are not allowed.
+- Whether pings without text (an icon in the world) fall under those text rules, the page does not say clearly. Ask on the Roblox DevForum before you build.
+
+**That is why the timing is *not* in messages**, but in the game itself. The Chain Call (§3.4) is a game mechanic: a shared countdown that the game starts. Even if Roblox limits the quick messages below to 1 per 10 s, the chain keeps working.
+
+**A. The smart ping ("SPOT")** — one tap on the ping button places an **icon in the world** on whatever is in the centre of your screen. The game chooses which icon itself:
+
+| What you aim at | What the crew sees | How long |
+|---|---|---|
+| Guard | Red guard icon that walks along with him | 5 s, extended as long as the Drone or a camera sees him |
+| Camera | Camera icon + its view cone on the floor | 5 s |
+| Dog | Paw print icon that walks along | 5 s |
+| Door, cupboard, gate, hatch | Lock icon | 10 s |
+| Loot | Bag icon | 10 s |
+| Floor or wall | Pin with arrow | 8 s |
+| Caught teammate | Wristband icon above their chair | until they are rescued |
+
+These are markers of things in the game, not sentences. At most 3 per 2 seconds per player.
+
+**B. The quick wheel** — holding the ping button opens a wheel with **8 preset quick messages** (well under the limit of 12), each with an icon:
 
 "NOW" · "WAIT" · "GO" · "BACK OFF" · "HELP" · "NEED EYES" · "NEED CLEAR" · "NEED OPEN"
 
-- Ze verschijnen als icoon boven het hoofd van wie ze stuurt, en bovenaan het scherm van de crew. Niet in de gewone chat, zodat ze duidelijk anders zijn dan vrije chat.
-- "NOW" en "WAIT" zijn de belangrijkste. Ze krijgen een eigen kleine knop op mobiel en een eigen toets op pc en controller.
-- Ontwerp ze zo dat ze ook werken als Roblox één bericht per 10 s per speler oplegt. De snelle timing loopt via de Chain Call.
+- They appear as an icon above the head of whoever sends them, and at the top of the crew's screen. Not in the normal chat, so they are clearly different from free chat.
+- "NOW" and "WAIT" are the most important. They get their own small button on mobile and their own key on PC and controller.
+- Design them so they also work if Roblox imposes one message per 10 s per player. The fast timing runs through the Chain Call.
 
-**C. Automatische meldingen** (het spel zelf, geen speler):
-- De Drone markeert vanzelf elke bewaker die hij 0,5 s in beeld heeft.
-- "CAMERA REBOOTING 3…2…1" als een EMP-venster afloopt.
-- "SIGNAL HIGH" als Asset Recovery dichterbij komt (later, §9).
-- "[naam] GOT CAUGHT" met een pijl naar de beveiligingsruimte.
+**C. Automatic messages** (the game itself, not a player):
+- The Drone automatically marks every guard it has in view for 0.5 s.
+- "CAMERA REBOOTING 3…2…1" when an EMP window runs out.
+- "SIGNAL HIGH" when Asset Recovery gets closer (later, §9).
+- "[name] GOT CAUGHT" with an arrow to the security room.
 
-**D. Leesbaarheid en misbruik**
-- Elke speler heeft een vaste kleur, en elke ping heeft ook een vorm, zodat kleurenblinde spelers ze uit elkaar houden.
-- Elk soort ping heeft een eigen geluid, zodat je het hoort zonder te kijken.
-- Elke speler kan de pings van een ander dempen.
-- Spelers die wél voice of tekstchat hebben, mogen die gewoon gebruiken. Pings blijven nodig, want vreemden spreken vaak geen gemeenschappelijke taal.
+**D. Readability and abuse**
+- Each player has a fixed colour, and each ping also has a shape, so colour-blind players can tell them apart.
+- Each kind of ping has its own sound, so you hear it without looking.
+- Each player can mute another player's pings.
+- Players who *do* have voice or text chat may simply use it. Pings remain necessary, because strangers often do not share a common language.
 
-### 3.6 Besturing per apparaat
+### 3.6 Controls per device
 
-**Mobiel (eerst ontworpen):**
+**Mobile (designed first):**
 
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │ [Alarm ●○○○]   [ EYES ✓ | CLEAR … | OPEN ✓ ]   [Signal ▮▮▯] │
 │                    ( CAMS OFF 8 )                            │
 │                                                              │
-│                          ·   ← richtpunt                     │
+│                          ·   ← aim point                     │
 │                                                              │
 │                                          [NOW]  [WAIT]       │
 │  ( joystick )                       [PING]       (GADGET 1)  │
@@ -214,972 +214,972 @@ Dit zijn markeringen van dingen in het spel, geen zinnen. Maximaal 3 per 2 secon
 └──────────────────────────────────────────────────────────────┘
 ```
 
-- Linksonder de standaard Roblox-joystick. Rechts je duim: GADGET (groot, minstens 64 px), USE (groot: deuren, buit oppakken, teamgenoot bevrijden), CROUCH, PING, NOW/WAIT (klein, 48 px).
-- **Eén knop per gadget.** Tik = richten (er verschijnt een boog of straal vanaf het richtpunt); nog eens tikken = gooien of gebruiken; van de knop wegvegen = annuleren. Geen enkele actie vraagt dat je langer dan 3 s een knop vasthoudt.
-- Met 2 of 3 gadgetvakken (bij 1–3 spelers, §3.7) staan er twee of drie gadgetknoppen. Nooit meer dan drie.
-- Springen kan via de standaard springknop, maar die staat kleiner en hoger: in een stealthgame klim je via USE ("vault"). Roblox-spelers verwachten wel dat springen kan, dus haal hem niet weg.
-- De camera draai je door met één vinger over de rechterhelft te vegen (Roblox-standaard).
+- Bottom left the standard Roblox joystick. On the right, your thumb: GADGET (big, at least 64 px), USE (big: doors, picking up loot, rescuing a teammate), CROUCH, PING, NOW/WAIT (small, 48 px).
+- **One button per gadget.** Tap = aim (an arc or radius appears from the aim point); tap again = throw or use; swipe off the button = cancel. No action requires you to hold a button for longer than 3 s.
+- With 2 or 3 gadget slots (with 1–3 players, §3.7) there are two or three gadget buttons. Never more than three.
+- Jumping is possible with the standard jump button, but it is smaller and higher up: in a stealth game you climb with USE ("vault"). Roblox players do expect to be able to jump, so do not remove it.
+- You turn the camera by swiping one finger over the right half (Roblox default).
 
-**Pc:** WASD lopen, muis kijken, **E** = USE, **C** = CROUCH, **1/2** = gadget kiezen, **linkermuisknop** = gadget gebruiken (vasthouden = richten, loslaten = gooien), **Q** = ping (vasthouden = wiel), **Z** = "NOW", **X** = "WAIT".
+**PC:** WASD to walk, mouse to look, **E** = USE, **C** = CROUCH, **1/2** = choose gadget, **left mouse button** = use gadget (hold = aim, release = throw), **Q** = ping (hold = wheel), **Z** = "NOW", **X** = "WAIT".
 
-**Controller (Xbox/PlayStation):** linkerstick lopen, rechterstick kijken, **R2** = gadget gebruiken, **L2** = richten, **X/□** = USE, **B/○** = CROUCH, **A/✕** = springen, **R1** = ping (vasthouden = wiel), **L1** = wissel gadget, **D-pad omhoog** = "NOW", **D-pad omlaag** = "WAIT", **D-pad links/rechts** = "NEED EYES"/"HELP".
+**Controller (Xbox/PlayStation):** left stick to walk, right stick to look, **R2** = use gadget, **L2** = aim, **X/□** = USE, **B/○** = CROUCH, **A/✕** = jump, **R1** = ping (hold = wheel), **L1** = switch gadget, **D-pad up** = "NOW", **D-pad down** = "WAIT", **D-pad left/right** = "NEED EYES"/"HELP".
 
-> Roblox kan zien welk invoertoestel een speler gebruikt (touch, toetsenbord of controller) en jij toont daarop de juiste knoppen. Ontwerp het scherm voor de kleinste telefoon en test met de **Device Simulator** in Studio (*een functie die je spel toont zoals het op een bepaalde telefoon of tablet zou verschijnen, inclusief aanraken*). Let op: de standaardbediening van Roblox neemt de hoek linksonder (joystick) en rechtsonder (springknop) in. Zet je eigen knoppen in een boog bóven en links van de springknop, niet eronder.
+> Roblox can see which input device a player uses (touch, keyboard or controller), and you show the right buttons accordingly. Design the screen for the smallest phone and test with the **Device Simulator** in Studio (*a feature that shows your game as it would appear on a particular phone or tablet, including touch*). Note: Roblox's default controls take up the bottom-left corner (joystick) and the bottom-right corner (jump button). Place your own buttons in an arc *above* and to the left of the jump button, not below it.
 
-### 3.7 Met 1, 2, 3 of 4 spelers
+### 3.7 With 1, 2, 3 or 4 players
 
-| Crew | Gadgetvakken per speler | Bewakers (map 1) | Venster (Normal) | Wat er anders is |
+| Crew | Gadget slots per player | Guards (map 1) | Window (Normal) | What is different |
 |---|---|---|---|---|
-| 1 (solo) | 3 (één per stap) | 3 | 12 s | **Solo Kit**: Noisemaker en EMP krijgen een timer (0–8 s), Spy Cams markeren automatisch. Jij bent je eigen crew: je zet de keten klaar en start hem met één aftelling. Solo krijgt op elke moeilijkheid 2 s extra. |
-| 2 | 2 | 4 | 10 s | Spy Cams markeren automatisch. Elk vult twee stappen; de Chain Call telt timers mee. |
-| 3 | 2 | 5 | 10 s | Alle zes gadgets in gebruik. |
-| 4 | 1 | 6 | 10 s | Twee gadgets blijven in het busje: je kunt tijdens de run terug om te ruilen. +15% crewbonus (§7). |
+| 1 (solo) | 3 (one per step) | 3 | 12 s | **Solo Kit**: Noisemaker and EMP get a timer (0–8 s), Spy Cams mark automatically. You are your own crew: you set up the chain and start it with one countdown. Solo gets 2 s extra on every difficulty. |
+| 2 | 2 | 4 | 10 s | Spy Cams mark automatically. Each fills two steps; the Chain Call counts timers too. |
+| 3 | 2 | 5 | 10 s | All six gadgets in use. |
+| 4 | 1 | 6 | 10 s | Two gadgets stay in the van: you can go back during the run to swap. +15% crew bonus (§7). |
 
-**Waarom dit de keten niet breekt:** de drie stappen vragen elk iets wat je niet tegelijk kunt doen. Wie de Drone bestuurt of naar camerabeelden kijkt, staat stil. Wie de Crowbar gebruikt, moet bij de deur staan. Een speler met twee gadgets kan dus nooit gelijktijdig zien en openen. Hij moet zijn tweede stap met een timer klaarzetten, of samenwerken.
+**Why this does not break the chain:** the three steps each require something you cannot do at the same time. Whoever flies the Drone or watches camera footage stands still. Whoever uses the Crowbar has to stand at the door. So a player with two gadgets can never see and open at the same time. They have to set up their second step with a timer, or work together.
 
-**Spelers die vertrekken of erbij komen** (bij vreemden gebeurt dat constant):
-- Vertrekt iemand, dan valt zijn gadget op de grond (iedereen kan het oppakken) en krijgen de overblijvers automatisch een extra gadgetvak. Het aantal bewakers blijft gelijk; het venster gaat 1 s omhoog.
-- In de eerste 3 minuten van een run kunnen nieuwe spelers via matchmaking **instappen bij het busje** ("Backup arrived!"). Daarna niet meer, want dat zou het plan verstoren.
-- Een speler die met opzet het alarm laat afgaan, kan het spel niet volledig verpesten: het alarm loopt trapsgewijs op (§9.5), en de crew kan hem met een stemming (meerderheid: 2 van 3 of 3 van 4) uit de run zetten.
-
----
-
-## 4. De zes gadgets op Roblox
-
-**Afspraken voor alle gadgets**
-- Je draagt elk gadget in een vak. Wissel van vak: 0,5 s.
-- Grote buit dragen = je gadgetknop wordt "DROP" (laten vallen, 0,3 s). Je loopt 25% trager.
-- Elk gadget heeft een vast aantal **ladingen per run**. Dat aantal staat als bolletjes op de knop.
-- Alle getallen hieronder zijn startwaarden voor de eerste speeltest. Pas ze aan op basis van wat je ziet, niet op gevoel.
-- De effecten worden op de **server** uitgerekend; de client vraagt alleen "ik wil de EMP gooien naar punt X". Zo kan niemand vals spelen door zijn eigen toestel aan te passen.
+**Players who leave or join** (with strangers that happens constantly):
+- If someone leaves, their gadget drops on the floor (anyone can pick it up) and the remaining players automatically get an extra gadget slot. The number of guards stays the same; the window goes up by 1 s.
+- In the first 3 minutes of a run, new players can **join at the van** through matchmaking ("Backup arrived!"). After that no longer, because that would disrupt the plan.
+- A player who sets off the alarm on purpose cannot ruin the game completely: the alarm rises in steps (§9.5), and the crew can remove them from the run with a vote (majority: 2 out of 3 or 3 out of 4).
 
 ---
 
-### 4.1 Drone — "Drone" (zien)
+## 4. The six gadgets on Roblox
 
-De Drone hangt aan een dunne LAN-kabel. Dat verklaart waarom de bestuurder moet stilstaan en waarom het bereik beperkt is.
-
-| | |
-|---|---|
-| **Pc** | **1** kiezen → **linkermuisknop** lanceren. WASD vliegen, muis kijken, **spatie/Ctrl** omhoog/omlaag, **linkermuisknop** = SPOT, **F** = terughalen. |
-| **Mobiel** | Tik DRONE → het beeld springt naar de drone. Joystick = vliegen, vegen = kijken, knoppen ▲/▼ = hoogte, grote knop "SPOT", knop "BACK". |
-| **Controller** | **R2** lanceren, sticks vliegen en kijken, **R1/L1** hoogte, **X/□** = SPOT, **B/○** = terug. |
-| **In de keten** | EYES. Ziet bewakers, camera's en de hond, markeert ze automatisch na 0,5 s voor de hele crew, en maakt ketenkaartjes (§3.2). |
-| **Cijfers** | Bereik 45 studs rond je lichaam. Batterij 40 s vliegen, daarna 20 s opladen. 1 drone per run. Vult de Signal-meter (+1 per seconde). |
-| **Hoe het faalt** | (1) Je lichaam staat gehurkt stil en ziet niets: een bewaker kan je gewoon oppakken. (2) Een EMP binnen 14 studs: de drone valt met "BZZT" en een zielig piepje 10 s uit de lucht. Valt hij op een bewaker, dan zie je sterretjes rond diens hoofd en wordt die bewaker "Alert". (3) Lager dan 5 studs bij de hond: de hond grijpt hem en legt hem in zijn mand. Je kunt hem daar terughalen. (4) Een bewaker die de drone 1,5 s ziet: "What's that?" en hij komt kijken. |
-
-### 4.2 Spy Cams — "Spy Cams" (zien)
-
-| | |
-|---|---|
-| **Pc** | **2** kiezen → **linkermuisknop** op een muur of plafond plakken (groen silhouet = mag). **V** = beelden bekijken, **Q/E** = volgende camera. |
-| **Mobiel** | Tik CAMS = plakken op het richtpunt. Houd CAMS 0,5 s vast = beelden bekijken, met pijltjes om te wisselen en een SPOT-knop. |
-| **Controller** | **R2** plakken, **L2** vasthouden = beelden bekijken, **L1/R1** wisselen. |
-| **In de keten** | EYES, maar op een vaste plek. Wie kijkt, staat stil. Bij 1–2 spelers markeren de camera's bewakers ook automatisch als niemand kijkt (3 s). |
-| **Cijfers** | 2 camera's per speler die ze draagt. Bereik van plakken: 6 studs. Elke actieve camera vult de Signal-meter (+0,25/s). In het camerabeeld zet je een camera uit en aan (om de meter te sparen). |
-| **Hoe het faalt** | (1) Een bewaker die binnen 8 studs 2 s recht naar de camera kijkt, haalt hem weg (+20 alarmpunten); voor die run ben je hem kwijt. (2) Een EMP zet ze 10 s op ruis, ook je eigen camera's. (3) Te veel actieve camera's lokken Asset Recovery. |
-
-### 4.3 Noisemaker — "Noisemaker" (vrijmaken: mensen)
-
-Dit is de afleidingskit: een opwindbare wekker die rinkelt.
-
-| | |
-|---|---|
-| **Pc** | **Linkermuisknop** vasthouden = werpboog, loslaten = gooien. Scrollwiel = timer instellen (0, 3, 5 of 8 s). |
-| **Mobiel** | Tik = werpboog vanaf het richtpunt, tik "THROW" = gooien. Kleine knop "+3s" naast de gadgetknop = timer. |
-| **Controller** | **L2** richten, **R2** gooien, **D-pad links/rechts** = timer. |
-| **In de keten** | CLEAR (mensen en de hond). Bewakers binnen 20 studs die hem horen, lopen ernaartoe en zoeken 10 s (Rookie 12 s, Pro 8 s). |
-| **Cijfers** | 3 per run. Rinkelt 6 s. Na gebruik kun je hem terug oppakken als je erbij geraakt. |
-| **Hoe het faalt** | (1) Te dicht bij jezelf gegooid: de bewaker komt naar jóú. (2) Twee keer op dezelfde plek binnen 30 s: "Again?!" — de bewaker wordt Suspicious en kijkt de andere kant op (+15 alarmpunten). (3) Werkt niet op camera's. (4) Karel raapt hem op en steekt hem in zijn zak (§9.6). |
-
-### 4.4 EMP — "EMP" (vrijmaken: elektronica)
-
-| | |
-|---|---|
-| **Pc** | **Linkermuisknop** vasthouden = richten, met de straal als blauwe cirkel op de grond. Alles wat geraakt wordt, licht op — **ook de drone en camera's van je crew**, met een rood waarschuwingsicoon "YOUR DRONE!". Loslaten = gooien. |
-| **Mobiel** | Tik = richten (cirkel zichtbaar), tik "THROW" = gooien. |
-| **Controller** | **L2** richten, **R2** gooien. |
-| **In de keten** | CLEAR (camera's, lampen, alarmsensoren). Alles binnen 14 studs ligt 10 s plat. Elektronische sloten blijven dicht: de EMP opent nooit zelf een pad. |
-| **Cijfers** | 2 per run, 30 s afkoeltijd. Het licht in de straal gaat ook uit; donker = bewakers zien je op halve afstand. De EMP vult de Signal-meter in één keer met +15. |
-| **Hoe het faalt** | (1) **Je eigen drone en camera's in de straal vallen uit** (comedy, maar ook echt: je crew is 10 s blind). (2) "BZZT" is hoorbaar binnen 10 studs: een bewaker in de buurt wordt Suspicious. (3) Na 10 s starten de camera's opnieuw op en kijken ze eerst naar de plek waar ze stonden. |
-
-### 4.5 Crowbar — "Crowbar" (openen)
-
-| | |
-|---|---|
-| **Pc** | Bij een deur, kast of luik: **linkermuisknop** vasthouden. |
-| **Mobiel** | De gadgetknop toont het breekijzer zodra je bij iets staat dat open kan. Vasthouden. |
-| **Controller** | **R2** vasthouden. |
-| **In de keten** | OPEN. Deuren, kasten en luiken: 1,5 s. Hekken en kooien: 3 s. Aan het einde klinkt een luide "CRACK!" (25 studs). |
-| **Cijfers** | Onbeperkt gebruik. Laat je te vroeg los, dan blijft de voortgang 3 s bewaard. |
-| **Hoe het faalt** | (1) Hoort een bewaker de CRACK, dan komt hij kijken (+20 alarmpunten), tenzij hij net afgeleid is. (2) Elk gebruik laat een **breekspoor** achter op de deur (§5.3). (3) Wie de Crowbar draagt, kan niets zien of afleiden: hij moet vertrouwen op de crew. |
-
-### 4.6 Winch — "Winch" (openen: routes en buit)
-
-De haspel schiet een kabel tussen jou en een ankerpunt.
-
-| | |
-|---|---|
-| **Pc** | **Linkermuisknop** op een ankerpunt (geldige punten lichten op: dakrand, raam, busje). **E** bij de kabel = buit eraan hangen of zelf meeglijden. |
-| **Mobiel** | Tik WINCH → geldige ankerpunten lichten op → tik op een ankerpunt. USE bij de kabel = buit eraan of meeglijden. |
-| **Controller** | **R2** op een ankerpunt, **X/□** bij de kabel. |
-| **In de keten** | OPEN: een route over een muur, hek of water. Plus transport: grote buit glijdt in 4 s naar het andere eind (de Golden Gouda in 8 s), zonder dat iemand hem draagt. |
-| **Cijfers** | 2 kabels per run, die elk 45 s blijven hangen. Bereik 40 studs. Meeglijden duurt 3–5 s; ondertussen kun je niets anders. |
-| **Hoe het faalt** | (1) Een bewaker die de kabel ziet, volgt hem (+30 alarmpunten). (2) Glijdende buit maakt "zzzip" (10 studs). (3) De kabel moet vrij hangen: een boom of luifel ertussen = geen kabel. |
+**Agreements for all gadgets**
+- You carry each gadget in a slot. Switching slots: 0.5 s.
+- Carrying big loot = your gadget button becomes "DROP" (drop it, 0.3 s). You walk 25% slower.
+- Each gadget has a fixed number of **charges per run**. That number is shown as dots on the button.
+- All numbers below are starting values for the first playtest. Adjust them based on what you see, not on gut feeling.
+- The effects are calculated on the **server**; the client only asks "I want to throw the EMP at point X". That way nobody can cheat by modifying their own device.
 
 ---
 
-### 4.7 Extra gadgets: zijwaarts, niet sterker
+### 4.1 Drone — "Drone" (see)
 
-Extra gadgets koop je met spelgeld (Cash). Ze lossen dezelfde stap op, maar met een ander voor- en nadeel. Ze zijn nooit gewoon "beter".
+The Drone hangs on a thin LAN cable. That explains why the pilot has to stand still and why the range is limited.
 
-| Extra gadget | Stap | Wat het anders doet | Het nadeel | Prijs |
+| | |
+|---|---|
+| **PC** | **1** to choose → **left mouse button** to launch. WASD to fly, mouse to look, **space/Ctrl** up/down, **left mouse button** = SPOT, **F** = recall. |
+| **Mobile** | Tap DRONE → the view jumps to the drone. Joystick = fly, swipe = look, ▲/▼ buttons = altitude, big "SPOT" button, "BACK" button. |
+| **Controller** | **R2** to launch, sticks to fly and look, **R1/L1** altitude, **X/□** = SPOT, **B/○** = back. |
+| **In the chain** | EYES. Sees guards, cameras and the dog, marks them automatically after 0.5 s for the whole crew, and creates chain cards (§3.2). |
+| **Numbers** | Range 45 studs around your body. Battery 40 s of flying, then 20 s of charging. 1 drone per run. Fills the Signal meter (+1 per second). |
+| **How it fails** | (1) Your body stands still crouched and sees nothing: a guard can simply pick you up. (2) An EMP within 14 studs: the drone drops out of the air for 10 s with a "BZZT" and a pitiful beep. If it lands on a guard, you see stars around his head and that guard becomes "Alert". (3) Lower than 5 studs near the dog: the dog grabs it and puts it in its basket. You can get it back from there. (4) A guard who sees the drone for 1.5 s: "What's that?" and he comes to look. |
+
+### 4.2 Spy Cams — "Spy Cams" (see)
+
+| | |
+|---|---|
+| **PC** | **2** to choose → **left mouse button** to stick on a wall or ceiling (green silhouette = allowed). **V** = view footage, **Q/E** = next camera. |
+| **Mobile** | Tap CAMS = stick at the aim point. Hold CAMS for 0.5 s = view footage, with arrows to switch and a SPOT button. |
+| **Controller** | **R2** to stick, hold **L2** = view footage, **L1/R1** to switch. |
+| **In the chain** | EYES, but at a fixed spot. Whoever watches stands still. With 1–2 players the cameras also mark guards automatically when nobody is watching (3 s). |
+| **Numbers** | 2 cameras per player carrying them. Sticking range: 6 studs. Each active camera fills the Signal meter (+0.25/s). In the camera view you switch a camera off and on (to spare the meter). |
+| **How it fails** | (1) A guard who looks straight at the camera for 2 s within 8 studs removes it (+20 alarm points); you have lost it for that run. (2) An EMP turns them to static for 10 s, your own cameras too. (3) Too many active cameras draw Asset Recovery. |
+
+### 4.3 Noisemaker — "Noisemaker" (clear: people)
+
+This is the distraction kit: a wind-up alarm clock that rings.
+
+| | |
+|---|---|
+| **PC** | Hold **left mouse button** = throwing arc, release = throw. Scroll wheel = set timer (0, 3, 5 or 8 s). |
+| **Mobile** | Tap = throwing arc from the aim point, tap "THROW" = throw. Small "+3s" button next to the gadget button = timer. |
+| **Controller** | **L2** to aim, **R2** to throw, **D-pad left/right** = timer. |
+| **In the chain** | CLEAR (people and the dog). Guards within 20 studs who hear it walk towards it and search for 10 s (Rookie 12 s, Pro 8 s). |
+| **Numbers** | 3 per run. Rings for 6 s. After use you can pick it up again if you can reach it. |
+| **How it fails** | (1) Thrown too close to yourself: the guard comes towards *you*. (2) Twice in the same spot within 30 s: "Again?!" — the guard becomes Suspicious and looks the other way (+15 alarm points). (3) Does not work on cameras. (4) Karel picks it up and puts it in his pocket (§9.6). |
+
+### 4.4 EMP — "EMP" (clear: electronics)
+
+| | |
+|---|---|
+| **PC** | Hold **left mouse button** = aim, with the radius as a blue circle on the ground. Everything that will be hit lights up — **including your crew's drone and cameras**, with a red warning icon "YOUR DRONE!". Release = throw. |
+| **Mobile** | Tap = aim (circle visible), tap "THROW" = throw. |
+| **Controller** | **L2** to aim, **R2** to throw. |
+| **In the chain** | CLEAR (cameras, lamps, alarm sensors). Everything within 14 studs is down for 10 s. Electronic locks stay shut: the EMP never opens a path by itself. |
+| **Numbers** | 2 per run, 30 s cooldown. The light in the radius goes out too; dark = guards see you at half the distance. The EMP fills the Signal meter by +15 in one go. |
+| **How it fails** | (1) **Your own drone and cameras in the radius go down** (comedy, but also real: your crew is blind for 10 s). (2) "BZZT" is audible within 10 studs: a guard nearby becomes Suspicious. (3) After 10 s the cameras reboot and first look at the spot where they were pointing. |
+
+### 4.5 Crowbar — "Crowbar" (open)
+
+| | |
+|---|---|
+| **PC** | At a door, cupboard or hatch: hold **left mouse button**. |
+| **Mobile** | The gadget button shows the crowbar as soon as you stand next to something that can be opened. Hold it. |
+| **Controller** | Hold **R2**. |
+| **In the chain** | OPEN. Doors, cupboards and hatches: 1.5 s. Gates and cages: 3 s. At the end there is a loud "CRACK!" (25 studs). |
+| **Numbers** | Unlimited use. If you let go too early, the progress is kept for 3 s. |
+| **How it fails** | (1) If a guard hears the CRACK, he comes to look (+20 alarm points), unless he has just been distracted. (2) Each use leaves a **pry mark** on the door (§5.3). (3) Whoever carries the Crowbar cannot see or distract: they have to trust the crew. |
+
+### 4.6 Winch — "Winch" (open: routes and loot)
+
+The winch shoots a cable between you and an anchor point.
+
+| | |
+|---|---|
+| **PC** | **Left mouse button** on an anchor point (valid points light up: roof edge, window, van). **E** at the cable = hang loot on it or slide along yourself. |
+| **Mobile** | Tap WINCH → valid anchor points light up → tap an anchor point. USE at the cable = hang loot on it or slide along. |
+| **Controller** | **R2** on an anchor point, **X/□** at the cable. |
+| **In the chain** | OPEN: a route over a wall, gate or water. Plus transport: big loot slides to the other end in 4 s (the Golden Gouda in 8 s), without anyone carrying it. |
+| **Numbers** | 2 cables per run, each staying up for 45 s. Range 40 studs. Sliding along takes 3–5 s; meanwhile you can do nothing else. |
+| **How it fails** | (1) A guard who sees the cable follows it (+30 alarm points). (2) Sliding loot makes a "zzzip" (10 studs). (3) The cable has to hang free: a tree or awning in between = no cable. |
+
+---
+
+### 4.7 Extra gadgets: sideways, not stronger
+
+You buy extra gadgets with in-game money (Cash). They solve the same step, but with a different advantage and disadvantage. They are never simply "better".
+
+| Extra gadget | Step | What it does differently | The drawback | Price |
 |---|---|---|---|---|
-| **"Periscope"** | EYES | Analoog: kijkt onder deuren en om hoeken. Immuun voor EMP, vult de Signal-meter niet, de hond negeert hem. | Bereik maar 12 studs, en je moet zelf bij de deur staan. Markeren kan alleen wat dichtbij is. | 800 Cash |
-| **"Fake Delivery"** | CLEAR | Belt een nepbezorging: na 8 s gaat de deurbel en loopt de dichtstbijzijnde bewaker 14 s naar de voordeur. Geen geluid in het gebouw, dus geen verdenking. | 1× per run, alleen bij een deurbel, en je kiest niet welke bewaker gaat. Na alarmtrede 1 werkt hij niet meer ("Not now!"). | 1.000 Cash |
-| **"Lockpick Set"** | OPEN | Stil: geen CRACK en geen breekspoor. | Duurt 6 s in plaats van 1,5 s, past dus amper in een venster van 10 s. Werkt niet op hekken en kooien. | 900 Cash |
+| **"Periscope"** | EYES | Analogue: looks under doors and around corners. Immune to EMP, does not fill the Signal meter, the dog ignores it. | Range only 12 studs, and you have to stand at the door yourself. It can only mark what is close by. | 800 Cash |
+| **"Fake Delivery"** | CLEAR | Calls in a fake delivery: after 8 s the doorbell rings and the nearest guard walks to the front door for 14 s. No noise in the building, so no suspicion. | 1× per run, only at a doorbell, and you do not choose which guard goes. After alarm step 1 it no longer works ("Not now!"). | 1,000 Cash |
+| **"Lockpick Set"** | OPEN | Silent: no CRACK and no pry mark. | Takes 6 s instead of 1.5 s, so it barely fits in a 10 s window. Does not work on gates and cages. | 900 Cash |
 
-**Waarom dit werkt voor nieuwe spelers:** wie net begint, heeft het standaardgadget voor dezelfde stap. Dat is even nuttig, alleen anders. Een crew zonder één extra gadget kan elke map uitspelen.
+**Why this works for new players:** whoever is just starting has the default gadget for the same step. That is just as useful, only different. A crew without a single extra gadget can finish every map.
 
 
-### 4.8 Grappige wapens — "Prank Arsenal" (toegevoegd 15/10/2026)
+### 4.8 Funny weapons — "Prank Arsenal" (added 15/10/2026)
 
-Maurits koos voor wapens, "maar leuk verwerkt en grappig". Zo past dat in de keten zonder er een schietspel van te maken:
+Maurits chose weapons, "but worked in nicely and funny". This is how that fits into the chain without turning it into a shooter:
 
-**De regel: een grap koopt tijd, geen oplossing.**
-- Elk wapen is een **CLEAR**-gadget dat op **één bewaker** een venster opent (Normal 8–10 s). Nooit dodelijk, nooit blijvend.
-- Daarna komt de bewaker **bozer terug**: hij gaat meteen naar Search (§9.1) en er komen **+10 alarmpunten** bij. Wie alleen schiet, eindigt in LOCKDOWN.
-- **Weinig munitie** (1–3 per run), en elk wapen is **zichtbaar of hoorbaar**. Sluipen blijft beter.
-- Het **raakt ook je eigen crew** (zoals de EMP): een teamgenoot in een zeepbel zweeft 3 s rond. Onschuldig, en precies het soort grap waar vrienden om lachen.
-- **Niet op Karel** ("Karel has seen worse") en **niet op de hond** (die lok je met een Dog Treat). Bewakers gebruiken zelf **geen** wapens.
+**The rule: a prank buys time, not a solution.**
+- Each weapon is a **CLEAR** gadget that opens a window on **one guard** (Normal 8–10 s). Never lethal, never permanent.
+- Afterwards the guard comes **back angrier**: he goes straight to Search (§9.1) and **+10 alarm points** are added. Whoever only shoots ends up in LOCKDOWN.
+- **Little ammo** (1–3 per run), and every weapon is **visible or audible**. Sneaking stays better.
+- It **also hits your own crew** (like the EMP): a teammate in a soap bubble floats around for 3 s. Harmless, and exactly the kind of joke friends laugh about.
+- **Not on Karel** ("Karel has seen worse") and **not on the dog** (you lure that one with a Dog Treat). Guards themselves use **no** weapons.
 
-| Wapen (spelernaam) | Wat het doet (venster) | Het grappige nadeel | Hoe je het krijgt |
+| Weapon (player-facing name) | What it does (window) | The funny drawback | How you get it |
 |---|---|---|---|
-| **"Bubble Blaster"** | Schiet een zeepbel: de bewaker zweeft 8 s ingesloten rond en kan niet zien of roepen. | De bel moet raken (vliegtijd), en klapt eerder als hij tegen een muur of speler botst. | **Standaard** (het 7e gadget, ook in de tutorial) |
-| **"Fondue Cannon"** | Een plas kleverige kaas: de bewaker staat 10 s vast. | Hij **ziet en roept nog**: zonder EYES loop je er recht in (+40 als hij je ziet). | Extra, 900 Cash |
-| **"Tickle Ray"** | De bewaker ligt 6 s in een deuk van het lachen. | Het lachen is **luid**: andere bewakers binnen 20 studs komen kijken. | Extra, 1.000 Cash |
-| **"Klomp Boomerang"** | Een houten klomp: *bonk*, 5 s sterretjes. Komt terug naar je hand. | Vang je hem niet op, dan ligt er een klomp op de vloer: een **spoor** (§5.3). | Extra, 800 Cash |
-| **"Confetti Popper"** | Verblindt een bewaker **of camera** 8 s met confetti. | De confetti blijft liggen: een spoor, en Karel komt het opruimen én verklikken. | Extra, 700 Cash |
-| **"Rubber Chicken"** | Van dichtbij: *PIEP*, de bewaker is 4 s duizelig. | Supersterk geluid (25 studs): +20 als iemand het hoort. Wel gratis te herladen. | Extra, 500 Cash |
+| **"Bubble Blaster"** | Shoots a soap bubble: the guard floats around trapped for 8 s and cannot see or shout. | The bubble has to hit (travel time), and pops early if it bumps into a wall or player. | **Default** (the 7th gadget, also in the tutorial) |
+| **"Fondue Cannon"** | A puddle of sticky cheese: the guard is stuck for 10 s. | He **can still see and shout**: without EYES you walk right into him (+40 if he sees you). | Extra, 900 Cash |
+| **"Tickle Ray"** | The guard is doubled over with laughter for 6 s. | The laughing is **loud**: other guards within 20 studs come to look. | Extra, 1,000 Cash |
+| **"Klomp Boomerang"** | A wooden clog: *bonk*, 5 s of stars. Comes back to your hand. | If you do not catch it, a clog lies on the floor: a **trace** (§5.3). | Extra, 800 Cash |
+| **"Confetti Popper"** | Blinds a guard **or camera** with confetti for 8 s. | The confetti stays on the floor: a trace, and Karel comes to clean it up *and* snitch. | Extra, 700 Cash |
+| **"Rubber Chicken"** | Up close: *SQUEAK*, the guard is dizzy for 4 s. | Super loud sound (25 studs): +20 if anyone hears it. But free to reload. | Extra, 500 Cash |
 
-**Bediening** (zoals Noisemaker en EMP, §3.6): richten en schieten met de gadgetknop. Op mobiel tik je op GADGET (richten) en THROW (vuren); de straal of boog is zichtbaar.
+**Controls** (like Noisemaker and EMP, §3.6): aim and shoot with the gadget button. On mobile you tap GADGET (aim) and THROW (fire); the radius or arc is visible.
 
-**Cosmetica voor Robux** (§8): alleen uiterlijk, bijvoorbeeld regenboogbellen, een gouden rubberen kip of een klomp met tulpjes. Nooit een sterker wapen of extra munitie.
+**Cosmetics for Robux** (§8): looks only, for example rainbow bubbles, a golden rubber chicken or a clog with tulips. Never a stronger weapon or extra ammo.
 
-**Bouwvolgorde:** de Bubble Blaster zit al in het fase 1-prototype (zodat je hem meteen kunt testen). De extra wapens volgen bij de eerste release en de updates. Let er bij het testen op dat spelers nog sluipen in plaats van alleen te schieten; anders: minder munitie of meer alarmpunten.
+**Build order:** the Bubble Blaster is already in the phase 1 prototype (so you can test it right away). The extra weapons follow with the first release and the updates. When testing, check that players still sneak instead of only shooting; if not: less ammo or more alarm points.
 
 ---
 
-## 5. Geweld, bloed en leeftijdslabel
+## 5. Violence, blood and age rating
 
-*(Een **leeftijdslabel** — bij Roblox "content maturity label" — vertelt spelers en ouders hoe heftig je spel is; je krijgt het door de **Maturity & Compliance Questionnaire** in te vullen, een vragenlijst in de Creator Hub over geweld, bloed, angst, humor en gokken. Een spel zonder label is voor niemand normaal speelbaar.)*
+*(An **age rating** — on Roblox the "content maturity label" — tells players and parents how intense your game is; you get it by filling in the **Maturity & Compliance Questionnaire**, a questionnaire in the Creator Hub about violence, blood, fear, humour and gambling. A game without a label is not normally playable for anyone.)*
 
-### 5.1 Advies in het kort
+### 5.1 The advice in short
 
-**Mik op het label Mild. Geen bloed. Grappige wapens en slapstick, nooit echt geweld.**
+**Aim for the Mild label. No blood. Funny weapons and slapstick, never real violence.**
 
-- **Minimal en Mild bereiken allebei de jongste groepen**: Roblox Kids (5–8 jaar) en Roblox Select (9–15 jaar), na de keuring uit §5.5. Moderate bereikt Kids niet meer.
-- Een stealthgame is van nature spannend (Roblox noemt "suspense-building gameplay" letterlijk **milde angst**), en de grappige wapens zijn **herhaaldelijk mild, onrealistisch geweld** (een bewaker even uitschakelen met een zeepbel of kaas). Samen geeft dat **Mild**. Dat is geen probleem: Mild bereikt nog altijd Kids (5–8) en Select (9–15).
-- **Bloed zou zelfs mogen**: Minimal laat "light unrealistic blood" toe (zelden, onrealistisch van kleur of vorm). Toch raad ik **geen bloed** aan. Een inbraakspel met bloed voelt voor ouders snel "fout", ook al past het in de regels, en het voegt niets toe wat een scheurtje van je vest niet ook vertelt. Zo hoef je ook nooit te twijfelen bij het invullen van de vragenlijst.
+- **Minimal and Mild both reach the youngest groups**: Roblox Kids (ages 5–8) and Roblox Select (ages 9–15), after the review from §5.5. Moderate no longer reaches Kids.
+- A stealth game is suspenseful by nature (Roblox literally calls "suspense-building gameplay" **mild fear**), and the funny weapons are **repeated mild, unrealistic violence** (briefly disabling a guard with a bubble or cheese). Together that gives **Mild**. That is not a problem: Mild still reaches Kids (5–8) and Select (9–15).
+- **Blood would even be allowed**: Minimal permits "light unrealistic blood" (rare, unrealistic in colour or shape). Even so, I recommend **no blood**. A burglary game with blood quickly feels "wrong" to parents, even if it fits the rules, and it adds nothing that a small tear in your vest cannot tell just as well. That way you never have to hesitate when filling in the questionnaire either.
 
-### 5.2 Wat de labels zeggen (stand 15/10/2026)
+### 5.2 What the labels say (as of 15/10/2026)
 
-| Label | Geweld | Bloed | Wie mag spelen (standaard) |
+| Label | Violence | Blood | Who may play (default) |
 |---|---|---|---|
-| **Minimal** | Af en toe mild geweld | Weinig onrealistisch bloed | Kids (5–8), Select (9–15), 16+ |
-| **Mild** | Herhaaldelijk mild geweld | Veel onrealistisch bloed | Kids, Select, 16+ |
-| **Moderate** | Matig, realistisch ogend geweld | Weinig realistisch bloed | Select (9+), 16+ |
-| **Restricted** | Sterk geweld | Veel realistisch bloed | Alleen 18+ met ID |
+| **Minimal** | Occasional mild violence | Little unrealistic blood | Kids (5–8), Select (9–15), 16+ |
+| **Mild** | Repeated mild violence | Lots of unrealistic blood | Kids, Select, 16+ |
+| **Moderate** | Moderate, realistic-looking violence | Little realistic blood | Select (9+), 16+ |
+| **Restricted** | Strong violence | Lots of realistic blood | Only 18+ with ID |
 
-- "Mild geweld" betekent bij Roblox impliciet of onrealistisch, bijvoorbeeld een lichaam dat verdwijnt bij nul levens.
-- Let op met decor: een **onspeelbaar casino of kaartspel** als doelwit maakt je spel volgens de regels **Moderate** ("unplayable gambling content"). Kies voor latere maps dus geen casino.
-- Diefstal of inbraak als thema heeft geen eigen categorie in de vragenlijst. Roblox' Community Standards verbieden wel het naspelen van **echte** misdaden of gebeurtenissen. Fictieve inbraken in een fictieve stad vallen daar niet onder. ⚠️ Ik vond geen regel die een cartoon-inbraakspel voor kinderen verbiedt, maar ook geen uitdrukkelijke toelating. Lees de vragen van de vragenlijst zelf vóór fase 3.
+- For Roblox, "mild violence" means implied or unrealistic, for example a body that disappears at zero health.
+- Be careful with set dressing: an **unplayable casino or card game** as a target makes your game **Moderate** under the rules ("unplayable gambling content"). So do not pick a casino for later maps.
+- Theft or burglary as a theme has no category of its own in the questionnaire. Roblox's Community Standards do forbid re-enacting **real** crimes or events. Fictional burglaries in a fictional town do not fall under that. ⚠️ I found no rule that forbids a cartoon burglary game for children, but no explicit permission either. Read the questionnaire's questions yourself before phase 3.
 
-**Hoe geweld er dan wél uitziet**
+**What violence does look like, then**
 
-**Geweld als gevolg (slapstick, niemand raakt gewond):**
-- Je drone valt door een EMP op het hoofd van een bewaker: sterretjes, en de bewaker is Alert (het is dus slecht voor jou).
-- Een bewaker zweeft 8 s in een zeepbel van de Bubble Blaster, of staat vast in kaasfondue (§4.8). Daarna komt hij bozer terug.
-- Een bewaker die je achtervolgt, botst tegen een deur die net dichtvalt en blijft even suf staan.
-- Een gepakte speler krijgt plastic polsbandjes en wordt met een overgangseffect naar de beveiligingsruimte gebracht.
+**Violence as a consequence (slapstick, nobody gets hurt):**
+- Your drone, hit by an EMP, falls on a guard's head: little stars, and the guard is Alert (so it is bad for you).
+- A guard floats for 8 s in a bubble from the Bubble Blaster, or is stuck in cheese fondue (§4.8). Afterwards he comes back angrier.
+- A guard chasing you bumps into a door that just slammed shut and stands there dazed for a moment.
+- A caught player gets plastic zip-tie cuffs and is taken to the security room with a transition effect.
 
-**Wat er nooit in komt:** echte of realistische wapens (geen pistolen, geen messen, geen verdovingspijltjes), wapens die bewakers gebruiken, slaan of duwen door spelers, een hond die bijt, politie die geweld gebruikt, bloed, echte merken of echte plekken.
+**What never goes in:** real or realistic weapons (no pistols, no knives, no tranquilliser darts), weapons used by guards, players hitting or pushing, a dog that bites, police using force, blood, real brands or real places.
 
-### 5.3 Hoe de sporen werken (zonder bloed)
+### 5.3 How the traces work (without blood)
 
-Sporen zijn **informatie voor de tegenstander**. Je laat ze achter door slordig te zijn, niet door geweld.
+Traces are **information for the opponent**. You leave them behind by being sloppy, not through violence.
 
-| Spoor | Hoe je het achterlaat | Hoe lang zichtbaar | Wie het vindt |
+| Trace | How you leave it | How long visible | Who finds it |
 |---|---|---|---|
-| **Modderige voetstappen** | Door de modderplas in de binnenkoer lopen. Je laat 12 stappen achter. | 90 s | Bewaker, Karel |
-| **Breekspoor** | Elke Crowbar-actie op een deur, kast of kooi | Hele run | Bewaker, Karel |
-| **Open deur of kast** | Iets openlaten dat dicht hoort | Tot iemand het sluit | Bewaker, Karel (sluit het en meldt het) |
-| **Scheurtje werkvest** | Over de omheining met prikkeldraad klimmen. Er blijft een oranje stukje stof hangen. Dit vervangt "bloed als spoor": het vertelt hetzelfde verhaal ("hier is iemand doorgekomen"). | Hele run | Bewaker |
-| **Leeg rek** | Buit weghalen. De lege plek licht op voor bewakers die er recht naar kijken. | Hele run | Bewaker |
+| **Muddy footprints** | Walking through the mud puddle in the courtyard. You leave 12 footprints behind. | 90 s | Guard, Karel |
+| **Pry marks** | Every Crowbar action on a door, cabinet or cage | Whole run | Guard, Karel |
+| **Open door or cabinet** | Leaving something open that should be closed | Until someone closes it | Guard, Karel (closes it and reports it) |
+| **Torn work vest** | Climbing over the barbed-wire fence. A little orange scrap of fabric stays behind. This replaces "blood as a trace": it tells the same story ("someone came through here"). | Whole run | Guard |
+| **Empty shelf** | Taking loot. The empty spot lights up for guards who look straight at it. | Whole run | Guard |
 
-- **Gevonden spoor** = de bewaker wordt Suspicious, krijgt +20 alarmpunten en volgt het spoor (bij voetstappen in de richting van de stappen).
-- **Sporen wissen:** de **"Clean Spray"** wist één spoor in 1 s (een reeks voetstappen telt als één spoor). Je krijgt er 2 gratis per run; extra kosten 60 Cash, nooit Robux. Een deur sluiten is gratis (0,5 s).
-- **Voorkomen is beter dan wissen:** om de modderplas heen lopen, de Lockpick in plaats van de Crowbar, de Winch in plaats van over het prikkeldraad.
-- **Aan het einde van de run** zie je op het uitbetalingsscherm een kaartje met alle sporen die je achterliet ("Your trail"), en of iemand ze vond. Zo leren spelers het systeem zonder uitleg vooraf.
-- **De Clean Job-bonus** (+20%) krijg je als niemand één spoor vond.
+- **Trace found** = the guard becomes Suspicious, adds +20 alarm points and follows the trace (with footprints, in the direction of the steps).
+- **Erasing traces:** the **"Clean Spray"** erases one trace in 1 s (a line of footprints counts as one trace). You get 2 free per run; extras cost 60 Cash, never Robux. Closing a door is free (0.5 s).
+- **Prevention beats erasing:** walk around the mud puddle, use the Lockpick instead of the Crowbar, the Winch instead of going over the barbed wire.
+- **At the end of the run** the payout screen shows a little map with all the traces you left behind ("Your trail"), and whether anyone found them. That way players learn the system without an explanation up front.
+- **The Clean Job bonus** (+20%) is yours if nobody found a single trace.
 
-### 5.4 Chat, voice en leeftijd: waarom pings nodig zijn
+### 5.4 Chat, voice and age: why pings are needed
 
-| Wat | Regel (stand 15/10/2026) |
+| What | Rule (as of 15/10/2026) |
 |---|---|
-| **Voicechat** | Alleen vanaf 13 jaar, met leeftijdsverificatie, in een beperkt aantal landen. **Niemand onder 13 heeft voice.** |
-| **Tekstchat** | Sinds 7 januari 2026 wereldwijd alleen na een **leeftijdscheck** (gezichtsschatting via de camera, of ID vanaf 13 jaar). In Nederland al sinds december 2025. Wie geen check deed, kan spelen maar niet chatten. |
-| **Met wie je chat** | Zes leeftijdsgroepen: onder 9, 9–12, 13–15, 16–17, 18–20, 21+. Je chat alleen met je eigen groep en de groepen er direct naast. Berichten naar iemand buiten die groepen verschijnen gewoon niet. |
-| **Onder 9 jaar** | Chat staat standaard uit; een ouder moet toestemming geven. |
-| **Quick Words** | Een ingebouwd Roblox-systeem met vaste berichten om **samen te spelen** ("gameplay coordination"). Spelers van alle leeftijden kunnen ze naar elkaar sturen (ouders kunnen het uitzetten). Je stelt zelf tot 3 categorieën in met elk 3–10 woorden van minder dan 25 tekens, in het Engels; Roblox keurt ze goed en vertaalt ze automatisch. Ze verschijnen in het chatvenster. |
+| **Voice chat** | Only from age 13, with age verification, in a limited number of countries. **Nobody under 13 has voice.** |
+| **Text chat** | Since 7 January 2026, worldwide only after an **age check** (facial age estimation via the camera, or ID from age 13). In the Netherlands already since December 2025. Anyone who has not done a check can play but not chat. |
+| **Who you chat with** | Six age groups: under 9, 9–12, 13–15, 16–17, 18–20, 21+. You only chat with your own group and the groups directly next to it. Messages to someone outside those groups simply do not appear. |
+| **Under 9** | Chat is off by default; a parent has to give permission. |
+| **Quick Words** | A built-in Roblox system with preset messages for **playing together** ("gameplay coordination"). Players of all ages can send them to each other (parents can turn it off). You set up to 3 categories yourself, each with 3–10 words of fewer than 25 characters, in English; Roblox approves them and translates them automatically. They appear in the chat window. |
 
-**Wat dit betekent voor het ontwerp:**
-1. In een busje met vreemden van 10, 14 en 25 jaar kan vaak niemand met iedereen praten of typen. Het spel moet volledig speelbaar zijn met **icoon-pings, de Chain Call en automatische markeringen** (§3.4–3.5).
-2. **Stel daarnaast Quick Words in** (Creator Hub → je spel → Configure → Chat → Quick Words), met dezelfde woorden als je snelwiel, bijvoorbeeld de categorie "Plan": *Wait*, *Go*, *Now*, *Follow me*, *Back off*, en de categorie "Need": *Need eyes*, *Need clear*, *Need open*, *Help*. Het kost je 10 minuten, Roblox vertaalt ze gratis, en spelers die het chatvenster gebruiken, hebben ze meteen.
-3. Bouw **geen eigen vrije chat**. Alle vrije tekst moet via Roblox' eigen chat (*TextChatService*) lopen, met de leeftijdsregels erbij.
+**What this means for the design:**
+1. In a van with strangers aged 10, 14 and 25, often nobody can talk or type to everyone. The game must be fully playable with **icon pings, the Chain Call and automatic markers** (§3.4–3.5).
+2. **Also set up Quick Words** (Creator Hub → your game → Configure → Chat → Quick Words), with the same words as your quick wheel, for example the category "Plan": *Wait*, *Go*, *Now*, *Follow me*, *Back off*, and the category "Need": *Need eyes*, *Need clear*, *Need open*, *Help*. It costs you 10 minutes, Roblox translates them for free, and players who use the chat window have them straight away.
+3. Build **no free chat of your own**. All free text has to go through Roblox's own chat (*TextChatService*), with the age rules attached.
 
-### 5.5 De extra keuring om 9–15-jarigen te bereiken (Kids & Select)
+### 5.5 The extra review to reach 9–15-year-olds (Kids & Select)
 
-Dit is de belangrijkste nieuwe Roblox-regel voor jouw plan. Sinds **16 juni 2026** hebben spelers van 5–8 jaar een "Roblox Kids"-account en spelers van 9–15 een "Roblox Select"-account. **Een nieuw spel is eerst alleen speelbaar voor spelers van 16+ met een leeftijdscheck.** Pas na een keuring komen Kids en Select erbij.
+This is the most important new Roblox rule for your plan. Since **16 June 2026**, players aged 5–8 have a "Roblox Kids" account and players aged 9–15 a "Roblox Select" account. **A new game is at first only playable for players aged 16+ with an age check.** Only after a review are Kids and Select added.
 
-**Wat je als maker nodig hebt:**
-1. Een account in orde, **ID-verificatie** (vanaf 18 jaar met een identiteitsbewijs) en **tweestapsverificatie** (*2FA: een extra code bij het inloggen*).
-2. De volledige vragenlijst, met als resultaat Minimal, Mild of Moderate.
-3. **Ofwel** 2 maanden na elkaar een Roblox Plus-abonnement (het betaalde abonnement dat Premium verving), **ofwel** een eenmalige borg van **1.000 Robux per spel** (bevestigd in de Roblox-aankondiging van 16/06/2026). De borg krijg je automatisch terug 90 dagen nadat het spel goedgekeurd is (of 90 dagen na betaling als het nooit goedgekeurd wordt). Je verliest hem alleen als Roblox je spel definitief verwijdert voor een zware overtreding van de regels.
+**What you need as a creator:**
+1. An account in good standing, **ID verification** (from age 18 with an identity document) and **two-step verification** (*2FA: an extra code when logging in*).
+2. The complete questionnaire, resulting in Minimal, Mild or Moderate.
+3. **Either** 2 consecutive months of a Roblox Plus subscription (the paid subscription that replaced Premium), **or** a one-off deposit of **1,000 Robux per game** (confirmed in the Roblox announcement of 16/06/2026). You get the deposit back automatically 90 days after the game is approved (or 90 days after payment if it is never approved). You only lose it if Roblox permanently removes your game for a serious breach of the rules.
 
-**Waarom die borg?** Roblox geeft zelf geen reden; het noemt het alleen een voorwaarde. Mijn inschatting: het is een drempel tegen wegwerpaccounts en slechte makers. Wie een spel voor kinderen wil uitbrengen, moet iets inzetten dat hij kwijt kan raken als hij de regels breekt. Roblox schrijft wel dat het de borg "over tijd kleiner hoopt te maken".
+**Why that deposit?** Roblox itself gives no reason; it only calls it a requirement. My estimate: it is a threshold against throwaway accounts and bad creators. Anyone who wants to release a game for children has to put up something they can lose if they break the rules. Roblox does write that it "hopes to make the deposit smaller over time".
 
-**Wat het jou kost:**
-- **De borg** (aanbevolen): 1.000 Robux, ruwweg 10 à 13 euro, afhankelijk van het Robux-pakket en je land. Je krijgt hem terug, dus in feite leen je Roblox dat bedrag een paar maanden.
-- **Roblox Plus**: 2 maanden van ongeveer 5 dollar per maand. Dat krijg je niet terug. Volgens de documentatie controleert Roblox het abonnement telkens als je het spel publiceert of bijwerkt voor alle leeftijden. Is het dan verlopen, dan blijft je spel wel speelbaar, maar ⚠️ het is niet helemaal duidelijk of je voor een volgende update opnieuw moet betalen. Neem deze route alleen als je Plus toch al wilt.
-- **Wanneer:** pas in fase 3b (§12), dus pas als het spel af is en voor 16+ draait. Nu hoef je niets te betalen.
-- **Zonder borg** kun je het spel gewoon publiceren, maar dan blijft het voor spelers van 16+.
+**What it costs you:**
+- **The deposit** (recommended): 1,000 Robux, roughly 10 to 13 euros, depending on the Robux package and your country. You get it back, so in effect you lend Roblox that amount for a few months.
+- **Roblox Plus**: 2 months at about 5 dollars a month. You do not get that back. According to the documentation, Roblox checks the subscription every time you publish or update the game for all ages. If it has expired by then, your game stays playable, but ⚠️ it is not entirely clear whether you have to pay again for a next update. Only take this route if you want Plus anyway.
+- **When:** only in phase 3b (§12), so only once the game is finished and running for 16+. You do not have to pay anything now.
+- **Without a deposit** you can still publish the game, but then it stays limited to players aged 16+.
 
-**Hoe de keuring verloopt:**
-1. **Proefperiode** bij spelers van 16+ met een leeftijdscheck.
-2. Roblox controleert of de spelers echt zijn, en beoordeelt de moderatiemeldingen en de gameplay.
-3. Drempel: **250 unieke plays van "highly engaged" spelers in de laatste 60 dagen.** Dat zijn spelers met een account dat al lang bestaat, genoeg speeltijd in jouw spel, en een aankoop ergens op Roblox in de laatste 60 dagen. Je volgt dit in de Creator Hub op het dashboard **Audience Reach**.
-4. Sneller kan met een "expedited review" voor een terugbetaalbare borg van **50.000 Robux**. Voor een beginner is dat niet realistisch.
+**How the review works:**
+1. **Trial period** with players aged 16+ with an age check.
+2. Roblox checks whether the players are real, and assesses the moderation reports and the gameplay.
+3. Threshold: **250 unique plays by "highly engaged" players in the last 60 days.** Those are players with an account that has existed for a long time, enough playtime in your game, and a purchase somewhere on Roblox in the last 60 days. You track this in the Creator Hub on the **Audience Reach** dashboard.
+4. It can go faster with an "expedited review" for a refundable deposit of **50,000 Robux**. For a beginner that is not realistic.
 
-**Wat dit verandert aan het plan:**
-- Je **eerste spelers zijn 16+**, niet 9–15. Het spel moet dus ook tieners en jongvolwassenen aanspreken: humor, een strakke keten en een stijl die "speels" is maar niet "kinderachtig". Denk aan Among Us, dat alle leeftijden aanspreekt.
-- De release gaat in **twee stappen** (§12, fase 3): eerst 16+ (proef), daarna Kids & Select.
-- Je hebt bij de lancering **een groep oudere testers** nodig die echt speelt: vrienden, klasgenoten, een Discord-groep, Roblox-spelers van 16+ die je via de DevForum of een eigen community vindt. 250 echte, betrokken spelers in 60 dagen is haalbaar, maar komt niet vanzelf.
-- Alles in §5.1–5.3 (geen bloed, slapstick, leesbare spanning) helpt om de veiligheidsbeoordeling vlot te doorstaan.
+**What this changes in the plan:**
+- Your **first players are 16+**, not 9–15. So the game also has to appeal to teenagers and young adults: humour, a tight chain and a style that is "playful" but not "childish". Think of Among Us, which appeals to all ages.
+- The release happens in **two steps** (§12, phase 3): first 16+ (trial), then Kids & Select.
+- At launch you need **a group of older testers** who really play: friends, classmates, a Discord group, Roblox players aged 16+ whom you find through the DevForum or a community of your own. 250 real, engaged players in 60 days is achievable, but it does not happen by itself.
+- Everything in §5.1–5.3 (no blood, slapstick, readable suspense) helps you get through the safety review smoothly.
 
 ---
 
-## 6. Spellus en sessie
+## 6. Game loop and session
 
-### 6.1 De plekken
+### 6.1 The places
 
-*(Een **experience** is je spel op Roblox; het kan bestaan uit meerdere **places**, aparte werelden met elk hun eigen servers, waartussen je spelers verplaatst.)*
+*(An **experience** is your game on Roblox; it can consist of several **places**, separate worlds each with their own servers, between which you move players.)*
 
-- **Place 1 — "The Depot"** (de lobby): een garagekoer in de fictieve stad **Polderdam** met geparkeerde busjes, de "Gear Wall" (winkel), de "Paint Shop" (uiterlijk) en de "Practice Yard" (tutorial, §11).
-- **Place 2 — de job** (de eerste map, §10). Elke latere map wordt een eigen place.
+- **Place 1 — "The Depot"** (the lobby): a garage yard in the fictional town of **Polderdam** with parked vans, the "Gear Wall" (shop), the "Paint Shop" (appearance) and the "Practice Yard" (tutorial, §11).
+- **Place 2 — the job** (the first map, §10). Every later map becomes a place of its own.
 
-*(**TeleportService** is de Roblox-dienst die spelers van de ene place naar de andere verplaatst; met een **reserved server** maak je daarbij een lege, afgesloten server aan voor alleen jouw crew. Let op: teleporteren werkt niet in Studio, alleen in het gepubliceerde spel. Test het dus met een privé gepubliceerde versie.)*
+*(**TeleportService** is the Roblox service that moves players from one place to another; with a **reserved server** you create an empty, closed server just for your crew. Note: teleporting does not work in Studio, only in the published game. So test it with a privately published version.)*
 
-### 6.2 Het busje als wachtrij
+### 6.2 The van as a queue
 
-Roblox-spelers kennen het "lift"- of "wachtpad"-principe: wie instapt, gaat samen weg. Gebruik dat:
+Roblox players know the "elevator" or "waiting pad" principle: whoever gets in leaves together. Use that:
 
-- In de Depot staan 4 busjes. **Instappen = bij die crew horen** (maximaal 4).
-- De eerste die instapt, is de **crewleider**: die kiest de job en de moeilijkheid op een bord in het busje.
-- Het busje vertrekt zodra het vol is, of **30 s nadat de leider "READY" tikt**, en uiterlijk 45 s nadat de eerste speler instapte. Met minder dan 4 spelers vertrekt het ook.
-- **"GO SOLO"**: een knop die meteen een busje voor jou alleen geeft.
-- **"PRIVATE VAN"**: de leider sluit het busje voor vreemden en nodigt vrienden uit via de standaard Roblox-uitnodiging. Zo speel je met vier vrienden **zonder een private server te moeten kopen** (§8).
-- **Roblox Party:** spelers kunnen in Roblox zelf een "party" vormen van maximaal 6 vrienden. Komt een party van 5 of 6 binnen, dan zet het spel ze automatisch in twee busjes naast elkaar, die tegelijk vertrekken (twee crews, dezelfde job).
+- There are 4 vans in the Depot. **Getting in = joining that crew** (maximum 4).
+- The first one to get in is the **crew leader**: they pick the job and the difficulty on a board in the van.
+- The van leaves as soon as it is full, or **30 s after the leader taps "READY"**, and at the latest 45 s after the first player got in. It also leaves with fewer than 4 players.
+- **"GO SOLO"**: a button that immediately gives you a van of your own.
+- **"PRIVATE VAN"**: the leader closes the van to strangers and invites friends through the standard Roblox invite. That way you play with four friends **without having to buy a private server** (§8).
+- **Roblox Party:** players can form a "party" of up to 6 friends in Roblox itself. If a party of 5 or 6 comes in, the game automatically puts them in two vans side by side, which leave at the same time (two crews, the same job).
 
-*(Een **private server** is een server van je spel waar alleen jij en de mensen die je uitnodigt in kunnen; spelers kunnen er een kopen of krijgen, afhankelijk van wat jij instelt.)*
+*(A **private server** is a server of your game that only you and the people you invite can enter; players can buy one or get one, depending on what you set.)*
 
-### 6.3 Eén sessie, minuut per minuut
+### 6.3 One session, minute by minute
 
-| Fase | Wat er gebeurt | Tijd | Klok |
+| Phase | What happens | Time | Clock |
 |---|---|---|---|
-| Laden en Depot | Je komt in de Depot. Een terugkerende speler loopt meteen naar een busje. | 0:30 | 0:00–0:30 |
-| Crew vormen | In een busje stappen, leider kiest de job. Langer dan 45 s wachten = vertrekken met wie er is. | 0:30–1:00 | tot 1:30 |
-| De rit (laadscherm) | Teleport naar de job. In het busje: **loadout** kiezen (wie neemt welk gadget), het jobkaartje bekijken (buit, bekende camera's). De loadout-balk toont of alle drie de stappen gedekt zijn: "EYES ✓ CLEAR ✓ OPEN ✗ — No one can open doors!". | 1:00 | tot 2:30 |
-| Verkenning ("Casing") | Het busje staat buiten. De drone en Spy Cams mogen; bewakers reageren buiten trager. Een zachte timer stelt voor: "Go in when ready". | ~2:00 | tot 4:30 |
-| Inbraak | De drie ketenpunten (§10). Hier gebeurt het spel. | ~6:30 | tot 11:00 |
-| Buit en vlucht | Buit naar het busje (dragen of via de Winch). Wie in het busje stapt, is veilig. Het busje vertrekt zodra iedereen erin zit of de leider "DRIVE" tikt. | ~2:30 | tot 13:30 |
-| Uitbetaling | Buit, Cash, Rep, bonussen, en de **grappige awards**: "Self-EMP Award" (wie het vaakst zijn eigen crew blind maakte), "Silent Hands" (geen enkele CRACK gehoord). | 0:45 | tot 14:15 |
-| Volgende | Grote knop **"SAME CREW, NEXT JOB"**: je gaat meteen terug naar de rit, zonder lobby. Of "BACK TO DEPOT". | — | — |
+| Loading and Depot | You arrive in the Depot. A returning player walks straight to a van. | 0:30 | 0:00–0:30 |
+| Forming a crew | Getting into a van, the leader picks the job. Waiting longer than 45 s = leaving with whoever is there. | 0:30–1:00 | until 1:30 |
+| The drive (loading screen) | Teleport to the job. In the van: choose the **loadout** (who takes which gadget), look at the job card (loot, known cameras). The loadout bar shows whether all three steps are covered: "EYES ✓ CLEAR ✓ OPEN ✗ — No one can open doors!". | 1:00 | until 2:30 |
+| Scouting ("Casing") | The van is parked outside. The drone and Spy Cams are allowed; guards react more slowly outside. A soft timer suggests: "Go in when ready". | ~2:00 | until 4:30 |
+| Break-in | The three chain points (§10). This is where the game happens. | ~6:30 | until 11:00 |
+| Loot and escape | Loot to the van (carried or via the Winch). Whoever gets into the van is safe. The van leaves as soon as everyone is in or the leader taps "DRIVE". | ~2:30 | until 13:30 |
+| Payout | Loot, Cash, Rep, bonuses, and the **funny awards**: "Self-EMP Award" (whoever blinded their own crew most often), "Silent Hands" (not a single CRACK heard). | 0:45 | until 14:15 |
+| Next | Big button **"SAME CREW, NEXT JOB"**: you go straight back to the drive, without a lobby. Or "BACK TO DEPOT". | — | — |
 
-**Een run duurt dus ongeveer 11 minuten (verkenning tot vlucht), een volledige cyclus ongeveer 14 minuten.**
+**So a run takes about 11 minutes (scouting to escape), a full cycle about 14 minutes.**
 
-Dat is langer dan een gemiddelde Roblox-sessie (de helft van de sessies per spel duurt korter dan ongeveer 7 minuten, volgens GameAnalytics). Daarom zit er **elke 2 à 3 minuten een beloning** in: het eerste ketenpunt rond 4:30 ("First chain! +15 Rep"), de eerste buit in het busje rond 7:00, de hoofdbuit rond 10:00. Wie na 7 minuten moet stoppen, heeft al iets gehaald: wat in het busje ligt, telt ook als je vroeg vertrekt (de helft van de waarde).
+That is longer than an average Roblox session (half of the sessions per game last less than about 7 minutes, according to GameAnalytics). That is why there is **a reward every 2 to 3 minutes**: the first chain point around 4:30 ("First chain! +15 Rep"), the first loot in the van around 7:00, the main loot around 10:00. Anyone who has to stop after 7 minutes has already achieved something: what is in the van also counts if you leave early (half the value).
 
-### 6.4 Wat runs kort houdt
+### 6.4 What keeps runs short
 
-- **Ploegwissel:** na 12:00 in de run verschijnt "SHIFT CHANGE IN 2:00". Na 14:00 komen er twee extra bewakers. Na 16:00 gaat het alarm automatisch naar de laatste trede (§9.5). Zo duurt geen enkele run langer dan ongeveer 17 minuten.
-- **Minimale buit om te winnen:** de hoofdbuit (op map 1 de Golden Gouda) of buit ter waarde van 600 Cash. Wie de minimale buit heeft, krijgt een pijl naar het busje. Dat voorkomt eindeloos rondzoeken.
-- **Iedereen gepakt = "BUSTED"**: de run eindigt meteen, met de helft van de waarde van wat al in het busje lag.
-
----
-
-## 7. Inzet, progressie en economie
-
-### 7.1 Twee soorten voortgang
-
-| | **Cash** (spelgeld) | **Rep** (reputatie, ervaringspunten) |
-|---|---|---|
-| Hoe verdien je het? | Buit in het busje + bonussen | Elke run, ook als je faalt |
-| Waarvoor gebruik je het? | Extra gadgets, verbruiksspullen, een deel van de cosmetica | Niveaus die nieuwe jobs, moeilijkheden en winkelitems openen |
-| Kun je het verliezen? | Cash zelf niet; wat je ermee kocht soms wel (gadgets) | Nooit |
-| Te koop met Robux? | **Nee** | **Nee** |
-
-*(**Robux** is de virtuele munt van Roblox die spelers met echt geld kopen.)*
-
-### 7.2 Wat je verdient
-
-**Je aandeel = 25% van de waarde van de buit in het busje**, ongeacht hoe groot je crew is. Een solospeler die alle buit binnenhaalt, verdient dus evenveel als elk lid van een crew van vier. Dat is eerlijk, en er is geen reden om iemand weg te stemmen om meer te krijgen.
-
-| Bonus | Voorwaarde | Waarde |
-|---|---|---|
-| "Quiet Job" | Alarm nooit boven trede 1 | +30% |
-| "Clean Job" | Geen enkel spoor gevonden door bewakers of Karel | +20% |
-| "No One Left Behind" | Iedereen in het busje aan het einde | +10% |
-| Crewbonus | Per extra crewlid | +5% (max +15%) |
-| Eerste job van de dag | Eén keer per dag | ×2 |
-
-**Op map 1** is alle buit samen 2.200 Cash waard (§10.3). Een goede run levert per speler dus ongeveer **400–700 Cash** op, een perfecte run met alle bonussen ongeveer 950.
-
-**Rep:** 100 per run (bij falen 50), +15 per opgelost ketenpunt, +25 per bevrijde teamgenoot; gemiddeld ongeveer 160 per run. Van niveau n naar n+1 heb je 150 × n Rep nodig, dus niveau 10 haal je na ongeveer 6.750 Rep: zo'n 42 runs, of 10 uur spelen.
-
-| Niveau | Wat opengaat |
-|---|---|
-| 1 | Alle 6 standaardgadgets, map 1 op Rookie en Normal |
-| 2 | De Gear Wall (eerste extra gadget kopen) |
-| 4 | "Night Shift" (map 1 met andere bewakersroutes) |
-| 6 | Pro-moeilijkheid |
-| 8 | "Rush Job" (venster 8 s, bonus ×1,5) |
-| 10+ | Cosmetica voor Cash, badges; nieuwe maps bij updates |
-
-### 7.3 Wat je kunt verliezen: de inzet
-
-| Wat | Gepakt en **bevrijd** | Gepakt en **niet bevrijd** aan het einde van de run |
-|---|---|---|
-| Standaardgadget | Je krijgt het terug uit de bewijskast | Kwijt voor de rest van die run; volgende run gewoon terug |
-| Extra gadget (gekocht met Cash) | Je krijgt het terug uit de bewijskast | **Definitief kwijt** ("Confiscated") |
-| Alles wat met Robux gekocht is (skins, outfits) | Nooit kwijt | **Nooit kwijt** — een skin hoort bij je account, niet bij het gadget |
-| Je aandeel in de buit | Volledig | De helft ("Busted") |
-
-**Waarom dit eerlijk is voor kinderen:** omdat extra gadgets zijwaarts zijn, word je door een verlies **nooit zwakker**, alleen minder gevarieerd: je valt terug op het standaardgadget, dat even sterk is. En een extra gadget kost ongeveer 2 goede runs, geen avond grinden.
-
-**Waarom dit spanning geeft:** wie een gekocht gadget meeneemt, heeft iets te verliezen. Een teamgenoot bevrijden is dus echt "zijn dure gadget terughalen", zoals het concept wil.
-
-**Duidelijkheid vóór de run:** in het busje staat bij een extra gadget een gele rand en de tekst "At risk if caught". Niemand mag verrast worden.
-
-### 7.4 Een nieuwe speler is meteen nuttig
-
-- Alle zes standaardgadgets zijn vanaf niveau 1 beschikbaar en even sterk als de extra gadgets.
-- **Iedereen kan buit dragen en pingen.** Ook wie zijn gadget kwijt is, is nuttig: als drager, of als "ogen" door zelf rond te kijken.
-- Wie gepakt is, kijkt mee via de camera's van het gebouw (§9.2), dus niemand zit 5 minuten niets te doen.
-- Matchmaking zet spelers van niveau 1–3 bij voorkeur in een busje op Rookie.
-
-### 7.5 Waar het geld weer verdwijnt (zodat Cash waarde houdt)
-
-- Verloren extra gadgets opnieuw kopen (800–1.000 Cash).
-- Verbruiksspullen: "Clean Spray" (sporen wissen, 60 Cash; 2 gratis per run), "Dog Treat" (de hond 15 s bezig houden, 40 Cash).
-- Cosmetica voor Cash: busjeskleuren (1.500–5.000), stickers (300), uitbetalingsdansjes (2.000). Zo heeft wie veel speelt altijd iets om voor te sparen, zonder Robux.
+- **Shift change:** after 12:00 into the run, "SHIFT CHANGE IN 2:00" appears. After 14:00 two extra guards arrive. After 16:00 the alarm automatically goes to the top rung (§9.5). That way no run lasts longer than about 17 minutes.
+- **Minimum loot to win:** the main loot (on map 1 the Golden Gouda) or loot worth 600 Cash. Whoever has the minimum loot gets an arrow to the van. That prevents endless searching.
+- **Everyone caught = "BUSTED"**: the run ends immediately, with half the value of what was already in the van.
 
 ---
 
-## 8. Verdienmodel
+## 7. Stakes, progression and economy
 
-*(Een **game pass** is een eenmalige aankoop met Robux die een speler voor altijd houdt, bijvoorbeeld "alle drone-skins". Een **developer product** is een aankoop die je zo vaak kunt doen als je wilt; als het iets blijvends geeft, zoals één skin, bewaar jij in je DataStore dat de speler het bezit.)*
+### 7.1 Two kinds of progress
 
-### 8.1 De spelregels die je jezelf oplegt
-
-1. **Met Robux verkoop je alleen uiterlijk en gemak.** Nooit iets wat je sterker maakt of een stap van de keten overslaat.
-2. **Wat met Robux gekocht is, raak je nooit kwijt.** Een drone-skin hoort bij je account, niet bij een gadget. Word je gepakt met een "geskinde" drone, dan verlies je hooguit het gadget (als het een gekocht extra gadget was), nooit de skin.
-3. **Spelgeld (Cash) is nooit te koop met Robux**, ook niet via een 2× Cash-pas. Anders koopt echt geld indirect gadgets die je kunt verliezen (zie tegenstrijdigheid 4 in §2).
-4. **Samen spelen met vrienden kost nooit iets.** Het "Private Van"-busje is gratis, en private servers ook.
-5. **Geen willekeurige betaalde items** (loot boxes). Toeval mag alleen in **gratis** beloningen, zoals de Glovebox (§8.7). Zie ook §8.10.
-6. **Alles wat je koopt, zie je vooraf.** Geen verrassingen voor geld, geen "laatste kans"-druk.
-
-### 8.2 Hoe Roblox jou betaalt (stand 15/10/2026)
-
-- Van elke Robux die een speler in je spel uitgeeft, krijg jij **70%**.
-- Robux omzetten naar echt geld heet **DevEx** (*Developer Exchange: het Roblox-programma dat verdiende Robux uitbetaalt in dollars*). Het tarief is **US$ 0,0038 per Robux**. Je moet minstens 13 jaar zijn en minstens **30.000 verdiende Robux** hebben.
-- **Rekenvoorbeeld:** een game pass van 199 Robux → jij krijgt 139 Robux → ongeveer US$ 0,53. Verkoop je hem 1.000 keer, dan heb je 139.300 Robux ≈ US$ 530.
-- **Premium Payouts bestaan niet meer.** Roblox verving ze in juli 2025 door **Creator Rewards**: je krijgt een kleine beloning per dag voor actieve, betalende spelers die je spel bij hun eerste spellen van de dag spelen. Daarnaast krijg je iets als iemand via jouw spel een Roblox Plus-abonnement neemt. ⚠️ Deze regelingen veranderen vaak; kijk op de pagina "Creator Rewards" in de Roblox-documentatie.
-- **Regionale prijzen** staan voor game passes standaard aan: Roblox verlaagt je prijs in armere landen (tot 30% van je prijs). Laat dat aan; het helpt kinderen met weinig Robux.
-
-**Eerlijke verwachting:** een eerste spel van een beginner verdient zelden veel. Het doel van dit verdienmodel bij de release is: spelers die het spel graag hebben, een eerlijke manier geven om je te steunen, en de kosten dekken. Niet: zo veel mogelijk Robux uit kinderen halen.
-
-### 8.3 Game passes (eenmalig, voor altijd)
-
-| Naam in het spel | Wat je krijgt | Prijs |
+| | **Cash** (in-game money) | **Rep** (reputation, experience points) |
 |---|---|---|
-| **"Crew Wardrobe"** | 8 werkoutfit-stijlen (vesten, petten, overalls) die over je eigen avatar komen, plus een kleurenkiezer | 199 Robux |
-| **"Drone Garage"** | 6 drone-skins (o.a. kaaswiel, eend, discobal) plus lichtspoorkleuren | 199 Robux |
-| **"Paint Shop"** | Je busje zelf schilderen: kleuren, velgen, stickers, een eigen claxon | 249 Robux |
-| **"Loadout Presets"** | 5 vaste loadouts opslaan; in het busje kies je je gadget met één tik | 99 Robux |
-| **"Supporter Pack"** | Een gouden naamkaartje in de Depot, een unieke claxon, je naam in de aftiteling | 299 Robux |
+| How do you earn it? | Loot in the van + bonuses | Every run, even when you fail |
+| What do you use it for? | Extra gadgets, consumables, part of the cosmetics | Levels that unlock new jobs, difficulties and shop items |
+| Can you lose it? | Not the Cash itself; what you bought with it sometimes (gadgets) | Never |
+| For sale with Robux? | **No** | **No** |
 
-### 8.4 Developer products (los te koop)
+*(**Robux** is Roblox's virtual currency, which players buy with real money.)*
 
-| Wat | Prijs | Opmerking |
+### 7.2 What you earn
+
+**Your share = 25% of the value of the loot in the van**, regardless of how big your crew is. So a solo player who brings in all the loot earns as much as each member of a crew of four. That is fair, and there is no reason to vote someone out to get more.
+
+| Bonus | Condition | Value |
 |---|---|---|
-| Losse drone-skin | 49–99 Robux | Blijvend; bewaard in je DataStore |
-| Losse busjeswrap | 99–199 Robux | Blijvend; iedereen in de crew ziet hem |
-| Losse outfit | 79–149 Robux | Blijvend |
-| Uitbetalingsdansje (emote op het eindscherm) | 49 Robux | Blijvend |
-| **"Crew Fireworks"** | 25 Robux | Eenmalig vuurwerk boven het busje voor de hele crew na een geslaagde run. Sociaal en onschuldig. |
+| "Quiet Job" | Alarm never above rung 1 | +30% |
+| "Clean Job" | Not a single trace found by guards or Karel | +20% |
+| "No One Left Behind" | Everyone in the van at the end | +10% |
+| Crew bonus | Per extra crew member | +5% (max +15%) |
+| First job of the day | Once a day | ×2 |
 
-### 8.5 De Crew Pass (seizoenspas) — je sterkste verdienmotor
+**On map 1** all the loot together is worth 2,200 Cash (§10.3). So a good run yields about **400–700 Cash** per player, a perfect run with all bonuses about 950.
 
-*(Een seizoenspas — "battle pass" — is een lijst beloningen die je vrijspeelt door te spelen; een deel is gratis, een deel alleen met de betaalde pas. Er is geen toeval: je ziet vooraf precies wat je krijgt.)*
+**Rep:** 100 per run (50 on failure), +15 per solved chain point, +25 per rescued teammate; on average about 160 per run. To go from level n to n+1 you need 150 × n Rep, so you reach level 10 after about 6,750 Rep: some 42 runs, or 10 hours of play.
 
-| Onderdeel | Afspraak |
+| Level | What unlocks |
 |---|---|
-| Duur | Seizoen van **8 weken**, met een eigen thema. S1 "Cheese Season" (The Golden Wheel), S2 "Tulip Night", S3 "Canal Lights" … |
-| Treden | **30 treden van 600 Crew XP** (samen 18.000). Je verdient Crew XP met elke run (±150 per geslaagde run, 60 bij falen) en met 3 wekelijkse opdrachten van 500 XP ("Bubble 3 guards", "Finish a Quiet Job", "Free a teammate"). Met ±6 runs per week plus de opdrachten is de pas vol in 8 weken: ongeveer 1,5 uur spelen per week, haalbaar voor wie regelmatig speelt. |
-| Gratis rij | **10 beloningen** (elke 3e trede): Cash, Clean Sprays, 3 cosmetica en een seizoensbadge. Ook wie niets betaalt, heeft een reden om te spelen. |
-| Betaalde rij | **399 Robux** voor **alle 30 beloningen**, alleen uiterlijk: 4 drone-skins, 3 busjeswraps, 3 outfits, 2 Bubble Blaster-skins, emotes, een naamtitel ("Golden Wheel Veteran") en een eindbeloning (bijvoorbeeld een geanimeerde gouden busjeswrap). |
-| Laat kopen | Wie halverwege koopt, krijgt **meteen alle al behaalde treden**. Niemand verliest iets door later te beslissen. |
-| Wat niet | Geen treden overslaan voor Robux, geen wapens of gadgets in de pas, geen "nog 2 uur"-meldingen. Beloningen blijven voor altijd van jou. |
-| Wanneer | **Seizoen 1 start ±2 maanden na de release**, zodra spelers terugkomen. Eerst moet er genoeg te doen zijn: minstens 2 jobs of 3 varianten. |
+| 1 | All 6 standard gadgets, map 1 on Rookie and Normal |
+| 2 | The Gear Wall (buy your first extra gadget) |
+| 4 | "Night Shift" (map 1 with different guard routes) |
+| 6 | Pro difficulty |
+| 8 | "Rush Job" (8 s window, bonus ×1.5) |
+| 10+ | Cosmetics for Cash, badges; new maps with updates |
 
-### 8.6 Winkel met wisselend aanbod en bundels
+### 7.3 What you can lose: the stake
 
-- **"Van Shop"** (de winkel in de Depot): elke dag **4 items** en elke week **2 uitgelichte bundels**.
-- **Losse items 49–249 Robux** (drone-skins, wraps, outfits, wapenskins, emotes). Een paar items per dag kosten alleen **Cash**, zodat wie niet betaalt ook iets te kiezen heeft.
-- **Bundels 349–499 Robux**: een set in één stijl (busje + outfit + drone + Bubble Blaster-skin), ongeveer 30% goedkoper dan los. Voorbeelden: "Cheese Crew Bundle", "Night Shift Bundle", "Tulip Bundle".
-- **Eerlijke regels:** er staat alleen een klein labeltje "Refreshes in 14 h", geen aftelling met knipperende knoppen. **Elk item komt later terug**, er is dus geen "nu of nooit".
-- *(Een **bundel** is een set van meerdere items voor één prijs; technisch een developer product dat meerdere skins tegelijk aan je account toevoegt.)*
+| What | Caught and **rescued** | Caught and **not rescued** at the end of the run |
+|---|---|---|
+| Standard gadget | You get it back from the evidence locker | Gone for the rest of that run; back as normal next run |
+| Extra gadget (bought with Cash) | You get it back from the evidence locker | **Permanently gone** ("Confiscated") |
+| Everything bought with Robux (skins, outfits) | Never lost | **Never lost** — a skin belongs to your account, not to the gadget |
+| Your share of the loot | In full | Half ("Busted") |
 
-### 8.7 De Glovebox: spanning zonder gokken
+**Why this is fair for children:** because extra gadgets are sidegrades, a loss **never makes you weaker**, only less varied: you fall back on the standard gadget, which is just as strong. And an extra gadget costs about 2 good runs, not an evening of grinding.
 
-Het spannende gevoel van een loot box, maar **gratis en verdiend**. Daardoor is het geen gokken en mag het overal, ook in België en Nederland.
+**Why this creates tension:** whoever brings a bought gadget has something to lose. So rescuing a teammate really is "getting their expensive gadget back", as the concept intends.
 
-- Na elke **geslaagde run** open je het **dashboardkastje van het busje** met een korte animatie: het klepje springt open met een *klonk*.
-- Wat erin zit, is willekeurig, en de kansen staan altijd zichtbaar bij het kastje:
+**Clarity before the run:** in the van, an extra gadget has a yellow border and the text "At risk if caught". Nobody should be caught by surprise.
 
-| Inhoud | Kans |
+### 7.4 A new player is useful straight away
+
+- All six standard gadgets are available from level 1 and are as strong as the extra gadgets.
+- **Everyone can carry loot and ping.** Even someone who has lost their gadget is useful: as a carrier, or as "eyes" by looking around themselves.
+- Whoever is caught watches along through the building's cameras (§9.2), so nobody sits doing nothing for 5 minutes.
+- Matchmaking prefers to put level 1–3 players in a van on Rookie.
+
+### 7.5 Where the money goes again (so Cash keeps its value)
+
+- Buying lost extra gadgets again (800–1,000 Cash).
+- Consumables: "Clean Spray" (erasing traces, 60 Cash; 2 free per run), "Dog Treat" (keeping the dog busy for 15 s, 40 Cash).
+- Cosmetics for Cash: van colours (1,500–5,000), stickers (300), payout dances (2,000). That way someone who plays a lot always has something to save up for, without Robux.
+
+---
+
+## 8. Monetisation
+
+*(A **game pass** is a one-off purchase with Robux that a player keeps forever, for example "all drone skins". A **developer product** is a purchase you can make as often as you like; if it gives something permanent, such as one skin, you store in your DataStore that the player owns it.)*
+
+### 8.1 The ground rules you set yourself
+
+1. **With Robux you only sell appearance and convenience.** Never anything that makes you stronger or skips a step of the chain.
+2. **What is bought with Robux, you never lose.** A drone skin belongs to your account, not to a gadget. If you are caught with a "skinned" drone, you lose at most the gadget (if it was a bought extra gadget), never the skin.
+3. **In-game money (Cash) is never for sale with Robux**, not even through a 2× Cash pass. Otherwise real money indirectly buys gadgets you can lose (see contradiction 4 in §2).
+4. **Playing together with friends never costs anything.** The "Private Van" is free, and so are private servers.
+5. **No random paid items** (loot boxes). Chance is only allowed in **free** rewards, such as the Glovebox (§8.7). See also §8.10.
+6. **Everything you buy, you see in advance.** No surprises for money, no "last chance" pressure.
+
+### 8.2 How Roblox pays you (as of 15/10/2026)
+
+- Of every Robux a player spends in your game, you get **70%**.
+- Converting Robux into real money is called **DevEx** (*Developer Exchange: the Roblox programme that pays out earned Robux in dollars*). The rate is **US$ 0.0038 per Robux**. You must be at least 13 years old and have at least **30,000 earned Robux**.
+- **Worked example:** a game pass of 199 Robux → you get 139 Robux → about US$ 0.53. If you sell it 1,000 times, you have 139,300 Robux ≈ US$ 530.
+- **Premium Payouts no longer exist.** In July 2025 Roblox replaced them with **Creator Rewards**: you get a small reward per day for active, paying players who play your game among their first games of the day. On top of that you get something when someone takes out a Roblox Plus subscription through your game. ⚠️ These schemes change often; check the "Creator Rewards" page in the Roblox documentation.
+- **Regional pricing** is on by default for game passes: Roblox lowers your price in poorer countries (down to 30% of your price). Leave it on; it helps children with few Robux.
+
+**Honest expectation:** a beginner's first game rarely earns much. The goal of this monetisation at release is: to give players who like the game a fair way to support you, and to cover the costs. Not: to squeeze as many Robux as possible out of children.
+
+### 8.3 Game passes (one-off, forever)
+
+| Name in the game | What you get | Price |
+|---|---|---|
+| **"Crew Wardrobe"** | 8 work outfit styles (vests, caps, overalls) that go over your own avatar, plus a colour picker | 199 Robux |
+| **"Drone Garage"** | 6 drone skins (including cheese wheel, duck, disco ball) plus light trail colours | 199 Robux |
+| **"Paint Shop"** | Paint your van yourself: colours, rims, stickers, a horn of your own | 249 Robux |
+| **"Loadout Presets"** | Save 5 fixed loadouts; in the van you pick your gadget with one tap | 99 Robux |
+| **"Supporter Pack"** | A golden name tag in the Depot, a unique horn, your name in the credits | 299 Robux |
+
+### 8.4 Developer products (sold separately)
+
+| What | Price | Note |
+|---|---|---|
+| Single drone skin | 49–99 Robux | Permanent; stored in your DataStore |
+| Single van wrap | 99–199 Robux | Permanent; everyone in the crew sees it |
+| Single outfit | 79–149 Robux | Permanent |
+| Payout dance (emote on the end screen) | 49 Robux | Permanent |
+| **"Crew Fireworks"** | 25 Robux | One-off fireworks above the van for the whole crew after a successful run. Social and harmless. |
+
+### 8.5 The Crew Pass (season pass) — your strongest revenue engine
+
+*(A season pass — "battle pass" — is a list of rewards you unlock by playing; part is free, part only with the paid pass. There is no chance involved: you see in advance exactly what you get.)*
+
+| Part | Agreement |
+|---|---|
+| Duration | A season of **8 weeks**, with its own theme. S1 "Cheese Season" (The Golden Wheel), S2 "Tulip Night", S3 "Canal Lights" … |
+| Tiers | **30 tiers of 600 Crew XP** (18,000 in total). You earn Crew XP with every run (±150 per successful run, 60 on failure) and with 3 weekly challenges of 500 XP ("Bubble 3 guards", "Finish a Quiet Job", "Free a teammate"). With ±6 runs per week plus the challenges, the pass is full in 8 weeks: about 1.5 hours of play per week, achievable for someone who plays regularly. |
+| Free track | **10 rewards** (every 3rd tier): Cash, Clean Sprays, 3 cosmetics and a season badge. Even someone who pays nothing has a reason to play. |
+| Paid track | **399 Robux** for **all 30 rewards**, appearance only: 4 drone skins, 3 van wraps, 3 outfits, 2 Bubble Blaster skins, emotes, a name title ("Golden Wheel Veteran") and a final reward (for example an animated golden van wrap). |
+| Buying late | Whoever buys halfway through **immediately gets all tiers already reached**. Nobody loses anything by deciding later. |
+| What not | No skipping tiers for Robux, no weapons or gadgets in the pass, no "2 hours left" notifications. Rewards stay yours forever. |
+| When | **Season 1 starts ±2 months after release**, once players are coming back. First there has to be enough to do: at least 2 jobs or 3 variants. |
+
+### 8.6 Shop with rotating offers and bundles
+
+- **"Van Shop"** (the shop in the Depot): **4 items** every day and **2 featured bundles** every week.
+- **Single items 49–249 Robux** (drone skins, wraps, outfits, weapon skins, emotes). A few items per day cost only **Cash**, so that those who do not pay also have something to choose.
+- **Bundles 349–499 Robux**: a set in one style (van + outfit + drone + Bubble Blaster skin), about 30% cheaper than separately. Examples: "Cheese Crew Bundle", "Night Shift Bundle", "Tulip Bundle".
+- **Fair rules:** there is only a small label "Refreshes in 14 h", no countdown with flashing buttons. **Every item comes back later**, so there is no "now or never".
+- *(A **bundle** is a set of several items for one price; technically a developer product that adds several skins to your account at once.)*
+
+### 8.7 The Glovebox: excitement without gambling
+
+The exciting feeling of a loot box, but **free and earned**. That means it is not gambling and is allowed everywhere, including in Belgium and the Netherlands.
+
+- After every **successful run** you open the **van's glovebox** with a short animation: the little lid pops open with a *clunk*.
+- What is inside is random, and the odds are always visible next to the glovebox:
+
+| Contents | Chance |
 |---|---|
 | 50–200 Cash | 70% |
-| 1 Clean Spray of Dog Treat | 15% |
-| Gewone cosmetica (sticker, ping-kader, kleurvariant) | 12% |
-| Zeldzame cosmetica (bijvoorbeeld een glanzende drone-skin) | 3% |
+| 1 Clean Spray or Dog Treat | 15% |
+| Common cosmetic (sticker, ping frame, colour variant) | 12% |
+| Rare cosmetic (for example a shiny drone skin) | 3% |
 
-- Maximaal **3 Gloveboxes per dag** met cosmetica-kans; daarna zit er alleen nog Cash in.
-- **Gouden regel, voor altijd:** een Glovebox is **nooit** te koop, niet te versnellen met Robux, en Cash is nooit te koop met Robux. Verandert één van die drie, dan wordt het een betaald willekeurig item. Dat is verboden in België en Nederland, en dan moet de vragenlijst aangepast worden.
+- At most **3 Gloveboxes per day** with a cosmetic chance; after that they only contain Cash.
+- **Golden rule, forever:** a Glovebox is **never** for sale, cannot be sped up with Robux, and Cash is never for sale with Robux. If one of those three changes, it becomes a paid random item. That is forbidden in Belgium and the Netherlands, and the questionnaire would have to be updated.
 
-### 8.8 Wat het kan opleveren (ruwe schatting)
+### 8.8 What it could bring in (rough estimate)
 
-Een eerlijk rekenvoorbeeld. De aannames zijn **schattingen**, geen beloftes: een beginnend spel haalt deze aantallen niet vanzelf.
+An honest worked example. The assumptions are **estimates**, not promises: a beginner's game does not reach these numbers by itself.
 
-| Aanname | Waarde |
+| Assumption | Value |
 |---|---|
-| Verschillende spelers per seizoen van 8 weken | 10.000 |
-| Deel dat de Crew Pass koopt | 3% → 300 × 399 Robux |
-| Deel dat iets in de winkel koopt | 2% → 200 × gemiddeld 150 Robux |
-| Game passes | 100 × gemiddeld 200 Robux |
+| Different players per 8-week season | 10,000 |
+| Share that buys the Crew Pass | 3% → 300 × 399 Robux |
+| Share that buys something in the shop | 2% → 200 × an average of 150 Robux |
+| Game passes | 100 × an average of 200 Robux |
 
-Samen geven spelers ±170.000 Robux uit. Jij krijgt 70%, dus ±119.000 Robux, en via DevEx is dat **ongeveer US$ 450 per seizoen** (±US$ 225 per maand), plus kleine bedragen uit Creator Rewards. Met 100.000 spelers per seizoen wordt dat ongeveer tien keer zoveel. Het verschil maak je dus niet met loot boxes, maar met **meer spelers die terugkomen**: daarom staan de eerste minuut en de keten centraal in dit plan.
+Together, players spend ±170,000 Robux. You get 70%, so ±119,000 Robux, and through DevEx that is **about US$ 450 per season** (±US$ 225 per month), plus small amounts from Creator Rewards. With 100,000 players per season that becomes about ten times as much. So you do not make the difference with loot boxes, but with **more players who come back**: that is why the first minute and the chain are central to this plan.
 
 
-### 8.9 Private servers: gratis
+### 8.9 Private servers: free
 
-- Roblox laat je kiezen: private servers gratis of tegen een maandprijs in Robux.
-- **Advies: gratis.** Samen spelen met vrienden is de kern van je spel, en de "Private Van" maakt een private server voor de gewone speler toch al overbodig. Gratis private servers zijn een reden voor YouTubers en vriendengroepen om je spel te kiezen. Bovendien telt het aanbevelingsalgoritme van Roblox sinds juni 2026 "intentional co-play days" mee: dagen waarop iemand terugkomt om met vrienden te spelen (via uitnodiging, meejoinen of een private server). Samen spelen makkelijk maken, helpt dus je zichtbaarheid.
-- Weet: als je later toch een prijs instelt en die nog eens wijzigt, vervallen alle lopende abonnementen.
+- Roblox lets you choose: private servers for free or for a monthly price in Robux.
+- **Advice: free.** Playing together with friends is the core of your game, and the "Private Van" already makes a private server unnecessary for the regular player. Free private servers are a reason for YouTubers and groups of friends to choose your game. Moreover, since June 2026 Roblox's recommendation algorithm counts "intentional co-play days": days on which someone comes back to play with friends (via an invite, joining in or a private server). Making it easy to play together therefore helps your visibility.
+- Be aware: if you later set a price after all and then change it again, all running subscriptions lapse.
 
-### 8.10 Wat je bewust níét verkoopt
+### 8.10 What you deliberately do *not* sell
 
-| Niet verkopen | Waarom niet |
+| Do not sell | Why not |
 |---|---|
-| **Cash** (spelgeld) voor Robux | Echt geld zou indirect gadgets kopen die je kunt verliezen. En wie betaalt, koopt zich voorbij de voortgang. |
-| **2× Cash / 2× Rep-pas** | Entry Point (300 Robux) en Notoriety (499 Robux) verkopen ze wel. Hier botst het met regel 3 en voelt het als pay-to-win voor jonge spelers. |
-| **Gadgets of extra ladingen** voor Robux | Pay-to-win, en het ondermijnt de inzet. |
-| **"Get out of jail"** of herleven voor Robux | Dat maakt het bevrijden door je teamgenoten, een kernmoment, waardeloos. |
-| **Verzekering** tegen verlies | Kopen dat je niets verliest = de inzet afkopen. |
-| **Betaalde maps of jobs** | Entry Point verkoopt missies als game passes (750–1.200 Robux). Met weinig spelers splitst dat je publiek: wie een betaalde map wil, vindt geen crew. |
-| **Willekeurige betaalde items** (loot boxes) | In België zijn betaalde loot boxes sinds 2018 verboden (de Kansspelcommissie ziet ze als gokken); in Nederland werden Roblox-spellen er in 2022 om geblokkeerd. Roblox schakelt ze daar uit, dus jij en je vrienden zouden ze niet eens kunnen kopen. Roblox eist bovendien vooraf exacte kansen en een gratis route. Gebruik in de plaats de gratis Glovebox (§8.7) en de Crew Pass (§8.5). Besproken en bevestigd op 15/10/2026. |
-| **Beloonde advertenties** ("kijk een advertentie voor Cash") | Roblox verbiedt beloningen om spelers onder 13 naar advertenties te laten kijken. Je kernpubliek is jong; sla advertenties dus volledig over. |
-| **Tijdsdruk-aanbiedingen** ("nog 5 minuten!") | Druk op kinderen. Slecht voor het vertrouwen van ouders. |
+| **Cash** (in-game money) for Robux | Real money would indirectly buy gadgets you can lose. And whoever pays buys their way past the progression. |
+| **2× Cash / 2× Rep pass** | Entry Point (300 Robux) and Notoriety (499 Robux) do sell them. Here it clashes with rule 3 and feels like pay-to-win for young players. |
+| **Gadgets or extra charges** for Robux | Pay-to-win, and it undermines the stake. |
+| **"Get out of jail"** or reviving for Robux | That makes being rescued by your teammates, a core moment, worthless. |
+| **Insurance** against loss | Buying that you lose nothing = buying off the stake. |
+| **Paid maps or jobs** | Entry Point sells missions as game passes (750–1,200 Robux). With few players that splits your audience: whoever wants a paid map cannot find a crew. |
+| **Random paid items** (loot boxes) | In Belgium, paid loot boxes have been banned since 2018 (the Gaming Commission sees them as gambling); in the Netherlands, Roblox games were blocked over them in 2022. Roblox switches them off there, so you and your friends would not even be able to buy them. Roblox also requires exact odds up front and a free route. Use the free Glovebox (§8.7) and the Crew Pass (§8.5) instead. Discussed and confirmed on 15/10/2026. |
+| **Rewarded ads** ("watch an ad for Cash") | Roblox forbids rewards for getting players under 13 to watch ads. Your core audience is young; so skip ads entirely. |
+| **Time-pressure offers** ("5 minutes left!") | Pressure on children. Bad for parents' trust. |
 
-### 8.11 Technische zorg bij aankopen
+### 8.11 Technical care with purchases
 
-- Elke aankoop van een developer product verwerk je met **ProcessReceipt** (*de Roblox-functie die bevestigt dat een aankoop goed is aangekomen*). Pas als je de aankoop veilig hebt opgeslagen, meld je "gelukt" aan Roblox. Anders betaalt een speler voor niets.
-- Bewaar gekochte items apart van gewone voortgang.
-- Test alle aankopen met **testaankopen in Studio** (die kosten geen echte Robux) voor je publiceert.
+- You process every developer product purchase with **ProcessReceipt** (*the Roblox function that confirms a purchase has arrived correctly*). Only once you have safely stored the purchase do you report "success" to Roblox. Otherwise a player pays for nothing.
+- Keep bought items separate from regular progress.
+- Test all purchases with **test purchases in Studio** (they cost no real Robux) before you publish.
 
 ---
 
-## 9. Tegenstanders en alarmladder
+## 9. Opponents and alarm ladder
 
-*(Een **NPC** is een personage dat door de computer bestuurd wordt; Roblox heeft **PathfindingService**, een ingebouwde dienst die voor een NPC een looproute rond muren berekent.)*
+*(An **NPC** is a character controlled by the computer; Roblox has **PathfindingService**, a built-in service that calculates a walking route around walls for an NPC.)*
 
-### 9.1 Bewakers — "Guard"
+### 9.1 Guards — "Guard"
 
-Bewakers hebben vier toestanden, elk met een duidelijk icoon boven hun hoofd. Spelers moeten in één oogopslag zien wat een bewaker denkt.
+Guards have four states, each with a clear icon above their head. Players must see at a glance what a guard is thinking.
 
-| Toestand | Icoon | Gedrag | Hoe hij erin komt | Hoe hij eruit gaat |
+| State | Icon | Behaviour | How he gets into it | How he gets out of it |
 |---|---|---|---|---|
-| **Patrol** | geen | Loopt een vaste route met 2–4 stoppunten | Start | — |
-| **Suspicious** | gele "?" + meter | Loopt naar de plek waar hij iets zag of hoorde, zoekt 8 s | Ziet een speler half (meter loopt vol in 1,5 s), hoort CRACK/BZZT/Noisemaker, vindt een spoor | Niets gevonden → terug naar Patrol |
-| **Alert** | rode "!" | Rent naar de speler, roept via de radio (+40 alarmpunten) | Meter vol, of drone valt op zijn hoofd | Speler kwijt → Search |
-| **Search** | oranje "?!" | Zoekt 15 s rond de laatste plek, 20% sneller | Na Alert | Na 15 s → Patrol |
+| **Patrol** | none | Walks a fixed route with 2–4 stops | Start | — |
+| **Suspicious** | yellow "?" + meter | Walks to the spot where he saw or heard something, searches for 8 s | Half sees a player (meter fills in 1.5 s), hears CRACK/BZZT/Noisemaker, finds a trace | Nothing found → back to Patrol |
+| **Alert** | red "!" | Runs to the player, calls on the radio (+40 alarm points) | Meter full, or drone falls on his head | Loses the player → Search |
+| **Search** | orange "?!" | Searches for 15 s around the last spot, 20% faster | After Alert | After 15 s → Patrol |
 
-- **Zicht:** kegel van 70°, 35 studs in het licht, 18 studs in het donker. Gehurkt word je 50% trager opgemerkt.
-- **Dekmantel (werkkleding):** in openbare zones (straat, winkel) reageert een bewaker niet op je zolang je niets illegaals doet. Illegaal = buit dragen, een gadget gebruiken of iets openbreken. In "Staff Only"-zones loopt de meter gewoon op.
-- **Oppakken:** een bewaker in Alert die binnen 3 studs komt, pakt je in 1 s ("CAUGHT"). Je krijgt plastic polsbandjes (cartoon) en wordt met een overgangseffect naar de beveiligingsruimte gebracht.
-- **Geen wapens.** Bewakers hebben een zaklamp en een radio. Ze slaan niet en duwen niet.
+- **Sight:** a 70° cone, 35 studs in the light, 18 studs in the dark. Crouching makes you get noticed 50% more slowly.
+- **Cover (work clothes):** in public zones (street, shop) a guard does not react to you as long as you do nothing illegal. Illegal = carrying loot, using a gadget or breaking something open. In "Staff Only" zones the meter fills as normal.
+- **Arrest:** a guard in Alert who comes within 3 studs catches you in 1 s ("CAUGHT"). You get plastic zip-tie cuffs (cartoon) and are taken to the security room with a transition effect.
+- **No weapons.** Guards have a torch and a radio. They do not hit and do not push.
 
-### 9.2 Gepakt: de beveiligingsruimte
+### 9.2 Caught: the security room
 
-- Je zit op een stoel in de beveiligingsruimte. Je gadget ligt in de **bewijskast** in dezelfde ruimte.
-- **Je bent niet uitgeschakeld:** je ziet de beelden van de bewakingscamera's van het gebouw (wisselen met pijltjes) en kunt vanuit die beelden SPOT-pings plaatsen. Je wordt de "ogen" van je crew.
-- Valt een EMP op die camera's, dan zie jij ook ruis (weer een comedy-moment).
-- **Bevrijden:** een teamgenoot houdt 2 s USE bij je stoel ("Cut zip-ties") en 1 s bij de bewijskast ("Grab gear"). Daarna ben je vrij en heb je je gadget terug.
-- In de beveiligingsruimte zit bewust geen vaste bewaker, maar er kijkt een camera naar de deur.
+- You sit on a chair in the security room. Your gadget lies in the **evidence locker** in the same room.
+- **You are not out of the game:** you see the footage from the building's security cameras (switch with arrows) and can place SPOT pings from that footage. You become your crew's "eyes".
+- If an EMP hits those cameras, you see static too (another comedy moment).
+- **Rescue:** a teammate holds USE for 2 s at your chair ("Cut zip-ties") and 1 s at the evidence locker ("Grab gear"). Then you are free and have your gadget back.
+- The security room deliberately has no permanent guard, but a camera watches the door.
 
-### 9.3 Camera's — "Camera"
+### 9.3 Cameras — "Camera"
 
-- Zwaaien 90° heen en weer in 6 s. De meter loopt in 2 s vol (Rookie 3 s).
-- Een volle meter = +40 alarmpunten en alle bewakers krijgen de plek door ("Camera spotted someone in Warehouse").
-- Een EMP zet ze 10 s uit. Daarna herstarten ze ("REBOOTING") en kijken ze eerst naar de plek waar ze stonden.
-- Een camera heeft altijd een **zichtkegel die je kunt zien** als hij gemarkeerd is. Kinderen moeten niet hoeven raden.
+- Sweep 90° back and forth in 6 s. The meter fills in 2 s (Rookie 3 s).
+- A full meter = +40 alarm points and all guards are told the spot ("Camera spotted someone in Warehouse").
+- An EMP switches them off for 10 s. After that they restart ("REBOOTING") and first look at the spot where they were pointing.
+- A camera always has a **view cone you can see** when it is marked. Children should not have to guess.
 
-### 9.4 De hond — "Boef"
+### 9.4 The dog — "Boef"
 
-- Loopt alleen buiten (op map 1 de binnenkoer).
-- **Jaagt op de drone:** vliegt de drone lager dan 5 studs binnen 20 studs van de hond, dan rent hij erheen. Blijft de drone 2 s laag, dan grijpt hij hem en legt hem in zijn mand. Terughalen kan, maar de mand staat in het zicht van een camera.
-- **Blaft naar spelers** die hij binnen 10 studs ziet. Hij bijt niet en valt niet aan, maar de bewaker die het hoort, wordt Suspicious en komt kijken.
-- Is af te leiden met de Noisemaker (8 s) of een "Dog Treat" (15 s).
+- Only walks outside (on map 1, the courtyard).
+- **Hunts the drone:** if the drone flies lower than 5 studs within 20 studs of the dog, he runs over. If the drone stays low for 2 s, he grabs it and puts it in his basket. You can get it back, but the basket is in view of a camera.
+- **Barks at players** he sees within 10 studs. He does not bite and does not attack, but the guard who hears it becomes Suspicious and comes to look.
+- Can be distracted with the Noisemaker (8 s) or a "Dog Treat" (15 s).
 
-### 9.5 De alarmladder
+### 9.5 The alarm ladder
 
-Alles wat opvalt, levert **alarmpunten** op. De ladder gaat alleen omhoog, nooit omlaag; in 12 minuten is dat duidelijker dan een meter die weer zakt.
+Everything that draws attention earns **alarm points**. The ladder only goes up, never down; over 12 minutes that is clearer than a meter that drops again.
 
-| Gebeurtenis | Punten |
+| Event | Points |
 |---|---|
-| Camera ziet je volledig | +40 |
-| Bewaker wordt Alert | +40 |
-| Verkeerd antwoord bij een aanspreking (later, §9.7) | +40 |
-| Bewaker ziet een Winch-kabel | +30 |
-| Bewaker of Karel vindt een spoor | +20 |
-| Bewaker hoort een CRACK | +20 |
-| Spy Cam gevonden | +20 |
-| Noisemaker 2× op dezelfde plek | +15 |
+| Camera fully sees you | +40 |
+| Guard becomes Alert | +40 |
+| Wrong answer when challenged (later, §9.7) | +40 |
+| Guard sees a Winch cable | +30 |
+| Guard or Karel finds a trace | +20 |
+| Guard hears a CRACK | +20 |
+| Spy Cam found | +20 |
+| Noisemaker 2× in the same spot | +15 |
 
-| Trede | Punten | Spelernaam | Wat er verandert |
+| Rung | Points | Player name | What changes |
 |---|---|---|---|
-| 0 | 0–99 | "QUIET" | Normaal |
-| 1 | 100–199 | "SUSPICIOUS" | Bewakers 10% sneller, één bewaker controleert sporen. "Quiet Job"-bonus kan nog. |
-| 2 | 200–299 | "SEARCHING" | Bewakers lopen per twee op de hoofdroutes, camera's zwaaien 30% sneller. "Quiet Job"-bonus weg. **Vensters blijven 10 s**, want het ritme moet betrouwbaar blijven. |
-| 3 | 300+ | "LOCKDOWN" | Groot scherm: "POLICE IN 90". Elektronische deuren naar de hoofdbuit gaan op slot. Wie na 90 s nog binnen is, is gepakt. **Er komen geen politieagenten**: de politie is een timer, geen tegenstander. |
+| 0 | 0–99 | "QUIET" | Normal |
+| 1 | 100–199 | "SUSPICIOUS" | Guards 10% faster, one guard checks traces. "Quiet Job" bonus still possible. |
+| 2 | 200–299 | "SEARCHING" | Guards walk the main routes in pairs, cameras sweep 30% faster. "Quiet Job" bonus gone. **Windows stay 10 s**, because the rhythm has to stay reliable. |
+| 3 | 300+ | "LOCKDOWN" | Big screen: "POLICE IN 90". Electronic doors to the main loot lock. Whoever is still inside after 90 s is caught. **No police officers arrive**: the police is a timer, not an opponent. |
 
-Op Rookie tellen alle punten maar half.
+On Rookie all points count for only half.
 
-### 9.6 Karel — "Karel" (bevestigd)
+### 9.6 Karel — "Karel" (confirmed)
 
-De samenvatting zei alleen dat Karel "een rol speelt" bij de sporen. Gekozen invulling, omdat ze de sporen in een spel voor kinderen zichtbaar en grappig maakt:
+The summary only said that Karel "plays a role" in the traces. The chosen interpretation, because it makes the traces visible and funny in a game for children:
 
-- **Karel is de conciërge.** Hij is geen bewaker en kan je niet oppakken.
-- Hij loopt rond en **ruimt op**: hij sluit deuren die openstaan, raapt Noisemakers op en steekt ze in zijn zak, en veegt sporen weg.
-- Maar elk spoor dat hij vindt, **meldt hij luid** ("WHO LEFT THIS DOOR OPEN?!") en dat geeft +20 alarmpunten.
-- Een EMP doet hem niets. Een Noisemaker ook niet: die steekt hij op. Wat wél werkt, is **rommel**: duw ergens een plantenbak om, en Karel loopt er 12 s heen om op te ruimen. Zo leer je hem gebruiken.
-- Zijn humor: een mopperende, overdreven nette man met een bezem en een vest met 14 sleutels. Een herkenbare "Nederlandse" figuur zonder stereotypen.
-- Hij komt op map 1 pas in Normal en hoger (niet op Rookie), zodat nieuwe spelers niet te veel tegelijk moeten leren.
+- **Karel is the caretaker.** He is not a guard and cannot catch you.
+- He walks around and **tidies up**: he closes doors that are open, picks up Noisemakers and puts them in his pocket, and sweeps traces away.
+- But every trace he finds, he **reports loudly** ("WHO LEFT THIS DOOR OPEN?!") and that gives +20 alarm points.
+- An EMP does nothing to him. A Noisemaker neither: he pockets it. What *does* work is **mess**: knock over a planter somewhere, and Karel walks over for 12 s to tidy it up. That is how you learn to use him.
+- His humour: a grumbling, exaggeratedly tidy man with a broom and a vest with 14 keys. A recognisable "Dutch" figure without stereotypes.
+- On map 1 he only appears on Normal and higher (not on Rookie), so that new players do not have to learn too much at once.
 
-### 9.7 Asset Recovery en dekmantel (na de eerste release)
+### 9.7 Asset Recovery and cover (after the first release)
 
-Beide zijn goede ideeën, maar ze maken de eerste versie te zwaar. Ze komen in de eerste updates (§12).
+Both are good ideas, but they make the first version too heavy. They come in the first updates (§12).
 
-**Asset Recovery — de Signal-meter**
-- De crew deelt één **Signal-meter** (antenne-icoontje linksboven). Elk actief elektronisch gadget vult hem: Drone +1/s, elke Spy Cam +0,25/s, elke EMP +15 in één keer. Niets aan = −2/s.
-- Bij 100: "ASSET RECOVERY INBOUND". 20 s later stapt er een **Recovery Agent** uit een grijs busje: een man in een grijs pak met een grote antenne op zijn rug.
-- Hij loopt naar het sterkste actieve signaal en **neemt dat gadget in beslag** (een gekocht exemplaar ben je kwijt, een standaardgadget voor die run). Ziet hij een speler, dan meldt hij het aan de bewakers (+40).
-- Staat 20 s alles uit, dan vertrekt hij. **Uitzetten betekent blind gaan**: precies de keuze uit het concept.
-- Met constant gebruik van de drone duurt het ongeveer 90–100 s tot hij komt, dus in een run van 12 minuten zie je hem één of twee keer.
+**Asset Recovery — the Signal meter**
+- The crew shares one **Signal meter** (antenna icon top left). Every active electronic gadget fills it: Drone +1/s, each Spy Cam +0.25/s, each EMP +15 in one go. Nothing on = −2/s.
+- At 100: "ASSET RECOVERY INBOUND". 20 s later a **Recovery Agent** steps out of a grey van: a man in a grey suit with a big antenna on his back.
+- He walks to the strongest active signal and **confiscates that gadget** (a bought one you lose, a standard gadget for that run). If he sees a player, he reports it to the guards (+40).
+- If everything stays off for 20 s, he leaves. **Switching off means going blind**: exactly the choice from the concept.
+- With constant use of the drone it takes about 90–100 s before he comes, so in a 12-minute run you see him once or twice.
 
-**Dekmantel — "Cover Story"**
-- Met deze update verandert de regel uit §9.1: in een "Staff Only"-zone loopt de meter niet meer meteen op zolang je werkkleding draagt en niets illegaals doet. Een NPC (bewaker of Karel) die je daar 2 s ziet, spreekt je aan: "Hey! Who are you?".
-- Je krijgt **3 icoontjes** (bijvoorbeeld 🔧 "Repairs", 📦 "Delivery", 🧹 "Cleaning") en 5 s om te kiezen.
-- Het juiste antwoord staat op de **werkbon** die je tijdens de verkenning kunt vinden: de drone ziet een klembord op het prikbord ("TODAY: FRIDGE REPAIR").
-- Juist → "Ah, the fridge guy. Carry on." Fout of te laat → +40 alarmpunten en de NPC wordt Alert.
-- Werkt overal zonder taal: een icoon, geen tekst om te lezen.
+**Cover — "Cover Story"**
+- With this update the rule from §9.1 changes: in a "Staff Only" zone the meter no longer fills immediately as long as you wear work clothes and do nothing illegal. An NPC (guard or Karel) who sees you there for 2 s challenges you: "Hey! Who are you?".
+- You get **3 icons** (for example 🔧 "Repairs", 📦 "Delivery", 🧹 "Cleaning") and 5 s to choose.
+- The right answer is on the **work order** you can find during scouting: the drone sees a clipboard on the noticeboard ("TODAY: FRIDGE REPAIR").
+- Right → "Ah, the fridge guy. Carry on." Wrong or too late → +40 alarm points and the NPC becomes Alert.
+- Works everywhere without language: an icon, no text to read.
 
 ---
 
-## 10. Eerste map: "The Golden Wheel" (de kaaswinkel)
+## 10. First map: "The Golden Wheel" (the cheese shop)
 
-**Waarom een kaaswinkel:** kaas is wereldwijd herkenbaar als Nederlands, cartoonvriendelijk en grappig. Grote kaaswielen zijn perfecte buit om te dragen (zwaar, rond, opvallend). Er hoort geen echt merk bij. De kaaswinkel heet in het spel "The Golden Wheel Cheese Shop", in de fictieve stad Polderdam.
+**Why a cheese shop:** cheese is recognised worldwide as Dutch, cartoon-friendly and funny. Big cheese wheels are perfect loot to carry (heavy, round, eye-catching). No real brand is attached to it. In the game the cheese shop is called "The Golden Wheel Cheese Shop", in the fictional town of Polderdam.
 
-### 10.1 Plattegrond in woorden
+### 10.1 Floor plan in words
 
-Het terrein is ongeveer 120 × 80 studs. Noord ligt boven.
+The site is about 120 × 80 studs. North is at the top.
 
 ```
-                                N
-+--------------------- GRACHT (water, woonboot) ---------------------+
-| KADE:   [BUSJE]   fietsen   straatlamp                             |
-+------------------+------------------+------------------------------+
-| A  WINKEL        | B  BEVEILIGINGS- | C  BINNENKOER (buiten)       |
-| etalage, toog,   |    RUIMTE        | hond Boef, kratten, modder-  |
-| kassa, deurbel,  | monitoren, stoel | plas, leveringspoort met     |
-| camera op deur   | bewijskast       | hangslot    <-- KETENPUNT 1  |
-+--------+---------+------------------+-----------+------------------+
-| KARELS | D  RIJPINGSHAL                         | E  KANTOOR       |
-| HOK    | 8 kaaswielen in rekken, gaaskooi,      | (mezzanine, trap |
-| bezem, | 2 camera's, 1 bewaker in een lus       |  vanuit D)       |
-| rommel |                                        | kluiskast met de |
-|        |               <-- KETENPUNT 2          | Golden Gouda,    |
-|        |                                        | raam naar koer   |
-|        |                                        | <-- KETENPUNT 3  |
-+--------+----------------------------------------+------------------+
+                                    N
++----------------------- CANAL (water, houseboat) -----------------------+
+| QUAY:   [VAN]   bikes   street lamp                                    |
++--------------------+-------------------+-------------------------------+
+| A  SHOP            | B  SECURITY       | C  COURTYARD (outside)        |
+| shop window,       |    ROOM           | dog Boef, crates, mud         |
+| counter, till,     | monitors, chair   | puddle, delivery gate with    |
+| doorbell, door cam | evidence locker   | padlock     <-- CHAIN POINT 1 |
++--------+-----------+-------------------+-----------+-------------------+
+| KAREL'S| D  RIPENING HALL                          | E  OFFICE         |
+| CLOSET | 8 cheese wheels on racks, wire cage,      | (mezzanine,       |
+| broom, | 2 cameras, 1 guard on a loop              |  stairs from D)   |
+| junk   |                                           | safe with the     |
+|        |               <-- CHAIN POINT 2           | Golden Gouda,     |
+|        |                                           | window to yard    |
+|        |                                           | <-- CHAIN POINT 3 |
++--------+-------------------------------------------+-------------------+
 ```
 
-- **Kade (noord):** het busje staat aan de gracht. Vanaf hier verken je. Er staan fietsen en een straatlamp; de woonboot is decor.
-- **A — Winkel (noordwest):** openbare zone (je dekmantel werkt hier). De voordeur heeft een camera erboven en een deurbel (voor de "Fake Delivery"). De toog en de kassa met de **kassalade** (kleine buit, 200 Cash).
-- **B — Beveiligingsruimte (midden-noord):** monitoren en een stoel met polsbandjes. De bewijskast. Eén camera op de deur.
-- **C — Binnenkoer (noordoost):** buiten, omheind. De hond Boef. Een modderplas bij de poort (voetsporen!). De **leveringspoort met hangslot** naar de straat. Gestapelde kratten om achter te schuilen. De achterdeur van de rijpingshal.
-- **D — Rijpingshal (zuid, de grootste ruimte):** lange rekken met **8 kaaswielen** (elk 100 Cash, groot: dragen of via de Winch). Een gaaskooi met de duurste wielen. Twee camera's die elkaar dekken. Eén bewaker in een lus rond de rekken.
-- **E — Kantoor (mezzanine, zuidoost):** bereikbaar via een trap in de rijpingshal. De kluiskast met **de Golden Gouda** (hoofdbuit, 1.200 Cash, de zwaarste buit). Een raam naar de binnenkoer.
-- **Karels hok (zuidwest):** bezem, emmers en de rommel waarmee je Karel kunt afleiden.
+- **Quay (north):** the van is parked by the canal. You scout from here. There are bikes and a street lamp; the houseboat is decoration.
+- **A — Shop (northwest):** public zone (your cover works here). The front door has a camera above it and a doorbell (for the "Fake Delivery"). The counter and the till with the **cash drawer** (small loot, 200 Cash).
+- **B — Security room (centre-north):** monitors and a chair with wrist straps. The evidence locker. One camera on the door.
+- **C — Courtyard (northeast):** outside, fenced in. The dog Boef. A mud puddle by the gate (footprints!). The **delivery gate with padlock** to the street. Stacked crates to hide behind. The back door of the ripening hall.
+- **D — Ripening hall (south, the largest room):** long racks with **8 cheese wheels** (100 Cash each, large: carry them or use the Winch). A wire cage with the most expensive wheels. Two cameras that cover each other. One guard on a loop around the racks.
+- **E — Office (mezzanine, southeast):** reached by stairs in the ripening hall. The safe with **the Golden Gouda** (main loot, 1,200 Cash, the heaviest loot). A window onto the courtyard.
+- **Karel's closet (southwest):** broom, buckets and the junk you can use to distract Karel.
 
-### 10.2 De keten komt drie keer voor
+### 10.2 The chain occurs three times
 
-**Ketenpunt 1 — De leveringspoort (binnenkomen)**
-- *Zien:* de drone vliegt over de omheining (hoog blijven, anders grijpt Boef hem) en ziet de buitenbewaker, de camera boven de poort en Boef. Of: een Spy Cam op de straatlamp aan de overkant.
-- *Vrijmaken:* een Noisemaker in de verste hoek van de koer lokt Boef en de bewaker weg. Of: de EMP zet de poortcamera uit, maar dan moet de drone **buiten de 14 studs** blijven.
-- *Openen:* de Crowbar breekt het hangslot (3 s, CRACK). Dat moet tijdens de afleiding, anders hoort de bewaker het. Alternatief: de Winch over de omheining (geen lawaai, maar de kabel is zichtbaar).
-- *Les:* "afleiden + openen tegelijk". Kleine kans op gepakt worden; dit punt is de tutorial in het echt.
+**Chain point 1 — The delivery gate (getting in)**
+- *See:* the drone flies over the fence (stay high, or Boef grabs it) and spots the outside guard, the camera above the gate and Boef. Or: a Spy Cam on the street lamp across the street.
+- *Clear:* a Noisemaker in the far corner of the courtyard lures Boef and the guard away. Or: the EMP switches off the gate camera, but then the drone has to stay **outside the 14 studs**.
+- *Open:* the Crowbar breaks the padlock (3 s, CRACK). That has to happen during the distraction, or the guard hears it. Alternative: the Winch over the fence (no noise, but the cable is visible).
+- *Lesson:* "distract + open at the same time". Small chance of getting caught; this point is the tutorial for real.
 
-**Ketenpunt 2 — De rijpingshal (de buit)**
-- *Zien:* een Spy Cam bij de achterdeur van de hal, of de drone door het ventilatierooster. Twee camera's dekken elkaar; een bewaker loopt een lus van 25 s.
-- *Vrijmaken:* de EMP midden tussen beide camera's legt ze **samen** plat. Dat is ook de grootste kans op de comedy: de drone die de bewaker in de gaten houdt, hangt vaak net binnen de straal.
-- *Openen:* de Crowbar op de gaaskooi (3 s, CRACK) terwijl de bewaker aan de andere kant van zijn lus is. Wie eerlijk rekent: 10 s venster − 3 s wrikken = 7 s om erin, eruit en achter een rek te geraken.
-- *Les:* "twee vrijmakers tegelijk", en de EMP-straal leren inschatten.
+**Chain point 2 — The ripening hall (the loot)**
+- *See:* a Spy Cam by the back door of the hall, or the drone through the ventilation grille. Two cameras cover each other; a guard walks a 25 s loop.
+- *Clear:* the EMP right between the two cameras knocks them out **together**. That is also the biggest chance of comedy: the drone that is watching the guard is often hanging just inside the radius.
+- *Open:* the Crowbar on the wire cage (3 s, CRACK) while the guard is at the other end of his loop. If you do the honest maths: 10 s window − 3 s prying = 7 s to get in, out and behind a rack.
+- *Lesson:* "two clearers at once", and learning to judge the EMP radius.
 
-**Ketenpunt 3 — Het kantoor en de vlucht (de hoofdbuit)**
-- *Zien:* de bewakingscamera's van het gebouw zelf (als iemand gepakt is, ziet die ze toch al) of de drone via de trap. Karel poetst in het kantoor.
-- *Vrijmaken:* een Noisemaker beneden in de hal lokt de bewaker weg. Voor Karel werkt dat niet: hij heeft rommel in zijn hok nodig, of een "Fake Delivery" stuurt een bewaker naar de voordeur.
-- *Openen:* de Crowbar op de kluiskast (1,5 s). Dan opent de **Winch** een route: een kabel van het kantoorraam over de binnenkoer naar het dak van het busje. De Golden Gouda glijdt er in 8 s overheen. Boef moet op dat moment afgeleid zijn, anders blaft hij naar de glijdende kaas.
-- *Les:* alles samen, met drie mensen tegelijk aan het werk en één die de buit wegbrengt.
+**Chain point 3 — The office and the escape (the main loot)**
+- *See:* the building's own security cameras (if someone has been caught, they can see them anyway) or the drone via the stairs. Karel is cleaning in the office.
+- *Clear:* a Noisemaker down in the hall lures the guard away. That does not work on Karel: he needs a mess in his closet, or a "Fake Delivery" sends a guard to the front door.
+- *Open:* the Crowbar on the safe (1.5 s). Then the **Winch** opens a route: a cable from the office window across the courtyard to the roof of the van. The Golden Gouda slides across it in 8 s. Boef has to be distracted at that moment, or he barks at the sliding cheese.
+- *Lesson:* everything together, with three people working at the same time and one carrying the loot away.
 
-### 10.3 Buit op map 1
+### 10.3 Loot on map 1
 
-| Buit | Aantal | Waarde | Soort |
+| Loot | Count | Value | Type |
 |---|---|---|---|
-| Golden Gouda | 1 | 1.200 Cash | Groot, heel zwaar (Winch: 8 s) |
-| Kaaswiel | 8 | 100 Cash elk | Groot |
-| Kassalade | 1 | 200 Cash | Klein (in je zak) |
-| **Totaal** | | **2.200 Cash** | Minimum om te winnen: Golden Gouda óf 600 Cash |
+| Golden Gouda | 1 | 1,200 Cash | Large, very heavy (Winch: 8 s) |
+| Cheese wheel | 8 | 100 Cash each | Large |
+| Cash drawer | 1 | 200 Cash | Small (in your pocket) |
+| **Total** | | **2,200 Cash** | Minimum to win: Golden Gouda or 600 Cash |
 
-### 10.4 Waarom deze map
+### 10.4 Why this map
 
-- **Klein:** vijf kleine ruimtes en een kade, één verdieping plus een mezzanine. Haalbaar om als beginner te bouwen en snel genoeg voor runs van 11 minuten.
-- **Weinig verticaal:** alleen de mezzanine. Een drone besturen op een telefoon in een hoog trappenhuis is lastig.
-- **Elke stap op twee manieren:** zo werkt elke combinatie van gadgets in je crew.
-- **Varianten zonder nieuw bouwwerk:** "Night Shift" (andere routes, minder licht) en "Rush Job" (8 s vensters) gebruiken hetzelfde gebouw. Zo krijg je drie "jobs" uit één map.
+- **Small:** five small rooms and a quay, one floor plus a mezzanine. Doable to build as a beginner and quick enough for 11-minute runs.
+- **Little verticality:** only the mezzanine. Flying a drone on a phone in a tall stairwell is tricky.
+- **Every step in two ways:** that way every combination of gadgets in your crew works.
+- **Variants without new building work:** "Night Shift" (different routes, less light) and "Rush Job" (8 s windows) use the same building. That gets you three "jobs" out of one map.
 
-### 10.5 Stijl, sfeer en setting: opvallen in de Roblox-catalogus
+### 10.5 Style, mood and setting: standing out in the Roblox catalogue
 
-**Het probleem met het pc-concept:** een realistische, Nederlandse inbraakgame oogt op een telefoonscherm van 6 inch donker, druk en "volwassen". In de Roblox-catalogus scoren gestileerde, felle, leesbare spellen. 83% van de Roblox-spelers speelt op mobiel (Roblox, jaarverslag 2025).
+**The problem with the PC concept:** a realistic Dutch burglary game looks dark, busy and "grown-up" on a 6-inch phone screen. In the Roblox catalogue, stylised, bright, readable games do well. 83% of Roblox players play on mobile (Roblox, annual report 2025).
 
-**Wat er verandert:**
+**What changes:**
 
-| Onderdeel | Pc-concept (vermoedelijk) | Roblox-versie |
+| Element | PC concept (presumably) | Roblox version |
 |---|---|---|
-| Kunststijl | Realistisch | **"Speelgoeddiorama"**: dikke, eenvoudige vormen, overdreven verhoudingen (grachtenpanden die scheef hangen, fietsen met te grote wielen), weinig textuur |
-| Licht | Donker, nacht | **"Blauwe nacht"**: diepblauwe schaduwen met warm oranje licht uit ramen en straatlampen. Donker genoeg om je te verstoppen, licht genoeg om te zien op een telefoon op halve helderheid |
-| Kleur | Gedempt | Fel en verzadigd. Oranje is de crewkleur (werkvesten, het busje): een knipoog naar Nederland en goed zichtbaar |
-| Personages | Eigen crew | **Spelers houden hun eigen Roblox-avatar** met een werkvest en pet erover (dat is ook je dekmantel). Roblox-spelers willen hun avatar laten zien; die afpakken kost je spelers |
-| Bewakers | Realistisch | Gezet, snor, grote zaklamp, zichtbare zichtkegel, icoon boven het hoofd. Grappig, niet eng |
-| Setting | Herkenbaar Nederland | De fictieve stad **Polderdam**: grachtenpanden, fietsen overal, kaas, tulpenkratten, een molen aan de horizon, een haringkar. Opschriften in het Engels met Nederlandse knipoog ("KAAS", "FIETSEN") als decor. Nergens tekst in het Nederlands die je moet begrijpen om te spelen |
-| Humor | ? | Karel de conciërge, de hond Boef, kartonnen bewakers in de tutorial, awards op het eindscherm |
+| Art style | Realistic | **"Toy diorama"**: chunky, simple shapes, exaggerated proportions (canal houses that lean, bikes with oversized wheels), little texture |
+| Lighting | Dark, night | **"Blue night"**: deep blue shadows with warm orange light from windows and street lamps. Dark enough to hide in, light enough to see on a phone at half brightness |
+| Colour | Muted | Bright and saturated. Orange is the crew colour (work vests, the van): a nod to the Netherlands and highly visible |
+| Characters | Own crew | **Players keep their own Roblox avatar** with a work vest and cap over it (which is also your cover). Roblox players want to show off their avatar; taking it away costs you players |
+| Guards | Realistic | Stocky, moustache, big flashlight, visible vision cone, icon above the head. Funny, not scary |
+| Setting | Recognisably Dutch | The fictional town of **Polderdam**: canal houses, bikes everywhere, cheese, tulip crates, a windmill on the horizon, a herring cart. Signage in English with a Dutch wink ("KAAS", "FIETSEN") as decoration. Nowhere any Dutch text you need to understand to play |
+| Humour | ? | Karel the caretaker, the dog Boef, cardboard guards in the tutorial, awards on the end screen |
 
-**Wat je vermijdt:** echte merken, logo's of winkelnamen (Roblox verwijdert inbreuk op merken na een klacht), clichés die mensen kwetsen, en "eng" donker. De Nederlandse setting is je charme, geen drempel: kinderen wereldwijd kennen kaas, fietsen, molens en tulpen.
+**What you avoid:** real brands, logos or shop names (Roblox removes trademark infringement after a complaint), clichés that hurt people, and "scary" darkness. The Dutch setting is your charm, not a barrier: children all over the world know cheese, bikes, windmills and tulips.
 
-**Voor de spelpagina:**
-- **Icoon** (512 × 512, wordt getoond op ongeveer 150 × 150): één beeld dat je verschil toont, bijvoorbeeld een drone die met vonken en "BZZT" uit de lucht valt, boven een kaaswiel. Geen kleine tekst.
-- **Thumbnails** (1920 × 1080, maximaal 10): maak er 3 tot 5 en zet **Thumbnail Personalization** aan (Roblox toont elke speler de thumbnail die bij hem het best werkt; in Roblox' eigen tests gaf dat gemiddeld +8,5% meer spelers die doorklikken). Geen belangrijke tekst onderaan, want daar zet Roblox het aantal spelers.
-- **Eerste zin van de beschrijving** = het genre: "Co-op stealth heist for 1–4 players. No real guns, only silly ones."
-- Het spel moet ook **tieners van 16+** aanspreken, want zij spelen het eerst (§5.5). "Speels" werkt voor alle leeftijden, "kinderachtig" niet.
+**For the game page:**
+- **Icon** (512 × 512, shown at about 150 × 150): one image that shows what makes you different, for example a drone falling out of the sky with sparks and "BZZT", above a cheese wheel. No small text.
+- **Thumbnails** (1920 × 1080, up to 10): make 3 to 5 and turn on **Thumbnail Personalization** (Roblox shows each player the thumbnail that works best for them; in Roblox's own tests this gave on average +8.5% more players clicking through). No important text at the bottom, because that is where Roblox puts the player count.
+- **First sentence of the description** = the genre: "Co-op stealth heist for 1–4 players. No real guns, only silly ones."
+- The game also has to appeal to **teenagers aged 16+**, because they play it first (§5.5). "Playful" works for all ages, "childish" does not.
 
 ---
 
-## 11. De eerste 5 minuten van een nieuwe speler
+## 11. A new player's first 5 minutes
 
-**Principe:** leren door te doen. Maximaal 6 woorden per hint, altijd met een icoon. Geen tekstschermen. De eerste grap komt binnen 60 seconden.
+**Principle:** learning by doing. At most 6 words per hint, always with an icon. No text screens. The first joke comes within 60 seconds.
 
-| Klok | Wat de speler doet | Wat het spel toont |
+| Clock | What the player does | What the game shows |
 |---|---|---|
-| **0:00** | Komt binnen in de Depot, naast de **Practice Yard** (een omheind oefenkoertje). | Eén zin over de hele breedte: "No boss. One van. Silly weapons only." Een pijl naar de Practice Yard. |
-| **0:10** | Krijgt automatisch de Drone. | Hint: "Fly the drone. Find the guard." De speler vliegt over een muurtje en ziet een **kartonnen bewaker** op wieltjes die heen en weer rijdt. Na 0,5 s kijken: rood icoon. "Spotted!" |
-| **0:40** | Krijgt de EMP; de drone hangt nog boven de camera. | Hint: "EMP the camera." De blauwe straal raakt ook de drone (rood icoon "YOUR DRONE!"), maar de speler gooit toch. **BZZT** — camera uit, en de drone valt op het hoofd van de kartonnen bewaker. Sterretjes. Tekst: "Oops. EMP hits YOUR stuff too." Dit is de eerste lach. |
-| **1:10** | Krijgt de Crowbar; een ring telt af ("CAMS OFF 10"). | Hint: "Open the door now." De speler wrikt de deur open in het venster. Achter de deur ligt een kaasje (kleine buit). "Chain complete: EYES → CLEAR → OPEN." Drie icoontjes klikken op hun plek. |
-| **1:40** | Loopt door naar het tweede deel. Hier staan twee kartonnen crewleden met pingballonnen. | Een kartonnen crewlid toont "WAIT", daarna "NOW". Hint: "Hold PING. Pick NOW." De speler pingt zelf. Zo leert hij de twee belangrijkste pings zonder uitleg. |
-| **2:10** | Komt uit de Practice Yard bij de busjes. Krijgt 500 Cash ("Welcome bonus") en de Rookie-badge. | Twee grote knoppen: "PLAY WITH CREW" (matchmaking) en "GO SOLO". Kiest hij niets, dan loopt hij gewoon een busje in. |
-| **2:30** | De rit: kiest een gadget. | Het spel kiest standaard het gadget dat de crew nog mist ("Your crew needs: OPEN") en zet het klaar. Eén tik om te bevestigen. |
-| **3:30** | De verkenning op map 1, Rookie (vensters 12 s, geen Karel, geen Asset Recovery). | Ketenkaartjes met kleuren (§3.2). Bij het eerste ketenpunt start het spel automatisch een Chain Call voor wie nog nooit een Chain Call deed: "Tap I'M IN". |
-| **5:00** | Het eerste ketenpunt is opgelost met echte mensen of in solo. | "First chain! +15 Rep". Vanaf hier verdwijnen de hints, tenzij de speler 60 s niets doet. |
+| **0:00** | Arrives in the Depot, next to the **Practice Yard** (a small fenced practice yard). | One sentence across the full width: "No boss. One van. Silly weapons only." An arrow to the Practice Yard. |
+| **0:10** | Automatically gets the Drone. | Hint: "Fly the drone. Find the guard." The player flies over a low wall and sees a **cardboard guard** on little wheels rolling back and forth. After 0.5 s of looking: red icon. "Spotted!" |
+| **0:40** | Gets the EMP; the drone is still hovering above the camera. | Hint: "EMP the camera." The blue radius also hits the drone (red icon "YOUR DRONE!"), but the player throws anyway. **BZZT** — camera off, and the drone falls on the cardboard guard's head. Little stars. Text: "Oops. EMP hits YOUR stuff too." This is the first laugh. |
+| **1:10** | Gets the Crowbar; a ring counts down ("CAMS OFF 10"). | Hint: "Open the door now." The player pries the door open within the window. Behind the door is a little cheese (small loot). "Chain complete: EYES → CLEAR → OPEN." Three little icons click into place. |
+| **1:40** | Walks on to the second part. Two cardboard crew members with ping balloons stand here. | A cardboard crew member shows "WAIT", then "NOW". Hint: "Hold PING. Pick NOW." The player sends a ping themselves. That way they learn the two most important pings without any explanation. |
+| **2:10** | Leaves the Practice Yard at the vans. Gets 500 Cash ("Welcome bonus") and the Rookie badge. | Two big buttons: "PLAY WITH CREW" (matchmaking) and "GO SOLO". If they choose nothing, they simply walk into a van. |
+| **2:30** | The ride: picks a gadget. | By default the game picks the gadget the crew is still missing ("Your crew needs: OPEN") and sets it up. One tap to confirm. |
+| **3:30** | The scouting on map 1, Rookie (12 s windows, no Karel, no Asset Recovery). | Colour-coded chain cards (§3.2). At the first chain point the game automatically starts a Chain Call for anyone who has never done a Chain Call: "Tap I'M IN". |
+| **5:00** | The first chain point is solved with real people or solo. | "First chain! +15 Rep". From here on the hints disappear, unless the player does nothing for 60 s. |
 
-**Wat hier bewust níét in zit:** geen uitleg over Cash, Rep, de winkel of de alarmladder. Die leer je na je eerste run, op het uitbetalingsscherm (één tip per run, maximaal drie runs).
+**What is deliberately not in here:** no explanation of Cash, Rep, the shop or the alarm ladder. You learn those after your first run, on the payout screen (one tip per run, for at most three runs).
 
-**Wat de eerste minuut doet tegen de concurrentie:** in 60 seconden ziet de speler wat Entry Point en Notoriety niet hebben: geen echt geweer maar een Bubble Blaster, een gadget dat je eigen drone neerhaalt, en een deur die alleen opengaat als iemand anders je het venster geeft.
-
----
-
-## 12. Bouwvolgorde voor een beginner
-
-**Uitgangspunt:** je werkt (bijna) alleen, ongeveer 10 uur per week, en Claude Code schrijft het grootste deel van de code via de officiële Roblox-koppeling. De tijden hieronder gaan daarvan uit. Werk je minder uren, dan rekken ze evenredig.
-
-**De gouden regel:** bouw eerst **één ketenpunt** dat leuk is in grijze blokken. Pas als drie vrienden daar samen om lachen, bouw je er een map omheen. Bijna elk beginnersproject op Roblox sneuvelt doordat het eerst mooi en groot moet zijn.
-
-*(Een **graybox** is een speelbare versie van een level in effen grijze blokken, zonder mooie modellen, om de gameplay te testen voor je tijd in kunst steekt.)*
-
-### Fase 0 — Opzetten en leren (1–2 weken)
-
-| | |
-|---|---|
-| **Wat erin zit** | Tools installeren (§15). Roblox Studio leren kennen: rondvliegen, blokken plaatsen, testen. Eén leeg testproject publiceren (privé). Claude via de Studio MCP iets kleins laten bouwen: "maak een deur die opengaat als ik op E druk". |
-| **Tools** | Roblox Studio, Roblox Studio MCP (via de officiële Claude Code-plugin), Git + deze repo, Rojo (via Rokit). |
-| **Klaar als** | (1) Claude Code kan je geopende place zien en een script aanpassen. (2) Een script dat Claude in de repo schrijft, staat via Rojo binnen 2 seconden in Studio. (3) Je kunt in Studio testen met 2 spelers tegelijk (*Test → Server & Clients: Studio start een server en tot 8 nepspelers op je eigen computer*). |
-
-### Fase 1 — Prototype: één ketenpunt (4–6 weken)
-
-| | |
-|---|---|
-| **Wat erin zit** | Eén graybox-ruimte met ketenpunt 2 uit §10: een bewaker met een vaste route en de vier toestanden, twee camera's, een kooi. Vier gadgets: Drone, Noisemaker, EMP, Crowbar. Het venster met de krimpende ring. De Chain Call en de "NOW"- en "WAIT"-pings. Gepakt = terug naar start. Eenvoudige knoppen op mobiel. |
-| **Bewust niet** | Geen opslag, geen geld, geen lobby, geen kunst, geen hond, geen Karel. |
-| **Tools** | Studio + Studio MCP (Claude laat het testen, leest fouten in de console, maakt schermafbeeldingen), Rojo + Git (alle code in deze repo). Optioneel: de Roblox Engineer Skill (§15). |
-| **Klaar als** | (1) Jij en 2 vrienden spelen het ketenpunt op één avond 10 keer. (2) Van elke mislukking kunnen ze zeggen waarom ze faalden. (3) Er wordt minstens één keer hardop gelachen om de EMP. (4) Het werkt op je eigen telefoon. (5) 10 minuten spelen geeft geen rode foutmeldingen in de console. |
-
-> **Stoppunt:** is het in fase 1 niet leuk, verander dan de keten (venster, straal, geluid), niet de kunst. Bouw niets van fase 2 tot dit klopt.
-
-### Fase 2 — Speelbare test met vrienden (6–10 weken)
-
-| | |
-|---|---|
-| **Wat erin zit** | De hele eerste map in graybox met alle drie de ketenpunten. Alle zes gadgets. Het volledige ping-systeem en de Chain Call. De alarmladder. Gepakt → beveiligingsruimte → bevrijden. Buit dragen, de Winch, het busje als uitgang. Uitbetalingsscherm (nog zonder opslag). De Depot met busjes en TeleportService. Solo Kit (timers). De hond. Eerste eenvoudige kunst: Roblox-materialen en een paar eigen props uit Blender. |
-| **Tools** | Alles uit fase 1, plus **Blender** en **Blender MCP** (Claude maakt eenvoudige props: kaaswiel, krat, busje). Importeren via Studio's ingebouwde 3D Importer (of de Roblox Blender Plugin, §15). |
-| **Klaar als** | (1) 5 testsessies met 3–4 vrienden, van wie er minstens 2 op een telefoon spelen. (2) Een run duurt gemiddeld 10–15 minuten. (3) Minstens 3 van de 4 testers willen na afloop "nog één keer". (4) Nieuwe testers spelen zonder dat jij iets uitlegt (jij kijkt alleen toe en zwijgt). (5) Een soloronde is uitspeelbaar. |
-
-### Fase 3 — Eerste release, in twee stappen (8–12 weken + 1–2 maanden keuring)
-
-**Fase 3a — Release voor 16+ (de proefperiode)**
-
-| | |
-|---|---|
-| **Wat erin zit** | Opslag van voortgang (*een **DataStore** is de Roblox-database waarin je per speler gegevens bewaart, zoals Cash en gekochte skins*). Cash, Rep en niveaus. De Gear Wall met de 3 extra gadgets en de inzet ("Confiscated"). Cosmetica, game passes, developer products, de Van Shop en de gratis Glovebox (§8). De Practice Yard (§11). Rookie en Normal. Karel (eenvoudig). Matchmaking met instappen in de eerste 3 minuten, en de stemming om iemand eruit te zetten. Quick Words ingesteld (§5.4). Kunstronde: het gestileerde Polderdam (§10.5). Geluid en muziek. De volledige vragenlijst voor het leeftijdslabel. Icoon en 3–5 thumbnails. Meetpunten (analytics) voor de eerste 5 minuten. Eerst een **gesloten bèta** (20–50 testers), daarna openbaar voor 16+. |
-| **Tools** | Alles van hiervoor, plus **RBXMonkey / Blender Animations** voor eigen animaties (bewaker, hond, Karel, hurken). Een bibliotheek voor veilige opslag (§15.2). |
-| **Klaar als** | (1) Twee weken gesloten bèta zonder één geval van verloren voortgang of verloren aankoop. (2) Alle aankopen getest met testaankopen in Studio (die kosten geen echte Robux). (3) Minstens 70% van de nieuwe spelers komt door de Practice Yard (af te lezen uit je meetpunten). (4) Het label is Minimal of Mild. (5) Het spel loopt vloeiend op een goedkope Android-telefoon. |
-
-**Fase 3b — De Kids & Select-keuring (9–15 jaar)**
-
-| | |
-|---|---|
-| **Wat erin zit** | ID-verificatie en tweestapsverificatie op je account, de borg of 2 maanden Roblox Plus (§5.5). Spelers van 16+ werven die echt spelen: je testgroep, vrienden, een Discord-groep, de DevForum. Moderatiemeldingen snel opvolgen. Ondertussen bugs oplossen en kleine verbeteringen uitbrengen. |
-| **Tools** | Creator Hub: het dashboard **Audience Reach** (voortgang van de keuring) en de analytics (D1-retentie, sessieduur, waar spelers afhaken). |
-| **Klaar als** | Het spel is goedgekeurd voor Kids en Select, dus de drempel van 250 unieke plays van betrokken spelers in 60 dagen is gehaald. Tegelijk volg je de twee cijfers die Roblox zelf eerst aanraadt: **D1-retentie** (*het deel van de nieuwe spelers dat de dag erna terugkomt*) en de **gemiddelde sessieduur**. Roblox toont benchmarks met vergelijkbare spellen zodra je gemiddeld 100 spelers per dag hebt. |
-
-### Fase 4 — Updates (elke 4–6 weken)
-
-Volgorde op basis van wat spelers het meest vasthoudt:
-
-1. **Asset Recovery** (de Signal-meter, §9.7) en **Pro**-moeilijkheid.
-2. **Cover Story** (dekmantel, §9.7) en de jobvarianten "Night Shift" en "Rush Job".
-3. **Een nieuwe map** ongeveer elke 2 maanden. Ideeën die in Polderdam passen: de fietsenwinkel (fietsen als buit, de Winch over de gracht), de bloemenveiling (koelcellen, transportbanden), de stroopwafelfabriek (lawaaierige machines dekken je CRACK), het grachtenpand-kantoor (verticaal: pas als je de drone goed onder de knie hebt).
-4. **Crew Pass seizoen 1** (§8.5), ±2 maanden na de release, daarna elke 8 weken een nieuw seizoen.
-5. Vertalingen, wekelijkse uitdagingen, evenementen.
-
-**Wat realistisch is voor een beginner, eerlijk gezegd:** NPC-gedrag (bewakers die zien, zoeken en volgen) en multiplayer (gadgets die bij alle spelers tegelijk werken) zijn de twee moeilijkste delen. Daarom zit allebei al in fase 1, zodat je vroeg weet of het lukt. Kunst, geld en opslag zijn veel voorspelbaarder en komen later.
+**What the first minute does against the competition:** in 60 seconds the player sees what Entry Point and Notoriety don't have: no real gun but a Bubble Blaster, a gadget that takes down your own drone, and a door that only opens when someone else gives you the window.
 
 ---
 
-## 13. Risico's
+## 12. Build order for a beginner
 
-De vijf grootste redenen waarom dit op Roblox zou kunnen mislukken, van groot naar kleiner:
+**Starting point:** you work (almost) alone, about 10 hours a week, and Claude Code writes most of the code through the official Roblox connection. The times below assume that. If you work fewer hours, they stretch proportionally.
 
-| # | Risico | Waarom het echt is | Wat je eraan doet |
+**The golden rule:** first build **one chain point** that is fun in grey blocks. Only when three friends laugh about it together do you build a map around it. Almost every beginner project on Roblox dies because it has to be pretty and big first.
+
+*(A **graybox** is a playable version of a level in plain grey blocks, without nice models, to test the gameplay before you put time into art.)*
+
+### Phase 0 — Setup and learning (1–2 weeks)
+
+| | |
+|---|---|
+| **What's in it** | Installing tools (§15). Getting to know Roblox Studio: flying around, placing blocks, testing. Publishing one empty test project (private). Having Claude build something small through the Studio MCP: "make a door that opens when I press E". |
+| **Tools** | Roblox Studio, Roblox Studio MCP (through the official Claude Code plugin), Git + this repo, Rojo (through Rokit). |
+| **Done when** | (1) Claude Code can see your open place and change a script. (2) A script that Claude writes in the repo shows up in Studio through Rojo within 2 seconds. (3) You can test in Studio with 2 players at once (*Test → Server & Clients: Studio starts a server and up to 8 fake players on your own computer*). |
+
+### Phase 1 — Prototype: one chain point (4–6 weeks)
+
+| | |
+|---|---|
+| **What's in it** | One graybox room with chain point 2 from §10: a guard with a fixed route and the four states, two cameras, a cage. Four gadgets: Drone, Noisemaker, EMP, Crowbar. The window with the shrinking ring. The Chain Call and the "NOW" and "WAIT" pings. Caught = back to start. Simple buttons on mobile. |
+| **Deliberately not** | No saving, no money, no lobby, no art, no dog, no Karel. |
+| **Tools** | Studio + Studio MCP (Claude runs the tests, reads errors in the console, takes screenshots), Rojo + Git (all code in this repo). Optional: the Roblox Engineer Skill (§15). |
+| **Done when** | (1) You and 2 friends play the chain point 10 times in one evening. (2) For every failure they can say why they failed. (3) There is at least one laugh out loud about the EMP. (4) It works on your own phone. (5) 10 minutes of play give no red errors in the console. |
+
+> **Stop point:** if phase 1 isn't fun, change the chain (window, radius, sound), not the art. Build nothing from phase 2 until this is right.
+
+### Phase 2 — Playable test with friends (6–10 weeks)
+
+| | |
+|---|---|
+| **What's in it** | The whole first map in graybox with all three chain points. All six gadgets. The full ping system and the Chain Call. The alarm ladder. Caught → security room → rescue. Carrying loot, the Winch, the van as the exit. Payout screen (still without saving). The Depot with vans and TeleportService. Solo Kit (timers). The dog. First simple art: Roblox materials and a few custom props from Blender. |
+| **Tools** | Everything from phase 1, plus **Blender** and **Blender MCP** (Claude makes simple props: cheese wheel, crate, van). Import through Studio's built-in 3D Importer (or the Roblox Blender Plugin, §15). |
+| **Done when** | (1) 5 test sessions with 3–4 friends, at least 2 of whom play on a phone. (2) A run lasts 10–15 minutes on average. (3) At least 3 of the 4 testers want "one more go" afterwards. (4) New testers play without you explaining anything (you just watch and stay silent). (5) A solo round can be completed. |
+
+### Phase 3 — First release, in two steps (8–12 weeks + 1–2 months of review)
+
+**Phase 3a — Release for 16+ (the trial period)**
+
+| | |
+|---|---|
+| **What's in it** | Saving progress (*a **DataStore** is the Roblox database in which you store data per player, such as Cash and bought skins*). Cash, Rep and levels. The Gear Wall with the 3 extra gadgets and the stake ("Confiscated"). Cosmetics, game passes, developer products, the Van Shop and the free Glovebox (§8). The Practice Yard (§11). Rookie and Normal. Karel (simple). Matchmaking with joining in the first 3 minutes, and the vote to kick someone out. Quick Words set up (§5.4). Art pass: the stylised Polderdam (§10.5). Sound and music. The full questionnaire for the age rating. Icon and 3–5 thumbnails. Tracking points (analytics) for the first 5 minutes. First a **closed beta** (20–50 testers), then public for 16+. |
+| **Tools** | Everything from before, plus **RBXMonkey / Blender Animations** for custom animations (guard, dog, Karel, crouching). A library for safe saving (§15.2). |
+| **Done when** | (1) Two weeks of closed beta without a single case of lost progress or a lost purchase. (2) All purchases tested with test purchases in Studio (they don't cost real Robux). (3) At least 70% of new players get through the Practice Yard (readable from your tracking points). (4) The rating is Minimal or Mild. (5) The game runs smoothly on a cheap Android phone. |
+
+**Phase 3b — The Kids & Select review (ages 9–15)**
+
+| | |
+|---|---|
+| **What's in it** | ID verification and two-step verification on your account, the deposit or 2 months of Roblox Plus (§5.5). Recruiting 16+ players who actually play: your test group, friends, a Discord group, the DevForum. Following up moderation reports quickly. Meanwhile fixing bugs and shipping small improvements. |
+| **Tools** | Creator Hub: the **Audience Reach** dashboard (progress of the review) and the analytics (D1 retention, session length, where players drop off). |
+| **Done when** | The game is approved for Kids and Select, so the threshold of 250 unique plays by engaged players in 60 days has been reached. At the same time you follow the two numbers Roblox itself recommends first: **D1 retention** (*the share of new players who come back the next day*) and the **average session length**. Roblox shows benchmarks against similar games once you average 100 players a day. |
+
+### Phase 4 — Updates (every 4–6 weeks)
+
+Order based on what keeps players around the most:
+
+1. **Asset Recovery** (the Signal meter, §9.7) and **Pro** difficulty.
+2. **Cover Story** (cover, §9.7) and the job variants "Night Shift" and "Rush Job".
+3. **A new map** about every 2 months. Ideas that fit Polderdam: the bike shop (bikes as loot, the Winch across the canal), the flower auction (cold stores, conveyor belts), the stroopwafel factory (noisy machines cover your CRACK), the canal-house office (vertical: only once you have really mastered the drone).
+4. **Crew Pass season 1** (§8.5), ±2 months after the release, then a new season every 8 weeks.
+5. Translations, weekly challenges, events.
+
+**What is realistic for a beginner, honestly:** NPC behaviour (guards that see, search and follow) and multiplayer (gadgets that work for all players at once) are the two hardest parts. That is why both are already in phase 1, so you find out early whether it works. Art, money and saving are much more predictable and come later.
+
+---
+
+## 13. Risks
+
+The five biggest reasons why this could fail on Roblox, from big to smaller:
+
+| # | Risk | Why it is real | What you do about it |
 |---|---|---|---|
-| 1 | **Het project is te groot voor één beginner en raakt nooit af.** | Bewakers die zien en zoeken, gadgets die in multiplayer werken, opslag en verkoop: elk is een vak apart. Elke week dat je bouwt zonder te testen, groeit het risico. | De fasen in §12 met harde "klaar als"-regels. De moeilijkste delen (NPC's en multiplayer) eerst. Asset Recovery, Cover Story en extra maps bewust ná de release. Eén map, drie varianten. Werk elke week met Git en kleine stappen. |
-| 2 | **Je doelgroep (9–15) kan je spel niet spelen tot het de Kids & Select-keuring haalt.** | Sinds juni 2026 is een nieuw spel eerst alleen voor spelers van 16+ met een leeftijdscheck. Je hebt 250 unieke plays van betrokken spelers in 60 dagen nodig (§5.5). Een kinderspel dat 16-plussers niet aanspreekt, komt nooit bij de kinderen. | Een stijl en humor die voor alle leeftijden werken (§10.5). Release in twee stappen (fase 3a en 3b). Al in fase 2 een testgroep van 16+ opbouwen (Discord, vrienden, DevForum). Het dashboard Audience Reach wekelijks bekijken. De borg op tijd regelen. |
-| 3 | **Lege servers.** Een nieuw spel heeft in het begin weinig spelers tegelijk online; een busje van 4 vreemden vult dan niet. | Wie 2 minuten op medespelers wacht, vertrekt. Een spel dat alleen met 4 werkt, sterft in de eerste week. | Solo en duo zijn volwaardig (§3.7). Busjes vertrekken na 45 s met wie er is. Instappen kan nog in de eerste 3 minuten van een run. Toon "X crews playing now" pas vanaf 20 spelers. Lanceer met een vaste testgroep die op afgesproken avonden speelt. |
-| 4 | **Samenwerken zonder voice is te moeilijk; vreemden werken niet samen.** | De keten draait om timing. Kinderen onder 13 hebben geen voice, tekstchat werkt alleen na een leeftijdscheck en binnen leeftijdsgroepen (§5.4). Eén speler die niet meewerkt, verpest het voor drie anderen. | De Chain Call (§3.4) en icoon-pings. Automatisch markeren door Drone en Spy Cams. Quick Words. Rookie-vensters van 12 s. Timers die een ontbrekende teamgenoot vervangen. Een stemming om een speler uit de run te zetten. Een alarm dat trapsgewijs oploopt in plaats van meteen "game over". **Test dit al in fase 1** met vrienden die níét mogen praten. |
-| 5 | **Niemand vindt of onthoudt het spel**: het verdwijnt tussen ROB IT, Notoriety en tientallen kleine "X Heist"-spellen, of spelers haken af in de eerste minuut. | Roblox telt tegenwoordig de "first play bounce rate" (spelers die binnen 60 s of 3 minuten weer vertrekken) als negatief signaal. Een stealthgame begint van nature traag. Wie "heist" zoekt, vindt eerst spellen met jaren content. | De EMP-grap binnen 60 s (§11). Geen tekstschermen. Rookie zonder Karel en Asset Recovery. Meetpunten op elke stap van de eerste 5 minuten. Het verschil overal tonen: alleen grappige wapens, niemand kan het alleen, een vrolijke speelgoedstad in plaats van een grijze bank (§1, §10.5). Een titel met een eigen merknaam en "heist" als tag (§14). Meerdere thumbnails met Thumbnail Personalization. |
+| 1 | **The project is too big for one beginner and never gets finished.** | Guards that see and search, gadgets that work in multiplayer, saving and selling: each is a craft of its own. Every week you build without testing, the risk grows. | The phases in §12 with hard "done when" rules. The hardest parts (NPCs and multiplayer) first. Asset Recovery, Cover Story and extra maps deliberately after the release. One map, three variants. Work with Git and in small steps every week. |
+| 2 | **Your target audience (9–15) cannot play your game until it passes the Kids & Select review.** | Since June 2026 a new game is at first only for players aged 16+ with an age check. You need 250 unique plays by engaged players in 60 days (§5.5). A children's game that doesn't appeal to over-16s never reaches the children. | A style and humour that work for all ages (§10.5). Release in two steps (phase 3a and 3b). Build up a 16+ test group as early as phase 2 (Discord, friends, DevForum). Check the Audience Reach dashboard weekly. Arrange the deposit in time. |
+| 3 | **Empty servers.** A new game has few players online at once at the start; a van of 4 strangers won't fill up. | Anyone who waits 2 minutes for teammates leaves. A game that only works with 4 dies in the first week. | Solo and duo are fully fledged (§3.7). Vans leave after 45 s with whoever is there. Joining is still possible in the first 3 minutes of a run. Only show "X crews playing now" from 20 players. Launch with a fixed test group that plays on agreed evenings. |
+| 4 | **Cooperating without voice is too hard; strangers don't cooperate.** | The chain is all about timing. Children under 13 have no voice, text chat only works after an age check and within age groups (§5.4). One player who doesn't cooperate ruins it for three others. | The Chain Call (§3.4) and icon pings. Automatic marking by Drone and Spy Cams. Quick Words. Rookie windows of 12 s. Timers that replace a missing teammate. A vote to kick a player out of the run. An alarm that escalates step by step instead of an instant "game over". **Test this already in phase 1** with friends who are not allowed to talk. |
+| 5 | **Nobody finds or remembers the game**: it disappears among ROB IT, Notoriety and dozens of small "X Heist" games, or players drop off in the first minute. | Roblox nowadays counts the "first play bounce rate" (players who leave again within 60 s or 3 minutes) as a negative signal. A stealth game starts slowly by nature. Anyone searching for "heist" first finds games with years of content. | The EMP joke within 60 s (§11). No text screens. Rookie without Karel and Asset Recovery. Tracking points at every step of the first 5 minutes. Show the difference everywhere: only funny weapons, nobody can do it alone, a cheerful toy town instead of a grey bank (§1, §10.5). A title with its own brand name and "heist" as a tag (§14). Several thumbnails with Thumbnail Personalization. |
 
-**Twee kleinere risico's om in het oog te houden:**
-- **Verloren gegevens of aankopen.** Eén verhaal over "ik verloor mijn gekochte skin" kost je het vertrouwen van ouders. Gebruik een bewezen opslagbibliotheek, test met testaankopen, en bewaar Robux-aankopen apart van gewone voortgang (§8.11).
-- **Prestaties op goedkope telefoons.** Veel kinderen spelen op oudere toestellen. Houd modellen eenvoudig, maximaal 8 NPC's per map, en zet *StreamingEnabled* aan (*een Roblox-instelling die alleen het deel van de wereld laadt dat dicht bij de speler is*).
+**Two smaller risks to keep an eye on:**
+- **Lost data or purchases.** One story about "I lost the skin I bought" costs you the trust of parents. Use a proven saving library, test with test purchases, and store Robux purchases separately from normal progress (§8.11).
+- **Performance on cheap phones.** Many children play on older devices. Keep models simple, at most 8 NPCs per map, and turn on *StreamingEnabled* (*a Roblox setting that only loads the part of the world close to the player*).
 
 ---
 
-## 14. Titelopties
+## 14. Title options
 
-Alle tien opgezocht in de Roblox-zoekfunctie op 15/10/2026: **geen enkele is in gebruik door een bekend spel.** Let wel: Roblox verbergt inactieve spellen in de zoekresultaten, en er is geen merkonderzoek gedaan.
+All ten searched in the Roblox search on 15/10/2026: **none of them is used by a well-known game.** Note: Roblox hides inactive games in search results, and no trademark search has been done.
 
-| # | Titel | Waarom |
+| # | Title | Why |
 |---|---|---|
-| 1 | **Crowbar Crew** | Kort, alliteratie, blijft hangen. Zegt meteen "samen inbreken", met een gereedschap in plaats van een geweer. Geen botsingen gevonden. ⚠️ Mist het zoekwoord "heist", dus zet het in een tag (zie onder). |
-| 2 | **Gadget Heist** | Het best vindbaar ("heist") en het noemt meteen je verschil met de shooters: gadgets in plaats van geweren. |
-| 3 | **Heist Buddies** | Het warmst en jongst: "buddies" zegt co-op en vriendschap. Past bij een publiek van 9–15, maar is minder sterk voor de 16+-proefperiode. |
-| 4 | **Heist Van** | Het busje als icoon. Vindbaar en eenvoudig te tekenen in een icoon. |
-| 5 | **Van Crew** | Het kortst. Zegt "crew" en "busje". Minder vindbaar omdat het zoekwoord "heist" ontbreekt. |
-| 6 | **Quiet Job** | Heist-jargon voor een stille klus. Klinkt stoer bij oudere spelers, maar "job" doet ook aan werksimulators denken. |
-| 7 | **Sneaky Van** | Speels en grappig, goed voor jonge spelers. Er bestaat al een kleiner spel "Sneak In!", dus het onderscheidt zich minder. |
-| 8 | **Crew of Four** | Zegt precies wat het is (co-op voor vier). Weinig heist-sfeer, en je spel werkt ook met 1–3 spelers. |
-| 9 | **EMP Heist** | Zet je comedy-gadget centraal. Maar veel 9-jarigen weten niet wat een EMP is. |
-| 10 | **Canal Heist** | De Nederlandse setting in twee woorden, vindbaar via "heist". Werkt minder als je later maps buiten Polderdam maakt. |
+| 1 | **Crowbar Crew** | Short, alliteration, sticks. Immediately says "breaking in together", with a tool instead of a gun. No clashes found. ⚠️ Lacks the keyword "heist", so put it in a tag (see below). |
+| 2 | **Gadget Heist** | The easiest to find ("heist") and it immediately names your difference from the shooters: gadgets instead of guns. |
+| 3 | **Heist Buddies** | The warmest and youngest: "buddies" says co-op and friendship. Suits an audience of 9–15, but is weaker for the 16+ trial period. |
+| 4 | **Heist Van** | The van as an icon. Findable and easy to draw in an icon. |
+| 5 | **Van Crew** | The shortest. Says "crew" and "van". Less findable because the keyword "heist" is missing. |
+| 6 | **Quiet Job** | Heist jargon for a job done quietly. Sounds cool to older players, but "job" also makes people think of work simulators. |
+| 7 | **Sneaky Van** | Playful and funny, good for young players. A smaller game "Sneak In!" already exists, so it stands out less. |
+| 8 | **Crew of Four** | Says exactly what it is (co-op for four). Little heist feel, and your game also works with 1–3 players. |
+| 9 | **EMP Heist** | Puts your comedy gadget centre stage. But many 9-year-olds don't know what an EMP is. |
+| 10 | **Canal Heist** | The Dutch setting in two words, findable through "heist". Works less well if you later make maps outside Polderdam. |
 
-**Bewust afgeraden:** "Drone Heist" (bestaat al als klein spel), "Tiny Heist" (een bekend indiespel van Terry Cavanagh), "Clean Getaway" (een missie in GTA IV), "Blackout Crew" (een Britse muziekgroep), "Back Door Crew" (dubbelzinnig, en "backdoor" betekent ook kwaadaardige code), en titels met "Night Shift", "Lights Out" of "Chain", die verward worden met bestaande horror- of obbyspellen.
+**Deliberately advised against:** "Drone Heist" (already exists as a small game), "Tiny Heist" (a well-known indie game by Terry Cavanagh), "Clean Getaway" (a mission in GTA IV), "Blackout Crew" (a British music group), "Back Door Crew" (ambiguous, and "backdoor" also means malicious code), and titles with "Night Shift", "Lights Out" or "Chain", which get confused with existing horror or obby games.
 
-**Gekozen: Crowbar Crew** (15/10/2026). De andere opties blijven hier staan als reserve, bijvoorbeeld als Roblox de naam toch niet zou toelaten.
+**Chosen: Crowbar Crew** (15/10/2026). The other options stay here as a reserve, for example in case Roblox does not allow the name after all.
 
-**Hoe je de titel op Roblox zet:** Roblox-titels dragen vaak een korte tag. Bijvoorbeeld **"Crowbar Crew 🚐 [CO-OP HEIST]"**: zo staat je merknaam vooraan en het zoekwoord erachter. Gebruik hooguit 1–2 emoji. Verander de titel daarna zelden; Roblox raadt dat zelf aan.
+**How to put the title on Roblox:** Roblox titles often carry a short tag. For example **"Crowbar Crew 🚐 [CO-OP HEIST]"**: that puts your brand name first and the keyword after it. Use at most 1–2 emoji. Change the title rarely after that; Roblox itself recommends this.
 
 ---
 
-## 15. Opzetplan voor je tools
+## 15. Setup plan for your tools
 
-*(Een **plugin** is een uitbreiding voor Roblox Studio die extra knoppen of functies toevoegt; je haalt ze uit de **Creator Store**, de officiële Roblox-winkel voor modellen, plugins en geluiden, of van internet. **MCP** (Model Context Protocol) is een standaardmanier waarop een AI-assistent zoals Claude een ander programma kan bedienen, bijvoorbeeld Roblox Studio of Blender. **Luau** is de programmeertaal van Roblox.)*
+*(A **plugin** is an extension for Roblox Studio that adds extra buttons or features; you get them from the **Creator Store**, the official Roblox store for models, plugins and sounds, or from the internet. **MCP** (Model Context Protocol) is a standard way for an AI assistant like Claude to operate another program, for example Roblox Studio or Blender. **Luau** is Roblox's programming language.)*
 
-Ik heb elke tool op 15 oktober 2026 opgezocht (GitHub, Creator Store, Roblox-documentatie, DevForum). Twee vaststellingen vooraf:
+I looked up every tool on 15 October 2026 (GitHub, Creator Store, Roblox documentation, DevForum). Two findings up front:
 
-1. **Vijf van je elf tools doen hetzelfde**: een AI laten werken in Roblox Studio (Studio MCP, Claudio, Vibe Coder, Vibe Code City, MCPBridge). Intussen zit dat **ingebouwd in Roblox Studio** (de Studio MCP), en sinds 7 oktober 2026 heeft Roblox een **officiële Claude Code-plugin** die er rechtstreeks mee verbindt. De community-tools (Claudio, Vibe Coder, Vibe Code City, MCPBridge) heb je daardoor niet meer nodig. Enkele ervan zijn bovendien riskant.
-2. **"Blender Animations Plugin" en "RBXMonkey" zijn dezelfde tool.** De plugin heette eerst "Blender Animations (ultimate edition)" en heet nu "RBXMonkey - Blender Animations".
+1. **Five of your eleven tools do the same thing**: let an AI work in Roblox Studio (Studio MCP, Claudio, Vibe Coder, Vibe Code City, MCPBridge). That is now **built into Roblox Studio** (the Studio MCP), and since 7 October 2026 Roblox has an **official Claude Code plugin** that connects to it directly. That means you no longer need the community tools (Claudio, Vibe Coder, Vibe Code City, MCPBridge). Some of them are risky as well.
+2. **"Blender Animations Plugin" and "RBXMonkey" are the same tool.** The plugin was first called "Blender Animations (ultimate edition)" and is now called "RBXMonkey - Blender Animations".
 
 ### 15.1 Per tool
 
-| # | Tool | Wat hij precies doet | Waarvoor in dit spel | Fase | Overslaan? |
+| # | Tool | What exactly it does | What it is for in this game | Phase | Skip? |
 |---|---|---|---|---|---|
-| 1 | **Rojo** (v7.7.1, okt. 2026) | Synchroniseert een map met codebestanden op je computer met Roblox Studio, via een klein programma en een Studio-plugin. Zo staat je code in Git (en in deze repo). | Alle Luau-code staat als bestanden in `Roblox-Game`. Claude schrijft de bestanden, Rojo zet ze in Studio. | 0 | **Nee, houden.** ⚠️ Overlapt met *Script Sync* (zie hieronder): kies er één. |
-| 2 | **Roblox Studio MCP** (officieel, ingebouwd in Studio) | Laat Claude je geopende place lezen en aanpassen, Luau uitvoeren, testen starten, de console lezen, schermafbeeldingen nemen en spelerinvoer nabootsen (ruim 25 functies). Je verbindt met de officiële Claude Code-plugin "Roblox Studio". De oude losse GitHub-versie is sinds april 2026 stopgezet. | Claude test zelf (lopen, gadgets gebruiken), leest fouten en bouwt grayboxes. | 0 | **Nee, de belangrijkste tool.** |
-| 3 | **Claudio** (alyssagithub/claudio, sept. 2026) | Een chatpaneel in Studio dat Claude Code inpakt. Eén ontwikkelaar, 1 ster op GitHub. | — | — | **Ja, laten vallen.** Werkt volgens de eigen handleiding alleen volledig op Windows. Installeert elke 3 uur automatisch de nieuwste code zonder controle. Doet hetzelfde als tool 2. |
-| 4 | **Roblox Engineer Skill** | ⚠️ **Niet zeker welke je bedoelt.** Waarschijnlijkst: de skill `roblox-engineer` uit de repo `buiphucminhtam/forgewright` (49 sterren, geen licentie). Een *skill* is een tekstbestand met vakkennis dat Claude Code inlaadt. Deze is een onderdeel van een systeem van 52 skills en niet gemaakt om los te gebruiken. | Extra Roblox-kennis voor Claude (veiligheid, opslag, multiplayer). | 1 (optioneel) | **Voorlopig ja.** De officiële plugin laadt de ingebouwde Roblox-skills van Studio al. Wil je toch een extra skillpakket, stuur me dan de link waar je de naam vond. Als alternatief is `TabooHarmony/roblox-brain` (MIT-licentie, 29 skills, o.a. NPC-AI en netwerk) sterker. Lees een skill altijd eerst. |
-| 5 | **Vibe Coder** (rbxvibecoder.com) | Een AI-plugin in Studio met 5 gratis berichten per dag via de server van de maker, of PRO voor 2.499 Robux met je eigen API-sleutel. | — | — | **Ja, laten vallen.** Stuurt je scripts naar de server van de maker. Op 15/10/2026 lagen de site en de server plat ("application suspended"). Doet minder dan tool 2. |
-| 6 | **Vibe Code City** | Een plugin waarin je het antwoord van een AI plakt, en die de wijzigingen over meerdere scripts toepast. Begon als grappost op het DevForum; het gelinkte item is nu een betaalde, gesloten plugin (US$ 5,99, 0 stemmen) met een andere naam. | — | — | **Ja, laten vallen.** Overbodig nu Claude rechtstreeks scripts aanpast. Gesloten code, niet te controleren. |
-| 7 | **Blender MCP** (nu "MCP for Blender", ahujasid, 30.000+ sterren) | Laat Claude Blender bedienen: objecten maken, Python uitvoeren, gratis modellen en texturen zoeken (Poly Haven, Sketchfab), schermafbeeldingen nemen. | Eenvoudige props: kaaswielen, kratten, het busje, de gevel van de kaaswinkel. | 2 | **Kan.** Je kunt de graybox en een eerste versie ook bouwen met Roblox-blokken en modellen uit de Creator Store. Houden voor de kunstronde. Zet de telemetrie uit (anonieme gebruiksgegevens die standaard aan staan). |
-| 8 | **MCPBridge** (iamjrmh/MCPBridge, 4 sterren) | Nog een brug tussen een AI (gebouwd rond Ollama) en Studio, plus Blender. | — | — | **Ja, laten vallen.** Alles wat hij doet, doet tool 2 officieel. Niet-ondertekende installatiebestanden. Het standaardmodel draait in de cloud, dus je code verlaat je computer. |
-| 9 | **Roblox Blender Plugin** (officieel, v1.0.5) | Een Blender-add-on die modellen met één klik als "Package" naar je Roblox-account uploadt. Roblox onderhoudt hem alleen nog licht (alleen bugfixes). | Props van Blender naar Roblox. | 2 | **Kan.** Studio's ingebouwde **3D Importer** (File → Import 3D) doet hetzelfde met een .fbx- of .gltf-bestand. Probeer eerst de importer. |
-| 10 | **Blender Animations Plugin** | = tool 11. | — | — | Dubbel in je lijst. |
-| 11 | **RBXMonkey – Blender Animations** (Cautioned, gratis, 1.860 duimpjes omhoog) | Een Studio-plugin plus Blender-add-on: animaties maken in Blender en live heen en weer zetten met Studio. Geen AI-tool. | Eigen animaties: de bewaker die zoekt, de hond die de drone pakt, Karel die veegt, hurken met buit. | 3 | **Kan in het begin.** Fase 1–2 werken met de standaardanimaties en de Animation Editor van Roblox. Roblox kan sinds kort ook zelf .fbx-animaties importeren. Houden voor fase 3. |
+| 1 | **Rojo** (v7.7.1, Oct. 2026) | Syncs a folder of code files on your computer with Roblox Studio, through a small program and a Studio plugin. That way your code lives in Git (and in this repo). | All Luau code lives as files in `Roblox-Game`. Claude writes the files, Rojo puts them in Studio. | 0 | **No, keep it.** ⚠️ Overlaps with *Script Sync* (see below): pick one. |
+| 2 | **Roblox Studio MCP** (official, built into Studio) | Lets Claude read and change your open place, run Luau, start tests, read the console, take screenshots and simulate player input (more than 25 functions). You connect with the official Claude Code plugin "Roblox Studio". The old standalone GitHub version was discontinued in April 2026. | Claude tests on its own (walking, using gadgets), reads errors and builds grayboxes. | 0 | **No, the most important tool.** |
+| 3 | **Claudio** (alyssagithub/claudio, Sept. 2026) | A chat panel in Studio that wraps Claude Code. One developer, 1 star on GitHub. | — | — | **Yes, drop it.** According to its own manual it only fully works on Windows. Automatically installs the latest code every 3 hours without any check. Does the same as tool 2. |
+| 4 | **Roblox Engineer Skill** | ⚠️ **Not sure which one you mean.** Most likely: the skill `roblox-engineer` from the repo `buiphucminhtam/forgewright` (49 stars, no licence). A *skill* is a text file with expert knowledge that Claude Code loads. This one is part of a system of 52 skills and not made to be used on its own. | Extra Roblox knowledge for Claude (security, saving, multiplayer). | 1 (optional) | **Yes, for now.** The official plugin already loads Studio's built-in Roblox skills. If you still want an extra skill pack, send me the link where you found the name. As an alternative, `TabooHarmony/roblox-brain` (MIT licence, 29 skills, including NPC AI and networking) is stronger. Always read a skill first. |
+| 5 | **Vibe Coder** (rbxvibecoder.com) | An AI plugin in Studio with 5 free messages a day through the maker's server, or PRO for 2,499 Robux with your own API key. | — | — | **Yes, drop it.** Sends your scripts to the maker's server. On 15/10/2026 the site and the server were down ("application suspended"). Does less than tool 2. |
+| 6 | **Vibe Code City** | A plugin into which you paste an AI's answer, and which applies the changes across several scripts. Started as a joke post on the DevForum; the linked item is now a paid, closed plugin (US$5.99, 0 votes) with a different name. | — | — | **Yes, drop it.** Unnecessary now that Claude changes scripts directly. Closed code, impossible to check. |
+| 7 | **Blender MCP** (now "MCP for Blender", ahujasid, 30,000+ stars) | Lets Claude operate Blender: create objects, run Python, search free models and textures (Poly Haven, Sketchfab), take screenshots. | Simple props: cheese wheels, crates, the van, the cheese shop's facade. | 2 | **You could.** You can also build the graybox and a first version with Roblox blocks and models from the Creator Store. Keep it for the art pass. Turn off telemetry (anonymous usage data that is on by default). |
+| 8 | **MCPBridge** (iamjrmh/MCPBridge, 4 stars) | Yet another bridge between an AI (built around Ollama) and Studio, plus Blender. | — | — | **Yes, drop it.** Everything it does, tool 2 does officially. Unsigned installers. The default model runs in the cloud, so your code leaves your computer. |
+| 9 | **Roblox Blender Plugin** (official, v1.0.5) | A Blender add-on that uploads models to your Roblox account as a "Package" with one click. Roblox now only maintains it lightly (bug fixes only). | Props from Blender to Roblox. | 2 | **You could.** Studio's built-in **3D Importer** (File → Import 3D) does the same with an .fbx or .gltf file. Try the importer first. |
+| 10 | **Blender Animations Plugin** | = tool 11. | — | — | Listed twice in your list. |
+| 11 | **RBXMonkey – Blender Animations** (Cautioned, free, 1,860 thumbs up) | A Studio plugin plus a Blender add-on: make animations in Blender and send them back and forth live with Studio. Not an AI tool. | Custom animations: the guard searching, the dog grabbing the drone, Karel sweeping, crouching with loot. | 3 | **You could at the start.** Phases 1–2 work with Roblox's default animations and Animation Editor. Roblox recently became able to import .fbx animations itself as well. Keep it for phase 3. |
 
-**Wat je overhoudt:** Rojo, Studio MCP (met de officiële plugin), Blender MCP, RBXMonkey. De Roblox Blender Plugin is optioneel; de Roblox Engineer Skill is onzeker.
-**Laat vallen:** Claudio, Vibe Coder, Vibe Code City, MCPBridge. De Blender Animations Plugin valt samen met RBXMonkey.
+**What you keep:** Rojo, Studio MCP (with the official plugin), Blender MCP, RBXMonkey. The Roblox Blender Plugin is optional; the Roblox Engineer Skill is uncertain.
+**Drop:** Claudio, Vibe Coder, Vibe Code City, MCPBridge. The Blender Animations Plugin is the same as RBXMonkey.
 
-### 15.2 Wat ontbreekt in je lijst (en belangrijk is)
+### 15.2 What is missing from your list (and important)
 
-| Ontbreekt | Waarom je het nodig hebt | Fase |
+| Missing | Why you need it | Phase |
 |---|---|---|
-| **De officiële Claude Code-plugin "Roblox Studio"** (Roblox/roblox-studio-agent-plugin) | De officiële, eenvoudigste manier om Claude Code met de Studio MCP te verbinden. Zie stap 2 hieronder. | 0 |
-| **Rokit** | Het installatieprogramma voor Rojo (en Selene en StyLua). Aanbevolen door Rojo zelf; de oude alternatieven Aftman en Foreman worden niet meer aangeraden. | 0 |
-| **Git + GitHub** (heb je al) | Elke versie van je code bewaren. Als Claude iets kapotmaakt, ga je gewoon terug. | 0 |
-| **Een bibliotheek voor veilige opslag** (bijv. *ProfileStore*) ⚠️ | Voortgang en aankopen mogen nooit verloren gaan. Een losse DataStore goed gebruiken is lastig. Een bewezen bibliotheek voorkomt dat spelers die tegelijk in twee servers zitten hun gegevens overschrijven. Laat Claude de actuele aanbevolen bibliotheek opzoeken vóór fase 3. | 3 |
-| **Een goedkope Android-telefoon of tablet** om te testen | 83% van de Roblox-spelers speelt op mobiel. De Device Simulator in Studio toont het scherm, maar niet de snelheid of hoe je duim de knoppen raakt. | 1 |
-| **Selene, StyLua, VS Code + Luau Language Server** (optioneel) | Controleren en netjes opmaken van code, en de code zelf kunnen lezen met kleuren en uitleg. | 1–2 |
-| **Een plek voor testers** (een eigen Roblox-community of Discord-server) | Fase 2 en 3 vragen 5 tot 50 testers. | 2 |
-| **Een geluidsbron** | De Roblox Creator Store heeft gratis geluiden met licentie. Geluid is in een stealthgame half het spel (CRACK, BZZT, het tikken van de klok). | 2 |
+| **The official Claude Code plugin "Roblox Studio"** (Roblox/roblox-studio-agent-plugin) | The official, simplest way to connect Claude Code to the Studio MCP. See step 2 below. | 0 |
+| **Rokit** | The installer for Rojo (and Selene and StyLua). Recommended by Rojo itself; the old alternatives Aftman and Foreman are no longer recommended. | 0 |
+| **Git + GitHub** (you already have it) | Keeping every version of your code. If Claude breaks something, you simply go back. | 0 |
+| **A library for safe saving** (e.g. *ProfileStore*) ⚠️ | Progress and purchases must never be lost. Using a bare DataStore correctly is tricky. A proven library prevents players who are in two servers at once from overwriting their data. Have Claude look up the currently recommended library before phase 3. | 3 |
+| **A cheap Android phone or tablet** for testing | 83% of Roblox players play on mobile. The Device Simulator in Studio shows the screen, but not the speed or how your thumb hits the buttons. | 1 |
+| **Selene, StyLua, VS Code + Luau Language Server** (optional) | Checking and neatly formatting code, and being able to read the code yourself with colours and explanations. | 1–2 |
+| **A place for testers** (your own Roblox community or Discord server) | Phases 2 and 3 need 5 to 50 testers. | 2 |
+| **A sound source** | The Roblox Creator Store has free licensed sounds. In a stealth game, sound is half the game (CRACK, BZZT, the ticking of the clock). | 2 |
 
-**Script Sync, de ingebouwde rivaal van Rojo.** Roblox heeft sinds eind 2025 *Script Sync*: een functie in Studio die scripts en mappen met bestanden op je computer synchroniseert, zonder extra installatie. Roblox' eigen gids voor AI-assistenten ("coding harness") raadt Claude Code + Script Sync + Studio MCP + Git aan. Script Sync synchroniseert alleen scripts en mappen, en was op 15/10/2026 mogelijk nog in bèta ⚠️. **Advies:** gebruik Rojo, omdat je hem al gekozen had, hij al jaren volwassen is en het standaardgereedschap is waar Claude het meest over weet. Laat Rojo alleen de **code** beheren en houd de map (de gebouwen) in Studio. Gebruik nooit Rojo én Script Sync op dezelfde mappen.
+**Script Sync, Rojo's built-in rival.** Since late 2025 Roblox has had *Script Sync*: a feature in Studio that syncs scripts and folders with files on your computer, without any extra installation. Roblox's own guide for AI assistants ("coding harness") recommends Claude Code + Script Sync + Studio MCP + Git. Script Sync only syncs scripts and folders, and on 15/10/2026 may still have been in beta ⚠️. **Advice:** use Rojo, because you had already chosen it, it has been mature for years and it is the standard tool Claude knows the most about. Let Rojo manage only the **code** and keep the map (the buildings) in Studio. Never use Rojo and Script Sync on the same folders.
 
-**Eén belangrijke afspraak tussen Rojo en de Studio MCP:** Claude past code aan **in de bestanden** (die Rojo naar Studio zet), nooit rechtstreeks in Studio. Anders overschrijft Rojo die wijziging bij de volgende synchronisatie. De Studio MCP gebruikt Claude om te **testen, te kijken en blokken/modellen te plaatsen**.
+**One important agreement between Rojo and the Studio MCP:** Claude changes code **in the files** (which Rojo puts into Studio), never directly in Studio. Otherwise Rojo overwrites that change at the next sync. Claude uses the Studio MCP to **test, look and place blocks/models**.
 
-### 15.3 Installatievolgorde voor een beginner (macOS)
+### 15.3 Installation order for a beginner (macOS)
 
-Wat al op je Mac staat (gecontroleerd op 15/10/2026): **Roblox Studio** (met de ingebouwde MCP), **Git**, **Homebrew** (*een installatieprogramma voor de terminal*), **Claude Code**. Deze repo staat al lokaal in `~/Roblox-Game`.
+What is already on your Mac (checked on 15/10/2026): **Roblox Studio** (with the built-in MCP), **Git**, **Homebrew** (*an installer for the terminal*), **Claude Code**. This repo is already local in `~/Roblox-Game`.
 
-| Stap | Wat | Hangt af van | Hoe | Hoe je controleert of het werkt |
+| Step | What | Depends on | How | How to check that it works |
 |---|---|---|---|---|
-| 1 | **Roblox Studio** bijwerken en inloggen | — | Open Studio; het werkt zichzelf bij. Log in met je Roblox-account. Maak een nieuwe "Baseplate" en sla die op. | Studio opent en je ziet de baseplate. |
-| 2 | **Studio MCP aan + officiële Claude Code-plugin** | Stap 1 + Claude Code | In Claude Code: typ `/plugin`, zoek **Roblox Studio** en installeer. In Studio: **Assistant → ⋯ → Settings → MCP Servers** → zet **Enable Studio as MCP server** aan. Of vraag Claude: "Get me set up with Roblox Studio." | In Claude Code toont `/mcp` de regel `plugin:roblox-studio:macos` als verbonden (die voor Windows mag "failed" tonen). Vraag: "List my open Roblox Studio windows" → Claude noemt je place. |
-| 3 | **Rokit** | Terminal | Het officiële installatiescript van de Rokit-GitHubpagina (`rojo-rbx/rokit`). ⚠️ Het is een `curl … \| bash`-commando: dat voert een script van internet uit. Laat Claude het script eerst lezen en uitleggen. | `rokit --version` toont een versienummer. |
-| 4 | **Rojo** | Stap 3 + stap 1 | In `~/Roblox-Game`: `rokit init`, `rokit add rojo-rbx/rojo`, `rojo init`, `rojo plugin install`. Daarna `rojo serve` en in Studio in de Rojo-plugin op **Connect** klikken. | `rojo --version` toont 7.7.x. De Rojo-plugin in Studio toont "Connected". Een testregel in een script verschijnt binnen 2 s in Studio. |
-| 5 | *(optioneel)* **VS Code, Luau Language Server, Selene, StyLua** | Stap 3 | VS Code van code.visualstudio.com; extensie `JohnnyMorganz.luau-lsp`; `rokit add Kampfkarren/selene` en `rokit add JohnnyMorganz/StyLua`. | Een `.luau`-bestand in VS Code krijgt kleuren en suggesties. |
-| — | *Hier begint fase 1. De stappen hieronder pas in fase 2–3.* | | | |
-| 6 | **Blender** | — | Alleen van **blender.org** (of `brew install --cask blender`). Neem versie 5.x: de Roblox-plugins zijn daarop getest. | Blender opent; Help → About toont 5.x. |
-| 7 | **uv** (nodig voor Blender MCP) | Homebrew | `brew install uv` | `uv --version` toont een versienummer. |
-| 8 | **Blender MCP** | Stap 6 + 7 | `claude mcp add blender uvx mcp-for-blender` (uit de officiële handleiding). Dan `uvx mcp-for-blender install-addon`. In Blender: **Edit → Preferences → Add-ons** → "MCP for Blender" aanzetten. In de 3D-weergave **N** → tab "MCP for Blender" → **Start MCP Server**. Telemetrie uit: zet de omgevingsvariabele `DISABLE_TELEMETRY=true` (vraag Claude dat juist in te stellen). | `claude mcp list` toont "blender". Vraag Claude: "Wat staat er in mijn Blender-scène?" → het noemt de standaardkubus, camera en lamp. |
-| 9 | *(optioneel)* **Roblox Blender Plugin** | Stap 6 | De zip van de releasepagina van `Roblox/roblox-blender-plugin` (niet uitpakken). Blender → Preferences → Add-ons → **Install from Disk** → aanzetten → in het N-paneel "Install Dependencies", Blender herstarten, inloggen. | Na een upload staat het model in Studio onder **Toolbox → Inventory → My Packages**. Probeer eerst gewoon **File → Import 3D** in Studio. |
-| 10 | **RBXMonkey – Blender Animations** | Stap 6 + 1 | Blender-deel: de zip van de releasepagina van `Cautioned/Blender-Animations-Plugin` installeren en aanzetten. Studio-deel: de plugin via de link **in die GitHub-handleiding** (niet via zoeken, want er bestaan kopieën met gelijkaardige namen). Geef alleen netwerktoegang tot `localhost`. | In Blender: N → tab "RBXMonkey" → server starten. In Studio: tab "Blender Sync" → Connect → "Connected". Een testanimatie komt door. |
+| 1 | Update **Roblox Studio** and log in | — | Open Studio; it updates itself. Log in with your Roblox account. Create a new "Baseplate" and save it. | Studio opens and you see the baseplate. |
+| 2 | **Studio MCP on + official Claude Code plugin** | Step 1 + Claude Code | In Claude Code: type `/plugin`, search for **Roblox Studio** and install it. In Studio: **Assistant → ⋯ → Settings → MCP Servers** → turn on **Enable Studio as MCP server**. Or ask Claude: "Get me set up with Roblox Studio." | In Claude Code, `/mcp` shows the line `plugin:roblox-studio:macos` as connected (the one for Windows may show "failed"). Ask: "List my open Roblox Studio windows" → Claude names your place. |
+| 3 | **Rokit** | Terminal | The official install script from the Rokit GitHub page (`rojo-rbx/rokit`). ⚠️ It is a `curl … \| bash` command: that runs a script from the internet. Have Claude read and explain the script first. | `rokit --version` shows a version number. |
+| 4 | **Rojo** | Step 3 + step 1 | In `~/Roblox-Game`: `rokit init`, `rokit add rojo-rbx/rojo`, `rojo init`, `rojo plugin install`. Then `rojo serve`, and in Studio click **Connect** in the Rojo plugin. | `rojo --version` shows 7.7.x. The Rojo plugin in Studio shows "Connected". A test line in a script appears in Studio within 2 s. |
+| 5 | *(optional)* **VS Code, Luau Language Server, Selene, StyLua** | Step 3 | VS Code from code.visualstudio.com; extension `JohnnyMorganz.luau-lsp`; `rokit add Kampfkarren/selene` and `rokit add JohnnyMorganz/StyLua`. | A `.luau` file in VS Code gets colours and suggestions. |
+| — | *Phase 1 starts here. The steps below only in phases 2–3.* | | | |
+| 6 | **Blender** | — | Only from **blender.org** (or `brew install --cask blender`). Take version 5.x: the Roblox plugins have been tested on it. | Blender opens; Help → About shows 5.x. |
+| 7 | **uv** (needed for Blender MCP) | Homebrew | `brew install uv` | `uv --version` shows a version number. |
+| 8 | **Blender MCP** | Step 6 + 7 | `claude mcp add blender uvx mcp-for-blender` (from the official manual). Then `uvx mcp-for-blender install-addon`. In Blender: **Edit → Preferences → Add-ons** → enable "MCP for Blender". In the 3D view **N** → tab "MCP for Blender" → **Start MCP Server**. Telemetry off: set the environment variable `DISABLE_TELEMETRY=true` (ask Claude to set it up correctly). | `claude mcp list` shows "blender". Ask Claude: "What is in my Blender scene?" → it names the default cube, camera and light. |
+| 9 | *(optional)* **Roblox Blender Plugin** | Step 6 | The zip from the release page of `Roblox/roblox-blender-plugin` (do not unzip it). Blender → Preferences → Add-ons → **Install from Disk** → enable → in the N panel "Install Dependencies", restart Blender, log in. | After an upload the model is in Studio under **Toolbox → Inventory → My Packages**. First just try **File → Import 3D** in Studio. |
+| 10 | **RBXMonkey – Blender Animations** | Step 6 + 1 | Blender part: install and enable the zip from the release page of `Cautioned/Blender-Animations-Plugin`. Studio part: the plugin through the link **in that GitHub manual** (not by searching, because there are copies with similar names). Only grant network access to `localhost`. | In Blender: N → tab "RBXMonkey" → start the server. In Studio: tab "Blender Sync" → Connect → "Connected". A test animation comes through. |
 
-**Afhankelijkheden in één oogopslag:**
+**Dependencies at a glance:**
 ```
-Roblox Studio ──┬── Studio MCP ── officiële Claude Code-plugin ── Claude Code
-                ├── Rojo-plugin ── Rojo ── Rokit
-                └── RBXMonkey-plugin ──┐
-Blender ────────┬── RBXMonkey-add-on ──┘
+Roblox Studio ──┬── Studio MCP ── official Claude Code plugin ── Claude Code
+                ├── Rojo plugin ── Rojo ── Rokit
+                └── RBXMonkey plugin ──┐
+Blender ────────┬── RBXMonkey add-on ──┘
                 ├── Blender MCP ── uv ── Homebrew
-                └── Roblox Blender Plugin (optioneel)
+                └── Roblox Blender Plugin (optional)
 ```
 
-### 15.4 Hoe je controleert of een plugin betrouwbaar is
+### 15.4 How to check whether a plugin is trustworthy
 
-Plugins en gratis modellen kunnen schadelijke scripts bevatten (*een "backdoor" is verborgen code waarmee een vreemde je spel kan overnemen of spelers kan misleiden*). Roblox schrijft zelf dat backdoors "vaak in modellen zitten die er verder legitiem uitzien" en dat **populariteit geen garantie is**. Doe deze controle bij **elke** plugin, elk model en elke Blender-add-on.
+Plugins and free models can contain malicious scripts (*a "backdoor" is hidden code that lets a stranger take over your game or mislead players*). Roblox itself writes that backdoors "are often in models that otherwise look legitimate" and that **popularity is no guarantee**. Do this check for **every** plugin, every model and every Blender add-on.
 
-**Voor je installeert**
-1. **Haal hem via de officiële link**: de link in de GitHub-handleiding van de maker of in de Roblox-documentatie, niet via zoeken in de Creator Store. Kopieën met bijna dezelfde naam bestaan (let op een kleine L in plaats van een hoofdletter i).
-2. **Kijk naar de maker:** een account dat al jaren bestaat en andere bekende plugins heeft. Het blauwe vinkje (Verified Badge) betekent alleen dat de maker echt en bekend is, **niet** dat Roblox de plugin op veiligheid controleerde.
-3. **Kijk naar de cijfers op de Creator Store-pagina:** veel stemmen met een hoge verhouding duimpjes omhoog, recente updates, de reviews, en het **aantal scripts** (dat staat erbij). Een eenvoudig model met tientallen scripts is verdacht. Een gloednieuwe plugin met alleen 5 sterren ook.
-4. **Is de broncode openbaar?** Rojo, RBXMonkey en Blender MCP staan op GitHub met een licentie. Een gesloten plugin kun je niet controleren.
-5. **Vraag nooit om je wachtwoord of cookie.** Een plugin, site of script dat om je Roblox-wachtwoord, je **.ROBLOSECURITY-cookie** (*je inlogsleutel*) of "gratis Robux" vraagt, is altijd oplichting.
-6. **Geen `.rbxm`- of `.rbxmx`-bestanden van Discord of onbekende sites** in je Plugins-map zetten. Zulke **lokale plugins slaan de toestemmingscontrole van Studio over**.
-7. **Terminal-installaties** (`curl … | bash`): laat Claude het script eerst openen en uitleggen voor je het uitvoert.
+**Before you install**
+1. **Get it through the official link**: the link in the maker's GitHub manual or in the Roblox documentation, not by searching the Creator Store. Copies with almost the same name exist (watch for a lowercase L instead of a capital i).
+2. **Look at the maker:** an account that has existed for years and has other well-known plugins. The blue tick (Verified Badge) only means that the maker is real and well known, **not** that Roblox checked the plugin for safety.
+3. **Look at the numbers on the Creator Store page:** many votes with a high ratio of thumbs up, recent updates, the reviews, and the **number of scripts** (it is listed there). A simple model with dozens of scripts is suspicious. So is a brand-new plugin with only 5 stars.
+4. **Is the source code public?** Rojo, RBXMonkey and Blender MCP are on GitHub with a licence. You cannot check a closed plugin.
+5. **Never give out your password or cookie.** A plugin, site or script that asks for your Roblox password, your **.ROBLOSECURITY cookie** (*your login key*) or "free Robux" is always a scam.
+6. **No `.rbxm` or `.rbxmx` files from Discord or unknown sites** in your Plugins folder. Such **local plugins skip Studio's permission check**.
+7. **Terminal installs** (`curl … | bash`): have Claude open and explain the script before you run it.
 
-**Bij en na het installeren (Roblox Studio)**
-8. Studio vraagt toestemming als een plugin **met internet wil praten**, apart per domein (en per subdomein). Geef alleen wat logisch is: Rojo en RBXMonkey hebben alleen `localhost` nodig (je eigen computer). Vraagt een plugin een onbekend domein, weiger dan.
-9. Open **Plugins → Manage Plugins**: daar zie je per plugin welke domeinen hij mag gebruiken en of hij **scripts mag aanpassen** ("Script Injection"). Zet Script Injection uit voor elke plugin die het niet nodig heeft. Je kunt alles achteraf intrekken.
-10. **Gratis modellen uit de Toolbox:** klik met de rechtermuisknop → **Disable Scripts** voor je ze gebruikt, of verwijder de scripts erin.
-11. **Zoek in je hele place** (Ctrl+Shift+F of vraag Claude: "Doorzoek mijn place op verdachte scripts") naar wat Roblox zelf als gevaarlijk noemt: `require(` gevolgd door een getal (laadt verborgen code van internet), `loadstring`, `InsertService:LoadAsset`, `getfenv`, `setfenv`, onleesbare of versleutelde code, code die met heel veel spaties buiten beeld geduwd is, en onverklaarbaar grote scripts. Kijk ook waar `TeleportService`, `MarketplaceService` of `HttpService` opduiken in scripts die je niet zelf maakte. Scriptnamen als "Vaccine", "Fix" of "Anti-Lag" zijn een klassieke valkuil.
+**During and after installing (Roblox Studio)**
+8. Studio asks for permission when a plugin **wants to talk to the internet**, separately per domain (and per subdomain). Only grant what makes sense: Rojo and RBXMonkey only need `localhost` (your own computer). If a plugin asks for an unknown domain, refuse.
+9. Open **Plugins → Manage Plugins**: there you see per plugin which domains it may use and whether it **may change scripts** ("Script Injection"). Turn off Script Injection for every plugin that does not need it. You can revoke everything afterwards.
+10. **Free models from the Toolbox:** right-click → **Disable Scripts** before you use them, or delete the scripts in them.
+11. **Search your whole place** (Ctrl+Shift+F or ask Claude: "Search my place for suspicious scripts") for what Roblox itself calls dangerous: `require(` followed by a number (loads hidden code from the internet), `loadstring`, `InsertService:LoadAsset`, `getfenv`, `setfenv`, unreadable or encrypted code, code pushed out of view with lots of spaces, and inexplicably large scripts. Also look at where `TeleportService`, `MarketplaceService` or `HttpService` show up in scripts you did not make yourself. Script names like "Vaccine", "Fix" or "Anti-Lag" are a classic trap.
 
-**Blender-add-ons**
-12. Blender zegt het zelf: Python kan op je computer alles. Neem add-ons bij voorkeur van **extensions.blender.org** (daar keurt een moderator ze eerst) of van de officiële GitHub-pagina van de maker.
-13. Laat in Blender **Auto Run Python Scripts** uit (staat standaard uit) en **Allow Online Access** uit, tenzij een add-on het echt nodig heeft (Blender MCP).
-14. Laat Claude de `.py`-bestanden in de zip doorlezen op `exec`, `eval`, `base64`, `subprocess`, `os.system` en netwerkcode (`urllib`, `requests`, `socket`), en wantrouw meegeleverde `.pyc`-, `.so`- of `.dll`-bestanden. Scan de zip met een virusscanner.
+**Blender add-ons**
+12. Blender says so itself: Python can do anything on your computer. Preferably get add-ons from **extensions.blender.org** (a moderator reviews them there first) or from the maker's official GitHub page.
+13. In Blender, leave **Auto Run Python Scripts** off (it is off by default) and **Allow Online Access** off, unless an add-on really needs it (Blender MCP).
+14. Have Claude read through the `.py` files in the zip for `exec`, `eval`, `base64`, `subprocess`, `os.system` and network code (`urllib`, `requests`, `socket`), and be wary of bundled `.pyc`, `.so` or `.dll` files. Scan the zip with a virus scanner.
 
-**Altijd**
-15. **Werk met Git en sla je place regelmatig op** (File → Save, en publiceer een versie). Gaat er iets mis, dan ga je terug naar de vorige versie.
-
----
-
-## Vragen: stand van zaken
-
-1. **Karel** — beantwoord: de conciërge die opruimt en verklikt (§9.6).
-2. **De Kids & Select-keuring** — nog open: wil je voor fase 3b je identiteit laten verifiëren, tweestapsverificatie aanzetten en de terugbetaalbare borg van 1.000 Robux betalen (§5.5)? Je hoeft dat pas te beslissen als het spel af is. Zonder keuring blijft het spel voor 16+, en dan moet het ontwerp ouder worden (minder kartonnen humor, meer spanning).
-3. **Titel** — beantwoord: **Crowbar Crew** (§14).
+**Always**
+15. **Work with Git and save your place regularly** (File → Save, and publish a version). If something goes wrong, you go back to the previous version.
 
 ---
 
-## Bijlage: bronnen (geraadpleegd op 15/10/2026)
+## Questions: current status
 
-**Roblox-regels**
-- Leeftijdslabels en vragenlijst: <https://create.roblox.com/docs/production/promotion/content-maturity> · <https://en.help.roblox.com/hc/en-us/articles/8862768451604>
-- Kids & Select (keuring voor 5–15 jaar): <https://create.roblox.com/docs/production/publishing/kids-and-select> · DevForum-aankondigingen van 16/06/2026 en 19/08/2026 (drempel van 500 naar 250 plays)
-- Publiceren: <https://create.roblox.com/docs/production/publishing/publish-games-and-places>
-- Leeftijdscheck voor chat (07/01/2026): <https://about.roblox.com/newsroom/2026/01/roblox-age-checks-required-to-chat> · <https://devforum.roblox.com/t/age-check-requirement-to-chat-now-live-globally/4226101>
-- Ouderlijk toezicht en Quick Words voor alle leeftijden: <https://en.help.roblox.com/hc/en-us/articles/30428310121620>
-- Voicechat: <https://create.roblox.com/docs/chat/voice-chat>
-- Vaste berichten (presets): <https://create.roblox.com/docs/chat/preset-system-guidelines> · Quick Words: <https://create.roblox.com/docs/chat/quick-words>
-- Chatregels voor makers: <https://create.roblox.com/docs/chat/guidelines>
-- Community Standards: <https://about.roblox.com/community-standards> · Merken en auteursrecht: <https://create.roblox.com/docs/production/publishing/ip-guidelines>
+1. **Karel** — answered: the caretaker who tidies up and tells on you (§9.6).
+2. **The Kids & Select review** — still open: for phase 3b, do you want to have your identity verified, turn on two-step verification and pay the refundable deposit of 1,000 Robux (§5.5)? You only need to decide that once the game is finished. Without the review the game stays 16+, and then the design has to become older (less cardboard humour, more tension).
+3. **Title** — answered: **Crowbar Crew** (§14).
 
-**Verdienen**
-- Overzicht: <https://create.roblox.com/docs/get-started/monetization> · game passes, developer products, abonnementen, private servers: <https://create.roblox.com/docs/production/monetization/>
-- DevEx (US$ 0,0038 per Robux sinds 05/09/2025): <https://create.roblox.com/docs/production/monetization/developer-exchange>
-- Creator Rewards (vervangt Premium Payouts): <https://create.roblox.com/docs/creator-rewards> · Roblox Plus: <https://create.roblox.com/docs/production/monetization/roblox-plus>
-- Regionale prijzen: <https://create.roblox.com/docs/production/monetization/managed-pricing>
-- Willekeurige betaalde items: <https://create.roblox.com/docs/production/monetization/paid-random-items> · Blokkade in Nederland (2022): <https://www.gamedeveloper.com/game-platforms/-i-roblox-i-game-i-adopt-me-i-ends-netherlands-service-due-to-loot-boxes>
-- Beloonde advertenties en leeftijd: <https://create.roblox.com/docs/production/promotion/rewarded-video-ads> · <https://en.help.roblox.com/hc/en-us/articles/13722260778260>
+---
 
-**Markt en techniek**
-- Gebruikers per leeftijd (35% onder 13, 38% 13–17, 27% 18+; Q2 2026) en per toestel (83% mobiel, 14% desktop, 3% console; 2025): aandeelhoudersbrief Q2 2026 en jaarverslag 2025 van Roblox (SEC-documenten).
-- Ontdekking en aanbevelingen: <https://create.roblox.com/docs/discovery> · DevForum 15/06/2026 ("Recommended for You" en retentie op lange termijn)
+## Appendix: sources (consulted on 15/10/2026)
+
+**Roblox rules**
+- Age ratings and questionnaire: <https://create.roblox.com/docs/production/promotion/content-maturity> · <https://en.help.roblox.com/hc/en-us/articles/8862768451604>
+- Kids & Select (review for ages 5–15): <https://create.roblox.com/docs/production/publishing/kids-and-select> · DevForum announcements of 16/06/2026 and 19/08/2026 (threshold from 500 to 250 plays)
+- Publishing: <https://create.roblox.com/docs/production/publishing/publish-games-and-places>
+- Age check for chat (07/01/2026): <https://about.roblox.com/newsroom/2026/01/roblox-age-checks-required-to-chat> · <https://devforum.roblox.com/t/age-check-requirement-to-chat-now-live-globally/4226101>
+- Parental controls and Quick Words for all ages: <https://en.help.roblox.com/hc/en-us/articles/30428310121620>
+- Voice chat: <https://create.roblox.com/docs/chat/voice-chat>
+- Fixed messages (presets): <https://create.roblox.com/docs/chat/preset-system-guidelines> · Quick Words: <https://create.roblox.com/docs/chat/quick-words>
+- Chat rules for creators: <https://create.roblox.com/docs/chat/guidelines>
+- Community Standards: <https://about.roblox.com/community-standards> · Trademarks and copyright: <https://create.roblox.com/docs/production/publishing/ip-guidelines>
+
+**Earning**
+- Overview: <https://create.roblox.com/docs/get-started/monetization> · game passes, developer products, subscriptions, private servers: <https://create.roblox.com/docs/production/monetization/>
+- DevEx (US$0.0038 per Robux since 05/09/2025): <https://create.roblox.com/docs/production/monetization/developer-exchange>
+- Creator Rewards (replaces Premium Payouts): <https://create.roblox.com/docs/creator-rewards> · Roblox Plus: <https://create.roblox.com/docs/production/monetization/roblox-plus>
+- Regional pricing: <https://create.roblox.com/docs/production/monetization/managed-pricing>
+- Paid random items: <https://create.roblox.com/docs/production/monetization/paid-random-items> · Ban in the Netherlands (2022): <https://www.gamedeveloper.com/game-platforms/-i-roblox-i-game-i-adopt-me-i-ends-netherlands-service-due-to-loot-boxes>
+- Rewarded ads and age: <https://create.roblox.com/docs/production/promotion/rewarded-video-ads> · <https://en.help.roblox.com/hc/en-us/articles/13722260778260>
+
+**Market and technology**
+- Users by age (35% under 13, 38% 13–17, 27% 18+; Q2 2026) and by device (83% mobile, 14% desktop, 3% console; 2025): Roblox's Q2 2026 shareholder letter and 2025 annual report (SEC filings).
+- Discovery and recommendations: <https://create.roblox.com/docs/discovery> · DevForum 15/06/2026 ("Recommended for You" and long-term retention)
 - Onboarding: <https://create.roblox.com/docs/production/game-design/onboarding>
-- Iconen en thumbnails: <https://create.roblox.com/docs/production/promotion/game-icons> · <https://create.roblox.com/docs/production/publishing/thumbnails>
-- TeleportService: <https://create.roblox.com/docs/projects/teleport> · Matchmaking: <https://create.roblox.com/docs/matchmaking> · Testen in Studio: <https://create.roblox.com/docs/studio/testing-modes>
-- Concurrenten: de Roblox-spelpagina's (API) van Entry Point, Notoriety en ROB IT, en Rolimons voor pieken en speelduur.
+- Icons and thumbnails: <https://create.roblox.com/docs/production/promotion/game-icons> · <https://create.roblox.com/docs/production/publishing/thumbnails>
+- TeleportService: <https://create.roblox.com/docs/projects/teleport> · Matchmaking: <https://create.roblox.com/docs/matchmaking> · Testing in Studio: <https://create.roblox.com/docs/studio/testing-modes>
+- Competitors: the Roblox game pages (API) of Entry Point, Notoriety and ROB IT, and Rolimons for peaks and play time.
 
 **Tools**
-- Studio MCP: <https://create.roblox.com/docs/studio/mcp> · Officiële Claude Code-plugin: <https://github.com/Roblox/roblox-studio-agent-plugin> · Gids voor AI-assistenten: <https://create.roblox.com/docs/ai/coding-harness>
+- Studio MCP: <https://create.roblox.com/docs/studio/mcp> · Official Claude Code plugin: <https://github.com/Roblox/roblox-studio-agent-plugin> · Guide for AI assistants: <https://create.roblox.com/docs/ai/coding-harness>
 - Rojo: <https://github.com/rojo-rbx/rojo> · <https://rojo.space/docs/v7/> · Rokit: <https://github.com/rojo-rbx/rokit> · Script Sync: <https://create.roblox.com/docs/scripting/sync>
 - Blender MCP: <https://github.com/ahujasid/mcp-for-blender> · Roblox Blender Plugin: <https://github.com/Roblox/roblox-blender-plugin> · 3D Importer: <https://create.roblox.com/docs/art/modeling/3d-importer>
 - RBXMonkey / Blender Animations: <https://github.com/Cautioned/Blender-Animations-Plugin>
-- Niet aangeraden: Claudio <https://github.com/alyssagithub/claudio> · Vibe Coder <https://rbxvibecoder.com> · Vibe Code City (DevForum, 12/04/2026) · MCPBridge <https://github.com/iamjrmh/MCPBridge> · Roblox Engineer Skill (waarschijnlijk) <https://github.com/buiphucminhtam/forgewright/tree/main/skills/roblox-engineer>
-- Plugin-veiligheid: <https://create.roblox.com/docs/production/creator-store> · <https://create.roblox.com/docs/scripting/security/third-party-vulnerabilities> · Blender: <https://docs.blender.org/manual/en/latest/advanced/scripting/security.html>
+- Not recommended: Claudio <https://github.com/alyssagithub/claudio> · Vibe Coder <https://rbxvibecoder.com> · Vibe Code City (DevForum, 12/04/2026) · MCPBridge <https://github.com/iamjrmh/MCPBridge> · Roblox Engineer Skill (probably) <https://github.com/buiphucminhtam/forgewright/tree/main/skills/roblox-engineer>
+- Plugin safety: <https://create.roblox.com/docs/production/creator-store> · <https://create.roblox.com/docs/scripting/security/third-party-vulnerabilities> · Blender: <https://docs.blender.org/manual/en/latest/advanced/scripting/security.html>

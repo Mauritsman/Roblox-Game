@@ -1,18 +1,18 @@
 --!strict
--- Lichtsfeer per heist: tijdstip, kleuren van het licht, nevel, kleurcorrectie, gloed (bloom) en lucht.
--- Elke heist geeft zijn eigen instellingen mee (veld `Atmosphere` in de definitie); wat hij niet invult,
--- komt uit BlueNight.
+-- Lighting mood per heist: time of day, light colours, fog, colour correction, glow (bloom) and sky.
+-- Each heist passes its own settings (field `Atmosphere` in the definition); whatever it leaves out
+-- comes from BlueNight.
 --
--- BlueNight = de "blauwe nacht" van Polderdam (§10.1). Donker genoeg voor sfeer, licht genoeg dat kinderen
--- op een gsm nog zien waar ze lopen. Warme lampen tegen koel maanlicht.
+-- BlueNight = the "blue night" of Polderdam (§10.1). Dark enough for mood, bright enough that kids
+-- on a phone can still see where they are walking. Warm lamps against cool moonlight.
 
 local Lighting = game:GetService("Lighting")
 
 local Atmosphere = {}
 
--- Alle velden zijn optioneel. Namen met Haze/Grade/Bloom horen bij de effecten in Lighting.
+-- All fields are optional. Names with Haze/Grade/Bloom belong to the effects in Lighting.
 export type Settings = {
-	ClockTime: number?, -- tijdstip, 0..24 (0.5 = half één 's nachts)
+	ClockTime: number?, -- time of day, 0..24 (0.5 = half past midnight)
 	GeographicLatitude: number?,
 	Brightness: number?,
 	Ambient: Color3?,
@@ -41,14 +41,14 @@ export type Settings = {
 
 local BLUE_NIGHT = {
 	ClockTime = 0.5,
-	GeographicLatitude = 52, -- Nederland
+	GeographicLatitude = 52, -- the Netherlands
 	Brightness = 1.6,
 	Ambient = Color3.fromRGB(34, 38, 58),
 	OutdoorAmbient = Color3.fromRGB(70, 82, 120),
 	ColorShiftTop = Color3.fromRGB(120, 140, 200),
 	ColorShiftBottom = Color3.fromRGB(20, 24, 40),
 	EnvironmentDiffuseScale = 0.45,
-	EnvironmentSpecularScale = 0.7, -- natte kasseien glanzen een beetje
+	EnvironmentSpecularScale = 0.7, -- wet cobblestones shine a little
 	ExposureCompensation = 0.25,
 	HazeDensity = 0.32,
 	HazeOffset = 0.15,
@@ -83,7 +83,7 @@ local function ensure(className: string, name: string): Instance
 	return inst
 end
 
--- Zet de sfeer van een heist. Zonder instellingen: BlueNight.
+-- Applies a heist's mood. Without settings: BlueNight.
 function Atmosphere.apply(settings: Settings?)
 	local s: Settings = settings or {}
 	local d = BLUE_NIGHT
@@ -100,7 +100,7 @@ function Atmosphere.apply(settings: Settings?)
 	Lighting.ExposureCompensation = s.ExposureCompensation or d.ExposureCompensation
 	Lighting.GlobalShadows = true
 
-	-- De namen van de effecten blijven dezelfde, zodat een volgende heist ze hergebruikt i.p.v. verdubbelt.
+	-- The effect names stay the same, so the next heist reuses them instead of duplicating them.
 	local atmosphere = ensure("Atmosphere", "NightHaze") :: Atmosphere
 	atmosphere.Density = s.HazeDensity or d.HazeDensity
 	atmosphere.Offset = s.HazeOffset or d.HazeOffset

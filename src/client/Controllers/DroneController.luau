@@ -1,7 +1,7 @@
 --!strict
--- De drone besturen (§4.1). De speler is netwerkeigenaar van de drone, dus vliegen voelt direct.
--- De camera volgt de drone; WASD/joystick vliegt in de kijkrichting, spatie/Ctrl of ▲/▼ voor hoogte.
--- Bewakers en camera's die de drone 0,5 s ziet, worden automatisch gemarkeerd voor de crew.
+-- Flying the drone (§4.1). The player is the drone's network owner, so flying feels immediate.
+-- The camera follows the drone; WASD/joystick flies in the view direction, space/Ctrl or ▲/▼ for height.
+-- Guards and cameras the drone sees for 0.5 s are marked automatically for the crew.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -134,7 +134,7 @@ local function flyStep(dt: number)
 	local move = Vector3.zero
 	local c = getControls()
 	if c then
-		move = c:GetMoveVector() -- x = links/rechts, z = vooruit/achteruit (camera-relatief)
+		move = c:GetMoveVector() -- x = left/right, z = forward/back (camera-relative)
 	end
 	local camCF = camera.CFrame
 	local forward = Vector3.new(camCF.LookVector.X, 0, camCF.LookVector.Z)
@@ -150,7 +150,7 @@ local function flyStep(dt: number)
 	end
 	local desired = (forward * -move.Z + right * move.X) * D.Speed + Vector3.yAxis * vertical * D.Speed * 0.6
 
-	-- De LAN-kabel: niet verder dan het bereik van je lichaam (de server controleert dit ook).
+	-- The LAN cable: no further than the range from your body (the server checks this too).
 	local root = characterRoot()
 	if root then
 		local offset = drone.Position - root.Position
@@ -185,7 +185,7 @@ end
 function DroneController:Start()
 	Net.on("DroneStarted", function(drone: BasePart?)
 		if not drone then
-			-- Kan gebeuren met StreamingEnabled: land meteen, anders staat de speler vast.
+			-- Can happen with StreamingEnabled: land at once, otherwise the player is stuck.
 			Net.request("Drone", "recall")
 			return
 		end
@@ -205,7 +205,7 @@ function DroneController:Start()
 			Net.request("Drone", "recall")
 		end
 	end)
-	-- In dronemodus is klikken/R2/SPOT = markeren wat in het midden van het beeld staat.
+	-- In drone mode, click/R2/SPOT = mark what is in the centre of the view.
 	Actions.on("MouseAim", function(phase)
 		if phase == "Begin" and ClientState.drone then
 			spotFromDrone()

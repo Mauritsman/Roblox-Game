@@ -1,5 +1,5 @@
--- Uitvoeren via de Studio MCP: execute_luau, datamodel "Edit", na `python3 tools/studio_sync.py`.
--- Haalt build/studio_payload.json op van 127.0.0.1:34999 en zet alle scripts in de place.
+-- Run via the Studio MCP: execute_luau, datamodel "Edit", after `python3 tools/studio_sync.py`.
+-- Fetches build/studio_payload.json from 127.0.0.1:34999 and puts all scripts into the place.
 local HttpService = game:GetService("HttpService")
 local wasEnabled = HttpService.HttpEnabled
 HttpService.HttpEnabled = true
@@ -8,7 +8,7 @@ local ok, body = pcall(function()
 end)
 HttpService.HttpEnabled = wasEnabled
 if not ok then
-	return "HTTP faalde: " .. tostring(body)
+	return "HTTP failed: " .. tostring(body)
 end
 local items = HttpService:JSONDecode(body)
 
@@ -57,4 +57,4 @@ for _, rootPath in { { "ReplicatedStorage", "Shared" }, { "ServerScriptService",
 		end
 	end
 end
-return `Sync: {#items} items, {updated} bijgewerkt, {removed} verwijderd; HttpEnabled={tostring(HttpService.HttpEnabled)}`
+return `Sync: {#items} items, {updated} updated, {removed} removed; HttpEnabled={tostring(HttpService.HttpEnabled)}`

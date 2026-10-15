@@ -1,7 +1,7 @@
 --!nocheck
--- Mini-testrunner voor pure logica (Lune). Gebruik: `lune run tests/run` (of via tools/check.sh).
--- Zoekt alle bestanden tests/**/*.spec.luau. Een spec geeft een functie terug die `t` krijgt:
---   return function(t) t.test("naam", function() t.eq(1 + 1, 2) end) end
+-- Mini test runner for pure logic (Lune). Usage: `lune run tests/run` (or via tools/check.sh).
+-- Finds all files tests/**/*.spec.luau. A spec returns a function that receives `t`:
+--   return function(t) t.test("name", function() t.eq(1 + 1, 2) end) end
 local fs = require("@lune/fs")
 local process = require("@lune/process")
 
@@ -24,7 +24,7 @@ local currentFile = ""
 function t.eq(actual, expected, msg)
 	if actual ~= expected then
 		error(
-			string.format("%sverwacht %s, kreeg %s", msg and (msg .. ": ") or "", fmt(expected), fmt(actual)),
+			string.format("%sexpected %s, got %s", msg and (msg .. ": ") or "", fmt(expected), fmt(actual)),
 			2
 		)
 	end
@@ -33,7 +33,7 @@ function t.near(actual, expected, eps, msg)
 	if math.abs(actual - expected) > (eps or 1e-6) then
 		error(
 			string.format(
-				"%sverwacht ~%s, kreeg %s",
+				"%sexpected ~%s, got %s",
 				msg and (msg .. ": ") or "",
 				tostring(expected),
 				tostring(actual)
@@ -44,7 +44,7 @@ function t.near(actual, expected, eps, msg)
 end
 function t.ok(cond, msg)
 	if not cond then
-		error(msg or "voorwaarde niet waar", 2)
+		error(msg or "condition not true", 2)
 	end
 end
 function t.test(name, fn)
@@ -64,14 +64,14 @@ local function walk(dir)
 			walk(path)
 		elseif string.sub(name, -10) == ".spec.luau" then
 			currentFile = path
-			local spec = require("./" .. string.sub(path, 7, -6)) -- pad relatief aan tests/
+			local spec = require("./" .. string.sub(path, 7, -6)) -- path relative to tests/
 			spec(t)
 		end
 	end
 end
 
 walk("tests")
-print(string.format("Tests: %d geslaagd, %d mislukt", passed, failed))
+print(string.format("Tests: %d passed, %d failed", passed, failed))
 for _, f in failures do
 	print("  ✗ " .. f)
 end

@@ -1,6 +1,6 @@
 --!strict
--- De vier gadgets van fase 1 (§4): Drone, Noisemaker, EMP, Crowbar.
--- De client vraagt alleen ("ik wil de EMP naar punt X gooien"); de server controleert en voert uit.
+-- The four gadgets of phase 1 (§4): Drone, Noisemaker, EMP, Crowbar.
+-- The client only asks ("I want to throw the EMP at point X"); the server checks and carries it out.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -55,7 +55,7 @@ local function positionOf(inst: Instance): Vector3?
 end
 
 --------------------------------------------------------------------------------
--- Elektronica uitzetten (EMP)
+-- Switching off electronics (EMP)
 --------------------------------------------------------------------------------
 
 local function setLampVisual(lamp: BasePart, disabled: boolean)
@@ -63,7 +63,7 @@ local function setLampVisual(lamp: BasePart, disabled: boolean)
 	if light then
 		light.Enabled = not disabled
 	end
-	-- De oorspronkelijke kleur bewaren: niet elke lamp is even warm (lantaarns, slingerlampjes, monitoren).
+	-- Keep the original colour: not every lamp is equally warm (lanterns, string lights, monitors).
 	if lamp:GetAttribute("OnColor") == nil then
 		lamp:SetAttribute("OnColor", lamp.Color)
 	end
@@ -112,7 +112,7 @@ function GadgetService:DisableElectronic(inst: Instance, seconds: number)
 end
 
 --------------------------------------------------------------------------------
--- Werpen (Noisemaker en EMP)
+-- Throwing (Noisemaker and EMP)
 --------------------------------------------------------------------------------
 
 local function flyProjectile(from: Vector3, to: Vector3, color: Color3, onLand: (Vector3) -> ())
@@ -207,7 +207,7 @@ local function onNoisemakerLanded(player: Player, position: Vector3)
 	local seconds = Config.windowSeconds(crewSize())
 	spawnNoisemaker(position, cfg.RingSeconds)
 	if repeated then
-		-- §4.3: zelfde truc twee keer = geen afleiding, wel achterdocht en alarmpunten.
+		-- §4.3: the same trick twice = no distraction, but suspicion and alarm points.
 		local noticed = GuardService:HearNoise(position, cfg.HearRadius, Config.Guard.SearchSeconds, "repeat")
 		if noticed > 0 then
 			AlarmService:Add("NoisemakerRepeat")
@@ -231,7 +231,7 @@ local function onEmpLanded(player: Player, position: Vector3)
 	local hitDrones: { string } = {}
 	for _, inst in CollectionService:GetTagged(Tags.Electronic) do
 		local instPosition = positionOf(inst)
-		-- Horizontale afstand (zoals de cirkel op de grond), tot 16 studs hoog: camera's hangen hoog.
+		-- Horizontal distance (like the circle on the ground), up to 16 studs high: cameras hang high.
 		local delta = if instPosition then instPosition - position else nil
 		if delta and Vector3.new(delta.X, 0, delta.Z).Magnitude <= cfg.Radius and math.abs(delta.Y) <= 16 then
 			GadgetService:DisableElectronic(inst, seconds)
@@ -246,7 +246,7 @@ local function onEmpLanded(player: Player, position: Vector3)
 			end
 		end
 	end
-	-- "BZZT" is hoorbaar: een bewaker vlakbij wordt even achterdochtig.
+	-- "BZZT" is audible: a guard nearby becomes briefly suspicious.
 	GuardService:HearNoise(position, cfg.BzztRadius, 4, "bzzt")
 	Net.broadcast("EMP", position, cfg.Radius, hitCameras, hitLamps, hitDrones)
 	if hitCameras > 0 then
@@ -258,7 +258,7 @@ local function onEmpLanded(player: Player, position: Vector3)
 end
 
 --------------------------------------------------------------------------------
--- Bubble Blaster (grappig wapen, §4.8)
+-- Bubble Blaster (funny weapon, §4.8)
 --------------------------------------------------------------------------------
 
 local function bubbleTeammate(victim: Player, shooter: Player, seconds: number)
@@ -318,7 +318,7 @@ local function shootBubble(player: Player, from: Vector3, target: Vector3)
 	if direction.Magnitude > cfg.ThrowRange then
 		direction = direction.Unit * cfg.ThrowRange
 	end
-	-- Waar botst de bel tegen? (muren stoppen hem)
+	-- What does the bubble hit? (walls stop it)
 	local params = RaycastParams.new()
 	params.FilterType = Enum.RaycastFilterType.Exclude
 	local shooterIgnore: { Instance } = {}
@@ -350,7 +350,7 @@ local function shootBubble(player: Player, from: Vector3, target: Vector3)
 	tween:Play()
 	tween.Completed:Connect(function()
 		ball:Destroy()
-		-- Wie staat er bij aankomst dichtbij? Een bewaker, of (oeps) een teamgenoot.
+		-- Who is close by when it arrives? A guard, or (oops) a teammate.
 		local overlap = OverlapParams.new()
 		overlap.FilterType = Enum.RaycastFilterType.Exclude
 		overlap.FilterDescendantsInstances = shooterIgnore
@@ -475,7 +475,7 @@ local function launchDrone(player: Player)
 	part.Material = Enum.Material.Metal
 	part.CFrame = root.CFrame * CFrame.new(0, 4, -2)
 	part.CustomPhysicalProperties = PhysicalProperties.new(0.3, 0.3, 0.2)
-	part.CollisionGroup = "Drone" -- botst niet met spelers en bewakers
+	part.CollisionGroup = "Drone" -- does not collide with players and guards
 	local attachment = Instance.new("Attachment")
 	attachment.Name = "Center"
 	attachment.Parent = part
@@ -483,7 +483,7 @@ local function launchDrone(player: Player)
 	velocity.Attachment0 = attachment
 	velocity.VelocityConstraintMode = Enum.VelocityConstraintMode.Vector
 	velocity.RelativeTo = Enum.ActuatorRelativeTo.World
-	velocity.MaxForce = 800 -- genoeg om te vliegen, te weinig om iemand weg te duwen
+	velocity.MaxForce = 800 -- enough to fly, too little to push anyone away
 	velocity.VectorVelocity = Vector3.zero
 	velocity.Parent = part
 	local orientation = Instance.new("AlignOrientation")
@@ -505,7 +505,7 @@ local function launchDrone(player: Player)
 	CollectionService:AddTag(part, Tags.Drone)
 	CollectionService:AddTag(part, Tags.Electronic)
 	pcall(function()
-		part:SetNetworkOwner(player) -- de speler stuurt de drone zelf: geen vertraging
+		part:SetNetworkOwner(player) -- the player steers the drone directly: no lag
 	end)
 
 	drones[player] = { part = part, velocity = velocity, orientation = orientation, owner = player }
@@ -540,7 +540,7 @@ local function updateDrones(dt: number)
 			level = math.min(cfg.BatterySeconds, level + dt * cfg.BatterySeconds / cfg.RechargeSeconds)
 		end
 		battery[player] = level
-		-- Alleen per 5% doorsturen, anders herbouwt de HUD elke frame.
+		-- Only send it in 5% steps, otherwise the HUD rebuilds every frame.
 		local rounded = math.floor(level / cfg.BatterySeconds * 20) / 20
 		if player:GetAttribute("DroneBattery") ~= rounded then
 			player:SetAttribute("DroneBattery", rounded)
@@ -603,7 +603,7 @@ local function hookPryable(inst: Instance)
 	end)
 end
 
--- De Crowbar gebruiken op een Pryable-object (knop, of DevService in Studio).
+-- Use the Crowbar on a Pryable object (button, or DevService in Studio).
 function GadgetService:Pry(player: Player, target: BasePart)
 	local prompt = target:FindFirstChild("PryPrompt")
 	if not prompt or not prompt:IsA("ProximityPrompt") or not prompt.Enabled then
@@ -613,8 +613,8 @@ function GadgetService:Pry(player: Player, target: BasePart)
 		Net.send(player, "Toast", "Needs the CROWBAR")
 		return
 	end
-	-- Niet meteen vernietigen: dan blijft de prompt-weergave bij de speler hangen
-	-- en verschijnen er geen andere knoppen meer. Eerst uitzetten, later opruimen.
+	-- Do not destroy it straight away: the prompt display would get stuck for the player
+	-- and no other buttons would appear any more. Disable it first, clean up later.
 	prompt.Enabled = false
 	task.delay(1, function()
 		prompt:Destroy()

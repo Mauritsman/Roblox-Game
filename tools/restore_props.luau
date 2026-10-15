@@ -1,6 +1,6 @@
--- Uitvoeren via de Studio MCP: execute_luau, datamodel "Edit".
--- Bouwt ServerStorage.Props opnieuw op uit de mesh- en textuur-ID's in tools/props.json
--- (bijvoorbeeld als de place ooit zonder props werd opgeslagen). Bestaande props blijven staan.
+-- Run via the Studio MCP: execute_luau, datamodel "Edit".
+-- Rebuilds ServerStorage.Props from the mesh and texture IDs in tools/props.json
+-- (for example if the place was ever saved without props). Existing props are left in place.
 local AssetService = game:GetService("AssetService")
 local ServerStorage = game:GetService("ServerStorage")
 
@@ -46,4 +46,4 @@ for _, spec in PROPS do
 		table.insert(failed, spec.name .. ": " .. tostring(err))
 	end
 end
-return `Props: {made} gemaakt, {kept} bestonden al, mislukt: {table.concat(failed, " | ")}`
+return `Props: {made} created, {kept} already existed, failed: {table.concat(failed, " | ")}`

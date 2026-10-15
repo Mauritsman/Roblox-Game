@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
-"""Zet de code uit de repo in de open Studio-place, zonder Rojo-klik.
+"""Puts the code from the repo into the open Studio place, without a Rojo click.
 
-1. Bouwt build/studio_payload.json (alle scripts volgens de Rojo-sourcemap).
-2. Zorgt dat een lokale webserver (alleen 127.0.0.1:34999) dat bestand aanbiedt.
-3. Daarna voert Claude tools/studio_sync_apply.luau uit via de Studio MCP (execute_luau, Edit).
-   Dat script zet HttpEnabled heel even aan, haalt de code op en zet HttpEnabled terug.
+1. Builds build/studio_payload.json (all scripts according to the Rojo sourcemap).
+2. Makes sure a local web server (127.0.0.1:34999 only) serves that file.
+3. Then Claude runs tools/studio_sync_apply.luau via the Studio MCP (execute_luau, Edit).
+   That script turns HttpEnabled on very briefly, fetches the code and sets HttpEnabled back.
 
-Gebruik: python3 tools/studio_sync.py
+Usage: python3 tools/studio_sync.py
 """
 import json
 import os
@@ -54,15 +54,15 @@ def build_payload():
 def ensure_server():
     with socket.socket() as s:
         if s.connect_ex(("127.0.0.1", PORT)) == 0:
-            return "draaide al"
+            return "was already running"
     subprocess.Popen([sys.executable, "-m", "http.server", str(PORT), "--bind", "127.0.0.1"],
                      cwd=os.path.join(ROOT, "build"), stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                      start_new_session=True)
-    return "gestart"
+    return "started"
 
 
 if __name__ == "__main__":
     path, count = build_payload()
     state = ensure_server()
-    print(f"{count} items in {path}; server op 127.0.0.1:{PORT} {state}")
-    print("Voer nu tools/studio_sync_apply.luau uit met execute_luau (datamodel Edit).")
+    print(f"{count} items in {path}; server on 127.0.0.1:{PORT} {state}")
+    print("Now run tools/studio_sync_apply.luau with execute_luau (datamodel Edit).")

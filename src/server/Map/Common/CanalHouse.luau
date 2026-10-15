@@ -1,6 +1,6 @@
 --!strict
--- Een Hollands grachtenpand als achtergrond: gevel met ruitjesramen, deur, kroonlijst en topgevel.
--- origin = onderkant-midden van de gevel; de LookVector van origin wijst naar de straat.
+-- A Dutch canal house as background: facade with paned windows, door, cornice and gable.
+-- origin = bottom centre of the facade; the LookVector of origin points towards the street.
 
 local Builder = require(script.Parent.Builder)
 
@@ -32,7 +32,7 @@ local function gable(
 	opts: Builder.PartOpts
 )
 	if style == "step" then
-		-- Trapgevel: drie treden die smaller worden.
+		-- Step gable: three steps that get narrower.
 		local steps = 3
 		local stepH = 3
 		for i = 1, steps do
@@ -62,7 +62,7 @@ local function gable(
 			opts
 		)
 	elseif style == "spout" or style == "bell" then
-		-- Halsgevel: smal middenstuk met schuine schouders.
+		-- Neck gable: narrow centre piece with sloping shoulders.
 		local neckW = width * 0.45
 		local neckH = if style == "bell" then 9 else 7
 		Builder.block(
@@ -105,7 +105,7 @@ local function gable(
 				opts
 			)
 		end
-		-- Hijsbalk: typisch voor grachtenpanden.
+		-- Hoist beam: typical of canal houses.
 		Builder.block(
 			parent,
 			"HoistBeam",
@@ -133,7 +133,7 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 		then { material = Enum.Material.Brick, variant = "CC_Brick" }
 		else { material = Enum.Material.Plaster }
 
-	-- Romp (achter de gevel, +Z in objectruimte).
+	-- Body (behind the facade, +Z in object space).
 	Builder.block(
 		model,
 		"Body",
@@ -142,7 +142,7 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 		spec.color,
 		wallOpts
 	)
-	-- Dak achter de topgevel.
+	-- Roof behind the gable.
 	Builder.block(
 		model,
 		"Roof",
@@ -155,7 +155,7 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 		}
 	)
 
-	-- Plint en kroonlijst.
+	-- Plinth and cornice.
 	Builder.block(
 		model,
 		"Plinth",
@@ -175,7 +175,7 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 	)
 	gable(model, origin, spec.width, height, spec.gable, spec.color, wallOpts)
 
-	-- Ramen per verdieping.
+	-- Windows per floor.
 	local cols = if spec.width >= 14 then 3 elseif spec.width >= 9 then 2 else 1
 	local spacing = spec.width / cols
 	local litChance = spec.litChance or 0.5
@@ -186,7 +186,7 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 			Builder.window(model, origin * CFrame.new(x, y, -0.2), 2.4, 3.8, rng:NextNumber() < litChance)
 		end
 	end
-	-- Benedenverdieping: deur + raam.
+	-- Ground floor: door + window.
 	if spec.door ~= false then
 		local doorX = if cols > 1 then -spec.width / 2 + spacing * 0.5 else 0
 		Builder.block(
@@ -230,7 +230,7 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 	return model
 end
 
--- Een rij huizen langs een lijn. from/to = punten op de gevellijn, facing = richting naar de straat.
+-- A row of houses along a line. from/to = points on the facade line, facing = direction towards the street.
 function CanalHouse.row(
 	parent: Instance,
 	from: Vector3,
@@ -256,7 +256,7 @@ function CanalHouse.row(
 	while pos < length - 0.5 do
 		local width = math.min(rng:NextInteger(10, 17), length - pos)
 		if length - pos - width < 9 then
-			width = length - pos -- geen gaten aan het eind van de rij
+			width = length - pos -- no gaps at the end of the row
 		end
 		local center = from + unit * (pos + width / 2)
 		local origin = CFrame.lookAt(center, center + facing)

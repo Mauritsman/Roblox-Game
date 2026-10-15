@@ -1,5 +1,5 @@
 --!strict
--- Vertaalt serverberichten naar de HUD: alarm, venster, gepakt, CRACK, EMP, einde van de run.
+-- Translates server messages into the HUD: alarm, window, caught, CRACK, EMP, end of the run.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")

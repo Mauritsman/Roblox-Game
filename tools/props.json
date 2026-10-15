@@ -1,5 +1,5 @@
 {
-  "_uitleg": "AI-props van map 1 (Studio MCP generate_mesh, segmentation none). 'size' = maat van de MeshPart in ServerStorage.Props. tools/restore_props.luau bouwt de map Props hieruit opnieuw op als ze ooit verloren gaat.",
+  "_about": "AI props for map 1 (Studio MCP generate_mesh, segmentation none). 'size' = size of the MeshPart in ServerStorage.Props. tools/restore_props.luau rebuilds the Props folder from this if it ever gets lost.",
   "props": [
     {"name": "Barrel", "mesh": "rbxassetid://91962339967938", "texture": "rbxassetid://102390238810600", "size": [2.6, 2.41, 2.12],
      "prompt": "Old wooden barrel with dark iron hoops, stylized cartoon game prop, chunky shape"},
@@ -13,14 +13,14 @@
      "prompt": "Small yellow warehouse forklift, cartoon toy style, chunky rounded shapes, black tires, forks lowered"},
     {"name": "GoldenGouda", "mesh": "rbxassetid://111314658249106", "texture": "rbxassetid://80663204516216", "size": [4, 1.989, 3.99],
      "prompt": "Stylized golden gouda cheese wheel treasure, shiny gold rind with a crown emblem embossed on top, cartoon toy style, glowing precious look",
-     "note": "Warehouse.luau vervangt de textuur door goudfolie (Foil + goudkleur)."},
+     "note": "Warehouse.luau replaces the texture with gold foil (Foil + gold colour)."},
     {"name": "Kennel", "mesh": "rbxassetid://87501583784307", "texture": "rbxassetid://103121969772012", "size": [3.931, 4.83, 5],
      "prompt": "Wooden dog kennel with red pointed roof and a round entrance, stylized cartoon game prop"},
     {"name": "PendantLamp", "mesh": "rbxassetid://108475747796097", "texture": "rbxassetid://108984570272205", "size": [2.067, 3.52, 2.061],
      "prompt": "Hanging industrial pendant lamp with dark green enamel metal shade and warm bulb, stylized cartoon warehouse lamp"},
     {"name": "StreetLamp", "mesh": "rbxassetid://86016392691368", "texture": "rbxassetid://122891292769432", "size": [2.289, 13, 2.278],
      "prompt": "Old Amsterdam canal street lamp post, dark green cast iron pole with ornate base and a glass lantern head on top, stylized cartoon game prop",
-     "note": "Glas zit op 9,1-10,2 studs hoogte; Quay.luau zet daar een neon cilinder als lichtbron."},
+     "note": "The glass sits at 9.1-10.2 studs high; Quay.luau puts a neon cylinder there as the light source."},
     {"name": "TulipBox", "mesh": "rbxassetid://82644917325670", "texture": "rbxassetid://102385372595353", "size": [4.375, 2.582, 2.4],
      "prompt": "Wooden window flower box full of red, yellow and orange tulips, stylized cartoon Dutch street decoration"},
     {"name": "TulipBoxTall", "mesh": "rbxassetid://96479653119468", "texture": "rbxassetid://88217394823765", "size": [2.517, 3, 1.853],

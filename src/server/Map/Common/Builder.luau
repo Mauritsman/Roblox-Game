@@ -1,7 +1,7 @@
 --!strict
--- Bouwhulpjes voor alle heists: blokken, cilinders, ramen, labels en props.
--- Props komen uit ServerStorage.Props (AI-gegenereerde modellen, opgeslagen in de place).
--- Ontbreekt een prop, dan bouwen we een eenvoudige vervanger, zodat de map altijd werkt.
+-- Building helpers for all heists: blocks, cylinders, windows, labels and props.
+-- Props come from ServerStorage.Props (AI-generated models, saved in the place).
+-- If a prop is missing, we build a simple stand-in, so the map always works.
 
 local MaterialService = game:GetService("MaterialService")
 local ServerStorage = game:GetService("ServerStorage")
@@ -40,7 +40,7 @@ Builder.Colors = {
 
 local C = Builder.Colors
 
--- Kleur per gadget (sokkels van de gadgetrek): in elke heist dezelfde, zodat spelers ze herkennen.
+-- Colour per gadget (pedestals of the gadget rack): the same in every heist, so players recognise them.
 Builder.GadgetColors = {
 	Drone = Color3.fromRGB(70, 160, 255),
 	Noisemaker = Color3.fromRGB(255, 210, 60),
@@ -49,10 +49,10 @@ Builder.GadgetColors = {
 	Crowbar = Color3.fromRGB(255, 90, 80),
 }
 
--- Hoogte van de stoep langs de gevels (x -28..-22).
+-- Height of the pavement along the facades (x -28..-22).
 Builder.SIDEWALK = 0.3
 
--- Verlichte ramen: warme tinten, af en toe het blauwe schijnsel van een tv.
+-- Lit windows: warm tints, now and then the blue glow of a TV.
 Builder.WindowGlows = {
 	Color3.fromRGB(255, 178, 92),
 	Color3.fromRGB(255, 196, 120),
@@ -90,7 +90,7 @@ export type PartOpts = {
 	query: boolean?,
 }
 
--- Een verankerd blok. size in studs, cframe = middelpunt.
+-- An anchored block. size in studs, cframe = centre.
 function Builder.block(
 	parent: Instance,
 	name: string,
@@ -133,7 +133,7 @@ function Builder.block(
 	return p
 end
 
--- Blok tussen twee hoeken (handig voor muren en vloeren): min = (x1,y1,z1), max = (x2,y2,z2).
+-- Block between two corners (handy for walls and floors): min = (x1,y1,z1), max = (x2,y2,z2).
 function Builder.box(
 	parent: Instance,
 	name: string,
@@ -173,7 +173,7 @@ function Builder.wedge(
 	return w
 end
 
--- Cilinder met verticale as (Roblox-cilinders liggen standaard langs X).
+-- Cylinder with a vertical axis (Roblox cylinders lie along X by default).
 function Builder.cylinder(
 	parent: Instance,
 	name: string,
@@ -195,7 +195,7 @@ function Builder.cylinder(
 	)
 end
 
--- Een raam met kader op een gevel. cf = middelpunt van het glas, kijkend naar buiten.
+-- A framed window on a facade. cf = centre of the glass, facing outwards.
 function Builder.window(
 	parent: Instance,
 	cf: CFrame,
@@ -224,7 +224,7 @@ function Builder.window(
 		}
 	)
 	if lit and math.random() < 0.45 then
-		-- Gordijn aan één kant: maakt de verlichte ramen minder eentonig.
+		-- Curtain on one side: makes the lit windows less monotonous.
 		local side = if math.random() < 0.5 then -1 else 1
 		local curtain = Builder.Curtains[math.random(1, #Builder.Curtains)]
 		Builder.block(
@@ -236,7 +236,7 @@ function Builder.window(
 			{ material = Enum.Material.Fabric, shadow = false }
 		)
 	end
-	-- Raamroede (kruis) voor dat typische Hollandse ruitjesraam.
+	-- Glazing bars (a cross) for that typical Dutch paned window.
 	Builder.block(
 		parent,
 		"Mullion",
@@ -254,7 +254,7 @@ function Builder.window(
 		{ shadow = false }
 	)
 	if lit and math.random() < 0.15 then
-		-- Een paar ramen geven echt licht naar buiten.
+		-- A few windows cast real light outside.
 		local light = Instance.new("SurfaceLight")
 		light.Face = Enum.NormalId.Front
 		light.Range = 10
@@ -285,13 +285,13 @@ function Builder.label(adornee: BasePart, text: string, color: Color3, offsetY: 
 end
 
 export type SignOpts = {
-	doubleSided: boolean?, -- tekst op voor- én achterkant (uithangbord haaks op de gevel)
-	frame: Color3?, -- dunne rand rond het bord
+	doubleSided: boolean?, -- text on the front and back (hanging sign at right angles to the facade)
+	frame: Color3?, -- thin frame around the board
 	material: Enum.Material?,
 }
 
--- Een bord met tekst. Leesbaar in het donker (LightInfluence 0), met marge rond de tekst zodat niets wordt
--- afgesneden, en een donkere rand rond de letters voor contrast.
+-- A board with text. Readable in the dark (LightInfluence 0), with padding around the text so nothing gets
+-- cut off, and a dark outline around the letters for contrast.
 function Builder.sign(
 	parent: Instance,
 	cf: CFrame,
@@ -383,7 +383,7 @@ export type PropOpts = {
 	fallback: ((parent: Instance, ground: Vector3, rotY: number) -> Instance)?,
 }
 
--- Plaatst een prop met de onderkant op `ground` (x, y van de vloer, z) en draaiing rotY (graden).
+-- Places a prop with its bottom at `ground` (x, floor y, z) and rotation rotY (degrees).
 function Builder.prop(
 	parent: Instance,
 	templateName: string,
@@ -424,7 +424,7 @@ function Builder.prop(
 				d.CastShadow = opts.shadow
 			end
 		elseif d:IsA("Script") or d:IsA("LocalScript") then
-			d:Destroy() -- veiligheid: props mogen nooit code meebrengen
+			d:Destroy() -- safety: props must never bring code along
 		end
 	end
 	if clone:IsA("BasePart") then
@@ -435,7 +435,7 @@ function Builder.prop(
 	return clone
 end
 
--- Een grachtboom (iep): stam met een kruin van bollen. Kruin botst niet (de drone mag erdoor).
+-- A canal tree (elm): trunk with a crown of balls. The crown does not collide (the drone may fly through).
 function Builder.tree(parent: Instance, ground: Vector3, rng: Random)
 	local model = Instance.new("Model")
 	model.Name = "Tree"
@@ -472,7 +472,7 @@ function Builder.tree(parent: Instance, ground: Vector3, rng: Random)
 			}
 		)
 	end
-	-- Boomkrans: een rand van klinkers rond de stam.
+	-- Tree ring: a border of paving bricks around the trunk.
 	Builder.block(
 		model,
 		"TreeRing",
@@ -488,7 +488,7 @@ function Builder.tree(parent: Instance, ground: Vector3, rng: Random)
 	return model
 end
 
--- Een sloep (klein bootje) op het water; boeg wijst naar +Z.
+-- A sloop (small boat) on the water; the bow points towards +Z.
 function Builder.boat(parent: Instance, waterCenter: Vector3, color: Color3)
 	local model = Instance.new("Model")
 	model.Name = "Sloep"
@@ -549,7 +549,7 @@ function Builder.boat(parent: Instance, waterCenter: Vector3, color: Color3)
 	return model
 end
 
--- Hoogste punt (y) van een part of model; handig om iets bovenop een prop te zetten.
+-- Highest point (y) of a part or model; handy for putting something on top of a prop.
 function Builder.topOf(inst: Instance?): number?
 	if not inst then
 		return nil

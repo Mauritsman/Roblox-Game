@@ -1,7 +1,7 @@
 --!strict
--- Pings tonen en sturen (§3.5).
--- SPOT: icoon op wat je aanwijst (Q / R1 / PING-knop). NOW en WAIT: Z / X of de kleine knoppen.
--- Elk soort ping heeft een eigen vorm én de kleur van de speler (kleurenblind-vriendelijk).
+-- Showing and sending pings (§3.5).
+-- SPOT: icon on what you point at (Q / R1 / PING button). NOW and WAIT: Z / X or the small buttons.
+-- Each kind of ping has its own shape and the player's colour (colour-blind friendly).
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -84,7 +84,7 @@ local function showPing(data: { [string]: any })
 		return
 	end
 
-	-- Dezelfde target opnieuw gepingd: oude markering vervangen.
+	-- Same target pinged again: replace the old marker.
 	if data.target and activeByTarget[data.target] then
 		activeByTarget[data.target]:Destroy()
 	end

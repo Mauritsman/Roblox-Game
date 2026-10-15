@@ -1,6 +1,6 @@
 --!strict
--- Wie draagt welk gadget (§3.7). Er is één exemplaar van elk gadget; je neemt het aan het rek bij het busje.
--- Het aantal vakken hangt af van de crewgrootte. Ladingen horen bij het gadget, niet bij de speler.
+-- Who carries which gadget (§3.7). There is one of each gadget; you take it from the rack by the van.
+-- The number of slots depends on the crew size. Charges belong to the gadget, not to the player.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -12,7 +12,7 @@ local Tags = require(ReplicatedStorage.Shared.Tags)
 
 local LoadoutService = {}
 
-local owners: { [string]: Player? } = {} -- gadget -> speler
+local owners: { [string]: Player? } = {} -- gadget -> player
 local charges: { [string]: number } = {}
 
 local function gadgetsOf(player: Player): { string }
@@ -36,7 +36,7 @@ local function publish()
 			player:SetAttribute(Tags.Charges .. gadgetName, if value == math.huge then -1 else value)
 		end
 	end
-	-- Sokkels tonen of het gadget nog vrij is.
+	-- Pedestals show whether the gadget is still free.
 	for _, pedestal in CollectionService:GetTagged(Tags.GadgetPedestal) do
 		if pedestal:IsA("BasePart") then
 			local gadgetName = pedestal:GetAttribute("Gadget")
@@ -53,7 +53,7 @@ function LoadoutService:Charges(gadgetName: string): number
 	return charges[gadgetName] or 0
 end
 
--- Verbruikt één lading. Geeft false terug als er geen meer zijn.
+-- Uses up one charge. Returns false if there are none left.
 function LoadoutService:UseCharge(player: Player, gadgetName: string): boolean
 	if owners[gadgetName] ~= player then
 		return false
@@ -104,7 +104,7 @@ local function togglePedestal(pedestal: BasePart, player: Player)
 	publish()
 end
 
--- Nemen of teruglegen op naam (gebruikt door de sokkelknop en door DevService in Studio).
+-- Take or return by name (used by the pedestal button and by DevService in Studio).
 function LoadoutService:Toggle(player: Player, gadgetName: string)
 	for _, pedestal in CollectionService:GetTagged(Tags.GadgetPedestal) do
 		if pedestal:IsA("BasePart") and pedestal:GetAttribute("Gadget") == gadgetName then
@@ -114,7 +114,7 @@ function LoadoutService:Toggle(player: Player, gadgetName: string)
 	end
 end
 
--- Een knop per sokkel ("Take / Return"): werkt met E, controller-X en tikken, en gaat niet per ongeluk af.
+-- One button per pedestal ("Take / Return"): works with E, controller X and tapping; never fires by accident.
 local function hookPedestal(pedestal: Instance)
 	if not pedestal:IsA("BasePart") or pedestal:FindFirstChild("TakePrompt") then
 		return

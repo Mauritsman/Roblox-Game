@@ -1,8 +1,8 @@
 --!strict
--- Bouwt een heist (map) uit code, zodat het level als tekst in Git staat.
--- Welke heists er zijn, staat in src/server/Map/Registry; elke heist heeft een eigen map in Map/Heists/
--- (map 1: Heists/GoldenWheel). Gedeelde bouwstenen (Builder, CanalHouse, Atmosphere) staan in Map/Common/.
--- Props (AI-modellen) staan in ServerStorage.Props; ontbreken ze, dan bouwt Builder eenvoudige vervangers.
+-- Builds a heist (map) from code, so the level lives in Git as text.
+-- The list of heists is in src/server/Map/Registry; each heist has its own folder in Map/Heists/
+-- (map 1: Heists/GoldenWheel). Shared building blocks (Builder, CanalHouse, Atmosphere) live in Map/Common/.
+-- Props (AI models) live in ServerStorage.Props; if they are missing, Builder builds simple stand-ins.
 
 local PhysicsService = game:GetService("PhysicsService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -15,33 +15,33 @@ local Builder = require(Map.Common.Builder)
 local Registry = require(Map.Registry)
 
 local defaultHeist = Registry.get(Registry.DefaultHeist)
-assert(defaultHeist, `[MapService] DefaultHeist "{Registry.DefaultHeist}" staat niet in de Registry`)
+assert(defaultHeist, `[MapService] DefaultHeist "{Registry.DefaultHeist}" is not in the Registry`)
 
 local MapService = {}
 MapService.LevelBuilt = Signal.new() :: Signal.Signal<Folder>
 MapService.Level = nil :: Folder?
--- De definitie van de heist die nu gebouwd is (nil tot de eerste Build).
+-- The definition of the heist that is currently built (nil until the first Build).
 MapService.CurrentHeist = nil :: Registry.Heist?
 MapService.GadgetColors = Builder.GadgetColors
 
--- Belangrijke posities die andere services gebruiken (Spawn, GuardStart, GuardRoute).
--- Vóór de eerste Build die van de standaard-heist; Build zet ze op die van de gebouwde heist.
+-- Key positions that other services use (Spawn, GuardStart, GuardRoute).
+-- Before the first Build these are the default heist's; Build sets them to those of the built heist.
 MapService.Points = defaultHeist.Points
 
--- Bouwt (of herbouwt) een heist in Workspace.Level en zet de sfeer van die heist.
--- Zonder heistId: dezelfde heist opnieuw (de eerste keer de standaard-heist uit de Registry).
+-- Builds (or rebuilds) a heist in Workspace.Level and applies that heist's atmosphere.
+-- Without heistId: the same heist again (the first time, the default heist from the Registry).
 function MapService:Build(heistId: string?): Folder
 	local current = MapService.CurrentHeist
 	local id = heistId or (if current then current.Id else Registry.DefaultHeist)
 	local heist = Registry.get(id)
-	assert(heist, `[MapService] Onbekende heist "{id}"`)
+	assert(heist, `[MapService] Unknown heist "{id}"`)
 
 	local old = workspace:FindFirstChild("Level")
 	if old then
 		old:Destroy()
 	end
 	if current and current.Id ~= heist.Id then
-		-- Andere heist: het water (Terrain) van de vorige weghalen. Elke heist vult zijn eigen Terrain.
+		-- Different heist: remove the previous one's water (Terrain). Each heist fills its own Terrain.
 		workspace.Terrain:Clear()
 	end
 	Atmosphere.apply(heist.Atmosphere)
@@ -58,7 +58,7 @@ function MapService:Build(heistId: string?): Folder
 end
 
 local function setupCollisionGroups()
-	-- De drone botst met muren, maar niet met spelers of bewakers (hij mag niemand wegduwen).
+	-- The drone collides with walls, but not with players or guards (it must not push anyone away).
 	for _, group in { "Players", "Guards", "Drone" } do
 		if not PhysicsService:IsCollisionGroupRegistered(group) then
 			PhysicsService:RegisterCollisionGroup(group)
@@ -68,7 +68,7 @@ local function setupCollisionGroups()
 	PhysicsService:CollisionGroupSetCollidable("Drone", "Guards", false)
 end
 
--- De grondplaat zakt onder de gracht (y -12): de kade, de straat en de hal hebben hun eigen vloer.
+-- The baseplate sinks below the canal (y -12): the quay, the street and the hall have their own floor.
 local function placeBaseplate()
 	local baseplate = workspace:FindFirstChild("Baseplate")
 	if baseplate and baseplate:IsA("BasePart") then
