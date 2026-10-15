@@ -2,7 +2,9 @@
 
 *Advisor, 16/10/2026. Based on gameplan v1.3, `docs/development.md` and web research (sources at the bottom).
 Direction: **"Sneak in, grab as much cheese as you dare, get out."** This brief overrides the gameplan; the mandatory
-chain and the 10 s window are dropped. All numbers are starting values and belong in `src/shared/Config.luau`.*
+chain and the 10 s window are dropped. All numbers are starting values and belong in `src/shared/Config.luau`.
+**Update 16/10:** `advisor-notoriety.md` adds difficulty tiers (these numbers = Normal), the job board, objectives, perks,
+stars and star-based unlocks; where they differ, that file wins.*
 
 ## 0. Decision table
 
@@ -16,11 +18,11 @@ chain and the 10 s window are dropped. All numbers are starting values and belon
 | Caught | Carried to the cell; a teammate frees you (2 s) or you self-escape once per round (15 s). All in the cell = BUSTED (50% of van loot). |
 | Alarm | Ladder stays (100/200/300). LOCKDOWN = 60 s chase (was 90), not a loss. |
 | Teamwork | A bonus, not a must: carry together (12 vs 7 studs/s), throw, rescue, +15% per extra member. |
-| Randomness | Loot spots, Gouda spot, 2 of 4 entrances locked, guard routes, 2nd exit (50%), 3 jobs, 6 modifiers. |
+| Randomness | Loot spots, Gouda spot, 2 of 4 entrances locked, guard routes, 2nd exit (50%). Job board: all heists + difficulty + 1 Hot Job with a modifier (see `advisor-notoriety.md`). |
 | Hiding, NPCs | 8–12 barrels per map (20 s max); Boef smells cheese; Karel closes doors, returns loot. |
-| Maps | **3**: The Golden Wheel (Rank 1), Praline Palace (Rank 3), Tulip Auction (Rank 5). Map 3 is cut first. |
+| Maps | **3**: The Golden Wheel, Praline Palace (3★ on map 1 or Rank 4), Tulip Auction (3★ on map 2 or Rank 7). Map 3 is cut first. |
 | Lobby | One place, 4-player servers, hideout "The Garage" in the same server; newcomers start in a 3-min mini-job. |
-| Progression | Cash + Crew Rank, 3 daily contracts, weekly "Most Wanted", trophy wall. No pay-to-win, no paid randomness. |
+| Progression | Cash + Crew Rank (cap 20), 3×3 perk tree, stars per heist and difficulty, 3 daily contracts, weekly "Most Wanted", trophy wall. No pay-to-win, no paid randomness. |
 | Monetization | Beta: **off** (free private servers). Cosmetics at launch, Crew Pass ±2 months later. |
 | Beta | Private → max. 10 Early Testers → open beta 16+ "[BETA]". Goals: D1 ≥ 10%, session ≥ 20 min, ≥ 70% finish the mini-job. |
 | Not in the beta | Roles, minigames, Winch, Spy Cams, Asset Recovery, Cover Story. |
@@ -118,16 +120,16 @@ rules; maps 2 and 3 are smaller (±80 × 60 studs) and reuse the canal-street pa
 
 | Map | Theme | Mechanically different | Unlock |
 |---|---|---|---|
-| 1. **The Golden Wheel** | Cheese shop + ripening hall (exists) | Learning map: wide routes, Boef, wheels roll down the ramp, 2nd exit by boat | Rank 1 |
-| 2. **Praline Palace** | Belgian chocolaterie in Polderdam's "Flemish quarter" | Conveyor belts move loot and players; machine noise covers the Crowbar; a "Robo-Mop" (robot vacuum) beeps when it bumps you, EMP stops it; fragile Praline Tower (drop = −25%) | Rank 3 |
-| 3. **Tulip Auction** | Flower auction | Fragile bulbs and vases; push carts (4 medium items, 12 studs/s, squeaky wheels); cold rooms whose door shuts after 10 s; auction clock with a rotating spotlight | Rank 5 |
+| 1. **The Golden Wheel** | Cheese shop + ripening hall (exists) | Learning map: wide routes, Boef, wheels roll down the ramp, 2nd exit by boat | Start |
+| 2. **Praline Palace** | Belgian chocolaterie in Polderdam's "Flemish quarter" | Conveyor belts move loot and players; machine noise covers the Crowbar; a "Robo-Mop" (robot vacuum) beeps when it bumps you, EMP stops it; fragile Praline Tower (drop = −25%) | 3★ on map 1 or Rank 4 |
+| 3. **Tulip Auction** | Flower auction | Fragile bulbs and vases; push carts (4 medium items, 12 studs/s, squeaky wheels); cold rooms whose door shuts after 10 s; auction clock with a rotating spotlight | 3★ on map 2 or Rank 7 |
 
 If one crew member has a map unlocked, the whole crew can play it: veterans bring newcomers along. Avoid: casinos
 (label Moderate), real brands, tall vertical maps.
 
 **Modifiers (6):** Power Cut (lights and cameras off, guards with flashlights, +20%), Health Inspector (extra snitch,
 +15%), Wet Floor (sliding and squeaking, +10%), Rush Job (6:00, +25%), Sleepy Guards (meter 30% slower, −20%), Double
-Shift (+1 guard, +30%). The job board always shows 3 jobs (map + modifier); modifiers only from your 3rd round.
+Shift (+1 guard, +30%). In the beta a modifier only appears on the rotating Hot Job (see `advisor-notoriety.md`).
 
 ## 4. Hideout, session and first minute
 
