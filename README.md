@@ -7,3 +7,4 @@ De titel staat nog niet vast.
 ## Inhoud
 
 - `docs/roblox-prompt.md` — de opdracht om het gameconcept om te zetten naar een volledig Roblox-gameplan.
+- `docs/gameplan-roblox.md` — het volledige gameplan voor Roblox (versie 1, 15 oktober 2026): keten, gadgets, economie, eerste map, bouwvolgorde en het opzetplan voor de tools.
