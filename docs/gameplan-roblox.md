@@ -1,8 +1,8 @@
-# Gameplan Roblox — co-op stealth-heist (werktitel: kies uit §14)
+# Crowbar Crew — gameplan voor Roblox
 
-*Versie 1 — 15 oktober 2026. Opdracht: [`docs/roblox-prompt.md`](roblox-prompt.md).*
+*Versie 1.1 — 15 oktober 2026. Opdracht: [`docs/roblox-prompt.md`](roblox-prompt.md). Titel en rol van Karel bevestigd door Maurits op 15/10/2026.*
 
-**Bron van het concept.** Het volledige oude plan (`unpaid-gameplan.md`) zat niet bij de opdracht en staat niet in deze repo. Dit plan gaat daarom uit van de samenvatting in de prompt. Waar die samenvatting iets openlaat (bijvoorbeeld de rol van Karel), staat er een **voorstel** dat als `[TE BEVESTIGEN]` gemarkeerd is.
+**Bron van het concept.** Het volledige oude plan (`unpaid-gameplan.md`) zat niet bij de opdracht en staat niet in deze repo. Dit plan gaat daarom uit van de samenvatting in de prompt. Waar die samenvatting iets openliet, staat er een voorstel. De rol van Karel (§9.6) en de titel (§14) zijn intussen bevestigd.
 
 **Feiten over Roblox** (regels, prijzen, tools) zijn op 15 oktober 2026 nagekeken. De bronnen staan in de bijlage onderaan. Roblox verandert zijn regels vaak: controleer de punten met ⚠️ opnieuw vlak voor je publiceert.
 
@@ -12,7 +12,7 @@
 
 ## 1. Samenvatting in vijf zinnen
 
-1. Dit is een co-op stealth-heist voor 1 tot 4 spelers op Roblox, waarin een crew met een busje kleine, slimme inbraken pleegt in een speelse, Nederlands aanvoelende stad, zonder één wapen.
+1. **Crowbar Crew** is een co-op stealth-heist voor 1 tot 4 spelers op Roblox, waarin een crew met een busje kleine, slimme inbraken pleegt in een speelse, Nederlands aanvoelende stad, zonder één wapen.
 2. Elke hindernis vraagt drie stappen — **zien → vrijmaken → openen** — binnen een venster van 10 seconden, en elk gadget doet maar één van die stappen: je wint alleen als je samenwerkt.
 3. Het is gemaakt voor spelers van 9 tot 15 jaar (bereikbaar na Roblox' extra keuring, §5.5) op telefoon, tablet, pc en console: runs van ongeveer 12 minuten, één knop per gadget, en een ping- en aftelsysteem dat werkt zonder voice- of tekstchat.
 4. Het leeftijdslabel wordt Minimal of Mild, allebei speelbaar vanaf 5 jaar: geen bloed, geweld nooit als oplossing, alleen slapstick als gevolg — zoals je eigen drone die door de EMP van je vriend op het hoofd van een bewaker valt.
@@ -71,10 +71,10 @@ Op de spelpagina (icoon, thumbnails, eerste zin van de beschrijving) laat je het
 | Dekmantel (werkkleding, aanspreking door een NPC) | **Past aan, later** | Gesprekken met tekst werken niet voor 9-jarigen op een telefoon in een internationaal spel. Het wordt een keuze uit 3 icoontjes, waarbij je het juiste antwoord tijdens de verkenning hebt gezien (§9). |
 | Sporen (voetstappen, glas, verplaatste spullen) | **Blijft** (minder soorten) | Vijf soorten sporen, allemaal zichtbaar en leesbaar, zonder bloed (§5). |
 | Sporen wissen kost een verbruiksspul | **Blijft** | De "Clean Spray", alleen met spelgeld te koop, nooit met Robux. |
-| NPC Karel | **Past aan** `[TE BEVESTIGEN]` | Zijn rol staat niet in de samenvatting. Voorstel: de conciërge die alles opruimt en verklikt (§9.6). |
+| NPC Karel | **Past aan** | Zijn rol stond niet in de samenvatting. Karel wordt de conciërge die alles opruimt en verklikt (§9.6, bevestigd). |
 | Geweld als gevolg, nooit als oplossing | **Blijft** (als slapstick) | Vallen, botsen, sterretjes rond het hoofd. Niemand raakt gewond. |
 | Bloed als informatie (spoor) | **Vervalt** | Vervangen door een scheurtje van je werkvest aan prikkeldraad: hetzelfde idee ("hier is iemand geweest"), zonder bloed. Zo hoef je bij bloed nooit te twijfelen in de vragenlijst voor het leeftijdslabel (§5). |
-| Werktitel UNPAID | **Vervalt** | Past niet meer. Zie §14 voor tien opties. |
+| Werktitel UNPAID | **Vervalt** | Past niet meer. De nieuwe titel is **Crowbar Crew** (§14). |
 | Overleg via voice (pc-ontwerp) | **Past aan** | Wordt een ping-systeem plus de "Chain Call": een gedeelde 3-2-1-aftelling (§3.4). |
 | Pc-besturing | **Past aan** | Eerst ontworpen voor touchscreen, daarna pc en controller (§3.6). |
 
@@ -91,7 +91,7 @@ Dit zijn de plekken waar het concept zichzelf tegenspreekt, en hoe dit plan ze o
 7. **"Camera-set = vaste camera's die een gebied bewaken"** gaat tegen de regel "elk gadget opent alleen een venster", want camera's geven blijvende informatie. *Oplossing:* wie naar de beelden kijkt, moet stilstaan, en actieve camera's vullen de Signal-meter van Asset Recovery. Informatie kost dus iets.
 8. **Een langzaam aanzwellende dreiging (Asset Recovery)** past niet in runs van 12 minuten. *Oplossing:* ze komt na ongeveer 90 seconden onafgebroken elektronica, niet na een kwartier.
 9. **"Vier vrienden"** als fantasie tegenover de werkelijkheid van matchmaking: vreemden die halverwege vertrekken. *Oplossing:* gadgetvakken schuiven automatisch bij als iemand vertrekt, en tijdens de eerste minuten kunnen nieuwe spelers aansluiten bij het busje (§3.7).
-10. **Karel** heeft een rol "in de sporen", maar welke staat er niet. Zie de vraag aan het eind.
+10. **Karel** heeft een rol "in de sporen", maar welke stond er niet. *Opgelost:* hij is de conciërge die sporen opruimt én ze luid verklikt (§9.6).
 
 ---
 
@@ -417,7 +417,15 @@ Dit is de belangrijkste nieuwe Roblox-regel voor jouw plan. Sinds **16 juni 2026
 **Wat je als maker nodig hebt:**
 1. Een account in orde, **ID-verificatie** (vanaf 18 jaar met een identiteitsbewijs) en **tweestapsverificatie** (*2FA: een extra code bij het inloggen*).
 2. De volledige vragenlijst, met als resultaat Minimal, Mild of Moderate.
-3. **Ofwel** 2 maanden na elkaar een Roblox Plus-abonnement (het betaalde abonnement dat Premium verving), **ofwel** een eenmalige borg die je terugkrijgt. ⚠️ Volgens een Roblox-aankondiging is dat 1.000 Robux; de documentatie noemt het bedrag niet. De borg krijg je automatisch terug 90 dagen nadat het spel goedgekeurd is (of 90 dagen na betaling als het nooit goedgekeurd wordt).
+3. **Ofwel** 2 maanden na elkaar een Roblox Plus-abonnement (het betaalde abonnement dat Premium verving), **ofwel** een eenmalige borg van **1.000 Robux per spel** (bevestigd in de Roblox-aankondiging van 16/06/2026). De borg krijg je automatisch terug 90 dagen nadat het spel goedgekeurd is (of 90 dagen na betaling als het nooit goedgekeurd wordt). Je verliest hem alleen als Roblox je spel definitief verwijdert voor een zware overtreding van de regels.
+
+**Waarom die borg?** Roblox geeft zelf geen reden; het noemt het alleen een voorwaarde. Mijn inschatting: het is een drempel tegen wegwerpaccounts en slechte makers. Wie een spel voor kinderen wil uitbrengen, moet iets inzetten dat hij kwijt kan raken als hij de regels breekt. Roblox schrijft wel dat het de borg "over tijd kleiner hoopt te maken".
+
+**Wat het jou kost:**
+- **De borg** (aanbevolen): 1.000 Robux, ruwweg 10 à 13 euro, afhankelijk van het Robux-pakket en je land. Je krijgt hem terug, dus in feite leen je Roblox dat bedrag een paar maanden.
+- **Roblox Plus**: 2 maanden van ongeveer 5 dollar per maand. Dat krijg je niet terug. Volgens de documentatie controleert Roblox het abonnement telkens als je het spel publiceert of bijwerkt voor alle leeftijden. Is het dan verlopen, dan blijft je spel wel speelbaar, maar ⚠️ het is niet helemaal duidelijk of je voor een volgende update opnieuw moet betalen. Neem deze route alleen als je Plus toch al wilt.
+- **Wanneer:** pas in fase 3b (§12), dus pas als het spel af is en voor 16+ draait. Nu hoef je niets te betalen.
+- **Zonder borg** kun je het spel gewoon publiceren, maar dan blijft het voor spelers van 16+.
 
 **Hoe de keuring verloopt:**
 1. **Proefperiode** bij spelers van 16+ met een leeftijdscheck.
@@ -688,9 +696,9 @@ Alles wat opvalt, levert **alarmpunten** op. De ladder gaat alleen omhoog, nooit
 
 Op Rookie tellen alle punten maar half.
 
-### 9.6 Karel — "Karel" (voorstel `[TE BEVESTIGEN]`)
+### 9.6 Karel — "Karel" (bevestigd)
 
-De samenvatting zegt alleen dat Karel "een rol speelt" bij de sporen. Voorstel, omdat het de sporen in een spel voor kinderen zichtbaar en grappig maakt:
+De samenvatting zei alleen dat Karel "een rol speelt" bij de sporen. Gekozen invulling, omdat ze de sporen in een spel voor kinderen zichtbaar en grappig maakt:
 
 - **Karel is de conciërge.** Hij is geen bewaker en kan je niet oppakken.
 - Hij loopt rond en **ruimt op**: hij sluit deuren die openstaan, raapt Noisemakers op en steekt ze in zijn zak, en veegt sporen weg.
@@ -943,7 +951,7 @@ Alle tien opgezocht in de Roblox-zoekfunctie op 15/10/2026: **geen enkele is in 
 
 **Bewust afgeraden:** "Drone Heist" (bestaat al als klein spel), "Tiny Heist" (een bekend indiespel van Terry Cavanagh), "Clean Getaway" (een missie in GTA IV), "Blackout Crew" (een Britse muziekgroep), "Back Door Crew" (dubbelzinnig, en "backdoor" betekent ook kwaadaardige code), en titels met "Night Shift", "Lights Out" of "Chain", die verward worden met bestaande horror- of obbyspellen.
 
-**Mijn top 3:** 1. Crowbar Crew, 2. Gadget Heist, 3. Heist Buddies.
+**Gekozen: Crowbar Crew** (15/10/2026). De andere opties blijven hier staan als reserve, bijvoorbeeld als Roblox de naam toch niet zou toelaten.
 
 **Hoe je de titel op Roblox zet:** Roblox-titels dragen vaak een korte tag. Bijvoorbeeld **"Crowbar Crew 🚐 [CO-OP HEIST]"**: zo staat je merknaam vooraan en het zoekwoord erachter. Gebruik hooguit 1–2 emoji. Verander de titel daarna zelden; Roblox raadt dat zelf aan.
 
@@ -1051,13 +1059,11 @@ Plugins en gratis modellen kunnen schadelijke scripts bevatten (*een "backdoor" 
 
 ---
 
-## Drie vragen aan jou
+## Vragen: stand van zaken
 
-Dit zijn keuzes die ik niet voor je kan maken:
-
-1. **Karel: is hij de opruimende verklikker uit §9.6, of had hij in je oorspronkelijke plan een andere rol?** Stond er in `unpaid-gameplan.md` iets over hem, zet dat bestand dan in deze repo (`docs/`), dan pas ik dit plan aan.
-2. **Ben je bereid om voor de Kids & Select-keuring (§5.5) je identiteit te laten verifiëren, tweestapsverificatie aan te zetten en ofwel 2 maanden Roblox Plus ofwel een terugbetaalbare borg (volgens Roblox 1.000 Robux) te betalen?** Zo niet, dan blijft je spel voor 16+ en moet het ontwerp ouder worden (minder kartonnen humor, meer spanning).
-3. **Welke titel spreekt je aan?** Mijn top 3 is Crowbar Crew, Gadget Heist en Heist Buddies (§14). De naam bepaalt mee het icoon, het busje en de toon van alle teksten.
+1. **Karel** — beantwoord: de conciërge die opruimt en verklikt (§9.6).
+2. **De Kids & Select-keuring** — nog open: wil je voor fase 3b je identiteit laten verifiëren, tweestapsverificatie aanzetten en de terugbetaalbare borg van 1.000 Robux betalen (§5.5)? Je hoeft dat pas te beslissen als het spel af is. Zonder keuring blijft het spel voor 16+, en dan moet het ontwerp ouder worden (minder kartonnen humor, meer spanning).
+3. **Titel** — beantwoord: **Crowbar Crew** (§14).
 
 ---
 
