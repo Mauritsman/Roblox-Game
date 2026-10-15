@@ -25,10 +25,11 @@ function DevService:Start()
 			LoadoutService:Toggle(player, gadgetName)
 		end
 	end)
-	-- Een Pryable-object openen alsof de speler de Crowbar-knop vasthield.
-	Net.onRequest("DevPry", function(player: Player)
+	-- Een Pryable-object openen alsof de speler de Crowbar-knop vasthield (optioneel op naam, bv. "CageDoor").
+	Net.onRequest("DevPry", function(player: Player, targetName: any)
 		for _, target in CollectionService:GetTagged(Tags.Pryable) do
-			if target:IsA("BasePart") then
+			local nameOk = typeof(targetName) ~= "string" or target.Name == targetName
+			if target:IsA("BasePart") and nameOk then
 				GadgetService:Pry(player, target)
 				return
 			end

@@ -8,7 +8,12 @@ Gebruiker: Maurits, beginner. Antwoord in het Nederlands (Vlaams); spelerteksten
   - `src/server/` → ServerScriptService.Server (bootstrap laadt `Services/*` : Init() dan Start())
   - `src/client/` → StarterPlayerScripts.Client (bootstrap laadt `Controllers/*`; helpers in `Lib/`)
   - `src/shared/` → ReplicatedStorage.Shared (`Config`, `Net`, `Tags`, `Signal`)
-- Het level (graybox) wordt in code gebouwd door `MapService` — pas het daar aan, niet in Studio.
+- Het level (map 1 "The Golden Wheel") wordt in code gebouwd: `MapService` roept de modules in `src/server/Map/` aan
+  (`Builder` hulpjes, `CanalHouse`, `Quay`, `GoldenWheel`, `Warehouse`, `Atmosphere`). Pas het daar aan, niet in Studio.
+- AI-props (busje, lantaarn, kaaswiel, …) staan als modellen in `ServerStorage.Props` van de place; `Builder.prop` kloont ze
+  en valt terug op eenvoudige blokken als een prop ontbreekt. ID's en prompts: `tools/props.json`; herstellen:
+  `tools/restore_props.luau`. Gameplay-tags en -attributen (Lamp, Pryable, Goal, GadgetPedestal, camera's) niet weghalen.
+- Genereer meshes alleen in Edit-modus (niet tijdens Play) en hooguit 2 tegelijk (anders "Too Many Requests").
 - Alle afstelbare getallen staan in `src/shared/Config.luau`.
 
 ## Regels
@@ -29,13 +34,22 @@ Gebruiker: Maurits, beginner. Antwoord in het Nederlands (Vlaams); spelerteksten
   server op 127.0.0.1:34999), daarna de inhoud van `tools/studio_sync_apply.luau` uitvoeren met `execute_luau`
   (datamodel Edit, niet tijdens een playtest). Het script zet HttpEnabled even aan en meteen weer uit.
 - In Studio-playtests bestaat `DevService` (alleen als RunService:IsStudio()): vanaf de Client-datamodel
-  `Remotes.ToServer:FireServer("DevTake", "EMP")` en `FireServer("DevPry")` om zonder knoppen te testen.
+  `Remotes.ToServer:FireServer("DevTake", "EMP")` en `FireServer("DevPry", "CageDoor")` (of "StaffDoor", "DeliveryGate")
+  om zonder knoppen te testen.
   ProximityPrompts en screen_capture werken alleen als het Studio-venster vooraan staat (macOS).
 - Wat in Studio staat is pas live na File → Publish door Maurits (Claude kan niet publiceren).
 - Testen: `start_stop_play`, `get_console_output`, `screen_capture`, `character_navigation`, `user_keyboard_input`.
 - Start of registreer geen tweede StudioMCP-proces (poort 13469); de plugin beheert het.
 - Sluit Studio nooit zelf af en pas geen instellingenbestanden van Studio aan (officiële Roblox-regel).
 
+## Kijken zonder Studio-scherm (Blender-preview)
+Als `screen_capture` blijft hangen (Studio tekent niet als het venster niet zichtbaar is), gebruik de preview in Blender:
+1. `python3 -I tools/preview/receiver.py <map> 35001 &` (luistert alleen op 127.0.0.1).
+2. `tools/preview/studio_dump.luau` uitvoeren met `execute_luau` (Edit): bouwt het level en stuurt parts, lichten en meshes.
+3. `python3 -I tools/preview/to_gltf.py <map> level.glb`, daarna in Blender importeren (glTF) en renderen.
+Ruim daarna op: receiver stoppen; geen DevTools in ServerStorage laten staan.
+
 ## Tools op deze Mac
 Rokit (`~/.rokit/bin`): rojo 7.7.1, selene, stylua, luau-lsp. Blender 5.2 + Blender MCP (telemetrie uit, safe mode),
-RBXMonkey-add-on (Blender) + plugin (Roblox-inventaris), Roblox Blender Plugin (nog niet ingelogd).
+RBXMonkey-add-on (Blender) + plugin (Roblox-inventaris), Roblox Blender Plugin (inloggen gestart op 16/10; Maurits moet in de
+browser nog op Authorize klikken).

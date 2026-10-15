@@ -1,0 +1,31 @@
+{
+  "_uitleg": "AI-props van map 1 (Studio MCP generate_mesh, segmentation none). 'size' = maat van de MeshPart in ServerStorage.Props. tools/restore_props.luau bouwt de map Props hieruit opnieuw op als ze ooit verloren gaat.",
+  "props": [
+    {"name": "Barrel", "mesh": "rbxassetid://91962339967938", "texture": "rbxassetid://102390238810600", "size": [2.6, 2.41, 2.12],
+     "prompt": "Old wooden barrel with dark iron hoops, stylized cartoon game prop, chunky shape"},
+    {"name": "Bicycle", "mesh": "rbxassetid://97519321111170", "texture": "rbxassetid://134261933980295", "size": [3.52, 4.062, 5.519],
+     "prompt": "Classic black Dutch city bicycle with front basket, stylized cartoon toy style, chunky simplified shapes"},
+    {"name": "CheeseWheel", "mesh": "rbxassetid://73172573620854", "texture": "rbxassetid://70554462180714", "size": [2.999, 0.885, 3],
+     "prompt": "Flat round Dutch gouda cheese wheel lying flat, wide low disc shape about twice as wide as it is tall, bulging rounded sides, glossy yellow wax rind, small red label on top, cartoon toy style"},
+    {"name": "Crate", "mesh": "rbxassetid://95004689267588", "texture": "rbxassetid://100986554474392", "size": [4, 3.821, 3.987],
+     "prompt": "Stylized wooden shipping crate, chunky cartoon game prop, warm brown planks with darker edge frame, stencil cheese symbol on the side"},
+    {"name": "Forklift", "mesh": "rbxassetid://94517248461468", "texture": "rbxassetid://130828442981700", "size": [4, 5.539, 6.731],
+     "prompt": "Small yellow warehouse forklift, cartoon toy style, chunky rounded shapes, black tires, forks lowered"},
+    {"name": "GoldenGouda", "mesh": "rbxassetid://111314658249106", "texture": "rbxassetid://80663204516216", "size": [4, 1.989, 3.99],
+     "prompt": "Stylized golden gouda cheese wheel treasure, shiny gold rind with a crown emblem embossed on top, cartoon toy style, glowing precious look",
+     "note": "Warehouse.luau vervangt de textuur door goudfolie (Foil + goudkleur)."},
+    {"name": "Kennel", "mesh": "rbxassetid://87501583784307", "texture": "rbxassetid://103121969772012", "size": [3.931, 4.83, 5],
+     "prompt": "Wooden dog kennel with red pointed roof and a round entrance, stylized cartoon game prop"},
+    {"name": "PendantLamp", "mesh": "rbxassetid://108475747796097", "texture": "rbxassetid://108984570272205", "size": [2.067, 3.52, 2.061],
+     "prompt": "Hanging industrial pendant lamp with dark green enamel metal shade and warm bulb, stylized cartoon warehouse lamp"},
+    {"name": "StreetLamp", "mesh": "rbxassetid://86016392691368", "texture": "rbxassetid://122891292769432", "size": [2.289, 13, 2.278],
+     "prompt": "Old Amsterdam canal street lamp post, dark green cast iron pole with ornate base and a glass lantern head on top, stylized cartoon game prop",
+     "note": "Glas zit op 9,1-10,2 studs hoogte; Quay.luau zet daar een neon cilinder als lichtbron."},
+    {"name": "TulipBox", "mesh": "rbxassetid://82644917325670", "texture": "rbxassetid://102385372595353", "size": [4.375, 2.582, 2.4],
+     "prompt": "Wooden window flower box full of red, yellow and orange tulips, stylized cartoon Dutch street decoration"},
+    {"name": "TulipBoxTall", "mesh": "rbxassetid://96479653119468", "texture": "rbxassetid://88217394823765", "size": [2.517, 3, 1.853],
+     "prompt": "Wooden window flower box full of red, yellow and orange tulips, stylized cartoon Dutch street decoration"},
+    {"name": "Van", "mesh": "rbxassetid://125916443324999", "texture": "rbxassetid://132077415574363", "size": [8.125, 8.381, 13.046],
+     "prompt": "Bright orange delivery van, rounded cartoon toy car style, big windshield, rear double doors, chunky wheels, playful heist crew van"}
+  ]
+}

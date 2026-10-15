@@ -1,6 +1,6 @@
 # Ontwikkelen aan Crowbar Crew
 
-*Stand 15 oktober 2026 — fase 0 klaar, fase 1 (prototype van één ketenpunt) geschreven.*
+*Stand 16 oktober 2026 — fase 0 klaar, fase 1 getest, map 1 "The Golden Wheel" kreeg een kunstronde (kade, winkel, binnenkoer, hal).*
 
 ## Wat er op je Mac staat
 
@@ -14,7 +14,7 @@
 | Blender 5.2 | 3D-modellen | Ja |
 | Blender MCP | Claude kan Blender bedienen | Ja (telemetrie uit, safe mode aan) |
 | RBXMonkey | Animaties tussen Blender en Studio | Blender-deel aan; Studio-plugin staat in je Roblox-inventaris |
-| Roblox Blender Plugin | Modellen uploaden vanuit Blender | Geïnstalleerd; inloggen pas als het nodig is |
+| Roblox Blender Plugin | Modellen uploaden vanuit Blender | Geïnstalleerd; inloggen gestart: klik in je browser op **Authorize** |
 
 Bewust **niet** geïnstalleerd: Claudio, Vibe Coder, Vibe Code City, MCPBridge (zie gameplan §15) en Wally (pas nodig voor pakketten; de Mac-versie vraagt Rosetta).
 
@@ -28,7 +28,26 @@ Daarna kan Claude zelf testen, fouten lezen en schermafbeeldingen nemen.
 1. Open `build/CrowbarCrew.rbxl` in Studio (Claude houdt dit bestand bij; `rojo build` maakt het opnieuw).
 2. Klik **Play** (alleen) of **Test → Server & Clients** met 2–4 spelers (nepspelers op je eigen computer).
 3. Ga bij het oranje busje naar een **gekleurde sokkel** en druk op **E** (of de knop op het scherm) om het gadget te nemen. Nog eens = teruglegen.
-4. Doel: de **Golden Gouda** in de kooi achteraan de hal. De bewaker loopt een vaste ronde; twee camera's bewaken de kooi.
+4. Doel: de **Golden Gouda** in de kooi achteraan de rijpingshal. Er zijn twee wegen naar binnen:
+   - door de **kaaswinkel** (voordeur open) en de groene **STAFF ONLY**-deur achterin (Crowbar, 1,5 s);
+   - door de **leveringspoort** aan de kade (Crowbar, 3 s) en de binnenkoer, dan de open achterdeur van de hal.
+   De bewaker loopt een vaste ronde; twee camera's bewaken de kooi. Via de trap langs de noordmuur kom je op het kantoor.
+
+## De kaart (map 1, "The Golden Wheel")
+
+- **Kade en gracht** (noord = −X): grachtenpanden aan de overkant, iepen, lantaarns, paaltjes, fietsen, sloepjes, een woonboot
+  en bruggen aan beide uiteinden. Het oranje busje met de gadgetrek (kratten met een oplichtende plaat) staat op de klinkerweg.
+- **Kaaswinkel** met luifel, etalage, toonbank, kaasrekken, krijtbord en het hok van Karel; ernaast de **beveiligingsruimte**
+  (monitoren, alleen bereikbaar vanuit de hal) en de **binnenkoer** (hondenhok, kratten, klimop, slingerlampjes).
+- **Rijpingshal** (20 hoog): kaasstellingen als dekking, hoge ramen, leidingen, inpaktafel, heftruck, de kooi met de gouden
+  gouda op een gloeiende sokkel, en een **kantoor op een tussenverdieping**.
+- **Nacht:** "blauwe nacht" met maanlicht, nevel, warme lampen en een beetje gloed (bloom). Lampen met de tag *Lamp*
+  gaan uit door een EMP en krijgen daarna hun eigen kleur terug.
+- **AI-modellen:** 12 props gemaakt met Roblox' eigen 3D-generator (zie `tools/props.json` voor prompts en ID's). Ze staan in
+  `ServerStorage.Props` van de place. **Belangrijk:** die zitten alleen in je place als je hem bewaart. Doe dus
+  **File → Publish to Roblox** (dan staat alles ook online). Raakt de map ooit kwijt: `tools/restore_props.luau`.
+- Eigen materialen (`CC_Brick`, `CC_Cobble`, …) konden nog niet gemaakt worden: Roblox' materiaalgenerator gaf een interne fout.
+  De code gebruikt ze automatisch zodra ze bestaan; tot dan zie je de ingebouwde Roblox-materialen.
 
 ### Besturing
 

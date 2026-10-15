@@ -63,8 +63,16 @@ local function setLampVisual(lamp: BasePart, disabled: boolean)
 	if light then
 		light.Enabled = not disabled
 	end
+	-- De oorspronkelijke kleur bewaren: niet elke lamp is even warm (lantaarns, slingerlampjes, monitoren).
+	if lamp:GetAttribute("OnColor") == nil then
+		lamp:SetAttribute("OnColor", lamp.Color)
+	end
+	local onColor = lamp:GetAttribute("OnColor")
 	lamp.Material = if disabled then Enum.Material.SmoothPlastic else Enum.Material.Neon
-	lamp.Color = if disabled then Color3.fromRGB(50, 50, 50) else Color3.fromRGB(255, 196, 130)
+	lamp.Color = if disabled
+		then Color3.fromRGB(50, 50, 50)
+		elseif typeof(onColor) == "Color3" then onColor
+		else Color3.fromRGB(255, 196, 130)
 end
 
 local function setDroneDisabled(drone: BasePart, disabled: boolean)
