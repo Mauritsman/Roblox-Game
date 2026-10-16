@@ -161,4 +161,30 @@ UiText.Reasons = {
 	InRound = "Not during a job",
 } :: { [string]: string }
 
+-- Daily contracts (meta's templates; the server's own text wins when it sends one).
+UiText.Contracts = {
+	BankItems = "Bank 5 loot items",
+	BankValue = "Bank 1,000 Cash of loot",
+	PocketSmall = "Bank 6 small items",
+	FinishJobs = "Finish 2 jobs",
+	FreeTeammate = "Free a teammate",
+	BubbleGuards = "Bubble 3 guards",
+	BankHeavy = "Bank a heavy item",
+	TwoStars = "Get 2 stars on a job",
+	HideFromGuard = "Lose a guard in a hiding spot",
+	DistractBoef = "Distract Boef",
+	HotJob = "Finish the Hot Job",
+	StealGouda = "Escape with the main loot",
+	QuietJob = "Finish a Quiet Job",
+	HardJob = "Escape on Hard",
+	CarryTogether = "Bank a heavy item carried together",
+} :: { [string]: string }
+
+-- Heist unlock rules for the board when the server has not sent one yet (meta spec §4.2).
+UiText.HeistRequirements = {
+	PralinePalace = "3★ on The Golden Wheel or Rank 4",
+	TulipAuction = "3★ on Praline Palace or Rank 7",
+} :: { [string]: string }
+UiText.HeistOrder = { "GoldenWheel", "PralinePalace", "TulipAuction" }
+
 return UiText
