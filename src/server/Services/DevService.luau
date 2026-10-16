@@ -19,10 +19,10 @@ function DevService:Start()
 	if not RunService:IsStudio() then
 		return
 	end
-	-- Take/return a gadget as if the player pressed the pedestal button.
+	-- Carry a gadget with full charges (the pedestals are gone; meta's Garage rack picks the loadout).
 	Net.onRequest("DevTake", function(player: Player, gadgetName: any)
 		if typeof(gadgetName) == "string" then
-			LoadoutService:Toggle(player, gadgetName)
+			LoadoutService:DevTake(player, gadgetName)
 		end
 	end)
 	-- Open a Pryable object as if the player held the Crowbar button (optionally by name, e.g. "CageDoor").
@@ -30,7 +30,7 @@ function DevService:Start()
 		for _, target in CollectionService:GetTagged(Tags.Pryable) do
 			local nameOk = typeof(targetName) ~= "string" or target.Name == targetName
 			if target:IsA("BasePart") and nameOk then
-				GadgetService:Pry(player, target)
+				GadgetService:Pry(player, target, true)
 				return
 			end
 		end

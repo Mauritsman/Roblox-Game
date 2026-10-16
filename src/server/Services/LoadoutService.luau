@@ -1,166 +1,210 @@
 --!strict
--- Who carries which gadget (§3.7). There is one of each gadget; you take it from the rack by the van.
--- The number of slots depends on the crew size. Charges belong to the gadget, not to the player.
+-- Gadget loadouts (beta-spec §5). Everyone carries the Crowbar plus the 2 gadgets they picked at meta's Garage
+-- rack (ShopService:GetLoadout through Lib/Meta; meta's default when nothing is picked). Duplicates across a crew
+-- are allowed. Charges belong to the player and reset every round.
+--
+-- Entry points (integration.md):
+--   ResetRound(players, job)   Briefing and JUMP IN — ONLY the players passed in: picks, charges (perks), stats
+--   StatsOf(player)            per-player numbers after difficulty and perks (Lib/PlayerStats)
+--   Has(player, gadget) · UseCharge(player, gadget) · Charges(player, gadget) · Picks(player)
+--   DevTake(player, gadget)    Studio: add a gadget with full charges (tests)
+-- Panic Pack: at LOCKDOWN every crew member gets +1 charge on each picked gadget (Config.Features.LoudExtras).
+-- Player attributes: `Gadgets` ("a,b,Crowbar"; empty outside a crew round), `Charges_<Gadget>` (-1 = unlimited).
 
-local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
 
 local Config = require(ReplicatedStorage.Shared.Config)
 local Net = require(ReplicatedStorage.Shared.Net)
 local Tags = require(ReplicatedStorage.Shared.Tags)
+local Loadout = require(ReplicatedStorage.Shared.Logic.Loadout)
+
+local Server = script.Parent.Parent
+local Meta = require(Server.Lib.Meta)
+local Optional = require(Server.Lib.Optional)
+local PlayerStats = require(Server.Lib.PlayerStats)
 
 local LoadoutService = {}
 
-local owners: { [string]: Player? } = {} -- gadget -> player
-local charges: { [string]: number } = {}
+local CROWBAR = "Crowbar"
 
-local function gadgetsOf(player: Player): { string }
-	local list = {}
-	for _, gadgetName in Config.GadgetOrder do
-		if owners[gadgetName] == player then
-			table.insert(list, gadgetName)
-		end
-	end
-	return list
+type Kit = {
+	picks: { string },
+	charges: { [string]: number },
+	panic: boolean, -- Panic Pack already given this round
+}
+
+local kits: { [Player]: Kit } = {}
+
+local function isPlayer(value: any): boolean
+	return typeof(value) == "Instance" and value:IsA("Player") and value.Parent ~= nil
 end
 
-local function publish()
-	local slots = Config.slotsFor(#Players:GetPlayers())
-	for _, player in Players:GetPlayers() do
-		local list = gadgetsOf(player)
-		player:SetAttribute(Tags.Gadgets, table.concat(list, ","))
-		player:SetAttribute(Tags.Slots, slots)
-		for _, gadgetName in Config.GadgetOrder do
-			local value = if owners[gadgetName] == player then charges[gadgetName] else nil
-			player:SetAttribute(Tags.Charges .. gadgetName, if value == math.huge then -1 else value)
+local function publish(player: Player)
+	local kit = kits[player]
+	player:SetAttribute(Tags.Gadgets, if kit then Loadout.list(kit.picks, CROWBAR) else "")
+	player:SetAttribute(Tags.Slots, nil) -- DEPRECATED attribute (contracts §2.2)
+	for _, name in Config.GadgetOrder do
+		local value: number? = nil
+		if kit and name == CROWBAR then
+			value = -1
+		elseif kit then
+			value = kit.charges[name]
 		end
-	end
-	-- Pedestals show whether the gadget is still free.
-	for _, pedestal in CollectionService:GetTagged(Tags.GadgetPedestal) do
-		if pedestal:IsA("BasePart") then
-			local gadgetName = pedestal:GetAttribute("Gadget")
-			pedestal.Transparency = if typeof(gadgetName) == "string" and owners[gadgetName] then 0.75 else 0
-		end
+		player:SetAttribute(Tags.Charges .. name, value)
 	end
 end
 
-function LoadoutService:Has(player: Player, gadgetName: string): boolean
-	return owners[gadgetName] == player
+local function phase(): string?
+	local value = ReplicatedStorage:GetAttribute(Tags.RoundPhase)
+	return if type(value) == "string" then value else nil
 end
 
-function LoadoutService:Charges(gadgetName: string): number
-	return charges[gadgetName] or 0
+local function givePanicPack(player: Player, announce: boolean)
+	local kit = kits[player]
+	if not kit or kit.panic or not Config.Features.LoudExtras then
+		return
+	end
+	kit.panic = true
+	kit.charges = Loadout.panic(kit.charges, kit.picks, Config.Objectives.PanicPackCharges)
+	publish(player)
+	if announce and #kit.picks > 0 then
+		Net.send(player, "Toast", `PANIC PACK! +{Config.Objectives.PanicPackCharges} on each gadget`)
+	end
 end
 
--- Uses up one charge. Returns false if there are none left.
-function LoadoutService:UseCharge(player: Player, gadgetName: string): boolean
-	if owners[gadgetName] ~= player then
+-- Fresh picks, charges and stats for exactly these players (Briefing: the crew; JUMP IN: the newcomer).
+-- Returns true so RoundService knows the beta loadout handled it.
+function LoadoutService:ResetRound(players: { Player }, job: any?): boolean
+	if type(players) ~= "table" then
 		return false
 	end
-	local left = charges[gadgetName] or 0
-	if left <= 0 then
-		return false
+	local difficulty = if type(job) == "table" and type(job.difficulty) == "string"
+		then job.difficulty
+		else nil
+	for _, player in players do
+		if isPlayer(player) then
+			local stats = PlayerStats.Refresh(player, difficulty)
+			local raw = Meta.GetLoadout(player)
+			local picks =
+				Loadout.picks(raw, Config.Loadout.Pickable, Config.Loadout.Slots, Config.Loadout.Default)
+			kits[player] = {
+				picks = picks,
+				charges = Loadout.charges(picks, Config.Gadgets :: any, stats :: any),
+				panic = false,
+			}
+			publish(player)
+			-- Joined during LOCKDOWN: the Panic Pack too.
+			if phase() == "Lockdown" then
+				givePanicPack(player, false)
+			end
+			Optional.call("MovementService", "Refresh", player)
+		end
 	end
-	charges[gadgetName] = left - 1
-	publish()
 	return true
 end
 
-function LoadoutService:ResetRun()
-	for _, gadgetName in Config.GadgetOrder do
-		owners[gadgetName] = nil
-		charges[gadgetName] = Config.Gadgets[gadgetName].Charges
-	end
-	publish()
+function LoadoutService:StatsOf(player: Player): PlayerStats.Stats
+	return PlayerStats.StatsOf(player)
 end
 
-local function togglePedestal(pedestal: BasePart, player: Player)
-	local gadgetName = pedestal:GetAttribute("Gadget")
-	if typeof(gadgetName) ~= "string" then
-		return
+-- Everyone has the Crowbar; the other gadgets only when picked for this round.
+function LoadoutService:Has(player: Player, gadgetName: string): boolean
+	if gadgetName == CROWBAR then
+		return true
 	end
-	local character = player.Character
-	if character and (character:GetAttribute("Caught") or character:GetAttribute(Tags.Operating)) then
-		return
-	end
-
-	if owners[gadgetName] == player then
-		owners[gadgetName] = nil
-		Net.send(player, "Toast", `Returned the {gadgetName:upper()}`)
-	elseif owners[gadgetName] ~= nil then
-		local owner = owners[gadgetName] :: Player
-		Net.send(player, "Toast", `{owner.DisplayName} has the {gadgetName:upper()}`)
-		return
-	else
-		local slots = Config.slotsFor(#Players:GetPlayers())
-		if #gadgetsOf(player) >= slots then
-			Net.send(player, "Toast", `All {slots} slots full. Return a gadget first.`)
-			return
-		end
-		owners[gadgetName] = player
-		Net.send(player, "Toast", `Took the {gadgetName:upper()} ({Config.Gadgets[gadgetName].Step})`)
-	end
-	publish()
+	local kit = kits[player]
+	return kit ~= nil and table.find(kit.picks, gadgetName) ~= nil
 end
 
--- Take or return by name (used by the pedestal button and by DevService in Studio).
-function LoadoutService:Toggle(player: Player, gadgetName: string)
-	for _, pedestal in CollectionService:GetTagged(Tags.GadgetPedestal) do
-		if pedestal:IsA("BasePart") and pedestal:GetAttribute("Gadget") == gadgetName then
-			togglePedestal(pedestal, player)
-			return
-		end
-	end
+function LoadoutService:Picks(player: Player): { string }
+	local kit = kits[player]
+	return if kit then table.clone(kit.picks) else {}
 end
 
--- One button per pedestal ("Take / Return"): works with E, controller X and tapping; never fires by accident.
-local function hookPedestal(pedestal: Instance)
-	if not pedestal:IsA("BasePart") or pedestal:FindFirstChild("TakePrompt") then
-		return
+function LoadoutService:Charges(player: Player, gadgetName: string): number
+	if gadgetName == CROWBAR then
+		return math.huge
 	end
-	local gadgetName = pedestal:GetAttribute("Gadget")
-	local prompt = Instance.new("ProximityPrompt")
-	prompt.Name = "TakePrompt"
-	prompt.ActionText = "Take / Return"
-	prompt.ObjectText = if typeof(gadgetName) == "string" then gadgetName:upper() else "Gadget"
-	prompt.HoldDuration = 0
-	prompt.MaxActivationDistance = 4.5
-	prompt.RequiresLineOfSight = false
-	prompt.KeyboardKeyCode = Enum.KeyCode.E
-	prompt.GamepadKeyCode = Enum.KeyCode.ButtonX
-	prompt.Parent = pedestal
-	prompt.Triggered:Connect(function(player)
-		togglePedestal(pedestal, player)
-	end)
+	local kit = kits[player]
+	return if kit then kit.charges[gadgetName] or 0 else 0
 end
 
-function LoadoutService:Init()
-	for _, gadgetName in Config.GadgetOrder do
-		charges[gadgetName] = Config.Gadgets[gadgetName].Charges
+-- Uses up one charge. Returns false when the player has none left (or does not carry the gadget).
+function LoadoutService:UseCharge(player: Player, gadgetName: string): boolean
+	if gadgetName == CROWBAR then
+		return true
+	end
+	local kit = kits[player]
+	if not kit or not table.find(kit.picks, gadgetName) then
+		return false
+	end
+	local left = kit.charges[gadgetName] or 0
+	if left <= 0 then
+		return false
+	end
+	kit.charges[gadgetName] = left - 1
+	publish(player)
+	return true
+end
+
+-- Studio tests: carry this gadget (added to the picks) with full charges.
+function LoadoutService:DevTake(player: Player, gadgetName: string): boolean
+	if not RunService:IsStudio() or not table.find(Config.Loadout.Pickable, gadgetName) then
+		return false
+	end
+	local kit = kits[player]
+	if not kit then
+		kit = { picks = {}, charges = {}, panic = false }
+		kits[player] = kit
+	end
+	if not table.find(kit.picks, gadgetName) then
+		table.insert(kit.picks, gadgetName)
+	end
+	local def = (Config.Gadgets :: any)[gadgetName]
+	kit.charges[gadgetName] = if def then def.Charges else 1
+	publish(player)
+	Net.send(player, "Toast", `DEV: took the {Loadout.label(gadgetName, Config.Gadgets :: any)}`)
+	return true
+end
+
+-- Leaving a crew round (Garage, mini-job): no gadgets outside a heist.
+local function onActivity(player: Player)
+	if player:GetAttribute(Tags.Activity) ~= "Crew" and kits[player] then
+		kits[player] = nil
+		publish(player)
 	end
 end
 
 function LoadoutService:Start()
-	for _, pedestal in CollectionService:GetTagged(Tags.GadgetPedestal) do
-		hookPedestal(pedestal)
+	local function onPlayer(player: Player)
+		player:GetAttributeChangedSignal(Tags.Activity):Connect(function()
+			onActivity(player)
+		end)
+		publish(player)
 	end
-	CollectionService:GetInstanceAddedSignal(Tags.GadgetPedestal):Connect(function(pedestal)
-		hookPedestal(pedestal)
-		task.defer(publish)
-	end)
-	Players.PlayerAdded:Connect(function()
-		publish()
-	end)
+	Players.PlayerAdded:Connect(onPlayer)
+	for _, player in Players:GetPlayers() do
+		onPlayer(player)
+	end
 	Players.PlayerRemoving:Connect(function(player)
-		for gadgetName, owner in owners do
-			if owner == player then
-				owners[gadgetName] = nil
-			end
-		end
-		task.defer(publish)
+		kits[player] = nil
 	end)
-	publish()
+
+	-- Panic Pack at the start of the loud phase.
+	local round = Optional.get("RoundService")
+	if round and type(round.PhaseChanged) == "table" then
+		round.PhaseChanged:Connect(function(newPhase: string)
+			if newPhase == "Lockdown" then
+				for player in kits do
+					if player.Parent and player:GetAttribute(Tags.Activity) == "Crew" then
+						givePanicPack(player, true)
+					end
+				end
+			end
+		end)
+	end
 end
 
 return LoadoutService

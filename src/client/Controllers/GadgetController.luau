@@ -55,21 +55,16 @@ local function refreshHud()
 	local entries = {}
 	for _, name in list do
 		local charges = player:GetAttribute(Tags.Charges .. name)
+		local def = (Config.Gadgets :: any)[name]
 		table.insert(entries, {
 			name = name,
-			label = Config.Gadgets[name].Label or name,
+			label = if def and def.Label then def.Label else string.upper(name),
 			charges = if typeof(charges) == "number" then charges else nil,
 			selected = name == selected,
-			step = Config.Gadgets[name].Step,
 		})
 	end
-	local slots = player:GetAttribute(Tags.Slots)
 	local battery = player:GetAttribute("DroneBattery")
-	Hud.setLoadout(
-		entries,
-		if typeof(slots) == "number" then slots else 1,
-		if typeof(battery) == "number" then battery else nil
-	)
+	Hud.setLoadout(entries, #list, if typeof(battery) == "number" then battery else nil)
 end
 
 local function characterRoot(): BasePart?
@@ -90,7 +85,7 @@ local function screenRay(): Ray
 	return camera:ViewportPointToRay(size.X / 2, size.Y / 2)
 end
 
--- What is the player pointing at? Shared with the ping and Chain Call controllers.
+-- What is the player pointing at? Shared with the ping controller.
 function GadgetController.pointerHit(maxDistance: number?): RaycastResult?
 	local ray = screenRay()
 	local params = RaycastParams.new()
@@ -147,7 +142,7 @@ end
 local function useSelected()
 	local gadgetName = selectedGadget()
 	if not gadgetName then
-		Hud.toast("No gadget. Walk into a pedestal at the van.", Hud.Colors.Warn)
+		Hud.toast("No gadgets. Pick two at the Garage rack.", Hud.Colors.Warn)
 		return
 	end
 	if gadgetName == "Drone" then
@@ -357,17 +352,9 @@ function GadgetController:Start()
 		watchCharacter(player.Character)
 	end
 
-	-- Chain Call: on NOW, a readied EMP or Noisemaker goes off automatically (§3.4).
-	ClientState.Changed:Connect(function(key)
-		if key == "ChainNow" and ClientState.aiming then
-			throw()
-		end
-	end)
-
 	player.AttributeChanged:Connect(function(name)
 		if
 			name == Tags.Gadgets
-			or name == Tags.Slots
 			or name == "DroneBattery"
 			or string.sub(name, 1, #Tags.Charges) == Tags.Charges
 		then
