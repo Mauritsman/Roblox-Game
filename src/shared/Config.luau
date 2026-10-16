@@ -496,8 +496,9 @@ Config.Ping = {
 	SpotWindowSeconds = 2,
 	SpotDurationDefault = 8,
 	SpotDurationTracked = 5,
-	QuickCooldown = 2, -- advisor approved 10 s (one shared cooldown for the wheel); ux applies it in WP1
-	QuickPresets = { "NOW", "WAIT" },
+	QuickCooldown = 10, -- one shared cooldown for the whole quick wheel (advisor; Roblox preset rule)
+	-- The 6 fixed quick-wheel words (ux WP1). Labels and icons: src/client/Lib/Theme.luau.
+	QuickPresets = { "GO", "TO THE VAN", "THROW TO ME", "WAIT", "LIFT WITH ME", "HELP" },
 	MaxRange = 300,
 }
 
