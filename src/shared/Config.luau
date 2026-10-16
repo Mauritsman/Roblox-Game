@@ -182,6 +182,14 @@ Config.Guard = {
 	RadioSearchSeconds = 10, -- lockdown radio: search time at the radioed spot
 	DroneNoticeSeconds = 1.5, -- "What's that?" after seeing a drone this long
 	StuckSeconds = 3, -- not moving this long while walking → re-path or give up
+	-- Bugs B-007 / B-008
+	GrabVertical = 4.5, -- grab range is horizontal (CaptureDistance); this much height difference still counts
+	ConeMaxPitch = 55, -- degrees up/down for targets on another floor (≈ the old tilted cone's reach)
+	ConeVerticalSlack = 4, -- within this height difference from the eye only the cone's yaw counts
+	ConeOverlap = 1, -- a target this close horizontally is seen in any direction
+	WatchSeconds = 0.5, -- Suspicious/Search: seen this recently → he stands and stares at you instead of looking around
+	TurnSpeed = 360, -- degrees per second when turning on the spot (Mover's AlignOrientation)
+	VisionGuardsPerFrame = 2, -- vision budget (B-010): at most this many guards raycast in one frame, taking turns
 }
 
 -- ---------- Security cameras ----------

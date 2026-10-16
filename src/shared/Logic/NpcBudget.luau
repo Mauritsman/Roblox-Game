@@ -54,4 +54,29 @@ function NpcBudget.others(o: Others): number
 	return (if o.karel then 1 else 0) + (if o.dog then 1 else 0) + (o.extra or 0) + (o.inspector or 0)
 end
 
+-- Vision budget (bug B-010): which NPCs look this frame. `waited[i]` = seconds since NPC i last looked. Those
+-- that waited at least `interval` are due; at most `budget` of them look, taking turns from the one after
+-- `cursor` (the last NPC that looked). Returns the indices to update and the new cursor.
+function NpcBudget.dueThisFrame(
+	waited: { number },
+	cursor: number,
+	interval: number,
+	budget: number
+): ({ number }, number)
+	local picked = {}
+	local count = #waited
+	local nextCursor = cursor
+	for offset = 1, count do
+		if #picked >= budget then
+			break
+		end
+		local index = (cursor + offset - 1) % count + 1
+		if waited[index] >= interval then
+			table.insert(picked, index)
+			nextCursor = index
+		end
+	end
+	return picked, nextCursor
+end
+
 return NpcBudget

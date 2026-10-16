@@ -161,6 +161,42 @@ function Detection.inCone(
 	return cos >= math.cos(math.rad(halfAngleDegrees))
 end
 
+export type ViewCone = {
+	halfAngle: number, -- degrees, measured on the ground plane (yaw)
+	range: number,
+	maxPitch: number, -- degrees up or down; only checked for targets more than `verticalSlack` from the eye height
+	verticalSlack: number, -- studs: within this height difference (same floor) only the yaw counts
+	overlap: number, -- studs: a target this close horizontally (and within the slack) is always seen
+}
+
+-- Is `target` in a guard's (or snitch's) view? The cone is measured on the ground plane, so a player standing
+-- right in front of a guard stays in view however close he gets. (The old check tilted a 3D cone by the eye
+-- height, which lost a player standing 1.5 studs in front of the guard: bug B-008.) Targets on another floor
+-- (more than `verticalSlack` above or below the eye) must also be within `maxPitch` degrees up or down. Someone
+-- right on top of the viewer (`overlap`) is seen in any direction. Line of sight is the caller's job (raycast).
+function Detection.inViewCone(eye: Vec3, forward: Vec3, target: Vec3, cone: ViewCone): boolean
+	local dx, dy, dz = target.x - eye.x, target.y - eye.y, target.z - eye.z
+	if dx * dx + dy * dy + dz * dz > cone.range * cone.range then
+		return false
+	end
+	local flat = math.sqrt(dx * dx + dz * dz)
+	if math.abs(dy) > cone.verticalSlack then
+		local pitch = math.deg(math.atan2(math.abs(dy), flat))
+		if pitch > cone.maxPitch then
+			return false
+		end
+	end
+	if flat <= cone.overlap then
+		return true
+	end
+	local flen = math.sqrt(forward.x * forward.x + forward.z * forward.z)
+	if flen < 1e-6 then
+		return false
+	end
+	local cos = (dx * forward.x + dz * forward.z) / (flat * flen)
+	return cos >= math.cos(math.rad(cone.halfAngle))
+end
+
 -- Players guards, cameras and snitches ignore. Returns (ignored, reason).
 function Detection.isIgnored(target: Target, now: number): (boolean, string?)
 	if target.caught then

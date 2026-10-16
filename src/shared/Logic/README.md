@@ -22,7 +22,7 @@ Never require `Config`, `Net` or anything outside this folder; pass the `Config`
 | `Detection` | mechanics | Meter fill time, factors, alarm tier, vision range, cone, who is ignored |
 | `RoundClock` | mechanics | Police time, shift change, lockdown, JUMP IN window, "JUST MADE IT" |
 | `RoundPlan` | mechanics | The seeded round setup: loot, Gouda, entrances, exits, guards, hazards, objectives |
-| `NpcBudget` | mechanics | Guard count within the 7-NPC cap |
+| `NpcBudget` | mechanics | Guard count within the 7-NPC cap; which NPCs look this frame (vision budget) |
 | `Difficulty` | mechanics | Easy / Normal / Hard effects on the round |
 | `Perks` | mechanics | Per-player stats after perks (`LoadoutService:StatsOf`) |
 | `Awards` | mechanics | One payout award per crew member |

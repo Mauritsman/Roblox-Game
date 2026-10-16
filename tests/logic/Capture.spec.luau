@@ -72,4 +72,47 @@ return function(t)
 		t.eq(Capture.freeSpot({ [1] = "a" }, 1), nil)
 		t.eq(Capture.freeSpot({}, 0), nil)
 	end)
+
+	t.test("reach: horizontal distance, another floor is out of reach", function()
+		local vertical = Config.Guard.GrabVertical -- 4.5
+		t.near(Capture.reach(3, 0, 4, vertical), 5)
+		t.near(Capture.reach(3, -2, 0, vertical), 3) -- height difference within the tolerance is ignored
+		t.near(Capture.reach(0, 4.5, 2, vertical), 2)
+		t.eq(Capture.reach(0, 4.6, 0, vertical), math.huge)
+		t.eq(Capture.reach(1, -9, 1, vertical), math.huge) -- upper floor (y 9)
+	end)
+
+	t.test("B-007: a guard standing on the player's head still grabs within 1 s", function()
+		-- Smoke test: guard root y 6.96, player root y 2.9, 0.3 studs apart sideways. 3D distance 4.07 > 3.5.
+		local dx, dy, dz = 0.3, 2.9 - 6.96, 0.1
+		t.ok(math.sqrt(dx * dx + dy * dy + dz * dz) > RANGE)
+		local reach = Capture.reach(dx, dy, dz, Config.Guard.GrabVertical)
+		t.ok(reach <= RANGE)
+		local progress, grabbed = 0, false
+		for _ = 1, 10 do
+			progress, grabbed = Capture.grabStep(progress, 0.1, reach, RANGE, SECONDS)
+		end
+		t.ok(grabbed)
+	end)
+
+	t.test("B-007: a slow walker the guard keeps up with is grabbed after 1 s", function()
+		-- Chase at 15, the player crouch-walks away at 8: once within range the guard stays within range.
+		local guardX, playerX = -3, 0
+		local progress, grabbed, seconds = 0, false, 0
+		while not grabbed and seconds < 3 do
+			local dt = 1 / 60
+			seconds += dt
+			playerX += 8 * dt
+			guardX = math.min(playerX, guardX + Config.Guard.ChaseSpeed * dt) -- walks into the player (no collision)
+			progress, grabbed = Capture.grabStep(
+				progress,
+				dt,
+				Capture.reach(playerX - guardX, 0, 0, Config.Guard.GrabVertical),
+				RANGE,
+				SECONDS
+			)
+		end
+		t.ok(grabbed)
+		t.ok(seconds <= SECONDS + 0.05, string.format("grabbed after %.2f s", seconds))
+	end)
 end

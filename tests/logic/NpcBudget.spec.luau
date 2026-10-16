@@ -63,4 +63,47 @@ return function(t)
 		t.eq(NpcBudget.others({ karel = true }), 1)
 		t.eq(NpcBudget.others({ karel = true, dog = true, extra = 2, inspector = 1 }), 5)
 	end)
+
+	t.test("dueThisFrame: only due NPCs, at most the budget, taking turns", function()
+		local picked, cursor = NpcBudget.dueThisFrame({ 0.1, 0.1, 0.1, 0.1 }, 0, 0.1, 2)
+		t.eq(#picked, 2)
+		t.eq(picked[1], 1)
+		t.eq(picked[2], 2) -- no skipping
+		t.eq(cursor, 2)
+		picked, cursor = NpcBudget.dueThisFrame({ 0, 0, 0.1, 0.1 }, cursor, 0.1, 2)
+		t.eq(picked[1], 3)
+		t.eq(picked[2], 4)
+		t.eq(cursor, 4)
+		picked, cursor = NpcBudget.dueThisFrame({ 0.2, 0.05, 0, 0 }, cursor, 0.1, 2) -- wraps around
+		t.eq(#picked, 1)
+		t.eq(picked[1], 1)
+		t.eq(cursor, 1)
+		picked, cursor = NpcBudget.dueThisFrame({ 0, 0 }, 1, 0.1, 2) -- nobody due: cursor stays
+		t.eq(#picked, 0)
+		t.eq(cursor, 1)
+		t.eq(#NpcBudget.dueThisFrame({}, 3, 0.1, 2), 0)
+	end)
+
+	t.test("dueThisFrame: 8 guards at 60 fps all look about every 0.1 s with a budget of 2", function()
+		local waited, cursor, looks = {}, 0, {}
+		for i = 1, 8 do
+			waited[i] = (i - 1) * 0.1 / 8 -- staggered start
+			looks[i] = 0
+		end
+		local dt = 1 / 60
+		for _ = 1, 60 do -- one second
+			for i = 1, 8 do
+				waited[i] += dt
+			end
+			local picked
+			picked, cursor = NpcBudget.dueThisFrame(waited, cursor, 0.1, 2)
+			for _, i in picked do
+				waited[i] = 0
+				looks[i] += 1
+			end
+		end
+		for i = 1, 8 do
+			t.ok(looks[i] >= 8, string.format("guard %d looked %d times", i, looks[i]))
+		end
+	end)
 end

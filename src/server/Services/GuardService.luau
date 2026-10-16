@@ -1,13 +1,15 @@
 --!strict
 -- Guards (beta-spec §3.1–3.3). Many guards from the round plan, each on his own route.
 --   Patrol      walks his route (straight legs; a leg that changes floor uses pathfinding), speed 6 (tier 2: 7.5)
---   Suspicious  walks to something he saw or heard and looks around ("?"), speed 9
+--   Suspicious  walks to something he saw or heard and looks around ("?"), speed 9. While he still sees the
+--               player who made him suspicious he stands and stares at them (the meter keeps filling)
 --   Alert       chases at 15 ("!"): straight while he sees you, pathfinding when he lost sight; 1 s within
---               3.5 studs = grab. Lost for 3 s → Search
+--               3.5 studs (horizontal, up to 4.5 studs height difference) = grab. Lost for 3 s → Search
 --   Search      searches around the last known spot for 15 s ("?!")
 --   Stunned     in a bubble (8 s), sees nothing; then Search, +10 alarm
 --   Carrying    carries a captive to the cell at 8 (pathfinding), sees nothing (CaptureService drives this)
--- Guards have no weapons: a flashlight and a radio. Vision ignores `SeeThrough` parts (and the `Cage` folder).
+-- Guards have no weapons: a flashlight and a radio. Vision ignores `SeeThrough` parts (and the `Cage` folder) and
+-- invisible parts. Guards (collision group "Guards") walk through player characters ("Players"): bug B-007.
 -- Detection numbers: Logic/Detection (crouch, carry, Sleepy Guards, lockdown and difficulty factors).
 
 local CollectionService = game:GetService("CollectionService")
@@ -22,6 +24,7 @@ local Detection = require(ReplicatedStorage.Shared.Logic.Detection)
 local Hiding = require(ReplicatedStorage.Shared.Logic.Hiding)
 local Net = require(ReplicatedStorage.Shared.Net)
 local Noise = require(ReplicatedStorage.Shared.Logic.Noise)
+local NpcBudget = require(ReplicatedStorage.Shared.Logic.NpcBudget)
 local Patrol = require(ReplicatedStorage.Shared.Logic.Patrol)
 local Signal = require(ReplicatedStorage.Shared.Signal)
 local Tags = require(ReplicatedStorage.Shared.Tags)
@@ -67,8 +70,11 @@ type Guard = {
 	waitUntil: number,
 	waited: boolean,
 	meters: { [Player]: number },
+	visionAcc: number, -- seconds since his last vision update (vision is spread over frames)
 	target: Player?,
 	targetPos: Vector3?,
+	watchPos: Vector3?, -- where he last saw the player who made him suspicious (Suspicious/Search)
+	watchedAt: number,
 	lastSeenAt: number,
 	grabProgress: number,
 	arrived: boolean,
@@ -87,7 +93,13 @@ type Guard = {
 }
 
 local G = Config.Guard
-local COS_HALF = math.cos(math.rad(G.ConeHalfAngle))
+local VIEW_CONE: Detection.ViewCone = {
+	halfAngle = G.ConeHalfAngle,
+	range = math.huge, -- canSee passes the lit/dark range
+	maxPitch = G.ConeMaxPitch,
+	verticalSlack = G.ConeVerticalSlack,
+	overlap = G.ConeOverlap,
+}
 local RANGES = { RangeLit = G.RangeLit, RangeDark = G.RangeDark, FlashlightRange = G.FlashlightRange }
 local RATES = {
 	CrouchFillRate = G.CrouchFillRate,
@@ -106,6 +118,7 @@ local STATE_ICONS: { [GuardState]: { text: string, color: Color3 } } = {
 }
 
 local guards: { Guard } = {}
+local paramsDirty = true -- the vision ignore list must be rebuilt (guards, tagged parts or the level changed)
 local lockdownOn = false
 local everSeen: { [Player]: boolean } = {}
 local round = {
@@ -256,8 +269,11 @@ local function spawnGuard(
 		waitUntil = 0,
 		waited = false,
 		meters = {},
+		visionAcc = math.random() * G.VisionInterval, -- staggered so guards do not all look in one frame
 		target = nil,
 		targetPos = nil,
+		watchPos = nil,
+		watchedAt = 0,
 		lastSeenAt = 0,
 		grabProgress = 0,
 		arrived = false,
@@ -275,6 +291,7 @@ local function spawnGuard(
 		onArrive = nil,
 	}
 	table.insert(guards, guard)
+	paramsDirty = true
 end
 
 --------------------------------------------------------------------------------------------------------------
@@ -307,7 +324,17 @@ local function isLit(position: Vector3): boolean
 end
 
 -- Everything vision rays pass through: guards, NPCs, loot, drones, `SeeThrough` parts and the `Cage` folder.
+-- Built only when something changed (tags added/removed, guards spawned, a new level) or every 2 s, not for
+-- every vision update (bug B-010).
+local cachedParams: RaycastParams? = nil
+local paramsBuiltAt = -math.huge
 local function visionParams(): RaycastParams
+	local now = os.clock()
+	if cachedParams and not paramsDirty and now - paramsBuiltAt < 2 then
+		return cachedParams
+	end
+	paramsDirty = false
+	paramsBuiltAt = now
 	local ignore: { Instance } = {}
 	for _, guard in guards do
 		table.insert(ignore, guard.model)
@@ -325,27 +352,53 @@ local function visionParams(): RaycastParams
 	local params = RaycastParams.new()
 	params.FilterType = Enum.RaycastFilterType.Exclude
 	params.FilterDescendantsInstances = ignore
+	cachedParams = params
 	return params
 end
+
+-- Players as the guards see them, shared by every guard looking within the same 0.05 s.
+local cachedSeen: { Seen } = {}
+local seenAt = -math.huge
 
 local function eyeOf(guard: Guard): Vector3
 	return guard.root.Position + Vector3.new(0, G.HeadHeight, 0)
 end
 
+-- Is there a clear line from `from` to `point`? Hitting any part of `targetModel` counts as clear. Rays pass
+-- through invisible parts (Transparency ≥ 0.95: trigger boxes, invisible ramps), like a player's eyes do.
 local function lineOfSight(
 	from: Vector3,
 	point: Vector3,
 	targetModel: Instance?,
 	params: RaycastParams
 ): boolean
-	local result = workspace:Raycast(from, point - from, params)
-	if result == nil then
-		return true
+	local origin = from
+	for _ = 1, 4 do
+		local offset = point - origin
+		if offset.Magnitude < 0.05 then
+			return true
+		end
+		local result = workspace:Raycast(origin, offset, params)
+		if result == nil then
+			return true
+		end
+		local hit = result.Instance
+		if targetModel ~= nil and hit:IsDescendantOf(targetModel) then
+			return true
+		end
+		if hit.Transparency < 0.95 then
+			return false
+		end
+		origin = result.Position + offset.Unit * 0.05 -- a ray that starts inside a part does not hit it
 	end
-	return targetModel ~= nil and result.Instance:IsDescendantOf(targetModel)
+	return false
 end
 
--- Does this guard see this point inside his cone? Also returns the distance.
+local function vec(v: Vector3): Detection.Vec3
+	return { x = v.X, y = v.Y, z = v.Z }
+end
+
+-- Does this guard see this point inside his cone (Logic/Detection.inViewCone)? Also returns the distance.
 local function canSee(
 	guard: Guard,
 	point: Vector3,
@@ -354,25 +407,17 @@ local function canSee(
 	params: RaycastParams
 ): (boolean, number)
 	local eye = eyeOf(guard)
-	local offset = point - eye
-	local distance = offset.Magnitude
+	local distance = (point - eye).Magnitude
 	if distance > range then
 		return false, distance
 	end
-	if distance < 0.01 then
-		return true, distance
-	end
-	local look = guard.root.CFrame.LookVector
-	local flatLook = Vector3.new(look.X, 0, look.Z).Unit
-	local dir = offset.Unit
-	local flatDir = Vector3.new(dir.X, dir.Y * 0.5, dir.Z).Unit -- forgiving up and down (upper floors)
-	if flatLook:Dot(flatDir) < COS_HALF then
+	if not Detection.inViewCone(vec(eye), vec(guard.root.CFrame.LookVector), vec(point), VIEW_CONE) then
 		return false, distance
 	end
 	return lineOfSight(eye, point, targetModel, params), distance
 end
 
-local function snapshot(now: number): { Seen }
+local function buildSnapshot(now: number): { Seen }
 	local list = {}
 	local sleepy = (round.modifier or Targets.modifier()) == "SleepyGuards"
 	local lockdown = isLockdown()
@@ -399,6 +444,15 @@ local function snapshot(now: number): { Seen }
 		end
 	end
 	return list
+end
+
+local function snapshot(): { Seen }
+	local clock = os.clock()
+	if clock - seenAt >= G.VisionInterval * 0.5 then
+		seenAt = clock
+		cachedSeen = buildSnapshot(Targets.now())
+	end
+	return cachedSeen
 end
 
 local function investigate(guard: Guard, position: Vector3, searchSeconds: number, hunting: boolean?)
@@ -492,6 +546,9 @@ local function updateVision(guard: Guard, dt: number, seen: { Seen }, params: Ra
 					guard.arrived = false
 					guard.walkDeadline = now + 4
 				end
+				-- He keeps his eyes on you (updateInvestigate) while the meter fills.
+				guard.watchPos = position
+				guard.watchedAt = now
 			end
 		end
 		guard.meters[player] = meter
@@ -563,6 +620,7 @@ local function popBubble(guard: Guard)
 		guard.bubble = nil
 	end
 	guard.model:SetAttribute(Tags.Bubbled, nil)
+	guard.mover:refreshOwner()
 	Rig.sound(guard.root, "rbxasset://sounds/swoosh.wav")
 	-- Angry out of the bubble: searches right where he stands, and the alarm rises a little (§4.8).
 	startSearch(guard, nil, G.AlertSearchSeconds, false)
@@ -631,21 +689,33 @@ local function updatePatrol(guard: Guard)
 	guard.mover:moveTo(point, usePath)
 end
 
+-- Looks around on the spot. The Mover turns him through physics (no CFrame snapping every frame: bug B-010).
 local function lookAround(guard: Guard, dt: number)
-	guard.root.CFrame = guard.root.CFrame * CFrame.Angles(0, math.rad(70) * dt, 0)
+	guard.mover:turnBy(math.rad(70) * dt)
 end
 
 local function updateInvestigate(guard: Guard, dt: number)
 	local targetPos = guard.targetPos
 	local now = os.clock()
 	if targetPos and not guard.arrived then
-		guard.mover:moveTo(targetPos, guard.hunting or changesFloor(guard, targetPos))
-		local flatDistance = guard.mover:flatDistance(targetPos)
-		if flatDistance < 3 or now > guard.walkDeadline or guard.mover:stuck() then
+		-- Checked before walking: a spot he is already at (a vision refresh of a player right in front of him)
+		-- must not cost a one-frame MoveTo, which made him twitch every 0.1 s.
+		if guard.mover:flatDistance(targetPos) < 3 or now > guard.walkDeadline or guard.mover:stuck() then
 			guard.arrived = true
 			guard.mover:stop()
 			guard.wanderAt = now + 2
+		else
+			guard.mover:moveTo(targetPos, guard.hunting or changesFloor(guard, targetPos))
+			return
 		end
+	end
+	local watchPos = guard.watchPos
+	if watchPos and now - guard.watchedAt <= G.WatchSeconds then
+		-- He still sees who made him suspicious: he stands and stares (no turning away, no wandering, the search
+		-- time waits) so the meter fills. Spinning on the spot turned his cone away from a player standing right
+		-- in front of him and let the meter drain (bug B-008).
+		guard.mover:stop()
+		guard.mover:face(watchPos)
 		return
 	end
 	-- Look around while the search time runs out; while searching he also wanders around the spot.
@@ -707,9 +777,10 @@ local function updateAlert(guard: Guard, dt: number)
 	else
 		guard.mover:moveTo(guard.targetPos or position, true)
 	end
-	local distance = (position - guard.root.Position).Magnitude
+	local offset = position - guard.root.Position
+	local reach = Capture.reach(offset.X, offset.Y, offset.Z, G.GrabVertical)
 	local progress, grabbed =
-		Capture.grabStep(guard.grabProgress, dt, distance, G.CaptureDistance, G.GrabSeconds)
+		Capture.grabStep(guard.grabProgress, dt, reach, G.CaptureDistance, G.GrabSeconds)
 	guard.grabProgress = progress
 	if grabbed then
 		attemptGrab(guard, target)
@@ -855,6 +926,7 @@ function GuardService:Bubble(model: Instance, seconds: number, by: Player?): boo
 	weld.Parent = bubble
 	bubble.Parent = guard.model
 	guard.bubble = bubble
+	guard.mover:refreshOwner()
 	if captive then
 		GuardService.CarryInterrupted:Fire(guard.model, captive, "bubble", by)
 	end
@@ -937,6 +1009,7 @@ function GuardService:StartCarry(
 	guard.onArrive = onArrive
 	table.clear(guard.meters)
 	setState(guard, "Carrying")
+	guard.mover:refreshOwner() -- the captive was just welded to him
 	return true
 end
 
@@ -949,6 +1022,7 @@ function GuardService:StopCarry(model: Model)
 	guard.carrying = nil
 	guard.carryDest = nil
 	guard.onArrive = nil
+	guard.mover:refreshOwner() -- the captive's weld goes next
 	if guard.state == "Carrying" then
 		startSearch(guard, nil, 3, false)
 	end
@@ -1009,6 +1083,7 @@ function GuardService:Clear()
 	end
 	table.clear(guards)
 	table.clear(everSeen)
+	paramsDirty = true
 	lockdownOn = false
 end
 
@@ -1072,12 +1147,18 @@ local function setupGuardDoor(inst: Instance)
 end
 
 function GuardService:Init()
-	for _, group in { "Guards", "GuardDoor" } do
+	for _, group in { "Guards", "GuardDoor", "Players" } do
 		if not PhysicsService:IsCollisionGroupRegistered(group) then
 			PhysicsService:RegisterCollisionGroup(group)
 		end
 	end
 	PhysicsService:CollisionGroupSetCollidable("GuardDoor", "Guards", false)
+	-- Guards (and the other NPCs: Rig.place puts every NPC part in "Guards") walk through player characters
+	-- (RoundService puts every character part in "Players"). Bumping into a player made a chasing guard climb
+	-- on top of him and never get within grab range (bug B-007).
+	PhysicsService:CollisionGroupSetCollidable("Guards", "Players", false)
+	-- NPCs do not bump into each other either (guards meeting in a doorway pushed each other around: B-010).
+	PhysicsService:CollisionGroupSetCollidable("Guards", "Guards", false)
 end
 
 function GuardService:Start()
@@ -1137,29 +1218,48 @@ function GuardService:Start()
 		end
 	end)
 
-	local visionTimer = 0
+	for _, tag in { Tags.SeeThrough, Tags.Npc, Tags.Loot, Tags.Drone } do
+		local function dirty()
+			paramsDirty = true
+		end
+		CollectionService:GetInstanceAddedSignal(tag):Connect(dirty)
+		CollectionService:GetInstanceRemovedSignal(tag):Connect(dirty)
+	end
+	MapService.LevelBuilt:Connect(function()
+		paramsDirty = true
+	end)
+
+	-- Vision budget (bug B-010): each guard looks every VisionInterval with his own timer (staggered), and at
+	-- most VisionGuardsPerFrame guards look in one frame, taking turns. dt is each guard's own elapsed time, so a
+	-- guard who waited a frame longer fills his meter by the same amount.
+	local visionCursor = 0
 	RunService.Heartbeat:Connect(function(dt)
-		visionTimer += dt
-		local doVision = visionTimer >= G.VisionInterval
-		local visionDt = visionTimer
-		local seen: { Seen } = {}
-		local params: RaycastParams? = nil
-		if doVision then
-			visionTimer = 0
-			if #guards > 0 then
-				seen = snapshot(Targets.now())
-				params = visionParams()
+		for index = #guards, 1, -1 do
+			if guards[index].model.Parent == nil then
+				table.remove(guards, index)
+				paramsDirty = true
 			end
 		end
-		for index = #guards, 1, -1 do
+		local waited = {}
+		for index, guard in guards do
+			guard.visionAcc += dt
+			waited[index] = guard.visionAcc
+		end
+		local due
+		due, visionCursor =
+			NpcBudget.dueThisFrame(waited, visionCursor, G.VisionInterval, G.VisionGuardsPerFrame)
+		for _, index in due do
 			local guard = guards[index]
-			if guard.model.Parent == nil then
-				table.remove(guards, index)
-				continue
+			local visionDt = guard.visionAcc
+			guard.visionAcc = 0
+			local ok, err = pcall(function()
+				updateVision(guard, visionDt, snapshot(), visionParams())
+			end)
+			if not ok then
+				warn("[GuardService] guard vision failed:", err)
 			end
-			if doVision and params then
-				updateVision(guard, visionDt, seen, params)
-			end
+		end
+		for _, guard in guards do
 			local ok, err = pcall(function()
 				updateBehaviour(guard, dt)
 			end)
