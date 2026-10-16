@@ -99,7 +99,9 @@ local function targetOf(prompt: ProximityPrompt): Instance?
 end
 
 local function isDrive(prompt: ProximityPrompt): boolean
-	return prompt.Name == "Drive" or string.find(string.upper(prompt.ActionText), "DRIVE") ~= nil
+	return prompt.Name == "DrivePrompt"
+		or prompt.Name == "Drive"
+		or string.find(string.upper(prompt.ActionText), "DRIVE") ~= nil
 end
 
 -- Free teammates outside the van ("LEAVES 1 BEHIND").
