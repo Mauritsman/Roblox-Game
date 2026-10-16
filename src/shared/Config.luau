@@ -461,7 +461,8 @@ Config.Perks = {
 Config.MapRuntime = {
 	Ride = {
 		Speed = 8, -- studs/s when a Ride has no Speed attribute
-		LockdownFactor = 1, -- LOCKDOWN speed = LockdownSpeed attribute, else Speed × this
+		LockdownFactor = 1, -- LOCKDOWN speed = LockdownSpeed attribute, else Speed × this …
+		SwitchFactor = 2.5, -- … or × this when the Ride is tagged LockdownSwitch with Action "Speed"
 		Seats = 1, -- riders or loot per car
 		Cars = 3, -- cars on a loop without Car models (a shuttle always has 1)
 		TrainGap = 1, -- studs between coupled cars (Ride attribute Train = true)

@@ -17,6 +17,7 @@
 -- Riders hop off by jumping, only at a station window (loops) or while the shuttle stands; mid-ride jumps re-seat
 -- them. Getting caught (Caught/Captured), hiding or freezing takes them off at once.
 
+local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
@@ -977,6 +978,9 @@ local function setupRide(c: Util.Context, folder: Instance): Ride?
 		paths.Lockdown = RidePath.build(toVecs(lockdownRaw))
 	end
 	local speed = math.max(0.5, Util.num(folder, Tags.Speed, RC.Speed))
+	local switched = CollectionService:HasTag(folder, Tags.LockdownSwitch)
+		and Util.str(folder, Tags.Action) == "Speed"
+	local lockdownFactor = if switched then RC.SwitchFactor else RC.LockdownFactor
 	local ride: Ride = {
 		folder = folder,
 		id = id,
@@ -985,7 +989,7 @@ local function setupRide(c: Util.Context, folder: Instance): Ride?
 		shuttle = shuttle,
 		train = Util.bool(folder, Tags.Train, false),
 		speed = speed,
-		lockdownSpeed = math.max(0.5, Util.num(folder, Tags.LockdownSpeed, speed * RC.LockdownFactor)),
+		lockdownSpeed = math.max(0.5, Util.num(folder, Tags.LockdownSpeed, speed * lockdownFactor)),
 		seats = math.max(1, math.floor(Util.num(folder, Tags.Seats, RC.Seats))),
 		emptyHands = Util.bool(folder, Tags.EmptyHands, false),
 		twoWay = Util.bool(folder, Tags.TwoWay, false),

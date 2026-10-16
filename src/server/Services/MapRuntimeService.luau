@@ -4,6 +4,8 @@
 --   Rides            MapRuntime/Rides      Ride folders: server-moved cars on Points.Rides paths, seats, loot riding
 --   Rhythm machines  MapRuntime/Rhythm     fountain, mixer (noise mask), wrapper, mist/steam, sprinklers, clock beam
 --   Zones            MapRuntime/Zones      ColdZone + melting loot, GooZone (InGoo, splosh), StaffZone/SecureZone rings
+--   Security         MapRuntime/Security   LaserGrid, LockdownSwitch, GuardDoor/cell door motion, MorningLight,
+--                                          RisingPlinth, arriving/departing exits
 --
 -- SetupService:Apply calls Setup(level, heistInfo, job) at Briefing; SetupService:Teardown calls Clear(). Between
 -- them this service follows RoundService.PhaseChanged (Heist, Lockdown, Getaway).
@@ -24,6 +26,7 @@ local Util = require(MapRuntime.Util)
 local Rides = require(MapRuntime.Rides)
 local Rhythm = require(MapRuntime.Rhythm)
 local Zones = require(MapRuntime.Zones)
+local Security = require(MapRuntime.Security)
 local RoundService = require(script.Parent.RoundService)
 local SetupService = require(script.Parent.SetupService)
 
@@ -41,6 +44,7 @@ local MODULES: { { name: string, module: Module, interval: number } } = {
 	{ name = "Rides", module = Rides :: any, interval = 0 },
 	{ name = "Rhythm", module = Rhythm :: any, interval = 0.1 },
 	{ name = "Zones", module = Zones :: any, interval = Config.MapRuntime.ZoneInterval },
+	{ name = "Security", module = Security :: any, interval = 0 },
 }
 
 local ctx: Util.Context? = nil
