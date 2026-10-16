@@ -6,6 +6,8 @@
 --     Riders and loot are welded to the car, so they move smoothly too.
 --   * `Spinner`-tagged landmarks (the Golden Wheel sign) turn once per SpinSeconds around SpinAxis (local), on the
 --     client only; every client shows the same angle (server time). Skipped when far from the camera.
+--   * the Tulip auction clock's light beam (a part with attribute ClockBeam in Level.MapRuntime) sweeps every
+--     frame from its replicated Center/RadiusX/RadiusZ/Width/Period/T0, like the server computes it.
 
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -14,6 +16,7 @@ local RunService = game:GetService("RunService")
 local Config = require(ReplicatedStorage.Shared.Config)
 local Tags = require(ReplicatedStorage.Shared.Tags)
 local RidePath = require(ReplicatedStorage.Shared.Logic.RidePath)
+local Rhythm = require(ReplicatedStorage.Shared.Logic.Rhythm)
 
 local RideController = {}
 
@@ -22,6 +25,7 @@ type CarEntry = { model: Instance, folder: Instance }
 
 local paths: { [Instance]: { [string]: CachedPath } } = setmetatable({}, { __mode = "k" }) :: any
 local cars: { CarEntry } = {}
+local beams: { BasePart } = {}
 local rescanIn = 0
 local spinBase: { [Instance]: CFrame } = setmetatable({}, { __mode = "k" }) :: any
 local SPIN_RANGE = 600
@@ -47,6 +51,16 @@ local function pathOf(folder: Instance, key: string): RidePath.Path?
 end
 
 local function rescan()
+	table.clear(beams)
+	local level = workspace:FindFirstChild("Level")
+	local runtime = level and level:FindFirstChild("MapRuntime")
+	if runtime then
+		for _, child in runtime:GetChildren() do
+			if child:IsA("BasePart") and child:GetAttribute("ClockBeam") == true then
+				table.insert(beams, child)
+			end
+		end
+	end
 	table.clear(cars)
 	for _, folder in CollectionService:GetTagged(Tags.Ride) do
 		for _, d in folder:GetDescendants() do
@@ -95,6 +109,25 @@ local function stepCars(now: number)
 		end
 		local origin = Vector3.new(p.x, p.y + num(model, "Height", 1.5), p.z)
 		root.CFrame = CFrame.lookAt(origin, origin + dir.Unit)
+	end
+end
+
+local function stepBeams(now: number)
+	for _, beam in beams do
+		local center = beam:GetAttribute("Center")
+		local period = num(beam, "Period", 0)
+		if typeof(center) ~= "Vector3" or period <= 0 or not beam:IsDescendantOf(workspace) then
+			continue
+		end
+		local timer = Rhythm.new(period, period, num(beam, "T0", 0))
+		local angle = Rhythm.fraction(timer, now) * math.pi * 2
+		local ex, ez =
+			Rhythm.ellipse(center.X, center.Z, num(beam, "RadiusX", 18), num(beam, "RadiusZ", 30), angle)
+		local base = center + Vector3.new(0, 0.08, 0)
+		local tip = Vector3.new(ex, base.Y, ez)
+		local length = math.max(0.5, (tip - base).Magnitude)
+		beam.Size = Vector3.new(num(beam, "Width", 5) * 2, 0.1, length)
+		beam.CFrame = CFrame.lookAt((base + tip) / 2, tip)
 	end
 end
 
@@ -150,6 +183,7 @@ function RideController:Start()
 		local now = workspace:GetServerTimeNow()
 		stepCars(now)
 		stepSpinners(now)
+		stepBeams(now)
 	end)
 end
 

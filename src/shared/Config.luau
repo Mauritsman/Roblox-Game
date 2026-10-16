@@ -499,6 +499,7 @@ Config.MapRuntime = {
 			Decay = 1, -- meter per second out of the beam
 			Points = 40,
 			Cooldown = 8, -- per player after being spotted
+			SpeedsUp = true, -- LOCKDOWN: period × LockdownFactor (the 6 s FLOWER FRENZY sweep)
 		},
 		Sprinkler = { Period = 0, Active = 0, Radius = 8, SlipSpeed = 10, SlipEvery = 3, SqueakRadius = 15 },
 	},

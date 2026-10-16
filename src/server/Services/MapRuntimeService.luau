@@ -2,11 +2,13 @@
 -- The map runtime (mechanics package D): the server behaviour behind the map-specific tags, so map packages only
 -- build geometry and tags. Tag rules for map builders: src/server/MapRuntime/README.md.
 --   Rides            MapRuntime/Rides      Ride folders: server-moved cars on Points.Rides paths, seats, loot riding
+--   Rhythm machines  MapRuntime/Rhythm     fountain, mixer (noise mask), wrapper, mist/steam, sprinklers, clock beam
 --
 -- SetupService:Apply calls Setup(level, heistInfo, job) at Briefing; SetupService:Teardown calls Clear(). Between
 -- them this service follows RoundService.PhaseChanged (Heist, Lockdown, Getaway).
 --
--- Entry points: Setup(level, heistInfo, job), Clear(), RideOf(player) → RideId?
+-- Entry points: Setup(level, heistInfo, job), Clear(), RideOf(player) → RideId?,
+-- IsNoiseMasked(position) → boolean (call before GuardService:HearNoise for a CRACK: the Big Mixer drowns it out).
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
@@ -17,6 +19,7 @@ local Server = script.Parent.Parent
 local MapRuntime = Server.MapRuntime
 local Util = require(MapRuntime.Util)
 local Rides = require(MapRuntime.Rides)
+local Rhythm = require(MapRuntime.Rhythm)
 local RoundService = require(script.Parent.RoundService)
 local SetupService = require(script.Parent.SetupService)
 
@@ -32,6 +35,7 @@ type Module = {
 -- Every runtime module, in setup order; `interval` = seconds between steps (0 = every frame).
 local MODULES: { { name: string, module: Module, interval: number } } = {
 	{ name = "Rides", module = Rides :: any, interval = 0 },
+	{ name = "Rhythm", module = Rhythm :: any, interval = 0.1 },
 }
 
 local ctx: Util.Context? = nil
@@ -131,6 +135,14 @@ end
 -- The RideId this player is riding, or nil.
 function MapRuntimeService:RideOf(player: Player): string?
 	return Rides.rideOf(player)
+end
+
+-- True while a noise at `position` is drowned out (a Big Mixer thump window within its Radius).
+function MapRuntimeService:IsNoiseMasked(position: Vector3): boolean
+	if typeof(position) ~= "Vector3" then
+		return false
+	end
+	return Rhythm.isNoiseMasked(position)
 end
 
 function MapRuntimeService:Start()
