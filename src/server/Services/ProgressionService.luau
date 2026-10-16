@@ -14,6 +14,7 @@ local DataSchema = require(ReplicatedStorage.Shared.Logic.DataSchema)
 local JobBoard = require(ReplicatedStorage.Shared.Logic.JobBoard)
 local PerkTree = require(ReplicatedStorage.Shared.Logic.PerkTree)
 local Progression = require(ReplicatedStorage.Shared.Logic.Progression)
+local Settlement = require(ReplicatedStorage.Shared.Logic.Settlement)
 
 local Meta = script.Parent.Parent.Meta
 local Access = require(Meta.Access)
@@ -129,19 +130,9 @@ function ProgressionService.unlocksBetween(before: number, after: number): { Unl
 	return list
 end
 
--- Inside an Update: pays every unpaid rank-up reward. Returns the total Cash and the ranks paid.
-function ProgressionService.claimRankRewards(data: PlayerData): (number, { Progression.RankReward })
-	local rank = Access.rank(data)
-	local rewards, newRewarded =
-		Progression.rankRewards(data.rankRewarded, rank, MetaConfig.Economy.RankUpCashPerRank)
-	local total = 0
-	for _, reward in rewards do
-		total += reward.cash
-	end
-	data.cash += total
-	data.stats.cashEarned = (data.stats.cashEarned or 0) + total
-	data.rankRewarded = newRewarded
-	return total, rewards
+-- Inside an Update: pays every unpaid rank-up reward. Returns the Cash paid.
+function ProgressionService.claimRankRewards(data: PlayerData): number
+	return Settlement.claimRankRewards(data, MetaConfig, { Progression = Progression } :: any)
 end
 
 -- Tells the player about a rank-up and logs it (call after the Update that raised Rep).

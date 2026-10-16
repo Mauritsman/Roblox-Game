@@ -20,7 +20,9 @@ local DataSchema = require(ReplicatedStorage.Shared.Logic.DataSchema)
 local HeistRecords = require(ReplicatedStorage.Shared.Logic.HeistRecords)
 local Ledger = require(ReplicatedStorage.Shared.Logic.Ledger)
 local Payout = require(ReplicatedStorage.Shared.Logic.Payout)
+local Progression = require(ReplicatedStorage.Shared.Logic.Progression)
 local Rng = require(ReplicatedStorage.Shared.Logic.Rng)
+local Settlement = require(ReplicatedStorage.Shared.Logic.Settlement)
 
 local Meta = script.Parent.Parent.Meta
 local Access = require(Meta.Access)
@@ -66,7 +68,18 @@ EconomyService.Settled = Signal.new() :: Signal.Signal<Player, string, string, s
 local settledRounds: { [string]: { [number]: Settled } } = {}
 local settledOrder: { string } = {}
 local templatesById = Contracts.byId(MetaConfig.Contracts.Templates)
-local trackedLoot = Collection.tracked(MetaConfig.Collection.Pages)
+local DEPS: Settlement.Deps = {
+	Payout = Payout,
+	HeistRecords = HeistRecords,
+	Collection = Collection,
+	Contracts = Contracts,
+	Progression = Progression,
+	Ledger = Ledger,
+}
+
+local function itemExists(itemId: string): boolean
+	return Catalog.get(itemId) ~= nil
+end
 
 -- Daily / weekly reset ---------------------------------------------------------------------------------------
 
@@ -337,7 +350,6 @@ function EconomyService:SettleRound(result: RoundResult): { [number]: Settled }
 			allInVan = false
 		end
 	end
-	local tierMultiplier = E.DifficultyPayout[difficulty] or 1
 	local mwHeist, mwItem, week = ProfileView.mostWanted(Clock.now())
 	local realRound = outcome == "Escaped" or outcome == "Busted"
 	local heistName = MetaConfig.Heists.Names[heistId] or heistId
@@ -349,156 +361,41 @@ function EconomyService:SettleRound(result: RoundResult): { [number]: Settled }
 		if data and not Ledger.contains(data.recentRounds, result.roundId) then
 			local now = Clock.now()
 			local stats: CrewStats = if type(entry.stats) == "table" then entry.stats :: CrewStats else {}
-			local rankBefore = Access.rank(data)
 			local heistsBefore = Access.heists(data)
 			local roundsBefore = data.stats.rounds or 0
-			local s = {
-				pay = (nil :: any) :: Payout.Result,
-				newStars = 0,
-				starCash = 0,
-				completed = {} :: { Contracts.Contract },
-				contractCash = 0,
-				mostWanted = { done = false } :: { [string]: any },
-				mwCash = 0,
-				newCollection = {} :: { string },
-				collectionCash = 0,
-				newItems = {} :: { string },
-				rankCash = 0,
-				trophy = false,
-			}
+			local applied: Settlement.Summary? = nil
 			local ok = DataService:Update(player, "SettleRound", function(d)
 				EconomyService.refreshPeriods(d, userId, now)
-				local pay = Payout.compute({
+				applied = Settlement.applyRound(d, {
+					roundId = result.roundId,
+					heistId = heistId,
+					difficulty = difficulty,
 					outcome = outcome,
 					vanLoot = vanLoot,
+					stars = stars,
+					maxAlarmTier = maxAlarmTier,
+					isHotJob = isHotJob,
+					mainLootBanked = mainLootBanked,
+					objectives = objectives,
+					banked = banked :: any,
 					crewSize = n,
 					inVanAtEnd = entry.inVanAtEnd == true,
 					allInVan = allInVan,
-					difficulty = difficulty,
-					isHotJob = isHotJob,
-					maxAlarmTier = maxAlarmTier,
-					objectives = objectives,
-					fresh = Payout.isFresh(d.recentHeists, heistId, E.FreshWindow),
-					firstJobAvailable = not d.daily.firstJobUsed,
-				}, E)
-				s.pay = pay
-				d.cash += pay.cash
-				d.rep += pay.rep
-				d.stats.cashEarned = (d.stats.cashEarned or 0) + pay.cash
-				d.stats.bestPayout = math.max(d.stats.bestPayout or 0, pay.cash)
-				if pay.firstJobToday then
-					d.daily.firstJobUsed = true
-				end
-				Ledger.push(d.recentRounds, result.roundId, MetaConfig.Data.RecentRounds)
-
-				if realRound then
-					d.stats.rounds = roundsBefore + 1
-					if pay.escaped then
-						d.stats.escapes = (d.stats.escapes or 0) + 1
-					end
-					if pay.busted then
-						d.stats.busts = (d.stats.busts or 0) + 1
-					end
-					d.stats.rescues = (d.stats.rescues or 0) + math.max(0, math.floor(num(stats.rescues, 0)))
-					d.stats.lootBanked = (d.stats.lootBanked or 0)
-						+ math.max(0, math.floor(num(stats.lootBanked, 0)))
-					d.lastDifficulty = difficulty
-					Ledger.push(d.recentHeists, heistId, MetaConfig.Data.RecentHeists)
-
-					-- Stars (best per tier, only when this player escaped) and their first-time bonus.
-					s.newStars =
-						HeistRecords.record(d.heists, heistId, difficulty, stars, pay.escaped, vanLoot)
-					s.starCash = HeistRecords.starCash(s.newStars, E.StarBonus, tierMultiplier)
-					d.cash += s.starCash
-
-					-- Trophy wall: every escaped round with the main loot.
-					if pay.escaped and mainLootBanked then
-						d.stats.mainLoot = (d.stats.mainLoot or 0) + 1
-						Collection.pushTrophy(d.trophies, {
-							loot = "GoldenGouda",
-							heist = heistId,
-							tier = difficulty,
-							crew = n,
-							at = now,
-						}, MetaConfig.Data.TrophyLog)
-						s.trophy = true
-					end
-
-					-- Collection book: everything banked counts for the whole crew.
-					s.newCollection = Collection.record(d.collection, banked :: any, trackedLoot)
-					for _, pageId in
-						Collection.newPages(d.collection, MetaConfig.Collection.Pages, d.collectionRewards)
-					do
-						d.collectionRewards[pageId] = now
-						local item = MetaConfig.Collection.PageReward[pageId]
-						if item and Catalog.get(item) and not d.owned[item] then
-							d.owned[item] = now
-							table.insert(s.newItems, item)
-						else
-							s.collectionCash += E.CollectionPageCash
-						end
-					end
-					d.cash += s.collectionCash
-
-					-- Daily contracts.
-					s.completed = Contracts.apply(d.daily.contracts, templatesById, {
-						outcome = outcome,
-						escaped = pay.escaped,
-						isHotJob = isHotJob,
-						difficulty = difficulty,
-						stars = stars,
-						mainLootBanked = mainLootBanked,
-						maxAlarmTier = maxAlarmTier,
-						stats = stats,
-					}, E.QuietJobMaxTier)
-					for _, contract in s.completed do
-						s.contractCash += contract.reward
-					end
-					d.cash += s.contractCash
-
-					-- Weekly Most Wanted: 3★ on this week's heist on Normal or Hard, once per week.
-					local MW = MetaConfig.MostWanted
-					if
-						heistId == mwHeist
-						and pay.escaped
-						and stars >= MW.StarsNeeded
-						and MW.Tiers[difficulty]
-						and not (d.weekly.week == week and d.weekly.mostWantedDone)
-					then
-						d.weekly = { week = week, mostWantedDone = true }
-						if not d.owned[mwItem] then
-							d.owned[mwItem] = now
-							table.insert(s.newItems, mwItem)
-							s.mostWanted = { done = true, item = mwItem }
-						else
-							s.mwCash = E.MostWantedDuplicateCash
-							d.cash += s.mwCash
-							s.mostWanted = { done = true, cash = s.mwCash }
-						end
-					end
-
-					-- Mastery and star masks.
-					for _, item in
-						HeistRecords.rewardItems(
-							d.heists,
-							MetaConfig.Progression.MasteryMask,
-							MetaConfig.Progression.MasteryTier,
-							MetaConfig.Progression.StarMasks,
-							d.owned
-						)
-					do
-						d.owned[item] = now
-						table.insert(s.newItems, item)
-					end
-					d.stats.cashEarned += s.starCash + s.collectionCash + s.contractCash + s.mwCash
-				end
-				s.rankCash = ProgressionService.claimRankRewards(d)
+					stats = stats,
+					now = now,
+					week = week,
+					mostWantedHeist = mwHeist,
+					mostWantedItem = mwItem,
+					itemExists = itemExists,
+				}, MetaConfig, DEPS)
 			end)
 
-			if ok then
-				local pay = s.pay
+			local settled = applied
+			if ok and settled and not settled.skipped then
+				local s = settled :: Settlement.Summary
+				local pay: Payout.Result = s.pay
 				local after = DataService:Get(player) :: PlayerData
-				local rankAfter = Access.rank(after)
+				local rankBefore, rankAfter = s.rankBefore, s.rankAfter
 				summary[userId] = { cash = pay.cash, rep = pay.rep }
 
 				-- Newly opened heists and tiers.
