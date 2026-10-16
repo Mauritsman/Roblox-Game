@@ -1,16 +1,49 @@
 --!strict
 -- Client bootstrap for Crowbar Crew.
--- Loads every ModuleScript in Controllers, calls Init() first and then Start().
+-- Starts the shared UI and input libraries, then loads every ModuleScript in Controllers:
+-- Init() first and then Start().
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local StarterGui = game:GetService("StarterGui")
 
 local Config = require(ReplicatedStorage.Shared.Config)
-local Actions = require(script:WaitForChild("Lib"):WaitForChild("Actions"))
-local Hud = require(script.Lib:WaitForChild("Hud"))
+
+local Lib = script:WaitForChild("Lib")
+local Device = require(Lib:WaitForChild("Device"))
+local UiScale = require(Lib:WaitForChild("UiScale"))
+local Settings = require(Lib:WaitForChild("Settings"))
+local Audio = require(Lib:WaitForChild("Audio"))
+local Hud = require(Lib:WaitForChild("Hud"))
+local Actions = require(Lib:WaitForChild("Actions"))
+local RoundState = require(Lib:WaitForChild("RoundState"))
+local CharState = require(Lib:WaitForChild("CharState"))
+local Profile = require(Lib:WaitForChild("Profile"))
+local Screens = require(Lib:WaitForChild("Screens"))
 
 -- First the shared UI and input, then the controllers that use them.
+Device.init()
+UiScale.init()
+Settings.init()
+Audio.init()
 Hud.init()
 Actions.init()
+RoundState.init()
+CharState.init()
+Profile.init()
+Screens.init()
+
+-- The reset button would let players skip the cell; the server handles deaths (beta-spec §1.5).
+task.spawn(function()
+	for _ = 1, 20 do
+		local ok = pcall(function()
+			StarterGui:SetCore("ResetButtonCallback", false)
+		end)
+		if ok then
+			break
+		end
+		task.wait(0.5)
+	end
+end)
 
 local controllersFolder = script:WaitForChild("Controllers")
 
@@ -23,7 +56,12 @@ local controllers: { [string]: Controller } = {}
 
 for _, module in controllersFolder:GetChildren() do
 	if module:IsA("ModuleScript") then
-		controllers[module.Name] = (require :: any)(module)
+		local ok, result = pcall(require :: any, module)
+		if ok then
+			controllers[module.Name] = result :: any
+		else
+			warn(`[Client] Loading {module.Name} failed: {result}`)
+		end
 	end
 end
 
