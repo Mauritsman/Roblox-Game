@@ -11,11 +11,13 @@ commit messages and reports (owner's instruction, 16 Oct 2026).
   - `src/shared/` → ReplicatedStorage.Shared (`Config`, `Net`, `Tags`, `Signal`, `Logic/*`)
 - The level is built in code: `MapService:Build(heistId?)` builds a heist from `src/server/Map/Registry.luau`.
   One folder per heist in `src/server/Map/Heists/` (map 1 "The Golden Wheel": `Heists/GoldenWheel/` with `init.luau` =
-  definition, `Quay`, `Shop`, `Warehouse`); shared building blocks in `src/server/Map/Common/` (`Builder`, `CanalHouse`,
-  `Atmosphere`). New heist: `src/server/Map/README.md`. Change the level there, never in Studio.
+  definition, `Quay`, `Shop`, `Warehouse`, `Grounds`, `Cellar`, `Markers`); shared building blocks in
+  `src/server/Map/Common/` (`Builder`, `CanalHouse`, `CanalStreet`, `Doors`, `Security`, `Anchors`, `Rides`,
+  `Atmosphere`). New heist: `src/server/Map/README.md`. Change the level there, never in Studio. Map tests without
+  Studio: `tests/map/` (Lune harness).
 - AI props (van, street lamp, cheese wheel, …) are models in the place's `ServerStorage.Props`; `Builder.prop` clones them
   and falls back to simple blocks if a prop is missing. IDs and prompts: `tools/props.json`; rebuild:
-  `tools/restore_props.luau`. Do not remove gameplay tags/attributes (Lamp, Pryable, Goal, GadgetPedestal, cameras).
+  `tools/restore_props.luau`. Do not remove gameplay tags/attributes (`docs/contracts.md` §2.5 and §3).
 - Signs use `Builder.sign` (self-lit text, padding, outline). Every sign must be fully readable from where players stand.
 - Generate meshes only in Edit mode (not during Play) and at most 2 at a time (otherwise "Too Many Requests").
 - All tunable numbers live in `src/shared/Config.luau`.
