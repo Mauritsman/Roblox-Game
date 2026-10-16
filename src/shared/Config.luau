@@ -510,7 +510,8 @@ Config.MapRuntime = {
 	MorningLight = { BeforeEnd = { 180, 120, 60 }, Toast = "MORNING AUCTION IN 3:00" }, -- steps 1–3
 	Plinth = { RiseHeight = 4, RiseSeconds = 3 },
 	Exit = { ArriveHeight = 60, ArriveSeconds = 8, DepartHeight = 60, DepartDistance = 50, DepartSeconds = 4 },
-	Spinner = { Rpm = 6 },
+	Spinner = { SpinSeconds = 10 }, -- Spinner tag without SpinSeconds
+	CellDoor = { OpenSeconds = 0.5, HoldSeconds = 2.5 }, -- slides to OpenCFrame on a rescue
 	ZoneInterval = 0.1,
 	Particles = { Mist = 12, Steam = 10, Sprinkler = 30, Fountain = 14 }, -- emitter rates (phones: keep low)
 }

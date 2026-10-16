@@ -169,9 +169,6 @@ return table.freeze({
 	LoudOnly = "LoudOnly",
 
 	-- Mechanics D: map runtime (src/server/MapRuntime/README.md). Optional map attributes …
-	Spinner = "Spinner", -- tag (M): turns around its own axis on clients (attributes Rpm, Axis)
-	Rpm = "Rpm",
-	Axis = "Axis",
 	Loop = "Loop", -- Ride: true = loop, false = shuttle; default: a closed path is a loop
 	Train = "Train", -- Ride: coupled cars, only the front car halts at stations
 	Cars = "Cars", -- Ride: number of cars when the map has no Car models
@@ -199,6 +196,11 @@ return table.freeze({
 	Melting = "Melting", -- loot: losing value outside a ColdZone
 	Running = "Running", -- RhythmMachine / LockdownSwitch: switched on
 	Pulse = "Pulse", -- RhythmMachine: in its active window now
+	LootDelay = "LootDelay", -- Ride (shuttle): loot sent alone rolls out this many s after leaving (Cheese Chute)
+	ExitNoise = "ExitNoise", -- Ride (shuttle): noise radius when loot sent alone rolls out
+	SpinSeconds = "SpinSeconds", -- Spinner (map block tag): seconds per turn
+	SpinAxis = "SpinAxis", -- Spinner: Vector3 axis in the model's local space
+	OpenCFrame = "OpenCFrame", -- doors/shutters (map): where the part is when open
 
 	-- ===================================================================================================
 	-- MAP block (owner: map) — map-only tags go here.

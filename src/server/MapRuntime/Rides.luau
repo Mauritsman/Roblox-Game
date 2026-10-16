@@ -79,6 +79,8 @@ type Car = {
 	departAt: number?,
 	arrivedAt: number,
 	carriedRider: boolean,
+	departedAt: number,
+	unloadAt: number?, -- shuttle: when loot sent alone rolls out (LootDelay)
 }
 
 type Ride = {
@@ -102,6 +104,8 @@ type Ride = {
 	spacing: number,
 	trainHalf: number,
 	ends: { Vector3 }, -- shuttle: positions of s = 0 and s = length
+	lootDelay: number, -- shuttle: loot sent alone rolls out this long after leaving (0 = on arrival)
+	exitNoise: number, -- shuttle: noise radius when loot sent alone rolls out
 }
 
 local ctx: Util.Context? = nil
@@ -297,10 +301,34 @@ local function adoptCar(inst: Instance, seats: number): (BasePart?, { Seat })
 			table.insert(list, d)
 		end
 	end
+	-- Map cars (Common/Rides) mark the seat with a plain part named "Seat" and an Attachment "SeatPoint":
+	-- an invisible Seat goes on that point.
+	if #list == 0 then
+		for _, d in inst:GetDescendants() do
+			if d:IsA("BasePart") and d.Name == "Seat" and #list < seats then
+				local point = d:FindFirstChild("SeatPoint")
+				local at = if point and point:IsA("Attachment")
+					then point.WorldCFrame
+					else d.CFrame * CFrame.new(0, d.Size.Y / 2, 0)
+				local seat = Instance.new("Seat")
+				seat.Name = "RideSeat"
+				seat.Size = Vector3.new(math.min(2, d.Size.X), 0.4, math.min(2, d.Size.Z))
+				seat.CFrame = at * CFrame.new(0, 0.2, 0)
+				seat.Transparency = 1
+				seat.Parent = inst
+				table.insert(list, seat)
+			end
+		end
+	end
 	for i = #list + 1, seats do
 		table.insert(list, makeSeat(r, i, seats, inst))
 	end
 	return r, list
+end
+
+-- Map cars are named "Car" or "Car<n>".
+local function isCarName(name: string): boolean
+	return string.match(name, "^Car%d*$") ~= nil
 end
 
 local function freeSeat(car: Car): Seat?
@@ -556,7 +584,7 @@ local function autoLoad(car: Car)
 end
 
 -- Shuttle end: loot rolls out onto the floor there.
-local function unload(car: Car, at: Vector3, forward: Vector3)
+local function unload(car: Car, at: Vector3, forward: Vector3, noise: number)
 	for index, cargo in car.cargo do
 		local loot = LootService:Get(cargo.id)
 		local handle = loot and loot.handle
@@ -569,7 +597,7 @@ local function unload(car: Car, at: Vector3, forward: Vector3)
 			LootService:MarkDropped(loot, loot.lastHolderId)
 			LootService:SendSession(loot.session, "LootDropped", loot.lastHolderId or 0, loot.name, spot)
 			if not car.carriedRider then
-				Util.hearNoise(spot, RC.RumbleRadius, RC.RumbleSearch, "rumble")
+				Util.hearNoise(spot, noise, RC.RumbleSearch, "rumble")
 			end
 		end
 	end
@@ -747,7 +775,16 @@ local function arrive(ride: Ride, car: Car, endS: number)
 	for _, rider in car.riders do
 		dismount(rider, exit)
 	end
-	unload(car, at, forward)
+	if #car.cargo == 0 then
+		return
+	end
+	-- Loot sent alone rumbles down the chute and rolls out LootDelay s after it left (Cheese Chute).
+	local unloadAt = if car.carriedRider then 0 else car.departedAt + ride.lootDelay
+	if Util.now() >= unloadAt then
+		unload(car, at, forward, ride.exitNoise)
+	else
+		car.unloadAt = unloadAt
+	end
 end
 
 local function crewNear(position: Vector3): boolean
@@ -767,12 +804,18 @@ local function stepShuttle(ride: Ride, now: number)
 	local path = ride.paths.Normal
 	local s = sOf(car, now)
 	local speed = speedOf(ride)
+	if car.unloadAt and now >= (car.unloadAt :: number) then
+		car.unloadAt = nil
+		local at, forward = endFrame(ride, car, if car.atEnd then path.length else 0)
+		unload(car, at, forward, ride.exitNoise)
+	end
 	if car.state == "Home" then
-		if occupied(car) then
+		if occupied(car) and car.unloadAt == nil then
 			car.departAt = car.departAt or now + RC.ShuttleDepart
 			if now >= (car.departAt :: number) then
 				car.departAt = nil
 				car.carriedRider = next(car.riders) ~= nil
+				car.departedAt = now
 				anchor(car, now, if car.atEnd then -speed else speed)
 				car.state = "Going"
 			end
@@ -799,7 +842,7 @@ local function stepShuttle(ride: Ride, now: number)
 			car.state = if ride.twoWay then "Home" else "Arrived"
 		end
 	elseif car.state == "Arrived" then
-		if now - car.arrivedAt >= RC.ShuttleReturn and riderCount(car) == 0 then
+		if now - car.arrivedAt >= RC.ShuttleReturn and riderCount(car) == 0 and car.unloadAt == nil then
 			anchor(car, now, -ride.speed * RC.ReturnFactor)
 			car.state = "Returning"
 		end
@@ -900,6 +943,8 @@ local function newCar(
 		departAt = nil,
 		arrivedAt = 0,
 		carriedRider = false,
+		departedAt = 0,
+		unloadAt = nil,
 	}
 	model:SetAttribute(Tags.RideCar, true)
 	for _, seat in seats do
@@ -953,6 +998,8 @@ local function setupRide(c: Util.Context, folder: Instance): Ride?
 		spacing = RC.CarDepth + RC.TrainGap,
 		trainHalf = 0,
 		ends = {},
+		lootDelay = math.max(0, Util.num(folder, Tags.LootDelay, 0)),
+		exitNoise = math.max(0, Util.num(folder, Tags.ExitNoise, RC.RumbleRadius)),
 	}
 	local first = RidePath.pointAt(normal, 0)
 	local last = RidePath.pointAt(normal, normal.length)
@@ -998,11 +1045,11 @@ local function setupRide(c: Util.Context, folder: Instance): Ride?
 	-- Cars: the map's `Car` models, else default ones.
 	local mapCars: { Instance } = {}
 	for _, d in folder:GetDescendants() do
-		if d.Name == "Car" and (d:IsA("Model") or d:IsA("BasePart")) then
+		if isCarName(d.Name) and (d:IsA("Model") or d:IsA("BasePart")) then
 			local parent = d.Parent
 			local nested = false
 			while parent and parent ~= folder do
-				if parent.Name == "Car" then
+				if isCarName(parent.Name) then
 					nested = true
 					break
 				end

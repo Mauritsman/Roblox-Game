@@ -4,11 +4,14 @@
 --   * ride cars (src/server/MapRuntime/Rides): each frame a car is put where its replicated state says
 --     (S0 + Rate × (serverNow − T0) along the ride's path), instead of jumping at the server's network rate.
 --     Riders and loot are welded to the car, so they move smoothly too.
+--   * `Spinner`-tagged landmarks (the Golden Wheel sign) turn once per SpinSeconds around SpinAxis (local), on the
+--     client only; every client shows the same angle (server time). Skipped when far from the camera.
 
 local CollectionService = game:GetService("CollectionService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
+local Config = require(ReplicatedStorage.Shared.Config)
 local Tags = require(ReplicatedStorage.Shared.Tags)
 local RidePath = require(ReplicatedStorage.Shared.Logic.RidePath)
 
@@ -20,6 +23,8 @@ type CarEntry = { model: Instance, folder: Instance }
 local paths: { [Instance]: { [string]: CachedPath } } = setmetatable({}, { __mode = "k" }) :: any
 local cars: { CarEntry } = {}
 local rescanIn = 0
+local spinBase: { [Instance]: CFrame } = setmetatable({}, { __mode = "k" }) :: any
+local SPIN_RANGE = 600
 
 local function pathOf(folder: Instance, key: string): RidePath.Path?
 	local text = folder:GetAttribute("Path_" .. key)
@@ -93,6 +98,47 @@ local function stepCars(now: number)
 	end
 end
 
+local function stepSpinners(now: number)
+	local camera = workspace.CurrentCamera
+	local eye = if camera then camera.CFrame.Position else Vector3.zero
+	for _, inst in CollectionService:GetTagged(Tags.Spinner) do
+		if not inst:IsDescendantOf(workspace) then
+			continue
+		end
+		local base = spinBase[inst]
+		if not base then
+			if inst:IsA("Model") then
+				base = inst:GetPivot()
+			elseif inst:IsA("BasePart") then
+				base = inst.CFrame
+			end
+			if not base then
+				continue
+			end
+			spinBase[inst] = base
+		end
+		local pivot = base :: CFrame
+		if (pivot.Position - eye).Magnitude > SPIN_RANGE then
+			continue
+		end
+		local seconds = num(inst, Tags.SpinSeconds, Config.MapRuntime.Spinner.SpinSeconds)
+		if seconds <= 0 then
+			continue
+		end
+		local axisValue = inst:GetAttribute(Tags.SpinAxis)
+		local axis = if typeof(axisValue) == "Vector3" and axisValue.Magnitude > 0
+			then axisValue.Unit
+			else Vector3.yAxis
+		local angle = ((now / seconds) % 1) * math.pi * 2
+		local cf = pivot * CFrame.fromAxisAngle(axis, angle)
+		if inst:IsA("Model") then
+			inst:PivotTo(cf)
+		elseif inst:IsA("BasePart") then
+			inst.CFrame = cf
+		end
+	end
+end
+
 function RideController:Start()
 	rescan()
 	RunService.RenderStepped:Connect(function(dt: number)
@@ -103,6 +149,7 @@ function RideController:Start()
 		end
 		local now = workspace:GetServerTimeNow()
 		stepCars(now)
+		stepSpinners(now)
 	end)
 end
 
