@@ -1,0 +1,108 @@
+--!nocheck
+local RoundClock = require("../../src/shared/Logic/RoundClock")
+local Config = require("../../src/shared/Config")
+
+local ROUND = Config.Round.RoundSeconds -- 480
+local LOCK = Config.Alarm.LockdownSeconds -- 60
+
+return function(t)
+	t.test("no lockdown: police at 8:00, shift change at 7:00", function()
+		local s = RoundClock.status(100, 0, ROUND, nil, LOCK)
+		t.eq(s.roundEndsAt, 480)
+		t.eq(s.policeAt, 480)
+		t.eq(s.shiftChangeAt, 420)
+		t.eq(s.remaining, 380)
+		t.eq(s.elapsed, 100)
+		t.ok(not s.shiftChange and not s.lockdown and not s.over)
+		t.eq(s.lockdownEndsAt, nil)
+	end)
+
+	t.test("shift change runs from 7:00 until the police", function()
+		t.ok(not RoundClock.status(419, 0, ROUND, nil, LOCK).shiftChange)
+		t.ok(RoundClock.status(420, 0, ROUND, nil, LOCK).shiftChange)
+		t.ok(RoundClock.status(479, 0, ROUND, nil, LOCK).shiftChange)
+		local over = RoundClock.status(480, 0, ROUND, nil, LOCK)
+		t.ok(over.over and not over.shiftChange)
+		t.eq(over.remaining, 0)
+		t.eq(RoundClock.status(500, 0, ROUND, nil, LOCK).remaining, 0)
+	end)
+
+	t.test("Gouda at 3:00: police at 4:00, no shift change", function()
+		local s = RoundClock.status(200, 0, ROUND, 180, LOCK)
+		t.eq(s.policeAt, 240)
+		t.eq(s.lockdownEndsAt, 240)
+		t.eq(s.remaining, 40)
+		t.ok(s.lockdown)
+		t.eq(s.shiftChangeAt, nil)
+	end)
+
+	t.test("lockdown at 7:59 leaves 1 s (the cap is hard)", function()
+		local s = RoundClock.status(479, 0, ROUND, 479, LOCK)
+		t.eq(s.policeAt, 480)
+		t.eq(s.remaining, 1)
+		t.eq(s.lockdownEndsAt, 539)
+	end)
+
+	t.test("lockdown during the shift change keeps the earlier time", function()
+		local s = RoundClock.status(445, 0, ROUND, 440, LOCK)
+		t.eq(s.policeAt, 480)
+		t.eq(s.shiftChangeAt, 420)
+		t.ok(s.shiftChange and s.lockdown)
+	end)
+
+	t.test("lockdown exactly at the shift change keeps the shift change", function()
+		local s = RoundClock.status(421, 0, ROUND, 420, LOCK)
+		t.eq(s.shiftChangeAt, 420)
+		t.eq(s.policeAt, 480)
+	end)
+
+	t.test("Rush Job: 6:00 round, shift change at 5:00", function()
+		local rush = Config.Modifiers.RushJob.RoundSeconds
+		local s = RoundClock.status(10, 0, rush, nil, LOCK)
+		t.eq(s.policeAt, 360)
+		t.eq(s.shiftChangeAt, 300)
+		t.eq(RoundClock.status(10, 0, rush, 330, LOCK).policeAt, 360)
+	end)
+
+	t.test("tier lockdown lengths (Easy 75, Hard 50)", function()
+		local tiers = Config.DifficultyTiers.Tiers
+		t.eq(RoundClock.status(0, 0, ROUND, 100, tiers.Easy.LockdownSeconds).policeAt, 175)
+		t.eq(RoundClock.status(0, 0, ROUND, 100, tiers.Hard.LockdownSeconds).policeAt, 150)
+	end)
+
+	t.test("works with server-time offsets", function()
+		local s = RoundClock.status(5100, 5000, ROUND, 5300, LOCK)
+		t.eq(s.elapsed, 100)
+		t.eq(s.policeAt, 5360)
+		t.eq(s.remaining, 260)
+	end)
+
+	t.test("custom shift warning", function()
+		t.eq(RoundClock.status(0, 0, ROUND, nil, LOCK, 90).shiftChangeAt, 390)
+		t.eq(RoundClock.DEFAULT_SHIFT_WARNING, Config.Round.ShiftWarningSeconds)
+	end)
+
+	t.test("no cap (mini-job): only the lockdown ends it", function()
+		local s = RoundClock.status(30, 0, math.huge, nil, 60)
+		t.eq(s.policeAt, math.huge)
+		t.eq(s.shiftChangeAt, nil)
+		t.ok(not s.over)
+		local l = RoundClock.status(80, 0, math.huge, 50, 60)
+		t.eq(l.policeAt, 110)
+		t.eq(l.remaining, 30)
+	end)
+
+	t.test("JUMP IN: first 2:00 and room in the crew", function()
+		t.ok(RoundClock.canJumpIn(119, 0, 120, 2, 4))
+		t.ok(not RoundClock.canJumpIn(120, 0, 120, 2, 4))
+		t.ok(not RoundClock.canJumpIn(10, 0, 120, 4, 4))
+		t.ok(not RoundClock.canJumpIn(-1, 0, 120, 1, 4))
+	end)
+
+	t.test("JUST MADE IT within 5 s of the police", function()
+		t.ok(RoundClock.justMadeIt(475, 480, 5))
+		t.ok(RoundClock.justMadeIt(480, 480, 5))
+		t.ok(not RoundClock.justMadeIt(474, 480, 5))
+		t.ok(not RoundClock.justMadeIt(481, 480, 5))
+	end)
+end
