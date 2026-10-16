@@ -437,7 +437,7 @@ end
 local function noteSeen(player: Player)
 	if not everSeen[player] then
 		everSeen[player] = true
-		Peers.event("everSeen", player)
+		Peers.event("Seen", player)
 	end
 end
 

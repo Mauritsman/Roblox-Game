@@ -350,10 +350,10 @@ function CaptureService:Grab(player: Player, guardModel: Model): boolean
 	local captive: Captive = { player = player, stage = "Carried", guard = guardModel, token = nextToken }
 	captives[player] = captive
 	setAttrs(character, true, "Carried")
-	Peers.call("CarryService", "DropAll", player, "captured")
+	Peers.call("CarryService", "DropAll", player, "capture")
 	Peers.call("GadgetService", "RecallDrone", player, "")
 	Peers.refreshMovement(player)
-	Peers.event("timesCaught", player)
+	Peers.event("Caught", player)
 
 	local cellAvailable = hasCell()
 	if cellAvailable and attach(captive, character, guardModel) then
@@ -408,7 +408,7 @@ local function onCarryInterrupted(guardModel: Model, player: Player, _kind: stri
 	release(player, at, true, "dropped")
 	Net.broadcast("Captured", player.UserId, "dropped")
 	if by and by ~= player then
-		Peers.event("heroDrops", by)
+		Peers.event("HeroDrop", by)
 	end
 end
 
@@ -434,7 +434,7 @@ local function rescue(rescuer: Player, door: Instance)
 		release(player, standCFrame(exit, offset), true, "rescued")
 		Net.broadcast("Rescued", player.UserId, rescuer.UserId, "rescue")
 	end
-	Peers.event("rescues", rescuer, { count = #freed })
+	Peers.event("Rescue", rescuer, { amount = #freed })
 end
 
 local function crawlOut(player: Player)
@@ -543,7 +543,7 @@ function CaptureService:Jail(player: Player)
 	if not captives[player] then
 		nextToken += 1
 		captives[player] = { player = player, stage = "Respawn", token = nextToken }
-		Peers.call("CarryService", "DropAll", player, "captured")
+		Peers.call("CarryService", "DropAll", player, "capture")
 	end
 	putInCell(player)
 end
@@ -588,6 +588,37 @@ function CaptureService:Start()
 	end)
 
 	Net.onRequest("CrawlOut", crawlOut)
+
+	-- Cell keeper: a caught player stays on their spot, even when something else teleports them (for example the
+	-- respawn at the heist van after dying while caught).
+	task.spawn(function()
+		while true do
+			task.wait(0.5)
+			local spots: { Instance }? = nil
+			for player, captive in captives do
+				local character = player.Character
+				local root = character and character:FindFirstChild("HumanoidRootPart")
+				if
+					captive.stage == "Cell"
+					and captive.spot
+					and character
+					and root
+					and root:IsA("BasePart")
+				then
+					spots = spots or tagged(Tags.CellSpot)
+					local at = standCFrame((spots :: { Instance })[captive.spot])
+					if at and (root.Position - at.Position).Magnitude > 6 then
+						character:PivotTo(at)
+					end
+					root.Anchored = true
+					if character:GetAttribute(Tags.Captured) ~= "Cell" then
+						setAttrs(character, true, "Cell")
+						Peers.refreshMovement(player)
+					end
+				end
+			end
+		end
+	end)
 
 	Net.onRequest("ViewCam", function(player: Player, index: any)
 		if typeof(index) ~= "number" or index ~= index then

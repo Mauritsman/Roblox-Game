@@ -11,6 +11,8 @@ local Detection = require(ReplicatedStorage.Shared.Logic.Detection)
 local Difficulty = require(ReplicatedStorage.Shared.Logic.Difficulty)
 local Tags = require(ReplicatedStorage.Shared.Tags)
 
+local Optional = require(script.Parent.Parent:WaitForChild("Lib"):WaitForChild("Optional"))
+
 local Targets = {}
 
 export type View = {
@@ -126,8 +128,12 @@ local function isSmelly(typeName: string?): boolean
 	return def ~= nil and def.Smelly == true
 end
 
--- Does this player carry smelly loot (Boef)? Pocket loot counts.
+-- Does this player carry smelly loot (Boef)? Pocket loot counts. CarryService:HasSmelly when present.
 function Targets.smelly(player: Player, character: Model): boolean
+	local called, result = Optional.call("CarryService", "HasSmelly", player)
+	if called then
+		return result == true
+	end
 	for _, loot in Targets.carriedLoot(player) do
 		if isSmelly(typeOf(loot)) then
 			return true

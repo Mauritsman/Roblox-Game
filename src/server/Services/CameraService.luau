@@ -170,7 +170,7 @@ local function update(cam: Cam, dt: number, fillSeconds: number, now: number)
 				AlarmService:Add("CameraSpotted", nil, player)
 				GuardService:ReportPosition(view.root.Position)
 				Net.broadcast("Spotted", player.UserId, "camera")
-				Peers.event("everSeen", player)
+				Peers.event("Seen", player)
 			end
 		else
 			meter = math.max(0, meter - dt)
