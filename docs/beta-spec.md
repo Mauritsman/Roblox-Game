@@ -654,3 +654,34 @@ files change only inside each role's block; each WP owns its files; only M3 edit
 4. Duplicate gadget picks in one crew (4 × Bubble Blaster = 12 bubbles): allow or cap at 2 per kind?
 5. §7: tiers, Big Cheese rules, van recall on maps 2–3, objective bonus +10%, radio-check numbers, perk tree — which go
    into the beta and which wait?
+
+## 13. Final decisions (advisor)
+
+*Added by mechanics in WP0, 16 Oct 2026. Sources: `docs/research/advisor-notoriety.md`, `advisor-maps.md`,
+`advisor-decisions-2.md` and the orchestrator's contract decisions. Where these differ from §0–§12, **this section
+wins**. The single name reference for all roles is `docs/contracts.md`; numbers live in `src/shared/Config.luau`.*
+
+| Topic | Final decision (changes to the spec above) |
+|---|---|
+| Difficulty (§7.1) | **Easy / Normal / Hard only** ("Young / Aged / Extra Aged"); **no Big Cheese in the beta**. Payout ×0.8 / ×1.0 / ×1.4 (meta's `Config.Economy.DifficultyPayout`). **Hard unlocks at 2★ on Normal** on that heist (not 3★; meta's `Config.Progression`). Mixed votes → the crew plays the lowest tier any voter of the winning card chose. The tier table lives in **`Config.DifficultyTiers`** (the old `Config.Difficulty` string stays until M3 because today's services read it) |
+| Radio check (§7.3) | **Normal and Hard only** (Easy: a bubble costs the usual +10). Max **2 answers per round** for the whole crew; after that every bubble costs +40 |
+| Safe + Cheese Grater 3000 | Optional, **45 s** (Easy 35, Hard 55), 1–2 seeded jams, restart hold 1.5 s, +10%. **Max 1 optional objective per heist** |
+| Keycard | Required for its `KeycardDoor`. On **50% of rounds it hangs on a guard**: pickpocket by holding USE behind him for 1.5 s, unseen. Takes a pocket slot, drops when you are caught |
+| Loud (§7.2) | **Panic Pack only** (+1 charge per picked gadget at LOCKDOWN; `Config.Features.LoudExtras`). No random van recall, no arrival timers. Maps 2–3 get **one fixed lockdown exit** instead: `Exit` attributes `QuietOnly` / `LockdownOnly` / `ArrivesAt`, map changes via tag `LockdownSwitch` (`Action` = Close / Open / Speed / On); heist field `LoudEscape = "LockdownExit"` replaces `"Recall"`. RS attribute **`ExitArrivesAt`** replaces `VanArrivesAt`. `Config.Objectives.VanReturnSeconds` is dropped |
+| Perks (§7.4) | 3×3 tree, costs 1/2/3 SP, 1 SP per rank from Rank 2, **max 3 equipped**, free respec. **Muscle order changed:** Long Arm (row 1) · Deep Pockets (row 2) · Strong Back (row 3). Layout, costs and equip rules are meta's (`Config.PerkTree`, `Logic/PerkTree`); effects are mechanics' (`Config.Perks`, `Logic/Perks`). `ProgressionService:GetPerks(player)` returns `{[perkId] = 1}` for the equipped ones. Barrel Lungs also moves the warning to 20 s (proposed) |
+| Mask Up | New: you walk in unmasked; guards, cameras and snitches **ignore unmasked players** (they can only be in public areas). Character attribute **`Masked = true`** when you first grab loot or enter a `StaffZone` (proposed: also when you use a gadget or the Crowbar, and for everyone at LOCKDOWN); meta's `ShopService` renders the mask. Switch `Config.Features.MaskUp` |
+| Job board, modifiers (§6.2) | One card per heist + tier selector + one rotating **Hot Job** (heist + modifier, flat **+25%**, never Sleepy Guards). **Modifiers only come through the Hot Job** and no longer roll per round; there is **no per-modifier payout bonus** (`Config.Modifiers` holds effects only). Fresh bonus +20% (meta) |
+| §12 Q1 hiding | Pulled out of a hiding spot = **a normal grab** (carried at 8 studs/s, so a teammate can still bubble the guard) — not straight to the cell |
+| §12 Q2 Karel | Snitch **kept** ("I'M TELLING!" +20, 2 nearest guards investigate, fill ×0.5, range 25, 30 s cooldown per player, shows his own meter) |
+| §12 Q3 half share | **Confirmed**: a crew member not in the van gets half; the lost half goes to nobody. Busted = 50% of the van loot. No One Left Behind +10% only for crews of 2+ |
+| §12 Q4 duplicates | **Allowed, no cap.** Log bubbles per round; cap at 2 per kind only if 4-player crews average > 6 bubbles |
+| Payout rounding (§8) | **Round half up once**, on each player's final amount (meta's `Logic/Payout`): 3,000 shared by four → 1,088 each |
+| Banking (§2.5) | Automatic, no button: walking into the van zone (≤ 6 studs from the open rear doors) banks everything you carry; the client plays a 0.5 s toss animation |
+| Mini-job guard (§1.6) | At lockdown he **follows at 10 studs/s but never catches**; if the player stops he trips ±4 studs short (`Config.Tutorial.GuardChaseSpeed`, `GuardTripDistance`). Award "Fresh Crook" |
+| Quick wheel | One shared **10 s** cooldown for the whole wheel (ux applies `Config.Ping.QuickCooldown = 10` in WP1); SPOT pings stay 3 per 2 s |
+| Names | **`heistId`** everywhere (not `mapId`); the gadget pick request is **`SetLoadout`** (meta; ux's `PickGadgets` renamed); the vote is **`JobVote(cardId, difficulty)`** (meta); the loot throw is **`LootThrow`**; ux's `GoudaLifted` becomes **`MainLootLifted`** (maps 2–3 have other main loot). Funnel steps are reported **by name**: onboarding `Spawned`, `Moved`, `FirstLootGrabbed`, `FirstLootBanked`, `SneakedPastGuard`, `GoudaLifted` (mechanics; `MiniJobEscaped`, `GarageReached` meta); round `FirstLootGrabbed`, `FirstLootBanked`, `MainLootLifted` (mechanics; JUMP IN reports `VanDeparted`) |
+| Ownership | Meta owns `Config.Economy` / `Progression` / `PerkTree` / `HotJob` …, `Payout`, `JobBoard`, `Onboarding`, `SetLoadout`, `ProgressionService` (perks, rank) and the pure modules `Payout`, `JobBoard`, `HotJob`, `Progression`, `PerkTree`, … Mechanics owns the round, `NextJob`, `ReturnToGarage`, `JumpIn`, `Activity` / `InRound` / `Masked` and the 11 Logic modules of §9.6 |
+| Map names (`beta-spec-maps.md` §3) | **All adopted:** `Opener` (LootAnchor attribute; `RoundPlan` fills ≥ 1), `StaffZone`, `SecureZone`, `Ride` (`RideId`, `Seats`, `Speed`, `LockdownSpeed`; `Station` attachments with `Boarding`, `Stop`, `LockdownOnly`; path in `Points.Rides[RideId]`), `ColdZone`, `RhythmMachine` (`Kind`, `Period`, `Active`, `Radius`), `GooZone`, `LaserGrid` (+ `Electronic`), `MorningLight` (`Step`), `RisingPlinth` (`RiseHeight`), `PracticeTarget`, `GarageTV`, `TrophyBoard`. New tags **`SeeThrough`** (vision raycasts ignore it; replaces the hard-coded `Cage` rule, which stays as a fallback) and **`GuardDoor`** (opens for guards) |
+| Hiding (§4.1) | Hidden players are made invisible and parked inside the spot, so hide props only need to be **≥ 4 studs** tall (was 5.5) |
+| Guard routes (§3.2, §9.7) | Routes may include **upper floors (y 9)**; a leg that changes floor uses pathfinding (other legs stay straight `MoveTo`) |
+| Lighting | Client-side lighting per area approved: map provides presets in **`src/shared/LightingPresets.luau`** (name reserved), ux applies them by area / `Activity`; the server keeps the heist preset as a fallback |
