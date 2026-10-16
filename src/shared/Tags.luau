@@ -168,6 +168,38 @@ return table.freeze({
 	ClosedCFrame = "ClosedCFrame",
 	LoudOnly = "LoudOnly",
 
+	-- Mechanics D: map runtime (src/server/MapRuntime/README.md). Optional map attributes …
+	Spinner = "Spinner", -- tag (M): turns around its own axis on clients (attributes Rpm, Axis)
+	Rpm = "Rpm",
+	Axis = "Axis",
+	Loop = "Loop", -- Ride: true = loop, false = shuttle; default: a closed path is a loop
+	Train = "Train", -- Ride: coupled cars, only the front car halts at stations
+	Cars = "Cars", -- Ride: number of cars when the map has no Car models
+	TwoWay = "TwoWay", -- Ride (shuttle): can also be boarded at the far end
+	EmptyHands = "EmptyHands", -- Ride: riders may only carry pocket loot (Bean Chute)
+	LockdownPath = "LockdownPath", -- Ride: key in Points.Rides used from LOCKDOWN (default "<RideId>Lockdown")
+	Offset = "Offset", -- RhythmMachine: seconds added to its cycle (stagger machines)
+	LockdownPeriod = "LockdownPeriod", -- RhythmMachine: period during LOCKDOWN
+	Pick = "Pick", -- LockdownSwitch: how many of its Group close (seeded)
+	Exclusive = "Exclusive", -- LockdownSwitch: at most one picked per Exclusive value
+	OpenSeconds = "OpenSeconds", -- LockdownSwitch: animation length
+	OpenOffset = "OpenOffset", -- LockdownSwitch / GuardDoor: Vector3 move when opening (local space)
+	ArriveOffset = "ArriveOffset", -- Exit with ArrivesAt: Vector3 where it comes from (world)
+	DepartOffset = "DepartOffset", -- Exit: Vector3 it travels on escape (world)
+	-- … and runtime state (set by mechanics)
+	RideCar = "RideCar", -- car Model of a Ride (attributes S0, T0, Rate, PathKey for client smoothing)
+	Riding = "Riding", -- character: RideId while seated on a ride
+	RideStop = "RideStop", -- character: the car is in a STOP window (guards there may grab riders)
+	InMist = "InMist", -- character: inside an active mist/steam cloud (guards and cameras cannot see you)
+	InGoo = "InGoo", -- character: wading in a GooZone (walk Config.Movement.Goo)
+	Wrapped = "Wrapped", -- character: gold-wrapped (guards ignore you until WrappedUntil)
+	WrappedUntil = "WrappedUntil",
+	Ring = "Ring", -- character: "Public" | "Staff" | "Secure"
+	Area = "Area", -- character: Zone attribute (or name) of the StaffZone/SecureZone you are in
+	Melting = "Melting", -- loot: losing value outside a ColdZone
+	Running = "Running", -- RhythmMachine / LockdownSwitch: switched on
+	Pulse = "Pulse", -- RhythmMachine: in its active window now
+
 	-- ===================================================================================================
 	-- MAP block (owner: map) — map-only tags go here.
 	-- ===================================================================================================
