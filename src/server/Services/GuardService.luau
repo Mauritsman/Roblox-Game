@@ -39,7 +39,7 @@ local GuardService = {}
 
 -- Signals for other services.
 GuardService.Grabbed = Signal.new() :: Signal.Signal<Player, Model> -- a guard grabbed someone
-GuardService.Noise = Signal.new() :: Signal.Signal<Vector3, number, string> -- every HearNoise (Boef, Karel)
+GuardService.Noise = Signal.new() :: Signal.Signal<Vector3, number, string, Player?> -- every HearNoise (Boef)
 GuardService.Bubbled = Signal.new() :: Signal.Signal<Model, Player?> -- a guard was bubbled (radio checks)
 -- A carrying guard dropped his captive: guard, captive, "bubble" | "noisemaker", who did it (if known).
 GuardService.CarryInterrupted = Signal.new() :: Signal.Signal<Model, Player, string, Player?>
@@ -769,7 +769,7 @@ function GuardService:HearNoise(
 	kind: string?,
 	by: Player?
 ): number
-	GuardService.Noise:Fire(position, radius, kind or "")
+	GuardService.Noise:Fire(position, radius, kind or "", by)
 	local now = os.clock()
 	local heard = 0
 	if kind == "noisemaker" then
