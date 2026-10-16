@@ -355,6 +355,7 @@ Config.Tutorial = {
 	StirHintCooldown = 5,
 	DriveAwaySeconds = 2, -- van drives off, then the player lands in the Garage
 	WaitCheckSeconds = 5, -- a newcomer waiting for a free slot is re-checked this often
+	Stars = { 150, 500, 1500 }, -- van loot for 1★, 2★, 3★ (3★ also needs the Gouda)
 }
 
 -- ---------- §7 switches (advisor: all in the beta) ----------
