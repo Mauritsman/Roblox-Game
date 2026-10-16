@@ -108,7 +108,13 @@ function Style.pendant(
 end
 
 -- A canal street lamp (StreetLamp prop, glass at 9.1–10.2) with a warm PointLight. ground = local floor point.
-function Style.streetLamp(k: Kit.Kit, parent: Instance, ground: Vector3, range: number): Part
+function Style.streetLamp(
+	k: Kit.Kit,
+	parent: Instance,
+	ground: Vector3,
+	range: number,
+	shadows: boolean?
+): Part
 	k.prop(parent, "StreetLamp", ground, 0, {
 		fallback = function(p, g)
 			local post = Builder.cylinder(p, "LampPost", 0.5, 9, g + Vector3.new(0, 4.5, 0), C.Metal, {})
@@ -131,7 +137,7 @@ function Style.streetLamp(k: Kit.Kit, parent: Instance, ground: Vector3, range: 
 		C.LampWarm,
 		{ material = Enum.Material.Neon, shape = Enum.PartType.Cylinder, collide = false, shadow = false }
 	)
-	Builder.pointLight(glass, range, 1.4, C.LampWarm, false)
+	Builder.pointLight(glass, range, 1.4, C.LampWarm, shadows == true)
 	return glass
 end
 

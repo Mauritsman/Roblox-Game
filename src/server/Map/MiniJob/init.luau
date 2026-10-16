@@ -7,9 +7,15 @@
 -- All coordinates in this folder are LOCAL to the slot origin (studs; floor y 0; north = −X, the canal side).
 -- Flow: spawn by the van → grab the wheel at the market stall (15 studs) → bank it at the van → sneak past the
 -- sleeping guard into the shop → pocket the cubes → lift the Golden Gouda → roll it back past the guard (front
--- door) or through the side door and the alley → hold to drive.
+-- door, ≈ 40 studs) or through the side door and the alley (≈ 55 studs) → hold to drive.
+--
+--   x −46..−34 canal · −34..−12 quay (van −28,−13 · stall −25,3 · guard −13.6,3.4) · −12..8 Corner Cheese
+--   (z −8..12, front door z 5.4..11.4, side door x 0..6) · alley z 12..22 · road barriers at z −22 and 28
 
+local Builder = require(script.Parent.Common.Builder)
 local Kit = require(script.Parent.Garage.Kit)
+local Shop = require(script.Shop)
+local Street = require(script.Street)
 
 -- Key positions (local). Character positions are at root height (floor + 3).
 export type Points = {
@@ -29,19 +35,59 @@ export type Points = {
 
 export type LootEntry = { Type: string, Count: number, Group: string? }
 
+-- A walking/rolling lane (local floor points), kept free of props. Checked by tests/map and the tester.
+export type Lane = { Name: string, Width: number, Points: { Vector3 } }
+
+local V = Vector3.new
+
 local POINTS: Points = {
-	Spawn = Vector3.new(-18, 3, -13.1),
-	SpawnFacing = Vector3.new(-4, 0, 14.5).Unit,
-	Wheel = Vector3.new(-22, 2.6, 1.4),
-	Van = Vector3.new(-27, 0, -13),
-	BankZone = Vector3.new(-27, 0, -4),
-	DrivePoint = Vector3.new(-27, 0, -30),
-	SleepingGuard = Vector3.new(-14.5, 0.3, 3.4),
-	SleepingGuardFacing = Vector3.new(-1, 0, 0),
-	FrontDoor = Vector3.new(-12, 0, 8.4),
-	SideDoor = Vector3.new(3, 0, 12),
-	Gouda = Vector3.new(4, 1.4, 2),
-	Barrel = Vector3.new(-6, 0, 20),
+	Spawn = V(-19, 3, -13.1),
+	SpawnFacing = V(-6, 0, 14.5).Unit,
+	Wheel = V(-25, 2.6, 1.4),
+	Van = V(-28, 0, -13),
+	BankZone = V(-28, 0, -4),
+	DrivePoint = V(-28, 0, -30),
+	SleepingGuard = V(-13.6, 0.3, 3.4),
+	SleepingGuardFacing = V(-1, 0, 0),
+	FrontDoor = V(-12, 0, 8.4),
+	SideDoor = V(3, 0, 12),
+	Gouda = V(4, 1.4, 2),
+	Barrel = V(-6, 0, 20),
+}
+
+local LANES: { Lane } = {
+	{ Name = "SpawnToStall", Width = 4, Points = { V(-19, 0, -13.1), V(-24.5, 0, -0.8) } },
+	{ Name = "StallToVan", Width = 4, Points = { V(-24.5, 0, -1.8), V(-28, 0, -4) } },
+	{
+		Name = "QuayToFrontDoor",
+		Width = 5,
+		Points = { V(-19, 0, -9), V(-17.8, 0, -2.5), V(-17.8, 0, 8.4), V(-9, 0, 8.4) },
+	},
+	-- Rolling the Golden Gouda back (beta-spec-maps §5: two flat routes).
+	{
+		Name = "RollPastGuard",
+		Width = 5,
+		Points = {
+			V(1.5, 0, 5),
+			V(-7, 0, 4.5),
+			V(-9, 0, 8.4),
+			V(-17.8, 0, 8.4),
+			V(-17.8, 0, -2.5),
+			V(-26, 0, -4),
+		},
+	},
+	{
+		Name = "RollThroughAlley",
+		Width = 5,
+		Points = {
+			V(3, 0, 5),
+			V(3, 0, 15),
+			V(-14, 0, 15),
+			V(-17.8, 0, 9),
+			V(-17.8, 0, -2.5),
+			V(-26, 0, -4),
+		},
+	},
 }
 
 local MiniJob = {
@@ -49,6 +95,7 @@ local MiniJob = {
 	DisplayName = "Corner Cheese",
 	Seed = 2604, -- fixed: every slot looks the same
 	Points = POINTS,
+	Lanes = LANES,
 	-- Every anchor is Fixed, so this loot always spawns (RoundPlan fills Fixed anchors).
 	Loot = {
 		{ Type = "CheeseWheel", Count = 2 }, -- stall (Opener) + display table
@@ -59,7 +106,7 @@ local MiniJob = {
 	-- beta-spec-maps §12.
 	Budget = { Parts = 1500, Lights = 10, Shadowed = 2 },
 	-- Local box around everything that is built.
-	Bounds = { Min = Vector3.new(-70, -10, -50), Max = Vector3.new(14, 40, 50) },
+	Bounds = { Min = V(-70, -10, -50), Max = V(14, 40, 50) },
 }
 
 -- Session attribute of a slot's loot anchors, BankZone and triggers ("Tutorial1", "Tutorial2").
@@ -85,12 +132,21 @@ function MiniJob.worldPoints(origin: CFrame): Points
 	}
 end
 
--- Builds slot `slot` into `folder` at `origin`.
+-- Builds slot `slot` into `folder` at `origin` (≤ 1,500 parts, ≤ 10 lights of which 2 cast shadows).
 function MiniJob.Build(folder: Folder, origin: CFrame, slot: number, rng: Random)
 	local k = Kit.new(origin)
-	local _ = rng
-	local _slot = slot
-	k.box(folder, "Ground", Vector3.new(-34, -8, -46), Vector3.new(12, 0, 46), Color3.fromRGB(92, 96, 104))
+	local session = MiniJob.sessionFor(slot)
+	local anchors = Builder.folder(folder, "Anchors")
+	local ctx: Street.Context = {
+		k = k,
+		folder = folder,
+		anchors = anchors,
+		slot = slot,
+		session = session,
+		points = POINTS,
+	}
+	Street.build(ctx, rng)
+	Shop.build(ctx)
 end
 
 return MiniJob
