@@ -223,8 +223,9 @@ function Screens.open(name: string, arg: any?): boolean
 	pcall(function()
 		GuiService.TouchControlsEnabled = false
 	end)
+	-- Menus block gameplay input; Back closes, CamPrev/CamNext switch the spectate view.
 	Actions.setBlocker(function(action)
-		return action ~= "Back"
+		return action ~= "Back" and action ~= "CamPrev" and action ~= "CamNext"
 	end)
 	Audio.play("UiTap")
 	Screens.select(nil)

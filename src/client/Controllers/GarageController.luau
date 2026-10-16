@@ -103,6 +103,7 @@ local function refreshBar()
 	garageBar.Visible = mode == "Garage"
 	if mode ~= "Garage" then
 		departLabel.Visible = false
+		contractsChip.Visible = false
 		return
 	end
 	local cash = Profile.number("cash", "Cash")
