@@ -100,20 +100,13 @@ return function(t)
 		t.eq(job.modifierId, nil)
 		t.eq(job.isHotJob, false)
 		t.eq(job.cardId, "GoldenWheel")
-		local ok = RoundFlow.sanitizeJob(
-			{
-				cardId = "HotJob",
-				heistId = "PralinePalace",
-				difficulty = "Hard",
-				modifierId = "RushJob",
-				isHotJob = true,
-			},
-			heists,
-			tiers,
-			mods,
-			"GoldenWheel",
-			"Normal"
-		)
+		local ok = RoundFlow.sanitizeJob({
+			cardId = "HotJob",
+			heistId = "PralinePalace",
+			difficulty = "Hard",
+			modifierId = "RushJob",
+			isHotJob = true,
+		}, heists, tiers, mods, "GoldenWheel", "Normal")
 		t.eq(ok.heistId, "PralinePalace")
 		t.eq(ok.difficulty, "Hard")
 		t.eq(ok.modifierId, "RushJob")
