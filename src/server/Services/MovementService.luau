@@ -2,7 +2,7 @@
 -- The only writer of Humanoid.WalkSpeed / JumpHeight (beta-spec §0, §9.1). The speed comes from Logic/Movement
 -- with the player's stats (LoadoutService:StatsOf after perks, else Config defaults) and these character
 -- attributes: Frozen, Caught, Captured, Hidden, Bubbled, Slipping, Operating, CarryClass, Rolling, CarryPartner,
--- Crouching.
+-- Crouching, InGoo (GooZone cap, set by MapRuntimeService).
 --   * Other services only set attributes; MovementService refreshes automatically when one changes. Calling
 --     `MovementService:Refresh(player)` after a change is still good practice (integration.md).
 --   * Anyone else writing WalkSpeed/JumpHeight is overwritten at once (prototype code in other packages still does).
@@ -36,6 +36,7 @@ local WATCHED = {
 	Tags.Rolling,
 	Tags.CarryPartner,
 	Tags.Crouching,
+	Tags.InGoo, -- mechanics D (GooZone)
 }
 
 type Applied = { walk: number, jump: number }
@@ -67,6 +68,8 @@ local function flagsOf(character: Model): Movement.Flags
 		rolling = on(Tags.Rolling),
 		twoCarry = character:GetAttribute(Tags.CarryPartner) ~= nil,
 		crouching = character:GetAttribute(Tags.Crouching) == true,
+		speedCap = if on(Tags.InGoo) then Config.Movement.Goo else nil,
+		jumpCap = if on(Tags.InGoo) then Config.Movement.GooJump else nil,
 	}
 end
 

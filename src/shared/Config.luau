@@ -80,6 +80,8 @@ Config.Movement = {
 	MediumJump = 3.5,
 	HeavyJump = 2, -- (proposed) a small hop over thresholds, never over obstacles
 	SlipSeconds = 1,
+	Goo = 4, -- mechanics D: walking in a GooZone (character attribute InGoo) caps the speed …
+	GooJump = 2, -- … and the jump (wade out by the steps)
 }
 
 -- ---------- Loot (beta-spec §2) ----------
@@ -453,6 +455,68 @@ Config.Perks = {
 	EscapeArtist = { { Stat = "SelfEscapeAfter", Set = 12 } },
 	SpareBatteries = { { Stat = "FirstGadgetBonus", Add = 1 } },
 } :: { [string]: { PerkEffect } }
+
+-- ---------- Map runtime (mechanics D: MapRuntimeService; tag rules in src/server/MapRuntime/README.md) ----------
+-- Attributes on the tagged map objects override these defaults.
+Config.MapRuntime = {
+	Ride = {
+		Speed = 8, -- studs/s when a Ride has no Speed attribute
+		LockdownFactor = 1, -- LOCKDOWN speed = LockdownSpeed attribute, else Speed × this …
+		SwitchFactor = 2.5, -- … or × this when the Ride is tagged LockdownSwitch with Action "Speed"
+		Seats = 1, -- riders or loot per car
+		Cars = 3, -- cars on a loop without Car models (a shuttle always has 1)
+		TrainGap = 1, -- studs between coupled cars (Ride attribute Train = true)
+		Dwell = 2.5, -- a car halts this long at a Boarding station when someone waits there or rides in it
+		LockdownDwell = 1.5,
+		StationWindow = 4, -- ± studs around a station: board, hop off, load loot
+		StopWindow = 6, -- ± studs around a Stop station: fast cars slow to the ride's Speed (STOP window)
+		WaitRadius = 12, -- a free crew member this close to a Boarding station makes the next car halt
+		PromptRange = 7,
+		LoadRadius = 4, -- loot dropped this close to a halted car with a free seat is loaded into it
+		ShuttleDepart = 1, -- a shuttle leaves this long after someone boards or loot is loaded
+		ShuttleReturn = 1.5, -- seconds at the far end before it returns empty
+		ReturnFactor = 2, -- an empty shuttle returns this much faster
+		RumbleRadius = 20, -- loot sent alone down a shuttle rumbles out at the end (Cheese Chute)
+		RumbleSearch = 4,
+		CornerBlend = 1.5, -- studs over which cars turn at path corners
+		CarWidth = 4, -- default car when the map has no Car models
+		CarHeight = 3,
+		CarDepth = 4,
+	},
+	Rhythm = {
+		LockdownFactor = 0.5, -- period × this at LOCKDOWN (LockdownSwitch Action "Speed"; or attribute LockdownPeriod)
+		Fountain = { Period = 30, Active = 4, Radius = 40 }, -- the nearest guard within Radius comes to taste
+		Mixer = { Period = 6, Active = 2, Radius = 15 }, -- a CRACK within Radius in the Active s after a thump: unheard
+		Wrapper = { Period = 12, Active = 4, Radius = 4, WrapSeconds = 8 }, -- empty hands only
+		Mist = { Period = 10, Active = 4, Radius = 6 }, -- guards cannot see into an active cloud
+		Steam = { Period = 5, Active = 2.5, Radius = 5 }, -- MELTDOWN vents (same rule as Mist)
+		Clock = { -- Tulip auction clock: a light beam sweeps an ellipse around its centre
+			Period = 12,
+			Active = 12,
+			Radius = 5, -- beam half-width
+			RadiusX = 18,
+			RadiusZ = 30,
+			FillSeconds = 0.8, -- in the beam this long = spotted
+			Decay = 1, -- meter per second out of the beam
+			Points = 40,
+			Cooldown = 8, -- per player after being spotted
+			SpeedsUp = true, -- LOCKDOWN: period × LockdownFactor (the 6 s FLOWER FRENZY sweep)
+		},
+		Sprinkler = { Period = 0, Active = 0, Radius = 8, SlipSpeed = 10, SlipEvery = 3, SqueakRadius = 15 },
+	},
+	Melt = { RatePerSecond = 0.02, MinFactor = 0.5, Interval = 1 }, -- Melts loot outside a ColdZone, once moved
+	Goo = { SploshRadius = 15, SploshEvery = 1.5, SploshSearch = 5 },
+	Laser = { Points = 40, Cooldown = 3, ReportGuards = true },
+	Switch = { CloseSeconds = 1.2, OpenSeconds = 2 }, -- LockdownSwitch animations
+	GuardDoor = { Radius = 7, OpenSeconds = 0.4, HoldSeconds = 1.5 },
+	MorningLight = { BeforeEnd = { 180, 120, 60 }, Toast = "MORNING AUCTION IN 3:00" }, -- steps 1–3
+	Plinth = { RiseHeight = 4, RiseSeconds = 3 },
+	Exit = { ArriveHeight = 60, ArriveSeconds = 8, DepartHeight = 60, DepartDistance = 50, DepartSeconds = 4 },
+	Spinner = { SpinSeconds = 10 }, -- Spinner tag without SpinSeconds
+	CellDoor = { OpenSeconds = 0.5, HoldSeconds = 2.5 }, -- slides to OpenCFrame on a rescue
+	ZoneInterval = 0.1,
+	Particles = { Mist = 12, Steam = 10, Sprinkler = 30, Fountain = 14 }, -- emitter rates (phones: keep low)
+}
 
 -- ---------- Prototype keys (still read by today's services) ----------
 -- DEPRECATED (WP M3): global difficulty string; the per-job tier (Config.DifficultyTiers) replaces it.
