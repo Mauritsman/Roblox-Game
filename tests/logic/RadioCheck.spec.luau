@@ -77,4 +77,12 @@ return function(t)
 		RadioCheck.forget(s, "G1")
 		t.ok(RadioCheck.bubbled(s, "G1", 30) ~= nil, "new bubble, new check")
 	end)
+
+	t.test("cancel drops a check without points", function()
+		local s = RadioCheck.new(true, RULES)
+		RadioCheck.bubbled(s, "G1", 0)
+		RadioCheck.cancel(s, "G1")
+		t.ok(not RadioCheck.isOpen(s, "G1"))
+		t.eq(#RadioCheck.due(s, 10), 0)
+	end)
 end

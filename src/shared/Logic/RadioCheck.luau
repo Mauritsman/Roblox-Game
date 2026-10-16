@@ -12,6 +12,7 @@
 --   answer(s, id, now)   → true when it counted
 --   expire(s, now)       → the ids that ran out of time (each +40)
 --   popped(s, id)        → points when the bubble pops (+10 without a check, else 0: the check decides)
+--   forget(s, id) / cancel(s, id) → clean up a finished check / drop one without points
 
 local RadioCheck = {}
 
@@ -139,6 +140,11 @@ function RadioCheck.forget(s: State, id: string)
 	if check and check.popped and not open(check) then
 		s.checks[id] = nil
 	end
+end
+
+-- The guard is gone (round over, removed): drop his check without points.
+function RadioCheck.cancel(s: State, id: string)
+	s.checks[id] = nil
 end
 
 function RadioCheck.isOpen(s: State, id: string): boolean

@@ -21,7 +21,6 @@ local Net = require(ReplicatedStorage.Shared.Net)
 local Tags = require(ReplicatedStorage.Shared.Tags)
 local Loadout = require(ReplicatedStorage.Shared.Logic.Loadout)
 
-local Optional = require(script.Parent.Parent.Lib.Optional)
 local AlarmService = require(script.Parent.AlarmService)
 local CarryService = require(script.Parent.CarryService)
 local GuardService = require(script.Parent.GuardService)
@@ -369,11 +368,7 @@ local function bubbleGuard(player: Player, model: Model, position: Vector3): boo
 	end
 	stat("BubbledGuard", player)
 	Net.broadcast("Window", "GUARD BUBBLED", seconds, position)
-	-- Radio check 4 s later (Normal/Hard). ObjectiveService also listens to GuardService.Bubbled when it exists;
-	-- it ignores a second report of the same bubble.
-	if CollectionService:HasTag(model, Tags.Guard) then
-		Optional.call("ObjectiveService", "OnGuardBubbled", model, player)
-	end
+	-- The radio check 4 s later (Normal/Hard) is ObjectiveService's: it listens to GuardService.Bubbled.
 	return true
 end
 
@@ -425,16 +420,14 @@ local function shootBubble(player: Player, from: Vector3, target: Vector3)
 		for _, part in workspace:GetPartBoundsInRadius(endPoint, cfg.HitRadius, overlap) do
 			local model = part:FindFirstAncestorOfClass("Model")
 			if model and CollectionService:HasTag(model, Tags.Guard) then
-				bubbleGuard(player, model, endPoint)
+				-- Guards and the Inspector (also tagged Guard; GuardService passes him on to NpcService).
+				if not bubbleGuard(player, model, endPoint) then
+					Net.send(player, "Toast", "*pop* No effect!")
+				end
 				return
 			end
 			if model and CollectionService:HasTag(model, Tags.Npc) then
-				-- The Inspector can be bubbled (GuardService passes it on to NpcService); Karel and Boef cannot.
-				if
-					model:GetAttribute(Tags.NpcKind) == "Inspector" and bubbleGuard(player, model, endPoint)
-				then
-					return
-				end
+				-- Karel and Boef cannot be bubbled.
 				Net.send(player, "Toast", "*boing* It bounced off!")
 				return
 			end
