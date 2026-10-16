@@ -663,7 +663,16 @@ local function openPryable(target: BasePart, player: Player)
 
 	-- CRACK radius per player (Quiet Crowbar perk).
 	local radius = LoadoutService:StatsOf(player).CrackRadius
-	local heard = Guards:HearNoise(target.Position, radius, nil, "crack", player)
+	-- Loud machines (Praline mixer) drown out the CRACK: nobody hears it.
+	local runtime = script.Parent:FindFirstChild("MapRuntimeService")
+	local masked = false
+	if runtime and runtime:IsA("ModuleScript") then
+		local ok, result = pcall(function()
+			return (require :: any)(runtime):IsNoiseMasked(target.Position)
+		end)
+		masked = ok and result == true
+	end
+	local heard = if masked then 0 else Guards:HearNoise(target.Position, radius, nil, "crack", player)
 	if heard > 0 then
 		AlarmService:Add("CrackHeard")
 	end

@@ -14,7 +14,7 @@ to `fixed (<commit>)`; the tester re-runs the scenario and sets `verified`.
 | B-006 | low | Light count above the provisional mobile budget (69 lights, 25 with shadows) | map | open |
 | B-007 | high | Guard climbs on top of the player and never grabs (3D distance stays > 3.5) | mechanics (B) | open |
 | B-008 | high | Detection too weak: masked player 6 studs in front of a guard → Suspicious, back to Patrol after 8 s | mechanics (B) | open |
-| B-009 | high | Mask Up on entering StaffZone/SecureZone not implemented yet → unmasked players are ignored by guards everywhere | mechanics (D) | open (pending package D) |
+| B-009 | high | Mask Up on entering StaffZone/SecureZone not implemented yet → unmasked players are ignored by guards everywhere | mechanics (D) | fixed (package D merge) |
 
 ---
 
