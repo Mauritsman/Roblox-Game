@@ -15,9 +15,11 @@ Profile.view = nil :: { [string]: any }?
 Profile.board = nil :: { [string]: any }?
 Profile.result = nil :: { [string]: any }?
 Profile.saveStatus = "Ok"
+Profile.boardAt = 0 -- os.clock() when the board arrived
+Profile.viewAt = 0
 Profile.Changed = Signal.new() :: Signal.Signal<string>
 
-local lastRequest = 0
+local lastRequest = -math.huge
 
 -- Asks the server for a fresh profile (max once per 2 s).
 function Profile.request()
@@ -91,12 +93,14 @@ function Profile.init()
 	Net.on("ProfileSync", function(view: any)
 		if typeof(view) == "table" then
 			Profile.view = view
+			Profile.viewAt = os.clock()
 			Profile.Changed:Fire("profile")
 		end
 	end)
 	Net.on("JobBoard", function(board: any)
 		if typeof(board) == "table" then
 			Profile.board = board
+			Profile.boardAt = os.clock()
 			Profile.Changed:Fire("board")
 		end
 	end)
@@ -104,13 +108,30 @@ function Profile.init()
 		Profile.result = { action = action, ok = ok == true, id = id, reason = reason }
 		Profile.Changed:Fire("result")
 	end)
+	Net.on("RankUp", function()
+		Profile.request()
+	end)
 	Net.on("SaveStatus", function(status: any)
 		if typeof(status) == "string" then
 			Profile.saveStatus = status
 			Profile.Changed:Fire("save")
 		end
 	end)
-	task.delay(1, Profile.request)
+	-- Handlers are connected: now ask for the profile (anything sent before this was lost).
+	Profile.request()
+end
+
+-- Meta's clock (os.time() seconds on the server), estimated from the last snapshot's serverNow.
+function Profile.osNow(): number
+	local board = Profile.board
+	if board and typeof(board.serverNow) == "number" then
+		return board.serverNow + (os.clock() - Profile.boardAt)
+	end
+	local view = Profile.view
+	if view and typeof(view.serverNow) == "number" then
+		return view.serverNow + (os.clock() - Profile.viewAt)
+	end
+	return os.time()
 end
 
 return Profile

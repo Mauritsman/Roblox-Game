@@ -1,8 +1,9 @@
 --!strict
 -- Player settings on the client: a local cache with a Changed signal.
 -- Values arrive from meta (`Settings` message or `ProfileSync.settings`); changes are sent back with
--- `SaveSettings(table)`, debounced 2 s. Keys (meta's Config.Data.SettingsKeys):
---   MusicVolume (0–1), SfxVolume (0–1), ReduceMotion (boolean), Hints (boolean), MutedPings (comma list of UserIds)
+-- `SaveSettings(table)`, debounced 2 s. Saved keys (MetaConfig.Data.SettingsKeys):
+--   Music (0–10), Sfx (0–10), ReduceMotion (boolean), Hints (boolean)
+-- MutedPings (comma list of UserIds) is kept for this session only (not in meta's allowlist).
 
 local GuiService = game:GetService("GuiService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
@@ -12,11 +13,12 @@ local Signal = require(ReplicatedStorage.Shared.Signal)
 
 local Settings = {}
 
-Settings.Keys = { "MusicVolume", "SfxVolume", "ReduceMotion", "Hints", "MutedPings" }
+Settings.Keys = { "Music", "Sfx", "ReduceMotion", "Hints", "MutedPings" }
+local SAVED: { [string]: boolean } = { Music = true, Sfx = true, ReduceMotion = true, Hints = true }
 
 local values: { [string]: any } = {
-	MusicVolume = 0.6,
-	SfxVolume = 0.8,
+	Music = 6,
+	Sfx = 8,
 	ReduceMotion = GuiService.ReducedMotionEnabled,
 	Hints = true,
 	MutedPings = "",
@@ -36,7 +38,7 @@ local function scheduleSave()
 			return
 		end
 		local out = {}
-		for _, key in Settings.Keys do
+		for key in SAVED do
 			out[key] = values[key]
 		end
 		Net.request("SaveSettings", out)
@@ -59,7 +61,14 @@ function Settings.set(key: string, value: any)
 	values[key] = value
 	userTouched[key] = true
 	Settings.Changed:Fire(key)
-	scheduleSave()
+	if SAVED[key] then
+		scheduleSave()
+	end
+end
+
+-- Volume 0–1 from a 0–10 setting ("Music" or "Sfx").
+function Settings.volume(key: string): number
+	return math.clamp(Settings.number(key, 8) / 10, 0, 1)
 end
 
 function Settings.reduceMotion(): boolean

@@ -36,7 +36,7 @@ end
 
 local function volumeRow(parent: Instance, order: number, label: string, key: string)
 	local frame = row(parent, order, label)
-	local value = math.floor(Settings.number(key, 0.6) * 10 + 0.5)
+	local value = math.clamp(math.floor(Settings.number(key, 8) + 0.5), 0, 10)
 	local controls = Hud.frame({
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.fromScale(1, 0),
@@ -82,9 +82,9 @@ local function volumeRow(parent: Instance, order: number, label: string, key: st
 	}, controls)
 	local function change(delta: number)
 		local nextValue = math.clamp(value + delta, 0, 10)
-		Settings.set(key, nextValue / 10)
+		Settings.set(key, nextValue)
 		Screens.refresh()
-		if key == "SfxVolume" then
+		if key == "Sfx" then
 			Audio.play("UiTap")
 		end
 	end
@@ -120,8 +120,8 @@ function SettingsScreen.create(): any
 		size = Vector2.new(560, 420),
 		build = function(body: Frame): (() -> ())?
 			local list = Common.scroller(body, false)
-			volumeRow(list, 1, "MUSIC", "MusicVolume")
-			volumeRow(list, 2, "SOUND", "SfxVolume")
+			volumeRow(list, 1, "MUSIC", "Music")
+			volumeRow(list, 2, "SOUND", "Sfx")
 			toggleRow(list, 3, "REDUCE MOTION", "ReduceMotion")
 			toggleRow(list, 4, "HINTS", "Hints")
 			local others = {}

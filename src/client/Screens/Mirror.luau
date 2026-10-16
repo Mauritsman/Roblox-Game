@@ -2,13 +2,13 @@
 -- Mirror (beta-spec-ux §1.5, beta-spec-meta §5.3–5.4): masks are the main cosmetic. Tabs MASKS / HATS / VAN,
 -- a grid of items (price / OWNED / EQUIPPED / RANK n / reward source) and a preview with one action:
 -- "BUY 1,500" / "EQUIP" / "EQUIPPED" / greyed "NEED 300 MORE". Cash only in the beta.
--- Data: Config.Catalog (meta) + ProfileSync (owned, equipped); requests BuyItem(id), EquipItem(id).
+-- Data: Catalog (meta) + ProfileSync / attributes (owned, MaskId/HatId/VanId); requests BuyItem, EquipItem.
 
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
-local Config = require(ReplicatedStorage.Shared.Config)
+local Catalog = require(ReplicatedStorage.Shared.Catalog)
 local Net = require(ReplicatedStorage.Shared.Net)
 
 local Lib = script.Parent.Parent.Lib
@@ -16,7 +16,6 @@ local Hud = require(Lib.Hud)
 local Profile = require(Lib.Profile)
 local Screens = require(Lib.Screens)
 local Theme = require(Lib.Theme)
-local UiText = require(Lib.UiText)
 
 local Common = require(script.Parent.Common)
 
@@ -38,34 +37,46 @@ type Item = {
 	price: number?,
 	minRank: number,
 	source: string,
+	free: boolean,
 	color: Color3?,
 }
 
-local function catalog(): { Item }
-	local raw = (Config :: any).Catalog
-	local out: { Item } = {}
-	if typeof(raw) ~= "table" then
-		return out
+local SOURCE_TEXT: { [string]: string } = {
+	Starter = "Starter",
+	Rank = "Rank reward",
+	MostWanted = "Most Wanted",
+	Collection = "Collection",
+	Mastery = "3★ on Hard",
+	Stars = "Star reward",
+}
+
+local function toColor(rgb: any): Color3?
+	if typeof(rgb) == "table" and typeof(rgb[1]) == "number" then
+		return Color3.fromRGB(rgb[1], rgb[2] or 0, rgb[3] or 0)
 	end
-	for id, entry in raw do
-		if typeof(id) == "string" and typeof(entry) == "table" then
-			local kind = entry.Kind or entry.Slot or entry.kind
-			if typeof(kind) == "string" then
-				table.insert(out, {
-					id = id,
-					kind = kind,
-					name = if typeof(entry.Name) == "string" then entry.Name else UiText.pretty(id),
-					price = if typeof(entry.Price) == "number" then entry.Price else nil,
-					minRank = if typeof(entry.MinRank) == "number" then entry.MinRank else 1,
-					source = if typeof(entry.Source) == "string" then entry.Source else "Shop",
-					color = if typeof(entry.Color) == "Color3" then entry.Color else nil,
-				})
-			end
+	return nil
+end
+
+-- Cosmetics from meta's Catalog (Mask / Hat / Van).
+local function catalog(): { Item }
+	local out: { Item } = {}
+	for _, entry in Catalog.List do
+		if entry.Kind == "Mask" or entry.Kind == "Hat" or entry.Kind == "Van" then
+			table.insert(out, {
+				id = entry.Id,
+				kind = entry.Kind :: string,
+				name = entry.Name,
+				price = entry.Price,
+				minRank = entry.MinRank,
+				source = entry.Source,
+				free = entry.Free == true,
+				color = toColor(entry.Color) or toColor(entry.Fallback and entry.Fallback.Color),
+			})
 		end
 	end
 	table.sort(out, function(a, b)
-		local pa = a.price or (if a.source == "Starter" then 0 else 1e9)
-		local pb = b.price or (if b.source == "Starter" then 0 else 1e9)
+		local pa = a.price or (if a.free then 0 else 1e9)
+		local pb = b.price or (if b.free then 0 else 1e9)
 		if pa ~= pb then
 			return pa < pb
 		end
@@ -74,29 +85,32 @@ local function catalog(): { Item }
 	return out
 end
 
+local function rank(): number
+	return math.max(1, Profile.number("rank", "Rank"))
+end
+
 local function isOwned(item: Item): boolean
-	if item.source == "Starter" or item.price == 0 then
+	if item.free and rank() >= item.minRank then
 		return true
 	end
 	local owned = Profile.get("owned")
 	return typeof(owned) == "table" and owned[item.id] ~= nil
 end
 
+local EQUIP_ATTRIBUTE: { [string]: string } = { Mask = "MaskId", Hat = "HatId", Van = "VanId" }
+
 local function isEquipped(item: Item): boolean
-	local equipped = Profile.get("equipped")
-	if typeof(equipped) == "table" and equipped[item.kind] == item.id then
-		return true
+	local attribute = EQUIP_ATTRIBUTE[item.kind]
+	local fromAttribute = attribute and player:GetAttribute(attribute)
+	if typeof(fromAttribute) == "string" then
+		return fromAttribute == item.id
 	end
-	return item.kind == "Mask" and player:GetAttribute("MaskId") == item.id
+	local equipped = Profile.get("equipped")
+	return typeof(equipped) == "table" and equipped[item.kind] == item.id
 end
 
 local function cash(): number
 	return Profile.number("cash", "Cash")
-end
-
-local function rank(): number
-	local r = Profile.number("rank", "Rank")
-	return if r > 0 then r else 1
 end
 
 -- What the action button says and whether it works.
@@ -108,7 +122,10 @@ local function action(item: Item): (string, string, boolean)
 		return "EQUIP", "primary", true
 	end
 	if not item.price then
-		return string.upper(item.source), "disabled", false
+		if item.free then
+			return `RANK {item.minRank}`, "disabled", false
+		end
+		return string.upper(SOURCE_TEXT[item.source] or item.source), "disabled", false
 	end
 	if rank() < item.minRank then
 		return `RANK {item.minRank}`, "disabled", false
@@ -338,7 +355,8 @@ function Mirror.create(): any
 						elseif owned then "OWNED"
 						elseif item.price and rank() < item.minRank then `RANK {item.minRank}`
 						elseif item.price then `● {Hud.formatNumber(item.price)}`
-						else string.upper(item.source)
+						elseif item.free then `RANK {item.minRank}`
+						else string.upper(SOURCE_TEXT[item.source] or item.source)
 					Hud.text({
 						AnchorPoint = Vector2.new(0, 1),
 						Position = UDim2.new(0, 6, 1, -6),

@@ -74,12 +74,14 @@ function AudioController:Start()
 			update()
 		end
 	end)
-	Net.on("GoudaLifted", function()
+	local function mainLootLifted()
 		-- Hard stop, 0.6 s silence (the ding plays in MomentsController), lockdown music at +1.2 s.
 		Audio.stopMusic()
 		suppressUntil = os.clock() + 1.2
 		task.delay(1.25, update)
-	end)
+	end
+	Net.on("MainLootLifted", mainLootLifted)
+	Net.on("GoudaLifted", mainLootLifted) -- older name
 	Net.on("Busted", function()
 		Audio.stopMusic()
 		suppressUntil = os.clock() + 3

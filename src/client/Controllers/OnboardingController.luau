@@ -6,6 +6,7 @@
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local MetaConfig = require(ReplicatedStorage.Shared.MetaConfig)
 local Net = require(ReplicatedStorage.Shared.Net)
 
 local Lib = script.Parent.Parent.Lib
@@ -33,7 +34,7 @@ local pillGlyph: TextLabel
 local pillText: TextLabel
 local currentKey: string? = nil
 local shownAt = 0
-local lastServerHint = 0
+local lastServerHint = -math.huge
 local stopPulse: (() -> ())? = nil
 local beacon: Part? = nil
 local funnelStep = 0
@@ -164,7 +165,9 @@ function OnboardingController.tip(id: string)
 	end
 	tipCounts[id] = count + 1
 	lastTipAt = os.clock()
-	Net.request("TipSeen", id)
+	if table.find(MetaConfig.Data.TipIds, id) then
+		Net.request("TipSeen", id)
+	end
 	if currentKey == nil then
 		OnboardingController.showHint("tip:" .. id, text, "★")
 		task.delay(4, function()
@@ -398,6 +401,21 @@ function OnboardingController:Start()
 		end
 	end)
 	Profile.Changed:Connect(function(what)
+		-- Joined straight into the mini-job: the first Onboarding message may have come before we listened,
+		-- so continue from the steps the profile already has.
+		if what == "profile" and funnelStep == 0 and RoundState.activity() == "Tutorial" then
+			local onboarding = Profile.get("onboarding")
+			local steps = if typeof(onboarding) == "table" then onboarding.steps else nil
+			local highest = 0
+			if typeof(steps) == "table" then
+				for index, name in MetaConfig.Analytics.OnboardingSteps do
+					if steps[name] then
+						highest = math.max(highest, index)
+					end
+				end
+			end
+			onStep(math.max(highest, 1))
+		end
 		local result = Profile.result
 		if what == "result" and result and result.ok and result.action == "Loadout" then
 			OnboardingController.tourProgress(1)

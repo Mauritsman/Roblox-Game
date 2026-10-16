@@ -170,21 +170,23 @@ local function onLootCaught(userId: any)
 	end
 end
 
-local function onLootDropped(userId: any, _lootName: any)
-	if isMe(userId) then
-		local class = CharState.get("CarryClass")
-		Audio.play(if class == "Heavy" or class == "Main" then "DropHeavy" else "DropLight")
+local function onLootDropped(userId: any, _lootName: any, position: any)
+	local class = if isMe(userId) then CharState.get("CarryClass") else nil
+	local key = if class == "Heavy" or class == "Main" then "DropHeavy" else "DropLight"
+	if typeof(position) == "Vector3" then
+		Audio.playAt(key, position)
+	elseif isMe(userId) then
+		Audio.play(key)
 	end
 end
 
-local function onLootDamaged(userId: any, _lootName: any, position: any)
-	local where: Instance | Vector3 | nil = characterOf(userId)
-	if not where and typeof(position) == "Vector3" then
-		where = position
-	end
-	if where then
-		Juice.worldPop("-25%", C.Danger, where, { hold = 0.5 })
-	end
+local function onLootDamaged(lootName: any, _value: any, pct: any)
+	local left = if typeof(pct) == "number" then pct else nil
+	local name = if typeof(lootName) == "string" then string.upper(lootName) else "LOOT"
+	local text = if left
+		then `{name} CRACKED · {math.floor((if left <= 1 then left * 100 else left) + 0.5)}% LEFT`
+		else `{name} CRACKED`
+	Hud.toast(text, C.Danger, "✕")
 	Audio.play("FragileCrack")
 end
 
@@ -202,7 +204,7 @@ local function onSpotted(userId: any, by: any)
 		Juice.edgeFlash(C.Danger, 0.3)
 		Audio.play("Spotted")
 		if CharState.carry() then
-			OnboardingController.tip("DropOrRun")
+			OnboardingController.tip("SpottedDropRun")
 		else
 			OnboardingController.tip("HideBarrel")
 		end
@@ -479,7 +481,7 @@ local function onJobCard(card: any)
 	jobCard = panel
 	local heistName = if typeof(card.heistName) == "string"
 		then card.heistName
-		else UiText.heist(RoundState.get("HeistId")).name
+		else UiText.heist(card.heistId or RoundState.get("HeistId")).name
 	Hud.text({
 		Size = UDim2.new(1, 0, 0, 34),
 		Text = string.upper(heistName),
@@ -498,9 +500,17 @@ local function onJobCard(card: any)
 	)
 	local tier = if typeof(card.difficulty) == "string" then card.difficulty else "Normal"
 	local tierInfo = (UiText.Tiers :: any)[tier]
+	local mainName = if typeof(card.mainLootName) == "string" and card.mainLootName ~= ""
+		then card.mainLootName
+		else "Golden Gouda"
+	local mainShort = string.upper((string.gsub(mainName, "^Golden ", "")))
 	Hud.chip(pills, if tierInfo then tierInfo.name else string.upper(tier), C.Text, { LayoutOrder = 1 })
-	if typeof(card.modifier) == "string" and card.modifier ~= "" then
-		local mod = UiText.modifier(card.modifier)
+	local modifierId = card.modifierId or card.modifier
+	if card.isHotJob == true then
+		Hud.chip(pills, "HOT JOB", C.Gold, { LayoutOrder = 3 })
+	end
+	if typeof(modifierId) == "string" and modifierId ~= "" then
+		local mod = UiText.modifier(modifierId)
 		Hud.chip(pills, string.upper(mod.name), C.Accent, { LayoutOrder = 2 })
 		if mod.line ~= "" then
 			Hud.text({
@@ -514,16 +524,17 @@ local function onJobCard(card: any)
 	end
 	Hud.text({
 		Size = UDim2.new(1, 0, 0, 22),
-		Text = `★ {Hud.formatNumber(t[1])} · ★★ {Hud.formatNumber(t[2])} · ★★★ GOUDA + {Hud.formatNumber(
+		Text = `★ {Hud.formatNumber(t[1])} · ★★ {Hud.formatNumber(t[2])} · ★★★ {mainShort} + {Hud.formatNumber(
 			t[3]
 		)}`,
 		MaxTextSize = 18,
 		LayoutOrder = 4,
 	}, panel)
-	if typeof(card.goudaZone) == "string" and card.goudaZone ~= "" then
+	local mainZone = card.mainZone or card.goudaZone
+	if typeof(mainZone) == "string" and mainZone ~= "" then
 		Hud.text({
 			Size = UDim2.new(1, 0, 0, 20),
-			Text = `{Theme.Loot.Main.glyph} Gouda: {card.goudaZone}`,
+			Text = `{Theme.Loot.Main.glyph} {mainName}: {mainZone}`,
 			TextColor3 = C.Gold,
 			MaxTextSize = 17,
 			LayoutOrder = 5,
@@ -549,20 +560,21 @@ local function onJobCard(card: any)
 		local names = {}
 		for _, objective in card.objectives do
 			local id = if typeof(objective) == "table"
-				then (objective.name or objective.Id or objective.id)
+				then (objective.type or objective.id or objective.Id)
 				else objective
 			table.insert(names, UiText.pretty(id))
 		end
 		Hud.text({
 			Size = UDim2.new(1, 0, 0, 18),
-			Text = "Bonus: " .. table.concat(names, ", "),
+			Text = "Objectives: " .. table.concat(names, ", "),
 			TextColor3 = C.Info,
 			MaxTextSize = 15,
 			LayoutOrder = 7,
 		}, panel)
 	end
 	Juice.pop(panel, 1.1)
-	showGouda(if typeof(card.goudaPos) == "Vector3" then card.goudaPos else nil)
+	local mainPos = card.mainPos or card.goudaPos
+	showGouda(if typeof(mainPos) == "Vector3" then mainPos else nil)
 
 	-- Visible 4 s; fades on the first movement after 1.5 s.
 	local shownAt = os.clock()
@@ -582,6 +594,7 @@ local function onJobCard(card: any)
 	end)
 end
 
+-- Objective states (contracts §1.2): Locked · Active · Running · Jammed · Done · Failed.
 local OBJECTIVE_DONE = { done = true, Done = true, complete = true, Complete = true, completed = true }
 
 local function onObjective(id: any, state: any, data: any)
@@ -607,6 +620,13 @@ local function onObjective(id: any, state: any, data: any)
 	elseif string.lower(s) == "jammed" then
 		row.Text = `! {name} JAMMED`
 		row.TextColor3 = C.Danger
+		Audio.play("AlarmBeep", { pitch = 1.4 })
+	elseif string.lower(s) == "failed" then
+		row.Text = `✕ {name}`
+		row.TextColor3 = C.Danger
+	elseif string.lower(s) == "locked" then
+		row.Text = `🔒 {name}`
+		row.TextColor3 = C.Muted
 	elseif typeof(d.progress) == "number" then
 		row.Text = `{name} {math.floor(d.progress * (if d.progress <= 1 then 100 else 1))}%`
 		row.TextColor3 = C.Text
@@ -657,7 +677,8 @@ function MomentsController:Start()
 	Net.on("Spotted", onSpotted)
 	Net.on("Captured", onCaptured)
 	Net.on("Rescued", onRescued)
-	Net.on("GoudaLifted", onGoudaLifted)
+	Net.on("MainLootLifted", onGoudaLifted)
+	Net.on("GoudaLifted", onGoudaLifted) -- older name
 	Net.on("Lockdown", onLockdown)
 	Net.on("ShiftChange", onShiftChange)
 	Net.on("DriveWarning", onDriveWarning)

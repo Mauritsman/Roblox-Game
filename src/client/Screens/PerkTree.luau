@@ -7,6 +7,7 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
 local Config = require(ReplicatedStorage.Shared.Config)
+local MetaConfig = require(ReplicatedStorage.Shared.MetaConfig)
 local Net = require(ReplicatedStorage.Shared.Net)
 
 local Lib = script.Parent.Parent.Lib
@@ -27,41 +28,37 @@ local selectedPerk: string? = nil
 type Branch = { id: string, name: string, perks: { string } }
 
 local function branches(): { Branch }
-	local tree = (Config :: any).PerkTree
-	if typeof(tree) == "table" and typeof(tree.Branches) == "table" then
-		local out: { Branch } = {}
-		for _, default in UiText.PerkBranches do
-			local perks = tree.Branches[default.id]
-			if typeof(perks) == "table" then
-				table.insert(out, { id = default.id, name = default.name, perks = perks })
-			end
-		end
-		if #out > 0 then
-			return out
+	local tree = MetaConfig.PerkTree
+	local out: { Branch } = {}
+	for _, id in tree.BranchOrder do
+		local perks = tree.Branches[id]
+		if perks then
+			table.insert(out, { id = id, name = string.upper(id), perks = perks })
 		end
 	end
-	return UiText.PerkBranches
+	return if #out > 0 then out else UiText.PerkBranches
 end
 
 local function rowCost(row: number): number
-	local tree = (Config :: any).PerkTree
-	local costs = if typeof(tree) == "table" then tree.RowCost else nil
-	local value = if typeof(costs) == "table" then costs[row] else nil
-	return if typeof(value) == "number" then value else row
+	return MetaConfig.PerkTree.RowCost[row] or row
 end
 
 local function maxEquipped(): number
-	local tree = (Config :: any).PerkTree
-	local value = if typeof(tree) == "table" then tree.MaxEquipped else nil
-	return if typeof(value) == "number" then value else 3
+	return MetaConfig.PerkTree.MaxEquipped
 end
 
+local function perkName(id: string): string
+	return MetaConfig.PerkTree.Names[id] or UiText.perk(id).name
+end
+
+-- Perks are shown while meta's profile says the feature is on (fallback: Config.Features.Perks).
 local function enabled(): boolean
-	local features = (Config :: any).Features
-	if typeof(features) == "table" and features.Perks == false then
-		return false
+	local features = Profile.get("features")
+	if typeof(features) == "table" and features.Perks ~= nil then
+		return features.Perks == true
 	end
-	return true
+	local fromConfig = (Config :: any).Features
+	return typeof(fromConfig) == "table" and fromConfig.Perks == true
 end
 
 local function perkState(): ({ [string]: boolean }, { string }, number)
@@ -94,8 +91,8 @@ local function perkState(): ({ [string]: boolean }, { string }, number)
 	end
 	local view = Profile.view
 	local free: number
-	if view and typeof(view.freeSkillPoints) == "number" then
-		free = view.freeSkillPoints
+	if view and typeof(view.skillPointsFree) == "number" then
+		free = view.skillPointsFree
 	elseif view and typeof(view.skillPoints) == "number" then
 		free = math.max(0, view.skillPoints - spent)
 	else
@@ -139,7 +136,7 @@ function PerkTree.create(): any
 			)
 			for slot = 1, maxEquipped() do
 				local id = equipped[slot]
-				Hud.chip(top, if id then UiText.perk(id).name else "EMPTY", if id then C.Good else C.Muted, {
+				Hud.chip(top, if id then perkName(id) else "EMPTY", if id then C.Good else C.Muted, {
 					LayoutOrder = 1 + slot,
 					TextSize = 14,
 					Size = UDim2.fromOffset(0, 32),
@@ -197,7 +194,7 @@ function PerkTree.create(): any
 					Hud.text({
 						Position = UDim2.fromOffset(8, 4),
 						Size = UDim2.new(1, -16, 0, 22),
-						Text = UiText.perk(id).name,
+						Text = perkName(id),
 						TextColor3 = if dark then C.Panel else C.Text,
 						Heavy = true,
 						MaxTextSize = 16,
@@ -251,7 +248,7 @@ function PerkTree.create(): any
 				return nil
 			end
 			local perkId: string = id
-			local info = UiText.perk(perkId)
+			local info = { name = perkName(perkId), line = UiText.perk(perkId).line }
 			Hud.text({
 				Size = UDim2.new(1, -330, 0, 44),
 				Text = `{info.name}: {info.line}`,

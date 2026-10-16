@@ -4,7 +4,7 @@
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
-local Config = require(ReplicatedStorage.Shared.Config)
+local MetaConfig = require(ReplicatedStorage.Shared.MetaConfig)
 local Net = require(ReplicatedStorage.Shared.Net)
 
 local Lib = script.Parent.Parent.Lib
@@ -34,11 +34,23 @@ function Contracts.list(): { { [string]: any } }
 end
 
 local function freeRerolls(): number
-	local contracts = (Config :: any).Contracts
-	local free = if typeof(contracts) == "table" then contracts.FreeRerollsPerDay else nil
+	local left = Profile.get("rerollsLeft")
+	if typeof(left) == "number" then
+		return left
+	end
 	local daily = Profile.get("daily")
 	local used = if typeof(daily) == "table" and typeof(daily.rerolls) == "number" then daily.rerolls else 0
-	return math.max(0, (if typeof(free) == "number" then free else 1) - used)
+	return math.max(0, MetaConfig.Contracts.FreeRerollsPerDay - used)
+end
+
+-- Player text for a contract id (MetaConfig.Contracts.Templates[*].Text).
+function Contracts.text(id: string): string
+	for _, template in MetaConfig.Contracts.Templates do
+		if template.Id == id then
+			return template.Text
+		end
+	end
+	return UiText.Contracts[id] or UiText.pretty(id)
 end
 
 function Contracts.create(): any
@@ -60,9 +72,7 @@ function Contracts.create(): any
 				local target = if typeof(contract.target) == "number" then contract.target else 1
 				local progress = if typeof(contract.progress) == "number" then contract.progress else 0
 				local done = contract.done == true
-				local text = if typeof(contract.text) == "string"
-					then contract.text
-					else UiText.Contracts[id] or UiText.pretty(id)
+				local text = if typeof(contract.text) == "string" then contract.text else Contracts.text(id)
 				local row = Common.card(content, { Size = UDim2.new(1, 0, 0, 64), LayoutOrder = index })
 				Hud.text({
 					Position = UDim2.fromOffset(12, 6),

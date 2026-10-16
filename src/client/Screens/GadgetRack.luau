@@ -6,6 +6,7 @@
 local Players = game:GetService("Players")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 
+local Catalog = require(ReplicatedStorage.Shared.Catalog)
 local Config = require(ReplicatedStorage.Shared.Config)
 local Net = require(ReplicatedStorage.Shared.Net)
 
@@ -31,26 +32,33 @@ export type Context = { onLoadout: (() -> ())? }
 
 local picked: { string } = {}
 
+-- Gadgets from meta's Catalog (Kind "Gadget"); one only appears once mechanics defines Config.Gadgets[id].
 local function pickable(): { string }
-	local loadout = (Config :: any).Loadout
-	local list = if typeof(loadout) == "table" and typeof(loadout.Pickable) == "table"
-		then loadout.Pickable
-		else BASE
-	local out = table.clone(list)
-	-- Sidegrades appear once mechanics defines them in Config.Gadgets (beta-spec-meta §3.1).
+	local out = {}
 	local gadgets = (Config :: any).Gadgets
-	if typeof(gadgets) == "table" then
-		for _, id in { "Periscope", "LockpickSet", "FakeDelivery" } do
-			if gadgets[id] and not table.find(out, id) then
-				table.insert(out, id)
+	for _, item in Catalog.List do
+		if item.Kind == "Gadget" and item.Id ~= Catalog.AlwaysCarried then
+			if typeof(gadgets) ~= "table" or gadgets[item.Id] ~= nil then
+				table.insert(out, item.Id)
 			end
 		end
+	end
+	if #out == 0 then
+		return table.clone(BASE)
 	end
 	return out
 end
 
+local function rank(): number
+	return math.max(1, Profile.number("rank", "Rank"))
+end
+
 local function owned(id: string): boolean
-	if table.find(BASE, id) then
+	local item = Catalog.get(id)
+	if not item then
+		return table.find(BASE, id) ~= nil
+	end
+	if item.Free and rank() >= item.MinRank then
 		return true
 	end
 	local ownedMap = Profile.get("owned")
@@ -62,6 +70,22 @@ local function charges(id: string): number?
 	local entry = if typeof(gadgets) == "table" then gadgets[id] else nil
 	local value = if typeof(entry) == "table" then entry.Charges else nil
 	return if typeof(value) == "number" and value < 100 then value else nil
+end
+
+-- "BUY 2,000" / "RANK 5" / "NEED 300 MORE" for a gadget you don't own.
+local function buyText(id: string): string
+	local item = Catalog.get(id)
+	if not item or not item.Price then
+		return "Locked"
+	end
+	if rank() < item.MinRank then
+		return `RANK {item.MinRank}`
+	end
+	local missing = item.Price - Profile.number("cash", "Cash")
+	if missing > 0 then
+		return `NEED {Hud.formatNumber(missing)} MORE`
+	end
+	return `TAP TO BUY · {Hud.formatNumber(item.Price)}`
 end
 
 local function teammatesWith(id: string): { Player }
@@ -152,7 +176,7 @@ function GadgetRack.create(ctx: Context): any
 				Hud.text({
 					Position = if narrow then UDim2.fromOffset(58, 34) else UDim2.fromOffset(8, 104),
 					Size = if narrow then UDim2.new(1, -66, 0, 20) else UDim2.new(1, -16, 0, 36),
-					Text = if have then entry.line else "Buy at the rack",
+					Text = if have then ((Catalog.get(id) or {} :: any).Blurb or entry.line) else buyText(id),
 					TextColor3 = if slot then C.Panel else C.Muted,
 					MaxTextSize = 15,
 					TextXAlignment = if narrow then Enum.TextXAlignment.Left else Enum.TextXAlignment.Center,
@@ -190,7 +214,17 @@ function GadgetRack.create(ctx: Context): any
 				end
 				card.Activated:Connect(function()
 					if not have then
-						Hud.toast("Buy this gadget first", C.Muted)
+						local item = Catalog.get(id)
+						if
+							item
+							and item.Price
+							and rank() >= item.MinRank
+							and Profile.number("cash", "Cash") >= item.Price
+						then
+							Net.request("BuyItem", id)
+						else
+							Hud.toast(buyText(id), C.Muted)
+						end
 						return
 					end
 					toggle(id)

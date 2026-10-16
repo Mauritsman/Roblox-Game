@@ -268,6 +268,7 @@ local function build(body: Frame): () -> ()
 
 	-- Header
 	local heist = UiText.heist(p.heistId)
+	local heistTitle = if typeof(p.heistName) == "string" then p.heistName else heist.name
 	Hud.text({
 		Size = UDim2.new(1, 0, 0, 40),
 		Text = if busted then "BUSTED" else "PAYDAY!",
@@ -282,7 +283,7 @@ local function build(body: Frame): () -> ()
 		AnchorPoint = Vector2.new(1, 0),
 		Position = UDim2.new(1, 0, 0, 8),
 		Size = UDim2.fromOffset(300, 26),
-		Text = string.upper(heist.name) .. (if tier ~= "" then " · " .. string.upper(tier) else ""),
+		Text = string.upper(heistTitle) .. (if tier ~= "" then " · " .. string.upper(tier) else ""),
 		TextColor3 = C.Muted,
 		TextXAlignment = Enum.TextXAlignment.Right,
 		MaxTextSize = 18,
@@ -501,7 +502,14 @@ local function build(body: Frame): () -> ()
 		end
 		if num(p.crewSize, 1) > 1 then
 			order += 1
-			line(tally, `CREW OF {num(p.crewSize)} · +{(num(p.crewSize) - 1) * 15}%`, C.Info, order)
+			local crewPct = if typeof(p.crewBonusPct) == "number"
+				then (if p.crewBonusPct <= 5 then p.crewBonusPct * 100 else p.crewBonusPct)
+				else (num(p.crewSize) - 1) * 15
+			line(tally, `CREW OF {num(p.crewSize)} · +{math.floor(crewPct + 0.5)}%`, C.Info, order)
+		end
+		if p.welcome == true or (typeof(p.welcome) == "number" and p.welcome > 0) then
+			order += 1
+			line(tally, "WELCOME BONUS", C.Gold, order)
 		end
 		if p.firstJobToday == true then
 			order += 1
@@ -600,11 +608,29 @@ local function build(body: Frame): () -> ()
 		end
 		local unlocks = if typeof(p.unlocks) == "table" then p.unlocks else {}
 		for index, unlock in unlocks do
-			local text = if typeof(unlock) == "string" then UiText.pretty(unlock) else tostring(unlock)
+			local text = if typeof(unlock) == "table"
+				then tostring(unlock.name or unlock.id or "")
+				elseif typeof(unlock) == "string" then UiText.pretty(unlock)
+				else tostring(unlock)
 			line(repBox, `UNLOCKED: {text}`, C.Good, 10 + index, 20)
 		end
-		if num(p.contractCash) > 0 then
+		if num(p.rankCash) > 0 then
+			line(repBox, `RANK REWARD +{Hud.formatNumber(num(p.rankCash))}`, C.Gold, 19, 20)
+		end
+		local contracts = if typeof(p.contracts) == "table" then p.contracts else {}
+		for index, contract in contracts do
+			if typeof(contract) == "table" then
+				local text = if typeof(contract.text) == "string"
+					then contract.text
+					else UiText.pretty(contract.id)
+				line(repBox, `✓ {text} +{Hud.formatNumber(num(contract.reward))}`, C.Good, 20 + index, 20)
+			end
+		end
+		if #contracts == 0 and num(p.contractCash) > 0 then
 			line(repBox, `CONTRACTS +{Hud.formatNumber(num(p.contractCash))}`, C.Good, 20, 20)
+		end
+		if num(p.collectionCash) > 0 then
+			line(repBox, `COLLECTION PAGE +{Hud.formatNumber(num(p.collectionCash))}`, C.Good, 25, 20)
 		end
 		if typeof(p.mostWanted) == "table" and p.mostWanted.done == true then
 			line(repBox, "MOST WANTED ✓", C.Gold, 21, 20)

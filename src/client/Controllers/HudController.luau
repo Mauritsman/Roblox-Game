@@ -47,6 +47,7 @@ local lastTickSecond = -1
 -- Other parts
 local chipsRow: Frame
 local chips: { [string]: { label: TextLabel, endsAt: number, text: string } } = {}
+local exitChip: TextLabel? = nil
 local crewList: Frame
 local crewDirty = true
 local carryChip: Frame
@@ -255,7 +256,19 @@ local function refreshChips()
 			chip.label.TextColor3 = if left <= 3 then C.Danger else C.Info
 		end
 	end
-	chipsRow.Visible = next(chips) ~= nil
+	-- Maps 2–3: the lockdown exit only arrives at ExitArrivesAt.
+	local exitLeft = RoundState.left("ExitArrivesAt")
+	if exitLeft and exitLeft > 0 and RoundState.statusMode() == "Heist" then
+		if not exitChip then
+			exitChip = Hud.chip(chipsRow, "", C.Warn, { TextSize = 15, LayoutOrder = -1 })
+		end
+		local chip = exitChip :: TextLabel
+		chip.Text = `EXIT IN {Hud.formatTime(exitLeft)}`
+	elseif exitChip then
+		exitChip:Destroy()
+		exitChip = nil
+	end
+	chipsRow.Visible = next(chips) ~= nil or exitChip ~= nil
 end
 
 -- ── Crew list ────────────────────────────────────────────────────────────────────────────────────

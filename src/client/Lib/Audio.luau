@@ -53,8 +53,8 @@ local function group(name: string): SoundGroup
 end
 
 local function applyVolumes()
-	group("Music").Volume = Settings.number("MusicVolume", 0.6) * duckFactor
-	local sfx = Settings.number("SfxVolume", 0.8)
+	group("Music").Volume = Settings.volume("Music") * duckFactor
+	local sfx = Settings.volume("Sfx")
 	group("SFX").Volume = sfx
 	group("UI").Volume = sfx * 0.9
 end
@@ -240,7 +240,7 @@ function Audio.init()
 	started = true
 	applyVolumes()
 	Settings.Changed:Connect(function(key)
-		if key == "MusicVolume" or key == "SfxVolume" then
+		if key == "Music" or key == "Sfx" then
 			applyVolumes()
 		end
 	end)

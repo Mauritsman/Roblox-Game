@@ -11,6 +11,7 @@ local ProximityPromptService = game:GetService("ProximityPromptService")
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
+local Config = require(ReplicatedStorage.Shared.Config)
 local Net = require(ReplicatedStorage.Shared.Net)
 local Signal = require(ReplicatedStorage.Shared.Signal)
 
@@ -143,7 +144,16 @@ end
 local function virtualState(): (State?, (() -> ())?)
 	local mode = ClientState.mode
 	if mode == "Cell" then
-		if CharState.playerAttr("SelfEscapeUsed") == true or CharState.get("SelfEscapeUsed") == true then
+		-- SelfEscapeUsed = count used this round; the difficulty tier sets how many are allowed.
+		local used = CharState.playerAttr("SelfEscapeUsed")
+		local tiers = (Config :: any).DifficultyTiers
+		local tier = tiers and tiers.Tiers and tiers.Tiers[RoundState.string("Difficulty") or "Normal"]
+		local capture = (Config :: any).Capture
+		local allowed = if tier and typeof(tier.SelfEscapes) == "number"
+			then tier.SelfEscapes
+			elseif capture and typeof(capture.SelfEscapes) == "number" then capture.SelfEscapes
+			else 1
+		if used == true or (typeof(used) == "number" and used >= allowed) then
 			return nil, nil
 		end
 		local at = CharState.get("SelfEscapeAt")

@@ -44,9 +44,20 @@ local STATION_SCREENS: { [string]: string } = {
 	Workbench = "PerkTree",
 	Mirror = "Mirror",
 	TrophyWall = "TrophyWall",
-	CollectionBook = "TrophyWall",
+	CollectionBook = "Collection",
 }
 
+-- Meta's `OpenScreen(screen)` names (MetaConfig.Lobby.Stations) → ux screens.
+local OPEN_SCREEN: { [string]: string } = {
+	JobBoard = "HeistBoard",
+	Gadgets = "GadgetRack",
+	Perks = "PerkTree",
+	Mirror = "Mirror",
+	Collection = "Collection",
+	Trophies = "TrophyWall",
+}
+
+local pendingInvite: { from: string, endsAt: number }? = nil
 local garageBar: Frame
 local cashLabel: TextLabel
 local rankLabel: TextLabel
@@ -72,10 +83,18 @@ local function screenFor(prompt: ProximityPrompt): string?
 	return nil
 end
 
+local lastOpened: string? = nil
+local lastOpenedAt = -math.huge
+
+-- The station prompt opens the screen at once on this client; meta's OpenScreen then arrives too, so the
+-- same screen within a second is not opened twice.
 local function openScreen(name: string)
-	if name == "HeistBoard" or name == "TrophyWall" or name == "PerkTree" or name == "Contracts" then
-		Profile.request()
+	if Screens.current() == name and lastOpened == name and os.clock() - lastOpenedAt < 1.5 then
+		return
 	end
+	lastOpened = name
+	lastOpenedAt = os.clock()
+	Profile.request()
 	Screens.open(name)
 end
 
@@ -94,9 +113,8 @@ local function refreshBar()
 	lastCash = cash
 	local rank = Profile.number("rank", "Rank")
 	rankLabel.Text = `RANK {math.max(rank, 1)}`
-	local view = Profile.view
-	local into = if view and typeof(view.repIntoRank) == "number" then view.repIntoRank else nil
-	local need = if view and typeof(view.repForNext) == "number" then view.repForNext else nil
+	local into = Profile.number("repIntoRank", "RepIntoRank")
+	local need = Profile.number("repForNext", "RepForNext")
 	repFill.Size = UDim2.fromScale(if into and need and need > 0 then math.clamp(into / need, 0, 1) else 0, 1)
 	local list = Contracts.list()
 	local done = 0
@@ -214,6 +232,73 @@ function GarageController:Init()
 	)
 	Screens.register("Mirror", Mirror.create())
 	Screens.register("TrophyWall", TrophyWall.create())
+	Screens.register("Collection", TrophyWall.createCollection())
+	Screens.register("PrivateCrew", {
+		title = "PRIVATE CREW",
+		size = Vector2.new(460, 260),
+		build = function(body: Frame): (() -> ())?
+			local invite = pendingInvite
+			if not invite then
+				return nil
+			end
+			Hud.text({
+				Size = UDim2.new(1, 0, 0, 60),
+				Text = `{invite.from} asks: play in your own closed server?`,
+				MaxTextSize = 20,
+			}, body)
+			local countdown = Hud.text({
+				Position = UDim2.fromOffset(0, 62),
+				Size = UDim2.new(1, 0, 0, 24),
+				Text = "",
+				TextColor3 = C.Muted,
+				MaxTextSize = 16,
+			}, body)
+			local row =
+				Hud.frame({ Position = UDim2.fromOffset(0, 100), Size = UDim2.new(1, 0, 0, 64) }, body)
+			Hud.list(
+				row,
+				Enum.FillDirection.Horizontal,
+				12,
+				Enum.HorizontalAlignment.Center,
+				Enum.VerticalAlignment.Center
+			)
+			local function answer(yes: boolean)
+				pendingInvite = nil
+				Net.request("PrivateCrewAnswer", yes)
+				Screens.close("PrivateCrew")
+			end
+			local yes = Hud.button(
+				{ Size = UDim2.fromOffset(150, 56), Text = "YES", Kind = "good", LayoutOrder = 1 },
+				row
+			)
+			local no = Hud.button(
+				{ Size = UDim2.fromOffset(150, 56), Text = "NO", Kind = "secondary", LayoutOrder = 2 },
+				row
+			)
+			yes.Activated:Connect(function()
+				answer(true)
+			end)
+			no.Activated:Connect(function()
+				answer(false)
+			end)
+			local alive = true
+			task.spawn(function()
+				while alive do
+					local left = invite.endsAt - os.clock()
+					if left <= 0 then
+						pendingInvite = nil
+						Screens.close("PrivateCrew")
+						break
+					end
+					countdown.Text = `{math.ceil(left)} s`
+					task.wait(0.25)
+				end
+			end)
+			return function()
+				alive = false
+			end
+		end,
+	})
 	Screens.register("PerkTree", PerkTree.create())
 	Screens.register("Contracts", Contracts.create())
 	Screens.register("Settings", SettingsScreen.create())
@@ -289,14 +374,24 @@ function GarageController:Start()
 	end)
 	Net.on("OpenScreen", function(name: any)
 		if typeof(name) == "string" then
-			openScreen(name)
+			openScreen(OPEN_SCREEN[name] or name)
 		end
+	end)
+	Net.on("PrivateCrewInvite", function(fromName: any, seconds: any)
+		pendingInvite = {
+			from = if typeof(fromName) == "string" then fromName else "A crew member",
+			endsAt = os.clock() + (if typeof(seconds) == "number" then seconds else 10),
+		}
+		Audio.play("HintBlip")
+		Screens.open("PrivateCrew")
 	end)
 	Profile.Changed:Connect(function(what)
 		if what == "profile" then
 			refreshBar()
 			drawTrophies()
-			for _, name in { "GadgetRack", "Mirror", "TrophyWall", "PerkTree", "Contracts", "HeistBoard" } do
+			for _, name in
+				{ "GadgetRack", "Mirror", "TrophyWall", "Collection", "PerkTree", "Contracts", "HeistBoard" }
+			do
 				Screens.refresh(name)
 			end
 		elseif what == "board" then
@@ -310,6 +405,7 @@ function GarageController:Start()
 			name == "Player:Cash"
 			or name == "Player:Rank"
 			or name == "Player:Rep"
+			or name == "Player:RepIntoRank"
 			or name == "Player:Activity"
 		then
 			refreshBar()
