@@ -156,10 +156,4 @@ return function(t)
 			t.eq(Tags[name], name, name)
 		end
 	end)
-
-	t.test("prototype helpers still work", function()
-		t.eq(Config.windowSeconds(1), 12)
-		t.eq(Config.windowSeconds(3), 10)
-		t.eq(Config.slotsFor(4), 1)
-	end)
 end

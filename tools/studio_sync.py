@@ -17,7 +17,7 @@ import sys
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PORT = 34999
 ROOTS = [["ReplicatedStorage", "Shared"], ["ServerScriptService", "Server"],
-         ["StarterPlayer", "StarterPlayerScripts", "Client"]]
+         ["StarterPlayer", "StarterPlayerScripts", "Client"], ["ReplicatedFirst"]]
 SCRIPTS = ("Script", "LocalScript", "ModuleScript")
 
 

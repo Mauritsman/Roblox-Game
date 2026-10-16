@@ -214,7 +214,6 @@ Config.Alarm = {
 -- ---------- Gadgets (beta-spec §5): fixed durations ----------
 Config.Gadgets = {
 	Drone = {
-		Step = "EYES", -- DEPRECATED (WP M5): Chain Call is removed
 		Charges = 1,
 		Range = 45, -- maximum distance from the pilot's body
 		BatterySeconds = 40,
@@ -224,7 +223,6 @@ Config.Gadgets = {
 		DogGrabHeight = 5,
 	},
 	Noisemaker = {
-		Step = "CLEAR", -- DEPRECATED (WP M5)
 		Charges = 3,
 		ThrowRange = 40,
 		DistractSeconds = 8,
@@ -234,7 +232,6 @@ Config.Gadgets = {
 		RepeatDistance = 8,
 	},
 	EMP = {
-		Step = "CLEAR", -- DEPRECATED (WP M5)
 		Charges = 2,
 		ThrowRange = 40,
 		Radius = 14,
@@ -244,8 +241,7 @@ Config.Gadgets = {
 	},
 	-- Funny weapon (§4.8): a bubble buys time on one guard, not a solution.
 	BubbleBlaster = {
-		Step = "CLEAR", -- DEPRECATED (WP M5)
-		Label = "BUBBLE",
+		Label = "BUBBLE BLASTER", -- one player-facing name everywhere (B-004)
 		Charges = 3,
 		ThrowRange = 50, -- maximum shooting distance
 		ProjectileSpeed = 45,
@@ -254,7 +250,6 @@ Config.Gadgets = {
 		FriendlySeconds = 3, -- if you accidentally hit a teammate
 	},
 	Crowbar = {
-		Step = "OPEN", -- DEPRECATED (WP M5)
 		Charges = math.huge,
 		DoorSeconds = 1.5,
 		CageSeconds = 3,
@@ -356,6 +351,13 @@ Config.Tutorial = {
 	LockdownSeconds = 60,
 	GuardChaseSpeed = 10, -- lockdown: follows but never catches (advisor)
 	GuardTripDistance = 4, -- trips this far short when the player stops
+	GuardTripSeconds = 1.5, -- sits on the floor this long after tripping
+	MovedDistance = 8, -- funnel step "Moved"
+	PocketHintSeconds = 10, -- "Pocket the small cheese" shows this long (or until a cube is pocketed)
+	StirHintCooldown = 5,
+	DriveAwaySeconds = 2, -- van drives off, then the player lands in the Garage
+	WaitCheckSeconds = 5, -- a newcomer waiting for a free slot is re-checked this often
+	Stars = { 150, 500, 1500 }, -- van loot for 1★, 2★, 3★ (3★ also needs the Gouda)
 }
 
 -- ---------- §7 switches (advisor: all in the beta) ----------
@@ -385,6 +387,9 @@ Config.Objectives = {
 	RadioMissPoints = 40,
 	RadioMaxAnswers = 2, -- per round, whole crew
 	PanicPackCharges = 1,
+	PromptDistance = 8, -- keycard door, safe device, radio answer, pickpocket
+	ProgressInterval = 1, -- seconds between Objective progress snapshots while the device runs
+	DoorOpenSeconds = 0.6, -- keycard door slide
 }
 
 -- ---------- Round plan randomisation (Logic/RoundPlan) ----------
@@ -513,41 +518,11 @@ Config.MapRuntime = {
 -- ---------- Prototype keys (still read by today's services) ----------
 -- DEPRECATED (WP M3): global difficulty string; the per-job tier (Config.DifficultyTiers) replaces it.
 Config.Difficulty = "Normal" -- "Rookie" | "Normal" | "Pro"
--- DEPRECATED (WP M5): the shared window is gone; gadgets use fixed durations.
-Config.WindowSeconds = {
-	Rookie = 12,
-	Normal = 10,
-	Pro = 8,
-}
-Config.SoloExtraWindow = 2 -- DEPRECATED (WP M5)
-Config.SlotsByCrewSize = { 3, 2, 2, 1 } -- DEPRECATED (WP M5): everyone picks Config.Loadout.Slots
 -- DEPRECATED (WP M1): use Config.Movement.
 Config.Player = {
 	WalkSpeed = 16,
 	CrouchSpeed = 8,
 }
--- DEPRECATED (WP M5): deleted together with ChainCallService.
-Config.ChainCall = {
-	JoinSeconds = 6,
-	Cooldown = 5,
-	CountdownSeconds = 3,
-	Steps = { "EYES", "CLEAR", "OPEN" },
-}
-
--- DEPRECATED (WP M5)
-function Config.windowSeconds(crewSize: number): number
-	local base = Config.WindowSeconds[Config.Difficulty] or 10
-	if crewSize <= 1 then
-		base += Config.SoloExtraWindow
-	end
-	return base
-end
-
--- DEPRECATED (WP M5)
-function Config.slotsFor(crewSize: number): number
-	local clamped = math.clamp(crewSize, 1, #Config.SlotsByCrewSize)
-	return Config.SlotsByCrewSize[clamped]
-end
 
 -- =======================================================================================================
 -- Pings (shared: mechanics PingService + ux quick wheel). ux changes presets/cooldown in WP1.

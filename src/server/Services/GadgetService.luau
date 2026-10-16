@@ -1,6 +1,14 @@
 --!strict
--- The four gadgets of phase 1 (§4): Drone, Noisemaker, EMP, Crowbar.
--- The client only asks ("I want to throw the EMP at point X"); the server checks and carries it out.
+-- Gadgets (beta-spec §5): the Crowbar (everyone) and the picked Drone / Noisemaker / EMP / Bubble Blaster.
+-- The client only asks ("throw the EMP at point X"); the server checks and carries it out. Fixed durations
+-- (no shared window): Noisemaker distracts 8 s, EMP 10 s, a bubble holds a guard 8 s and a teammate 3 s.
+--
+-- Rules for every gadget and the Crowbar: only in a crew round, refused with full hands ("Hands full!",
+-- CarryService:HandsFull) and while frozen, caught, hidden, bubbled or flying the drone (MovementService:CanGadget).
+-- Speeds are MovementService's: this service only sets attributes (`Operating`, `Bubbled`, `Crouching`).
+--
+-- Entry points: ResetRound(players, job) (only those players: drone, battery, EMP cooldown), RecallDrone(player,
+-- reason), Pry(player, target), DisableElectronic(inst, seconds). Requests: Throw, Drone.
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -11,11 +19,15 @@ local TweenService = game:GetService("TweenService")
 local Config = require(ReplicatedStorage.Shared.Config)
 local Net = require(ReplicatedStorage.Shared.Net)
 local Tags = require(ReplicatedStorage.Shared.Tags)
+local Loadout = require(ReplicatedStorage.Shared.Logic.Loadout)
 
 local AlarmService = require(script.Parent.AlarmService)
+local CarryService = require(script.Parent.CarryService)
 local GuardService = require(script.Parent.GuardService)
 local LoadoutService = require(script.Parent.LoadoutService)
 local MapService = require(script.Parent.MapService)
+local MovementService = require(script.Parent.MovementService)
+local StatsService = require(script.Parent.StatsService)
 
 local GadgetService = {}
 
@@ -26,14 +38,20 @@ type DroneState = {
 	owner: Player,
 }
 
+local GADGETS = Config.Gadgets :: any
+-- Package B's GuardService takes an extra `by` (the player) in HearNoise and Bubble; the prototype ignores it.
+local Guards: any = GuardService
+local THROWABLE = { Noisemaker = true, EMP = true, BubbleBlaster = true }
+
 local drones: { [Player]: DroneState } = {}
 local battery: { [Player]: number } = {}
 local empCooldownUntil: { [Player]: number } = {}
 local disableTokens: { [Instance]: number } = {}
 local recentNoisemakers: { { position: Vector3, time: number } } = {}
+local lastThrow: { [Player]: number } = {}
 
-local function crewSize(): number
-	return math.max(1, #Players:GetPlayers())
+local function label(gadgetName: string): string
+	return Loadout.label(gadgetName, GADGETS)
 end
 
 local function characterRoot(player: Player): BasePart?
@@ -52,6 +70,42 @@ local function positionOf(inst: Instance): Vector3?
 		return inst:GetPivot().Position
 	end
 	return nil
+end
+
+local function stat(name: string, player: Player)
+	-- StatsService.Event is a callable Signal (not a plain function), so it is called directly, guarded.
+	local ok, err = pcall(function()
+		(StatsService :: any):Event(name, player)
+	end)
+	if not ok then
+		warn(`[GadgetService] stat {name} failed: {err}`)
+	end
+end
+
+-- Gadgets belong to a crew round (Activity "Crew"); without a round service (no Activity) they always work.
+local function inRound(player: Player): boolean
+	local activity = player:GetAttribute(Tags.Activity)
+	return activity == nil or activity == "Crew"
+end
+
+-- May this player use a gadget or the Crowbar now? Tells them why not when it helps.
+local function ready(player: Player): boolean
+	if not inRound(player) or not characterRoot(player) then
+		return false
+	end
+	if CarryService:HandsFull(player) then
+		Net.send(player, "Toast", "Hands full!")
+		return false
+	end
+	return MovementService:CanGadget(player)
+end
+
+-- Mask Up (beta-spec §13, proposed): using a gadget or the Crowbar puts your mask on.
+local function maskUp(player: Player)
+	local character = player.Character
+	if character and Config.Features.MaskUp and player:GetAttribute(Tags.Activity) == "Crew" then
+		character:SetAttribute(Tags.Masked, true)
+	end
 end
 
 --------------------------------------------------------------------------------
@@ -145,7 +199,8 @@ local function flyProjectile(from: Vector3, to: Vector3, color: Color3, onLand: 
 	end)
 end
 
-local function spawnNoisemaker(position: Vector3, seconds: number)
+-- The ringing clock. It is a trace for Karel (TraceKind "Noisemaker") while it rings.
+local function spawnNoisemaker(player: Player, position: Vector3, seconds: number)
 	local clock = Instance.new("Part")
 	clock.Name = "Noisemaker"
 	clock.Size = Vector3.new(1, 1, 0.6)
@@ -154,13 +209,16 @@ local function spawnNoisemaker(position: Vector3, seconds: number)
 	clock.Anchored = true
 	clock.CanCollide = false
 	clock.CFrame = CFrame.new(position + Vector3.new(0, 0.5, 0))
+	clock:SetAttribute(Tags.TraceKind, "Noisemaker")
+	clock:SetAttribute(Tags.TraceBy, player.UserId)
 	local sound = Instance.new("Sound")
 	sound.SoundId = "rbxasset://sounds/electronicpingshort.wav"
 	sound.Looped = true
 	sound.Volume = 0.8
-	sound.RollOffMaxDistance = Config.Gadgets.Noisemaker.HearRadius * 2
+	sound.RollOffMaxDistance = GADGETS.Noisemaker.HearRadius * 2
 	sound.Parent = clock
-	clock.Parent = workspace
+	clock.Parent = MapService.Level or workspace
+	CollectionService:AddTag(clock, Tags.Trace)
 	sound:Play()
 	task.delay(seconds, function()
 		clock:Destroy()
@@ -191,7 +249,7 @@ local function empPulseVisual(position: Vector3, radius: number)
 end
 
 local function onNoisemakerLanded(player: Player, position: Vector3)
-	local cfg = Config.Gadgets.Noisemaker
+	local cfg = GADGETS.Noisemaker
 	local now = os.clock()
 	local repeated = false
 	for index = #recentNoisemakers, 1, -1 do
@@ -204,31 +262,33 @@ local function onNoisemakerLanded(player: Player, position: Vector3)
 	end
 	table.insert(recentNoisemakers, { position = position, time = now })
 
-	local seconds = Config.windowSeconds(crewSize())
-	spawnNoisemaker(position, cfg.RingSeconds)
+	spawnNoisemaker(player, position, cfg.RingSeconds)
 	if repeated then
-		-- §4.3: the same trick twice = no distraction, but suspicion and alarm points.
-		local noticed = GuardService:HearNoise(position, cfg.HearRadius, Config.Guard.SearchSeconds, "repeat")
+		-- The same trick twice: no distraction, but suspicion and alarm points.
+		local noticed =
+			Guards:HearNoise(position, cfg.HearRadius, Config.Guard.SearchSeconds, "repeat", player)
 		if noticed > 0 then
 			AlarmService:Add("NoisemakerRepeat")
 			Net.broadcast("Toast", 'Guard: "Again?! Not falling for that."')
 		end
 		return
 	end
-	local heard = GuardService:HearNoise(position, cfg.HearRadius, seconds, "noisemaker")
+	-- "noisemaker" also makes a carrying guard drop his captive and lures Boef (GuardService).
+	local heard = Guards:HearNoise(position, cfg.HearRadius, cfg.DistractSeconds, "noisemaker", player)
 	if heard > 0 then
-		Net.broadcast("Window", "GUARD AWAY", seconds, position)
+		Net.broadcast("Window", "GUARD AWAY", cfg.DistractSeconds, position)
 	else
-		Net.send(player, "Toast", "No guard heard the Noisemaker")
+		Net.send(player, "Toast", "No guard heard the NOISEMAKER")
 	end
 end
 
 local function onEmpLanded(player: Player, position: Vector3)
-	local cfg = Config.Gadgets.EMP
-	local seconds = Config.windowSeconds(crewSize())
+	local cfg = GADGETS.EMP
+	local seconds = cfg.DisableSeconds
 	empPulseVisual(position, cfg.Radius)
 	local hitCameras, hitLamps = 0, 0
 	local hitDrones: { string } = {}
+	local selfHit = false
 	for _, inst in CollectionService:GetTagged(Tags.Electronic) do
 		local instPosition = positionOf(inst)
 		-- Horizontal distance (like the circle on the ground), up to 16 studs high: cameras hang high.
@@ -243,40 +303,37 @@ local function onEmpLanded(player: Player, position: Vector3)
 				local ownerId = inst:GetAttribute(Tags.Owner)
 				local owner = if typeof(ownerId) == "number" then Players:GetPlayerByUserId(ownerId) else nil
 				table.insert(hitDrones, if owner then owner.Name else "?")
+				if owner == player then
+					selfHit = true
+				end
 			end
 		end
 	end
+	if selfHit then
+		stat("SelfEmp", player) -- Self-EMP Award
+	end
 	-- "BZZT" is audible: a guard nearby becomes briefly suspicious.
-	GuardService:HearNoise(position, cfg.BzztRadius, 4, "bzzt")
+	Guards:HearNoise(position, cfg.BzztRadius, 4, "bzzt", player)
 	Net.broadcast("EMP", position, cfg.Radius, hitCameras, hitLamps, hitDrones)
 	if hitCameras > 0 then
 		Net.broadcast("Window", "CAMS OFF", seconds, position)
 	elseif hitLamps > 0 then
 		Net.broadcast("Window", "LIGHTS OFF", seconds, position)
 	end
-	local _ = player
 end
 
 --------------------------------------------------------------------------------
--- Bubble Blaster (funny weapon, §4.8)
+-- Bubble Blaster (funny weapon, gameplan §4.8)
 --------------------------------------------------------------------------------
 
 local function bubbleTeammate(victim: Player, shooter: Player, seconds: number)
 	local character = victim.Character
 	local root = character and character:FindFirstChild("HumanoidRootPart")
-	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-	if
-		not character
-		or not root
-		or not root:IsA("BasePart")
-		or not humanoid
-		or character:GetAttribute("Bubbled")
-	then
+	if not character or not root or not root:IsA("BasePart") or character:GetAttribute(Tags.Bubbled) then
 		return
 	end
-	character:SetAttribute("Bubbled", true)
-	local previousSpeed = humanoid.WalkSpeed
-	humanoid.WalkSpeed = 0
+	character:SetAttribute(Tags.Bubbled, true)
+	MovementService:Refresh(victim)
 	local bubble = Instance.new("Part")
 	bubble.Name = "Bubble"
 	bubble.Shape = Enum.PartType.Ball
@@ -293,24 +350,30 @@ local function bubbleTeammate(victim: Player, shooter: Player, seconds: number)
 	weld.Part1 = bubble
 	weld.Parent = bubble
 	bubble.Parent = character
+	stat("BubbledTeammate", shooter) -- "Oops, Bubbled"
 	Net.broadcast("Toast", `{shooter.DisplayName} bubbled {victim.DisplayName}! Oops.`)
 	task.delay(seconds, function()
 		bubble:Destroy()
 		if character.Parent then
-			character:SetAttribute("Bubbled", nil)
-			if
-				humanoid.WalkSpeed == 0
-				and not character:GetAttribute(Tags.Operating)
-				and not character:GetAttribute("Caught")
-			then
-				humanoid.WalkSpeed = if previousSpeed > 0 then previousSpeed else Config.Player.WalkSpeed
-			end
+			character:SetAttribute(Tags.Bubbled, nil)
+			MovementService:Refresh(victim)
 		end
 	end)
 end
 
+local function bubbleGuard(player: Player, model: Model, position: Vector3): boolean
+	local seconds = GADGETS.BubbleBlaster.BubbleSeconds
+	if not Guards:Bubble(model, seconds, player) then
+		return false
+	end
+	stat("BubbledGuard", player)
+	Net.broadcast("Window", "GUARD BUBBLED", seconds, position)
+	-- The radio check 4 s later (Normal/Hard) is ObjectiveService's: it listens to GuardService.Bubbled.
+	return true
+end
+
 local function shootBubble(player: Player, from: Vector3, target: Vector3)
-	local cfg = Config.Gadgets.BubbleBlaster
+	local cfg = GADGETS.BubbleBlaster
 	local direction = target - from
 	if direction.Magnitude < 0.5 then
 		return
@@ -350,21 +413,26 @@ local function shootBubble(player: Player, from: Vector3, target: Vector3)
 	tween:Play()
 	tween.Completed:Connect(function()
 		ball:Destroy()
-		-- Who is close by when it arrives? A guard, or (oops) a teammate.
+		-- Who is close by when it arrives? A guard, the Inspector, or (oops) a teammate.
 		local overlap = OverlapParams.new()
 		overlap.FilterType = Enum.RaycastFilterType.Exclude
 		overlap.FilterDescendantsInstances = shooterIgnore
-		local seconds = Config.windowSeconds(crewSize()) - 2
 		for _, part in workspace:GetPartBoundsInRadius(endPoint, cfg.HitRadius, overlap) do
 			local model = part:FindFirstAncestorOfClass("Model")
 			if model and CollectionService:HasTag(model, Tags.Guard) then
-				if GuardService:Bubble(model, math.max(seconds, cfg.BubbleSeconds)) then
-					Net.broadcast("Window", "GUARD BUBBLED", math.max(seconds, cfg.BubbleSeconds), endPoint)
+				-- Guards and the Inspector (also tagged Guard; GuardService passes him on to NpcService).
+				if not bubbleGuard(player, model, endPoint) then
+					Net.send(player, "Toast", "*pop* No effect!")
 				end
 				return
 			end
+			if model and CollectionService:HasTag(model, Tags.Npc) then
+				-- Karel and Boef cannot be bubbled.
+				Net.send(player, "Toast", "*boing* It bounced off!")
+				return
+			end
 			local victim = model and Players:GetPlayerFromCharacter(model)
-			if victim and victim ~= player then
+			if victim and victim ~= player and victim:GetAttribute(Tags.Activity) ~= "Garage" then
 				bubbleTeammate(victim, player, cfg.FriendlySeconds)
 				return
 			end
@@ -374,25 +442,30 @@ local function shootBubble(player: Player, from: Vector3, target: Vector3)
 end
 
 local function handleThrow(player: Player, gadgetName: any, target: any)
-	if gadgetName ~= "Noisemaker" and gadgetName ~= "EMP" and gadgetName ~= "BubbleBlaster" then
+	if type(gadgetName) ~= "string" or not THROWABLE[gadgetName] then
 		return
 	end
-	if typeof(target) ~= "Vector3" then
+	if typeof(target) ~= "Vector3" or target ~= target or target.Magnitude > 1e6 then
 		return
 	end
-	local root = characterRoot(player)
-	if not root or (player.Character and player.Character:GetAttribute("Caught")) then
+	local now = os.clock()
+	if now - (lastThrow[player] or 0) < 0.25 then
 		return
 	end
+	lastThrow[player] = now
+	if not ready(player) then
+		return
+	end
+	local root = characterRoot(player) :: BasePart
 	if not LoadoutService:Has(player, gadgetName) then
-		Net.send(player, "Toast", `You don't have the {gadgetName:upper()}`)
+		Net.send(player, "Toast", `You don't have the {label(gadgetName)}`)
 		return
 	end
-	if gadgetName == "EMP" and (empCooldownUntil[player] or 0) > os.clock() then
-		Net.send(player, "Toast", `EMP recharging: {math.ceil(empCooldownUntil[player] - os.clock())} s`)
+	if gadgetName == "EMP" and (empCooldownUntil[player] or 0) > now then
+		Net.send(player, "Toast", `EMP recharging: {math.ceil(empCooldownUntil[player] - now)} s`)
 		return
 	end
-	local cfg = Config.Gadgets[gadgetName]
+	local cfg = GADGETS[gadgetName]
 	local from = root.Position + Vector3.new(0, 1.5, 0)
 	local offset = target - root.Position
 	local flat = Vector3.new(offset.X, 0, offset.Z)
@@ -400,11 +473,12 @@ local function handleThrow(player: Player, gadgetName: any, target: any)
 		target = root.Position + flat.Unit * cfg.ThrowRange + Vector3.new(0, offset.Y, 0)
 	end
 	if not LoadoutService:UseCharge(player, gadgetName) then
-		Net.send(player, "Toast", `No {gadgetName:upper()} charges left`)
+		Net.send(player, "Toast", `No {label(gadgetName)} charges left`)
 		return
 	end
+	maskUp(player)
 	if gadgetName == "EMP" then
-		empCooldownUntil[player] = os.clock() + cfg.Cooldown
+		empCooldownUntil[player] = now + cfg.Cooldown
 	end
 	if gadgetName == "BubbleBlaster" then
 		shootBubble(player, from, target)
@@ -424,16 +498,13 @@ end
 -- Drone
 --------------------------------------------------------------------------------
 
+-- Flying the drone: the pilot stands still in a crouch (MovementService reads `Operating`).
 local function setOperating(player: Player, operating: boolean)
 	local character = player.Character
-	local humanoid = character and character:FindFirstChildOfClass("Humanoid")
 	if character then
 		character:SetAttribute(Tags.Operating, operating)
-		character:SetAttribute(Tags.Crouching, operating or nil)
-	end
-	if humanoid then
-		humanoid.WalkSpeed = if operating then 0 else Config.Player.WalkSpeed
-		humanoid.JumpHeight = if operating then 0 else 7.2
+		character:SetAttribute(Tags.Crouching, operating)
+		MovementService:Refresh(player)
 	end
 end
 
@@ -451,22 +522,20 @@ function GadgetService:RecallDrone(player: Player, reason: string?)
 end
 
 local function launchDrone(player: Player)
-	if drones[player] then
+	if drones[player] or not ready(player) then
 		return
 	end
 	if not LoadoutService:Has(player, "Drone") then
 		Net.send(player, "Toast", "You don't have the DRONE")
 		return
 	end
-	local root = characterRoot(player)
-	if not root then
-		return
-	end
-	local cfg = Config.Gadgets.Drone
+	local root = characterRoot(player) :: BasePart
+	local cfg = GADGETS.Drone
 	if (battery[player] or cfg.BatterySeconds) < cfg.BatterySeconds * 0.25 then
 		Net.send(player, "Toast", "Drone battery too low, wait a moment")
 		return
 	end
+	maskUp(player)
 
 	local part = Instance.new("Part")
 	part.Name = "Drone_" .. player.Name
@@ -515,7 +584,7 @@ local function launchDrone(player: Player)
 end
 
 local function updateDrones(dt: number)
-	local cfg = Config.Gadgets.Drone
+	local cfg = GADGETS.Drone
 	for _, player in Players:GetPlayers() do
 		local state = drones[player]
 		local level = battery[player] or cfg.BatterySeconds
@@ -528,7 +597,14 @@ local function updateDrones(dt: number)
 				level -= dt
 			end
 			local root = characterRoot(player)
-			if not root or (player.Character and player.Character:GetAttribute("Caught")) then
+			local character = player.Character
+			local stopped = character
+				and (
+					character:GetAttribute(Tags.Caught)
+					or character:GetAttribute(Tags.Captured)
+					or character:GetAttribute(Tags.Frozen)
+				)
+			if not root or stopped or not inRound(player) then
 				GadgetService:RecallDrone(player, "")
 			elseif level <= 0 then
 				level = 0
@@ -542,8 +618,8 @@ local function updateDrones(dt: number)
 		battery[player] = level
 		-- Only send it in 5% steps, otherwise the HUD rebuilds every frame.
 		local rounded = math.floor(level / cfg.BatterySeconds * 20) / 20
-		if player:GetAttribute("DroneBattery") ~= rounded then
-			player:SetAttribute("DroneBattery", rounded)
+		if player:GetAttribute(Tags.DroneBattery) ~= rounded then
+			player:SetAttribute(Tags.DroneBattery, rounded)
 		end
 	end
 end
@@ -560,7 +636,12 @@ end
 -- Crowbar
 --------------------------------------------------------------------------------
 
+-- A pried door swings open around its edge on the local −Z side. It keeps `ClosedCFrame` and becomes a trace
+-- (TraceKind "OpenDoor") so Karel can close it again.
 local function openPryable(target: BasePart, player: Player)
+	if target:GetAttribute(Tags.ClosedCFrame) == nil then
+		target:SetAttribute(Tags.ClosedCFrame, target.CFrame)
+	end
 	target.CanCollide = false
 	target.CanQuery = false
 	local hinge = target.CFrame * CFrame.new(0, 0, -target.Size.Z / 2)
@@ -568,6 +649,10 @@ local function openPryable(target: BasePart, player: Player)
 	TweenService:Create(target, TweenInfo.new(0.35, Enum.EasingStyle.Back), { CFrame = opened }):Play()
 	CollectionService:RemoveTag(target, Tags.Pryable)
 	CollectionService:RemoveTag(target, Tags.Spottable)
+	target:SetAttribute(Tags.DoorState, "Open")
+	target:SetAttribute(Tags.TraceKind, "OpenDoor")
+	target:SetAttribute(Tags.TraceBy, player.UserId)
+	CollectionService:AddTag(target, Tags.Trace)
 
 	local crack = Instance.new("Sound")
 	crack.SoundId = "rbxasset://sounds/clickfast.wav"
@@ -576,7 +661,9 @@ local function openPryable(target: BasePart, player: Player)
 	crack.Parent = target
 	crack:Play()
 
-	local heard = GuardService:HearNoise(target.Position, Config.Gadgets.Crowbar.CrackRadius, nil, "crack")
+	-- CRACK radius per player (Quiet Crowbar perk).
+	local radius = LoadoutService:StatsOf(player).CrackRadius
+	local heard = Guards:HearNoise(target.Position, radius, nil, "crack", player)
 	if heard > 0 then
 		AlarmService:Add("CrackHeard")
 	end
@@ -592,27 +679,37 @@ local function hookPryable(inst: Instance)
 	prompt.Name = "PryPrompt"
 	prompt.ActionText = "Pry open"
 	prompt.ObjectText = "Crowbar"
-	prompt.HoldDuration = if typeof(seconds) == "number" then seconds else Config.Gadgets.Crowbar.DoorSeconds
+	prompt.Style = Enum.ProximityPromptStyle.Custom
+	prompt.HoldDuration = if typeof(seconds) == "number" then seconds else GADGETS.Crowbar.DoorSeconds
 	prompt.MaxActivationDistance = 7
 	prompt.RequiresLineOfSight = false
 	prompt.KeyboardKeyCode = Enum.KeyCode.E
 	prompt.GamepadKeyCode = Enum.KeyCode.ButtonX
+	prompt:SetAttribute("ContextIcon", "pry")
 	prompt.Parent = inst
 	prompt.Triggered:Connect(function(player)
 		GadgetService:Pry(player, inst)
 	end)
 end
 
--- Use the Crowbar on a Pryable object (button, or DevService in Studio).
-function GadgetService:Pry(player: Player, target: BasePart)
+-- Use the Crowbar on a Pryable object (prompt, or DevService in Studio with `dev` = true: skips the round and
+-- hands checks).
+function GadgetService:Pry(player: Player, target: BasePart, dev: boolean?)
 	local prompt = target:FindFirstChild("PryPrompt")
 	if not prompt or not prompt:IsA("ProximityPrompt") or not prompt.Enabled then
 		return
 	end
-	if not LoadoutService:Has(player, "Crowbar") then
-		Net.send(player, "Toast", "Needs the CROWBAR")
+	if not dev and not ready(player) then
 		return
 	end
+	if
+		target:GetAttribute(Tags.LoudOnly) == true
+		and ReplicatedStorage:GetAttribute(Tags.Approach) ~= "Loud"
+	then
+		Net.send(player, "Toast", "Too noisy! Only during a LOCKDOWN.")
+		return
+	end
+	maskUp(player)
 	-- Do not destroy it straight away: the prompt display would get stuck for the player
 	-- and no other buttons would appear any more. Disable it first, clean up later.
 	prompt.Enabled = false
@@ -624,24 +721,24 @@ end
 
 --------------------------------------------------------------------------------
 
+-- Briefing and JUMP IN: a fresh drone battery and EMP cooldown for exactly these players.
+function GadgetService:ResetRound(players: { Player }, _job: any?): boolean
+	if type(players) ~= "table" then
+		return false
+	end
+	for _, player in players do
+		if typeof(player) == "Instance" and player:IsA("Player") then
+			GadgetService:RecallDrone(player, "")
+			battery[player] = nil
+			empCooldownUntil[player] = nil
+		end
+	end
+	return true
+end
+
 function GadgetService:Start()
 	Net.onRequest("Throw", handleThrow)
 	Net.onRequest("Drone", handleDrone)
-	Net.onRequest("Crouch", function(player: Player, crouching: any)
-		local character = player.Character
-		local humanoid = character and character:FindFirstChildOfClass("Humanoid")
-		if
-			not character
-			or not humanoid
-			or character:GetAttribute(Tags.Operating)
-			or character:GetAttribute("Caught")
-		then
-			return
-		end
-		local on = crouching == true
-		character:SetAttribute(Tags.Crouching, on)
-		humanoid.WalkSpeed = if on then Config.Player.CrouchSpeed else Config.Player.WalkSpeed
-	end)
 
 	for _, inst in CollectionService:GetTagged(Tags.Pryable) do
 		hookPryable(inst)
@@ -652,16 +749,19 @@ function GadgetService:Start()
 		for player in drones do
 			GadgetService:RecallDrone(player, "")
 		end
-		table.clear(empCooldownUntil)
 		table.clear(recentNoisemakers)
-		table.clear(disableTokens)
-		table.clear(battery)
+		for inst in disableTokens do
+			if inst.Parent == nil then
+				disableTokens[inst] = nil
+			end
+		end
 	end)
 
 	Players.PlayerRemoving:Connect(function(player)
 		GadgetService:RecallDrone(player, "")
 		battery[player] = nil
 		empCooldownUntil[player] = nil
+		lastThrow[player] = nil
 	end)
 
 	RunService.Heartbeat:Connect(updateDrones)

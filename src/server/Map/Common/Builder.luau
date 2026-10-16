@@ -195,15 +195,28 @@ function Builder.cylinder(
 	)
 end
 
--- A framed window on a facade. cf = centre of the glass, facing outwards.
+-- Deterministic stand-in rng for callers that pass none: seeded from the position, so a window always looks
+-- the same in every build (map code never uses math.random).
+local function rngAt(cf: CFrame): Random
+	local p = cf.Position
+	local seed = math.floor(p.X * 73.1 + p.Y * 19.7 + p.Z * 131.3) % 2147483647
+	return Random.new(seed)
+end
+
+-- A framed window on a facade. cf = centre of the glass, facing outwards. Glow colour and curtains come from
+-- `rng` (or from the position when nil). `allowLight` lets a few lit windows (15%) cast a SurfaceLight; map 1
+-- keeps it off to stay inside the light budget.
 function Builder.window(
 	parent: Instance,
 	cf: CFrame,
 	width: number,
 	height: number,
 	lit: boolean,
-	frameColor: Color3?
+	frameColor: Color3?,
+	rng: Random?,
+	allowLight: boolean?
 )
+	local r = rng or rngAt(cf)
 	Builder.block(
 		parent,
 		"WindowFrame",
@@ -211,7 +224,7 @@ function Builder.window(
 		cf * CFrame.new(0, 0, 0.05),
 		frameColor or C.Trim
 	)
-	local glowColor = Builder.WindowGlows[math.random(1, #Builder.WindowGlows)]
+	local glowColor = Builder.WindowGlows[r:NextInteger(1, #Builder.WindowGlows)]
 	local glass = Builder.block(
 		parent,
 		"WindowGlass",
@@ -223,10 +236,10 @@ function Builder.window(
 			shadow = false,
 		}
 	)
-	if lit and math.random() < 0.45 then
+	if lit and r:NextNumber() < 0.45 then
 		-- Curtain on one side: makes the lit windows less monotonous.
-		local side = if math.random() < 0.5 then -1 else 1
-		local curtain = Builder.Curtains[math.random(1, #Builder.Curtains)]
+		local side = if r:NextNumber() < 0.5 then -1 else 1
+		local curtain = Builder.Curtains[r:NextInteger(1, #Builder.Curtains)]
 		Builder.block(
 			parent,
 			"Curtain",
@@ -253,7 +266,7 @@ function Builder.window(
 		frameColor or C.Trim,
 		{ shadow = false }
 	)
-	if lit and math.random() < 0.15 then
+	if allowLight and lit and r:NextNumber() < 0.15 then
 		-- A few windows cast real light outside.
 		local light = Instance.new("SurfaceLight")
 		light.Face = Enum.NormalId.Front
@@ -263,6 +276,27 @@ function Builder.window(
 		light.Angle = 80
 		light.Parent = glass
 	end
+end
+
+-- Far-away window (background rows): one block, neon when lit. 1 part instead of 4–5, never a light.
+function Builder.farWindow(
+	parent: Instance,
+	cf: CFrame,
+	width: number,
+	height: number,
+	lit: boolean,
+	rng: Random?
+)
+	local r = rng or rngAt(cf)
+	local glow = Builder.WindowGlows[r:NextInteger(1, #Builder.WindowGlows)]
+	return Builder.block(
+		parent,
+		"FarWindow",
+		Vector3.new(width, height, 0.3),
+		cf * CFrame.new(0, 0, -0.05),
+		if lit then glow else C.WindowDark,
+		{ material = if lit then Enum.Material.Neon else Enum.Material.SmoothPlastic, shadow = false }
+	)
 end
 
 function Builder.label(adornee: BasePart, text: string, color: Color3, offsetY: number, maxDistance: number?)
@@ -288,10 +322,12 @@ export type SignOpts = {
 	doubleSided: boolean?, -- text on the front and back (hanging sign at right angles to the facade)
 	frame: Color3?, -- thin frame around the board
 	material: Enum.Material?,
+	viewFrom: Vector3?, -- where players read it from (attribute ViewFrom; the sign test casts rays from here)
 }
 
 -- A board with text. Readable in the dark (LightInfluence 0), with padding around the text so nothing gets
--- cut off, and a dark outline around the letters for contrast.
+-- cut off, and a dark outline around the letters for contrast. Rules (beta-spec-maps §2): ALL CAPS, ≤ 2 lines of
+-- ≤ 16 characters, board height ≥ viewing distance ÷ 12, nothing between `viewFrom` and the board.
 function Builder.sign(
 	parent: Instance,
 	cf: CFrame,
@@ -305,6 +341,9 @@ function Builder.sign(
 	local board = Builder.block(parent, "Sign", size, cf, bg, {
 		material = (opts and opts.material) or Enum.Material.Wood,
 	})
+	if opts and opts.viewFrom then
+		board:SetAttribute("ViewFrom", opts.viewFrom)
+	end
 	local faces = { Enum.NormalId.Front }
 	if opts and opts.doubleSided then
 		table.insert(faces, Enum.NormalId.Back)
@@ -487,11 +526,11 @@ function Builder.tree(parent: Instance, ground: Vector3, rng: Random)
 	return model
 end
 
--- A sloop (small boat) on the water; the bow points towards +Z.
-function Builder.boat(parent: Instance, waterCenter: Vector3, color: Color3)
+-- A sloop (small boat) on the water; the bow points towards +Z, turned by rotY degrees.
+function Builder.boat(parent: Instance, waterCenter: Vector3, color: Color3, rotY: number?): Model
 	local model = Instance.new("Model")
 	model.Name = "Sloep"
-	local cf = CFrame.new(waterCenter)
+	local cf = CFrame.new(waterCenter) * CFrame.Angles(0, math.rad(rotY or 0), 0)
 	Builder.block(
 		model,
 		"Hull",
@@ -557,7 +596,7 @@ function Builder.topOf(inst: Instance?): number?
 		local cf, size = inst:GetBoundingBox()
 		return cf.Position.Y + size.Y / 2
 	elseif inst:IsA("BasePart") then
-		return inst.Position.Y + inst.Size.Y / 2
+		return inst.CFrame.Position.Y + inst.Size.Y / 2
 	end
 	return nil
 end
