@@ -481,6 +481,34 @@ Config.Ping = {
 -- MAP block (owner: map) — Config.World (GarageOrigin, MiniJobOrigins, …) goes here.
 -- =======================================================================================================
 
+-- A position as plain numbers, so Config stays loadable outside Roblox (Lune tests). MapService turns it into a
+-- Vector3.
+export type WorldPoint = { X: number, Y: number, Z: number }
+
+-- Where each area of the world is built (beta-spec-maps §1). Areas are ≥ 2,000 studs apart, so with
+-- StreamingEnabled a phone only holds the area its player is in.
+Config.World = {
+	-- The Garage (permanent hideout): built once in MapService:Init into workspace.Garage.
+	GarageOrigin = { X = 2000, Y = 0, Z = 0 } :: WorldPoint,
+	-- Mini-job ("Corner Cheese") slots: slot n is built at MiniJobOrigins[n] into workspace.MiniJob_<n>.
+	MiniJobOrigins = {
+		{ X = 0, Y = 0, Z = 2000 },
+		{ X = 0, Y = 0, Z = -2000 },
+	} :: { WorldPoint },
+	-- Heists are built at the world origin. When the heist changes, MapService clears the previous heist's
+	-- `Bounds` in Terrain; a heist without Bounds uses this box.
+	DefaultHeistBounds = {
+		Min = { X = -200, Y = -40, Z = -200 } :: WorldPoint,
+		Max = { X = 200, Y = 80, Z = 200 } :: WorldPoint,
+	},
+	-- How far (studs, horizontal) from an area's origin a position still counts as that area
+	-- (LightingPresets.areaAt).
+	AreaRadius = 600,
+	-- true: the Garage SpawnLocation is the only spawn; MapService switches off SpawnLocations inside heists, and
+	-- mechanics moves crew members to the heist (Points.Spawn) itself.
+	GarageIsSpawn = true,
+}
+
 -- =======================================================================================================
 -- META block (owner: meta) — Config.Data, Economy, Progression, PerkTree, HotJob, Contracts, MostWanted,
 -- Lobby, Catalog, Collection, Monetization, Analytics, MetaRateLimit go here (beta-spec-meta §8.3).
