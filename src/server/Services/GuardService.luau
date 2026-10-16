@@ -376,11 +376,12 @@ local function snapshot(now: number): { Seen }
 	local list = {}
 	local sleepy = (round.modifier or Targets.modifier()) == "SleepyGuards"
 	local lockdown = isLockdown()
+	local active = Targets.inHeist() -- nobody is seen during Briefing / Getaway
 	for _, player in Players:GetPlayers() do
 		local view = Targets.view(player)
 		if view then
 			local character = view.character
-			local ignored = Targets.ignored(player, character, now)
+			local ignored = not active or Targets.ignored(player, character, now)
 			table.insert(list, {
 				player = player,
 				character = character,
@@ -622,12 +623,12 @@ local function updatePatrol(guard: Guard)
 			return
 		end
 		guard.waited = false
+		local reached = point
 		guard.routeIndex = Patrol.nextIndex(guard.routeIndex, #route)
-		step = route[guard.routeIndex]
-		point = step.pos :: Vector3
-		usePath = Patrol.changesFloor(previous, point, G.FloorStep) or changesFloor(guard, point)
+		point = route[guard.routeIndex].pos :: Vector3
+		usePath = Patrol.changesFloor(reached, point, G.FloorStep) or changesFloor(guard, point)
 	end
-	guard.mover:moveTo(point + Vector3.new(0, 0, 0), usePath)
+	guard.mover:moveTo(point, usePath)
 end
 
 local function lookAround(guard: Guard, dt: number)

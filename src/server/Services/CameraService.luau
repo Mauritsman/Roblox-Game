@@ -152,12 +152,13 @@ local function update(cam: Cam, dt: number, fillSeconds: number, now: number)
 
 	local tracking = false
 	local params: RaycastParams? = nil
+	local active = Targets.inHeist()
 	for _, view in Targets.crewViews() do
 		local player = view.player
 		local meter = cam.meters[player] or 0
 		local onCooldown = (cam.cooldown[player] or 0) > os.clock()
 		local seen = false
-		if not onCooldown and not Targets.ignored(player, view.character, now) then
+		if active and not onCooldown and not Targets.ignored(player, view.character, now) then
 			params = params or visionParams(cam)
 			seen = inView(cam, view.root.Position, view.character, C.Range, params :: RaycastParams)
 		end
