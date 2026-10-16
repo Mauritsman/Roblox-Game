@@ -115,13 +115,15 @@ local function spot()
 	end
 end
 
--- Spot from a tap on the cell feed (screen position in viewport pixels).
-function PingController.spotAtScreen(position: Vector2)
+-- Spot from the cell feed: a viewport point, or an input position (fromInput = true, GUI-inset space).
+function PingController.spotAtScreen(position: Vector2, fromInput: boolean?)
 	local camera = workspace.CurrentCamera
 	if not camera then
 		return
 	end
-	local ray = camera:ViewportPointToRay(position.X, position.Y)
+	local ray = if fromInput
+		then camera:ScreenPointToRay(position.X, position.Y)
+		else camera:ViewportPointToRay(position.X, position.Y)
 	local hit = workspace:Raycast(ray.Origin, ray.Direction * 200)
 	if hit then
 		Net.request("Spot", hit.Instance, hit.Position, ClientState.camIndex)
