@@ -774,6 +774,9 @@ function HudController:Start()
 			refreshStrip()
 			return
 		end
+		if string.sub(name, 1, 7) == "Player:" then
+			return -- other player attributes (DroneBattery, Cash…) don't change the heist HUD
+		end
 		refreshCarry()
 		refreshPockets()
 		refreshStrip()

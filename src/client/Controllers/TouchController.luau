@@ -495,6 +495,11 @@ local function build()
 	refresh()
 end
 
+-- Ask for a refresh (e.g. the onboarding gate changed).
+function TouchController.requestRefresh()
+	task.defer(refresh)
+end
+
 function TouchController.slot(name: string): GuiObject?
 	local slot = slots[name]
 	return if slot then slot.button else nil

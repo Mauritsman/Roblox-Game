@@ -272,7 +272,7 @@ local function onStep(step: number)
 		return
 	end
 	funnelStep = step
-	TouchController.Changed:Fire()
+	TouchController.requestRefresh()
 	if step == 8 then
 		tourStep = 1
 		task.delay(1, showTour)
@@ -387,7 +387,7 @@ function OnboardingController:Start()
 			then
 				OnboardingController.clearHint(true)
 			end
-			TouchController.Changed:Fire()
+			TouchController.requestRefresh()
 		elseif name == "Player:Loadout" then
 			OnboardingController.tourProgress(1)
 		end
