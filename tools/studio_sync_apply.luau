@@ -43,7 +43,7 @@ for _, item in items do
 end
 
 local removed = 0
-for _, rootPath in { { "ReplicatedStorage", "Shared" }, { "ServerScriptService", "Server" }, { "StarterPlayer", "StarterPlayerScripts", "Client" } } do
+for _, rootPath in { { "ReplicatedStorage", "Shared" }, { "ServerScriptService", "Server" }, { "StarterPlayer", "StarterPlayerScripts", "Client" }, { "ReplicatedFirst" } } do
 	local root: Instance? = game:GetService(rootPath[1])
 	for i = 2, #rootPath do
 		root = root and root:FindFirstChild(rootPath[i])
