@@ -3,16 +3,19 @@
 -- build geometry and tags. Tag rules for map builders: src/server/MapRuntime/README.md.
 --   Rides            MapRuntime/Rides      Ride folders: server-moved cars on Points.Rides paths, seats, loot riding
 --   Rhythm machines  MapRuntime/Rhythm     fountain, mixer (noise mask), wrapper, mist/steam, sprinklers, clock beam
+--   Zones            MapRuntime/Zones      ColdZone + melting loot, GooZone (InGoo, splosh), StaffZone/SecureZone rings
 --
 -- SetupService:Apply calls Setup(level, heistInfo, job) at Briefing; SetupService:Teardown calls Clear(). Between
 -- them this service follows RoundService.PhaseChanged (Heist, Lockdown, Getaway).
 --
 -- Entry points: Setup(level, heistInfo, job), Clear(), RideOf(player) → RideId?,
--- IsNoiseMasked(position) → boolean (call before GuardService:HearNoise for a CRACK: the Big Mixer drowns it out).
+-- IsNoiseMasked(position) → boolean (call before GuardService:HearNoise for a CRACK: the Big Mixer drowns it out),
+-- InColdZone(position) → boolean, RingOf(player) → "Public" | "Staff" | "Secure" | nil.
 
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local RunService = game:GetService("RunService")
 
+local Config = require(ReplicatedStorage.Shared.Config)
 local Tags = require(ReplicatedStorage.Shared.Tags)
 
 local Server = script.Parent.Parent
@@ -20,6 +23,7 @@ local MapRuntime = Server.MapRuntime
 local Util = require(MapRuntime.Util)
 local Rides = require(MapRuntime.Rides)
 local Rhythm = require(MapRuntime.Rhythm)
+local Zones = require(MapRuntime.Zones)
 local RoundService = require(script.Parent.RoundService)
 local SetupService = require(script.Parent.SetupService)
 
@@ -36,6 +40,7 @@ type Module = {
 local MODULES: { { name: string, module: Module, interval: number } } = {
 	{ name = "Rides", module = Rides :: any, interval = 0 },
 	{ name = "Rhythm", module = Rhythm :: any, interval = 0.1 },
+	{ name = "Zones", module = Zones :: any, interval = Config.MapRuntime.ZoneInterval },
 }
 
 local ctx: Util.Context? = nil
@@ -143,6 +148,14 @@ function MapRuntimeService:IsNoiseMasked(position: Vector3): boolean
 		return false
 	end
 	return Rhythm.isNoiseMasked(position)
+end
+
+function MapRuntimeService:InColdZone(position: Vector3): boolean
+	return typeof(position) == "Vector3" and Zones.inCold(position)
+end
+
+function MapRuntimeService:RingOf(player: Player): string?
+	return Zones.ringOf(player)
 end
 
 function MapRuntimeService:Start()

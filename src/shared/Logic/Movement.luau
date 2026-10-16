@@ -2,6 +2,7 @@
 -- How fast a player may move right now. MovementService is the only writer of WalkSpeed/JumpHeight and asks
 -- this module (beta-spec §9.6). Priority, first match wins:
 --   Frozen > Caught > Hidden > Bubbled > Slipping > Operating > carry > crouch > walk.
+-- `speedCap` / `jumpCap` (wading in a GooZone, mechanics D) then lower whatever won, never raise it.
 -- `stats` are the player's numbers (Config.Movement after perks, see Logic/Perks).
 
 local Movement = {}
@@ -17,6 +18,8 @@ export type Flags = {
 	rolling: boolean?, -- heavy loot rolled alone
 	twoCarry: boolean?, -- heavy loot carried as leader or helper
 	crouching: boolean?,
+	speedCap: number?, -- e.g. Config.Movement.Goo while InGoo
+	jumpCap: number?,
 }
 
 export type Stats = {
@@ -48,7 +51,23 @@ function Movement.handsFull(carryClass: string?): boolean
 	return carryClass == "Medium" or carryClass == "Heavy" or carryClass == "Main"
 end
 
+local function capped(result: Result, flags: Flags): Result
+	if flags.speedCap then
+		result.walkSpeed = math.min(result.walkSpeed, flags.speedCap)
+	end
+	if flags.jumpCap then
+		result.jumpHeight = math.min(result.jumpHeight, flags.jumpCap)
+	end
+	return result
+end
+
+local resolveUncapped: (flags: Flags, stats: Stats) -> Result
+
 function Movement.resolve(flags: Flags, stats: Stats): Result
+	return capped(resolveUncapped(flags, stats), flags)
+end
+
+function resolveUncapped(flags: Flags, stats: Stats): Result
 	if flags.frozen then
 		return still("Frozen")
 	elseif flags.caught then
