@@ -173,6 +173,7 @@ return table.freeze({
 	-- ===================================================================================================
 	GarageTV = "GarageTV", -- ux: WATCH (spectate) station
 	TrophyBoard = "TrophyBoard", -- meta writes the "Most Goudas" text
+	Spinner = "Spinner", -- decor Model that turns (landmarks): SpinSeconds per turn, SpinAxis (local); client-side
 
 	-- ===================================================================================================
 	-- META block (owner: meta) — Garage station tags (JobBoard, GadgetRack, …) and meta attributes go here.

@@ -1,12 +1,17 @@
 --!strict
 -- A Dutch canal house as background: facade with paned windows, door, cornice and gable.
 -- origin = bottom centre of the facade; the LookVector of origin points towards the street.
+-- `detail = "far"` (background rows): one block per window, no trim caps, plinth, door frame or step, and never
+-- a light. A far house is ~15 parts instead of ~45. Windows are drawn from the build's rng (never math.random),
+-- so every build is identical.
 
 local Builder = require(script.Parent.Builder)
 
 local C = Builder.Colors
 
 local CanalHouse = {}
+
+export type Detail = "near" | "far"
 
 export type HouseSpec = {
 	width: number,
@@ -17,6 +22,8 @@ export type HouseSpec = {
 	gable: "step" | "spout" | "bell" | "flat",
 	door: boolean?,
 	litChance: number?,
+	detail: Detail?, -- default "near"
+	lights: boolean?, -- near only: a few lit windows cast a SurfaceLight (default off: light budget)
 }
 
 local FLOOR_HEIGHT = 7
@@ -29,7 +36,8 @@ local function gable(
 	baseY: number,
 	style: string,
 	color: Color3,
-	opts: Builder.PartOpts
+	opts: Builder.PartOpts,
+	far: boolean
 )
 	if style == "step" then
 		-- Step gable: three steps that get narrower.
@@ -45,13 +53,15 @@ local function gable(
 				color,
 				opts
 			)
-			Builder.block(
-				parent,
-				"GableCap",
-				Vector3.new(w + 0.4, 0.4, 1.6),
-				origin * CFrame.new(0, baseY + i * stepH, 0.6),
-				C.Trim
-			)
+			if not far then
+				Builder.block(
+					parent,
+					"GableCap",
+					Vector3.new(w + 0.4, 0.4, 1.6),
+					origin * CFrame.new(0, baseY + i * stepH, 0.6),
+					C.Trim
+				)
+			end
 		end
 		Builder.block(
 			parent,
@@ -75,7 +85,7 @@ local function gable(
 		)
 		local shoulderW = (width - neckW) / 2
 		for _, side in { -1, 1 } do
-			local w = Builder.wedge(
+			Builder.wedge(
 				parent,
 				"GableShoulder",
 				Vector3.new(1.2, 4, shoulderW),
@@ -85,15 +95,16 @@ local function gable(
 				color,
 				opts
 			)
-			local _ = w
 		end
-		Builder.block(
-			parent,
-			"GableCap",
-			Vector3.new(neckW + 0.6, 0.5, 1.6),
-			origin * CFrame.new(0, baseY + neckH, 0.6),
-			C.Trim
-		)
+		if not far then
+			Builder.block(
+				parent,
+				"GableCap",
+				Vector3.new(neckW + 0.6, 0.5, 1.6),
+				origin * CFrame.new(0, baseY + neckH, 0.6),
+				C.Trim
+			)
+		end
 		if style == "bell" then
 			Builder.cylinder(
 				parent,
@@ -105,14 +116,16 @@ local function gable(
 				opts
 			)
 		end
-		-- Hoist beam: typical of canal houses.
-		Builder.block(
-			parent,
-			"HoistBeam",
-			Vector3.new(0.5, 0.5, 2.4),
-			origin * CFrame.new(0, baseY + neckH - 1.2, -0.9),
-			C.WoodDark
-		)
+		if not far then
+			-- Hoist beam: typical of canal houses.
+			Builder.block(
+				parent,
+				"HoistBeam",
+				Vector3.new(0.5, 0.5, 2.4),
+				origin * CFrame.new(0, baseY + neckH - 1.2, -0.9),
+				C.WoodDark
+			)
+		end
 	else
 		Builder.block(
 			parent,
@@ -127,6 +140,7 @@ end
 function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng: Random): Model
 	local model = Instance.new("Model")
 	model.Name = "CanalHouse"
+	local far = spec.detail == "far"
 	local depth = spec.depth or 14
 	local height = GROUND_FLOOR + spec.floors * FLOOR_HEIGHT
 	local wallOpts: Builder.PartOpts = if spec.brick
@@ -156,16 +170,18 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 	)
 
 	-- Plinth and cornice.
-	Builder.block(
-		model,
-		"Plinth",
-		Vector3.new(spec.width + 0.2, 1, 0.6),
-		origin * CFrame.new(0, 0.5, -0.2),
-		C.StoneDark,
-		{
-			material = Enum.Material.Slate,
-		}
-	)
+	if not far then
+		Builder.block(
+			model,
+			"Plinth",
+			Vector3.new(spec.width + 0.2, 1, 0.6),
+			origin * CFrame.new(0, 0.5, -0.2),
+			C.StoneDark,
+			{
+				material = Enum.Material.Slate,
+			}
+		)
+	end
 	Builder.block(
 		model,
 		"Cornice",
@@ -173,43 +189,54 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 		origin * CFrame.new(0, height - 0.4, -0.3),
 		C.Trim
 	)
-	gable(model, origin, spec.width, height, spec.gable, spec.color, wallOpts)
+	gable(model, origin, spec.width, height, spec.gable, spec.color, wallOpts, far)
+
+	local litChance = spec.litChance or 0.5
+	local function window(cf: CFrame, w: number, h: number)
+		local lit = rng:NextNumber() < litChance
+		if far then
+			Builder.farWindow(model, cf, w, h, lit, rng)
+		else
+			Builder.window(model, cf, w, h, lit, nil, rng, spec.lights)
+		end
+	end
 
 	-- Windows per floor.
 	local cols = if spec.width >= 14 then 3 elseif spec.width >= 9 then 2 else 1
 	local spacing = spec.width / cols
-	local litChance = spec.litChance or 0.5
 	for floor = 1, spec.floors do
 		local y = GROUND_FLOOR + (floor - 0.5) * FLOOR_HEIGHT
 		for col = 1, cols do
 			local x = -spec.width / 2 + spacing * (col - 0.5)
-			Builder.window(model, origin * CFrame.new(x, y, -0.2), 2.4, 3.8, rng:NextNumber() < litChance)
+			window(origin * CFrame.new(x, y, -0.2), 2.4, 3.8)
 		end
 	end
 	-- Ground floor: door + window.
 	if spec.door ~= false then
 		local doorX = if cols > 1 then -spec.width / 2 + spacing * 0.5 else 0
-		Builder.block(
-			model,
-			"DoorFrame",
-			Vector3.new(3.2, 6.6, 0.3),
-			origin * CFrame.new(doorX, 3.3 + 0.8, -0.15),
-			C.Trim
-		)
+		if not far then
+			Builder.block(
+				model,
+				"DoorFrame",
+				Vector3.new(3.2, 6.6, 0.3),
+				origin * CFrame.new(doorX, 3.3 + 0.8, -0.15),
+				C.Trim
+			)
+			Builder.block(
+				model,
+				"Step",
+				Vector3.new(3.6, 0.8, 1.6),
+				origin * CFrame.new(doorX, 0.4, -0.8),
+				C.Stone,
+				{ material = Enum.Material.Slate }
+			)
+		end
 		Builder.block(
 			model,
 			"Door",
 			Vector3.new(2.6, 6, 0.3),
 			origin * CFrame.new(doorX, 3 + 0.8, -0.3),
 			if rng:NextNumber() < 0.5 then C.DoorGreen else C.DoorBlue
-		)
-		Builder.block(
-			model,
-			"Step",
-			Vector3.new(3.6, 0.8, 1.6),
-			origin * CFrame.new(doorX, 0.4, -0.8),
-			C.Stone,
-			{ material = Enum.Material.Slate }
 		)
 		Builder.block(
 			model,
@@ -223,12 +250,19 @@ function CanalHouse.build(parent: Instance, origin: CFrame, spec: HouseSpec, rng
 		)
 		for col = 2, cols do
 			local x = -spec.width / 2 + spacing * (col - 0.5)
-			Builder.window(model, origin * CFrame.new(x, 4.2, -0.2), 2.6, 3.6, rng:NextNumber() < litChance)
+			window(origin * CFrame.new(x, 4.2, -0.2), 2.6, 3.6)
 		end
 	end
 	model.Parent = parent
 	return model
 end
+
+export type RowOpts = {
+	depth: number?,
+	maxFloors: number?,
+	detail: Detail?,
+	lights: boolean?,
+}
 
 -- A row of houses along a line. from/to = points on the facade line, facing = direction towards the street.
 function CanalHouse.row(
@@ -237,7 +271,7 @@ function CanalHouse.row(
 	to: Vector3,
 	facing: Vector3,
 	rng: Random,
-	opts: { depth: number?, maxFloors: number? }?
+	opts: RowOpts?
 )
 	local palette = {
 		{ color = C.BrickRed, brick = true },
@@ -269,6 +303,8 @@ function CanalHouse.row(
 			brick = style.brick,
 			gable = gables[rng:NextInteger(1, #gables)] :: any,
 			litChance = 0.55,
+			detail = opts and opts.detail,
+			lights = opts and opts.lights,
 		}, rng)
 		pos += width
 	end
