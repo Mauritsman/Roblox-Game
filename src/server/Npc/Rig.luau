@@ -1,7 +1,8 @@
 --!strict
 -- Building NPC models (guards, Karel, the Inspector, Boef) and their floating state icons.
 -- Humanoid NPCs try a real R15 character first and fall back to blocks. All NPC parts use the "Guards"
--- collision group (registered by MapService), so GuardDoor parts can let them through.
+-- collision group (registered by MapService and GuardService), so GuardDoor parts let them through and they walk
+-- through player characters ("Players", bug B-007).
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -72,6 +73,16 @@ function Rig.humanoid(name: string, colors: Colors): Model
 	humanoid.MaxHealth = math.huge
 	humanoid.Health = math.huge
 	humanoid:SetStateEnabled(Enum.HumanoidStateType.Dead, false)
+	-- No tripping, ragdolling or climbing: NPCs that bumped into something fell over or climbed it (B-007, B-010).
+	for _, state in
+		{
+			Enum.HumanoidStateType.FallingDown,
+			Enum.HumanoidStateType.Ragdoll,
+			Enum.HumanoidStateType.Climbing,
+		}
+	do
+		humanoid:SetStateEnabled(state, false)
+	end
 	return rig
 end
 
@@ -231,15 +242,25 @@ function Rig.walkTrack(humanoid: Humanoid): AnimationTrack?
 	return if ok then track else nil
 end
 
+-- Plays the walk while moving, at a speed that matches the feet. Start and stop thresholds differ so a guard
+-- creeping at about 0.5 studs/s no longer starts and stops the animation every frame (B-010).
 function Rig.updateWalk(track: AnimationTrack?, root: BasePart)
 	if not track then
 		return
 	end
-	local moving = root.AssemblyLinearVelocity.Magnitude > 0.5
-	if moving and not track.IsPlaying then
-		track:Play()
-	elseif not moving and track.IsPlaying then
-		track:Stop()
+	local velocity = root.AssemblyLinearVelocity
+	local speed = Vector3.new(velocity.X, 0, velocity.Z).Magnitude
+	if not track.IsPlaying then
+		if speed > 1.5 then
+			track:Play(0.2)
+		end
+	elseif speed < 0.5 then
+		track:Stop(0.2)
+	else
+		local rate = math.clamp(speed / 14, 0.5, 1.4) -- the default walk matches about 14 studs/s
+		if math.abs(track.Speed - rate) > 0.1 then
+			track:AdjustSpeed(rate)
+		end
 	end
 end
 

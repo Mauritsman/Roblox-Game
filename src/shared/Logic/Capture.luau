@@ -23,6 +23,16 @@ function Capture.grabStep(
 	return next, next >= seconds - 1e-6 -- tolerate float sums (10 × 0.1 s)
 end
 
+-- Grab reach (bug B-007): the horizontal distance from the guard to his target, or math.huge when the height
+-- difference `dy` is more than `vertical` (another floor). A 3D distance let a guard who ended up standing on a
+-- player's head stay "out of reach" (4.1 > 3.5) forever.
+function Capture.reach(dx: number, dy: number, dz: number, vertical: number): number
+	if math.abs(dy) > vertical then
+		return math.huge
+	end
+	return math.sqrt(dx * dx + dz * dz)
+end
+
 -- Does this make a carrying guard drop his captive? kind = "bubble" | "noisemaker".
 function Capture.heroDrop(kind: string, distance: number, noisemakerRadius: number): boolean
 	if kind == "bubble" then

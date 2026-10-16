@@ -16,7 +16,14 @@ local Targets = require(script.Parent.Targets)
 
 local S = Config.Snitch
 local G = Config.Guard
-local COS_HALF = math.cos(math.rad(G.ConeHalfAngle))
+-- The guards' cone (Logic/Detection.inViewCone); the range is checked here first.
+local VIEW_CONE: Detection.ViewCone = {
+	halfAngle = G.ConeHalfAngle,
+	range = math.huge,
+	maxPitch = G.ConeMaxPitch,
+	verticalSlack = G.ConeVerticalSlack,
+	overlap = G.ConeOverlap,
+}
 local RATES = {
 	CrouchFillRate = G.CrouchFillRate,
 	CarryFillRate = G.CarryFillRate,
@@ -84,8 +91,8 @@ function SnitchEye.step(self: SnitchEye, dt: number)
 	local now = Targets.now()
 	local eye = self.root.Position + Vector3.new(0, G.HeadHeight, 0)
 	local look = self.root.CFrame.LookVector
-	local flatLook = Vector3.new(look.X, 0, look.Z)
-	flatLook = if flatLook.Magnitude > 0.01 then flatLook.Unit else Vector3.zAxis
+	local eyeVec = { x = eye.X, y = eye.Y, z = eye.Z }
+	local lookVec = { x = look.X, y = look.Y, z = look.Z }
 	local rayParams: RaycastParams? = nil
 	local sleepy = Targets.modifier() == "SleepyGuards"
 	local lockdown = Targets.lockdown()
@@ -98,9 +105,15 @@ function SnitchEye.step(self: SnitchEye, dt: number)
 			local offset = view.root.Position - eye
 			local distance = offset.Magnitude
 			if distance <= S.Range and distance > 0.01 then
-				local dir = offset.Unit
-				local flatDir = Vector3.new(dir.X, dir.Y * 0.5, dir.Z).Unit
-				if flatLook:Dot(flatDir) >= COS_HALF then
+				local target = view.root.Position
+				if
+					Detection.inViewCone(
+						eyeVec,
+						lookVec,
+						{ x = target.X, y = target.Y, z = target.Z },
+						VIEW_CONE
+					)
+				then
 					rayParams = rayParams or params(self.model)
 					local hit = workspace:Raycast(eye, offset, rayParams :: RaycastParams)
 					if hit == nil or hit.Instance:IsDescendantOf(view.character) then
