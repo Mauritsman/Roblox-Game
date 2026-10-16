@@ -605,7 +605,7 @@ end
 -- Private Crew: release the profile before a teleport; Update returns false from now on.
 function DataService:PrepareTeleportAsync(player: Player): boolean
 	player:SetAttribute(MetaTags.Teleporting, true)
-	return self:ReleaseAsync(player)
+	return DataService:ReleaseAsync(player)
 end
 
 -- After TeleportInitFailed: load the profile again.
@@ -640,7 +640,7 @@ function DataService:DevResetAsync(player: Player): boolean
 	if not RunService:IsStudio() then
 		return false
 	end
-	local ok = self:Update(player, "DevReset", function(data)
+	local ok = DataService:Update(player, "DevReset", function(data)
 		local fresh = defaults() :: any
 		local live = data :: any
 		for key in live do
@@ -651,7 +651,7 @@ function DataService:DevResetAsync(player: Player): boolean
 		end
 	end)
 	if ok then
-		self:SaveNowAsync(player, "DevReset")
+		DataService:SaveNowAsync(player, "DevReset")
 	end
 	return ok
 end
@@ -661,13 +661,13 @@ function DataService:DevReloadAsync(player: Player, transform: ((any) -> any)?):
 	if not RunService:IsStudio() then
 		return false
 	end
-	self:ReleaseAsync(player)
+	DataService:ReleaseAsync(player)
 	if transform then
-		self:DevUpdateRecord(player.UserId, transform)
+		DataService:DevUpdateRecord(player.UserId, transform)
 	end
 	loadFailed[player] = nil
 	task.spawn(loadPlayer, player)
-	return self:WaitForData(player, 40) ~= nil
+	return DataService:WaitForData(player, 40) ~= nil
 end
 
 -- Lifecycle --------------------------------------------------------------------------------------------------

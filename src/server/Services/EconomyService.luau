@@ -12,6 +12,7 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Catalog = require(ReplicatedStorage.Shared.Catalog)
 local MetaConfig = require(ReplicatedStorage.Shared.MetaConfig)
 local Net = require(ReplicatedStorage.Shared.Net)
+local Signal = require(ReplicatedStorage.Shared.Signal)
 local Calendar = require(ReplicatedStorage.Shared.Logic.Calendar)
 local Collection = require(ReplicatedStorage.Shared.Logic.Collection)
 local Contracts = require(ReplicatedStorage.Shared.Logic.Contracts)
@@ -58,6 +59,9 @@ local E = MetaConfig.Economy
 local TX = Enum.AnalyticsEconomyTransactionType
 
 local EconomyService = {}
+
+-- Fired after a player's round was settled (player, roundId, outcome, heistId).
+EconomyService.Settled = Signal.new() :: Signal.Signal<Player, string, string, string>
 
 local settledRounds: { [string]: { [number]: Settled } } = {}
 local settledOrder: { string } = {}
@@ -531,6 +535,7 @@ function EconomyService:SettleRound(result: RoundResult): { [number]: Settled }
 				-- Analytics.
 				local balance = after.cash
 				AnalyticsTracker:RoundSettled(player)
+				EconomyService.Settled:Fire(player, result.roundId, outcome, heistId)
 				AnalyticsTracker:Economy(player, "Source", pay.cash, balance, TX.Gameplay.Name, heistId)
 				AnalyticsTracker:Economy(player, "Source", s.starCash, balance, TX.Gameplay.Name, "StarBonus")
 				AnalyticsTracker:Economy(

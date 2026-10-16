@@ -184,7 +184,7 @@ end
 -- LobbyService calls this at departure when no roundId is known yet.
 function AnalyticsTracker:MarkDeparted(player: Player, roundId: string?)
 	if roundId then
-		self:RoundStep(player, roundId, A.RoundSteps[1])
+		AnalyticsTracker:RoundStep(player, roundId, A.RoundSteps[1])
 	else
 		pendingDeparture[player] = true
 	end

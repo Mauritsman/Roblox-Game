@@ -88,7 +88,7 @@ function ProgressionService:CrewHeists(players: { Player }): { [string]: JobBoar
 end
 
 function ProgressionService:CrewTiers(players: { Player }, heistId: string): { [string]: boolean }
-	local entry = self:CrewHeists(players)[heistId]
+	local entry = ProgressionService:CrewHeists(players)[heistId]
 	if not entry then
 		return { [MetaConfig.Difficulty.Default] = true }
 	end
