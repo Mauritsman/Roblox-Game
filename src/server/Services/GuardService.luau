@@ -432,7 +432,6 @@ local function becomeAlert(guard: Guard, player: Player, position: Vector3)
 	setState(guard, "Alert")
 	AlarmService:Add("GuardAlert", nil, player)
 	Net.broadcast("Spotted", player.UserId, "guard")
-	Net.broadcast("GuardAlert", player.Name) -- DEPRECATED: until ux's HudController listens to Spotted
 end
 
 local function noteSeen(player: Player)

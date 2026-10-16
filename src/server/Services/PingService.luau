@@ -1,6 +1,7 @@
 --!strict
--- Pings (§3.5): icon markers in the world ("SPOT") and fixed quick messages (NOW / WAIT).
--- No free text: players cannot type anything themselves, so everyone may use them.
+-- Pings (§3.5): icon markers in the world ("SPOT") and the quick wheel's 6 fixed words (Config.Ping.QuickPresets,
+-- one 10 s cooldown per player for the whole wheel). No free text: players cannot type anything themselves.
+-- From the cell, a captive can SPOT through the security camera they watch (`Spot(inst, pos, camIndex)`).
 
 local CollectionService = game:GetService("CollectionService")
 local Players = game:GetService("Players")
@@ -9,6 +10,11 @@ local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local Config = require(ReplicatedStorage.Shared.Config)
 local Net = require(ReplicatedStorage.Shared.Net)
 local Tags = require(ReplicatedStorage.Shared.Tags)
+
+local CameraService = require(script.Parent.CameraService)
+
+local Npc = script.Parent.Parent:WaitForChild("Npc")
+local Targets = require(Npc.Targets)
 
 local PingService = {}
 
@@ -120,10 +126,29 @@ function PingService:Spot(player: Player, target: Instance?, position: Vector3?,
 end
 
 function PingService:Start()
-	Net.onRequest("Spot", function(player: Player, target: any, position: any)
+	Net.onRequest("Spot", function(player: Player, target: any, position: any, camIndex: any)
 		local inst = if typeof(target) == "Instance" then target else nil
 		local pos = if typeof(position) == "Vector3" then position else nil
-		local root = player.Character and player.Character:FindFirstChild("HumanoidRootPart") :: BasePart?
+		if pos and (pos.X ~= pos.X or pos.Y ~= pos.Y or pos.Z ~= pos.Z) then
+			return
+		end
+		local character = player.Character
+		if typeof(camIndex) == "number" and camIndex == camIndex then
+			-- From the cell: only through a working camera that can see the spot.
+			if not character or character:GetAttribute(Tags.Captured) ~= "Cell" then
+				return
+			end
+			local point = pos or (if inst then Targets.positionOf(inst) else nil)
+			if not point or not CameraService:CanSpotFrom(math.floor(camIndex), point) then
+				return
+			end
+			PingService:Spot(player, inst, pos, false)
+			return
+		end
+		if character and character:GetAttribute(Tags.Caught) == true then
+			return -- grabbed or celled: only through a camera
+		end
+		local root = character and character:FindFirstChild("HumanoidRootPart") :: BasePart?
 		if pos and root and (pos - root.Position).Magnitude > Config.Ping.MaxRange then
 			return
 		end
@@ -173,7 +198,7 @@ function PingService:Start()
 		if (quickUntil[player] or 0) > now then
 			return
 		end
-		quickUntil[player] = now + Config.Ping.QuickCooldown
+		quickUntil[player] = now + Config.Ping.QuickCooldown - 0.5 -- small tolerance for client timing
 		Net.broadcast("Quick", player.DisplayName, preset, PingService:ColorOf(player), player.UserId)
 	end)
 
