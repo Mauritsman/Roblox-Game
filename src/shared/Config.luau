@@ -170,6 +170,16 @@ Config.Guard = {
 	CountByCrew = { 2, 3, 3, 4 }, -- base guards by crew size 1..4 (map 1)
 	VisionInterval = 0.1,
 	HeadHeight = 2.5,
+	-- M3 (package B) additions
+	NoiseSearch = { thud = 4, rumble = 4, bark = 6, sneeze = 8, squeak = 6, beep = 5, splosh = 5 }, -- search s per kind
+	ArriveDistance = 2, -- horizontal distance that counts as "at the waypoint"
+	FloorStep = 4, -- legs with a bigger height difference change floor (pathfinding)
+	AgentRadius = 1.5, -- pathfinding (2 does not fit map 1's 5-stud doorways, bug B-002)
+	AgentHeight = 5,
+	SearchWander = 8, -- Search: wanders to points this far around the last known spot
+	RadioSearchSeconds = 10, -- lockdown radio: search time at the radioed spot
+	DroneNoticeSeconds = 1.5, -- "What's that?" after seeing a drone this long
+	StuckSeconds = 3, -- not moving this long while walking → re-path or give up
 }
 
 -- ---------- Security cameras ----------
@@ -269,6 +279,10 @@ Config.Capture = {
 	Scatter = 2, -- pocket loot scatters within this radius
 	AllCaughtDelay = 1.5,
 	HeroNoisemakerRadius = 20, -- a Noisemaker landing this close to a carrying guard drops the captive
+	-- M3 (package B) additions
+	DropoffRange = 4, -- carrying guard this close to CellDropoff → captive goes into the cell
+	ViewCamCooldown = 1, -- ViewCam requests per player
+	NoCellHoldSeconds = 1.2, -- map without a cell (prototype): held this long, then back to the van
 }
 
 Config.Hiding = {
@@ -279,6 +293,7 @@ Config.Hiding = {
 	SneezeRadius = 15,
 	Reentry = 5,
 	PullOut = 4, -- a guard this close pulls you out (= a normal grab, advisor)
+	PromptRange = 6,
 }
 
 Config.Dog = {
@@ -293,6 +308,9 @@ Config.Dog = {
 	TreatSeconds = 12,
 	NoisemakerSeconds = 8,
 	NoisemakerRadius = 20,
+	-- M4 (package B) additions
+	GiveUpDistance = 30, -- stops following a carrier this far away
+	HideBark = true, -- (proposed) barks at a hiding spot that holds smelly loot
 }
 
 Config.Karel = {
@@ -301,6 +319,11 @@ Config.Karel = {
 	Tier1RestFactor = 0.5,
 	Speed = 7,
 	Notice = 25,
+	-- M4 (package B) additions
+	OpenHold = 0.5, -- silent "Open" prompt on a door Karel closed
+	ReachDistance = 4, -- close enough to close a door / pick up a trace
+	ScanInterval = 0.5, -- looks for traces this often
+	TraceTimeout = 20, -- gives up a trace he cannot reach in this time
 }
 
 Config.Snitch = {
