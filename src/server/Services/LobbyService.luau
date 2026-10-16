@@ -102,8 +102,11 @@ local function hotPick(open: { [string]: boolean }): HotPick
 end
 
 -- Open cards for a group of players: {[cardId] = {open, tiers}} plus the union and Hot Job used.
+-- The Hot Job is picked from what the whole server has open (`serverHot`), so every board shows the same one;
+-- for a smaller group (the boarders) its card is only open when that group has the heist.
 local function cardsFor(
-	players: { Player }
+	players: { Player },
+	serverHot: HotPick?
 ): ({ [string]: JobBoard.CardState }, { [string]: JobBoard.CrewHeist }, HotPick)
 	local union = ProgressionService:CrewHeists(players)
 	local cards: { [string]: JobBoard.CardState } = {}
@@ -113,12 +116,18 @@ local function cardsFor(
 		cards[heistId] = { open = isOpen, tiers = entry.tiers }
 		open[heistId] = isOpen
 	end
-	local hot = hotPick(open)
+	local hot = serverHot or hotPick(open)
 	if hot.heistId then
-		local entry = union[hot.heistId :: string]
-		cards[HOT] = { open = true, tiers = if entry then entry.tiers else {} }
+		local heistId = hot.heistId :: string
+		local entry = union[heistId]
+		cards[HOT] = { open = open[heistId] == true, tiers = if entry then entry.tiers else {} }
 	end
 	return cards, union, hot
+end
+
+local function serverHotPick(): HotPick
+	local _, _, hot = cardsFor(Players:GetPlayers(), nil)
+	return hot
 end
 
 local function canVoteHot(player: Player): boolean
@@ -130,7 +139,7 @@ end
 
 function LobbyService:BuildBoard(): { [string]: any }
 	local players = Players:GetPlayers()
-	local cards, union, hot = cardsFor(players)
+	local cards, union, hot = cardsFor(players, nil)
 	currentHot = hot
 	local now = Clock.now()
 	local mwHeist = ProfileView.mostWanted(now)
@@ -236,13 +245,14 @@ function LobbyService:GetSelectedJob(boarders: { Player }, roundId: string?): Se
 			table.insert(list, player)
 		end
 	end
-	local cards, _, hot = cardsFor(list)
+	local cards, _, hot = cardsFor(list, serverHotPick())
 	local voters: { number } = {}
 	for _, player in list do
 		table.insert(voters, player.UserId)
 		local vote = votes[player.UserId]
 		if vote and (not cards[vote.cardId] or not cards[vote.cardId].open) then
-			local name = MetaConfig.Heists.Names[vote.cardId] or vote.cardId
+			local heistOfCard = if vote.cardId == HOT then hot.heistId or vote.cardId else vote.cardId
+			local name = MetaConfig.Heists.Names[heistOfCard] or heistOfCard
 			Net.send(player, "Toast", `You need a crew member who unlocked {name}.`)
 		end
 	end
@@ -306,7 +316,7 @@ local function onVote(player: Player, cardId: any, difficulty: any)
 	if not table.find(MetaConfig.Difficulty.Order, tier) or not Features.on("Difficulty") then
 		tier = MetaConfig.Difficulty.Default
 	end
-	local cards = cardsFor(Players:GetPlayers())
+	local cards = cardsFor(Players:GetPlayers(), nil)
 	local card = cards[id]
 	if not card or not card.open then
 		Net.send(player, "MetaResult", "Vote", false, id, "Locked")

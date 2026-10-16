@@ -272,11 +272,13 @@ local function onBuy(player: Player, itemId: any)
 			d.owned[id] = Clock.now()
 		end)
 	end
+	buying[player] = nil
 	result(player, "Buy", ok, id, reason)
 	if ok then
-		DataService:SaveNowAsync(player, "Buy")
+		task.spawn(function()
+			DataService:SaveNowAsync(player, "Buy")
+		end)
 	end
-	buying[player] = nil
 end
 
 local function onEquip(player: Player, itemId: any)
