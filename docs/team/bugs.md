@@ -12,6 +12,9 @@ to `fixed (<commit>)`; the tester re-runs the scenario and sets `verified`.
 | B-004 | low | Bubble Blaster is called "BUBBLEBLASTER" in the prompt and toasts but "BUBBLE" on its sign | mechanics | fixed (0a42f2c): "BUBBLE BLASTER" everywhere (`Config.Gadgets.BubbleBlaster.Label`, `Logic/Loadout.label`); the pedestal prompts are gone |
 | B-005 | low | Gadget pedestal labels pile up into an unreadable cluster when seen along the rack | map (ux advises) | open |
 | B-006 | low | Light count above the provisional mobile budget (69 lights, 25 with shadows) | map | open |
+| B-007 | high | Guard climbs on top of the player and never grabs (3D distance stays > 3.5) | mechanics (B) | open |
+| B-008 | high | Detection too weak: masked player 6 studs in front of a guard → Suspicious, back to Patrol after 8 s | mechanics (B) | open |
+| B-009 | high | Mask Up on entering StaffZone/SecureZone not implemented yet → unmasked players are ignored by guards everywhere | mechanics (D) | open (pending package D) |
 
 ---
 
@@ -122,3 +125,30 @@ to `fixed (<commit>)`; the tester re-runs the scenario and sets `verified`.
 - **`MeshContentProvider failed … rbxruntime://`** (4 lines) appeared once at the start of the session, before the
   sync and during a live-editing session. After the sync no MeshPart in the level uses an `rbxruntime://` mesh and
   the line did not come back.
+
+## B-007 — Guard climbs on top of the player and never grabs
+
+- **Severity:** high (no captures happen when a player stands still in front of a guard).
+- **Owner:** mechanics (B) — `GuardService` / `CaptureService`, collision groups.
+- **Found by:** orchestrator smoke test, main 559f540, Golden Wheel retrofit.
+- **Steps:** set the player's `Masked = true`, put the player 6 studs in front of guard 2, wait until Alert.
+- **Expected:** guard grabs within ~1 s once within 3.5 studs.
+- **Actual:** guard Alert at WalkSpeed 15 ends up at y 6.96 on top of the player (y 2.9); distance 4.1 > 3.5, never grabs.
+- **Fix idea:** guards should not collide with players (collision group), and/or the grab check should use horizontal (XZ)
+  distance with a vertical tolerance.
+
+## B-008 — Detection too weak at close range
+
+- **Severity:** high (stealth feels broken: guards ignore a player right in front of them).
+- **Owner:** mechanics (B) — `GuardService` vision / `Logic/Detection`.
+- **Steps:** as B-007; observe `GuardState` for 40 s.
+- **Expected:** meter fills in ~0.8 s at 6 studs (lit or dark) → Alert.
+- **Actual:** Suspicious at 0.5 s, back to Patrol at 8.6 s with the player still standing in front; Alert only on a later pass (40 s).
+- **Check:** whether the investigate walk turns the guard away / the cone check uses the wrong eye height / the meter decays
+  while investigating.
+
+## B-009 — Mask Up on staff zones missing
+
+- **Severity:** high until package D merges (guards ignore unmasked players, so walking through the hall is safe).
+- **Owner:** mechanics (D) — set `Masked = true` when a crew member enters a `StaffZone`/`SecureZone` (A already masks on
+  first grab and at lockdown).
