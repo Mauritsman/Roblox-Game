@@ -24,7 +24,7 @@ Notoriety, the official PAYDAY experience on Roblox, has **22 heists**, picked i
 | 1 | **Heist board** | A Job Board in the Garage shows a card for **every heist** (locked ones greyed out, with their requirement). The crew picks heist + difficulty. One rotating **Hot Job** (heist + modifier, +25%, changes every 30 min). **Fresh bonus +20%** for a heist not in your last 2 rounds. Modifiers come only through the Hot Job in the beta. Skip: contracts, hosting fees, host level limits. |
 | 2 | **Difficulty** | **3 tiers in the beta:** Easy / Normal / Hard (subtitles "Young / Aged / Extra Aged"), paying ×0.8 / ×1.0 / ×1.4 Cash and Rep. The brief's numbers = Normal. The silly 4th tier **Big Cheese** (×2.0) comes after the beta. |
 | 3 | **Stealth vs loud** | Every heist starts stealthy. Loud = LOCKDOWN: guards hunt, and the **Panic Pack** gives +1 charge of each gadget you picked. No loud-only heists. "Quiet Job" +20% stays. A `LoudOnly` shortcut (1 per heist) is allowed but low priority. |
-| 4 | **Objectives** | **Keycard** (required for its door), one optional **Safe + Cheese Grater 3000** (+10%), **radio check**. The van stays parked; recall and arrival timers come after the beta. |
+| 4 | **Objectives** | **Keycard** (required for its door), one optional **Safe + Cheese Grater 3000** (+10%), **radio check**. The van stays parked; on maps 2–3 a fixed lockdown exit replaces the front van during LOCKDOWN (`advisor-maps.md`). |
 | 5 | **Loadout + perks** | Crowbar + 2 gadgets + **3 perk slots** + mask. A **3×3 perk tree** (below), 1 point per Rank from Rank 2, free respec. |
 | 6 | **Masks** | Pure cosmetics with fixed prices or earned rewards; no safes or rarity rolls. **Auto "Mask Up":** you walk in unmasked; guards ignore you in public zones; the mask snaps on ("SHING") when you first grab loot or enter a staff zone. |
 | 7 | **Levels, prestige** | Crew Rank 1–**20** (cost per brief: 1,000 × n Rep). **No prestige in the beta.** Later, "Legend" prestige at Rank 50 (details below). |
@@ -108,7 +108,8 @@ Unchanged: round length, loot classes, getting caught and the cell, 3 maps, the 
   - **In:** 3 tiers (Easy/Normal/Hard ×0.8/1.0/1.4; Hard at **2★** on Normal, not 3★); objective bonus +10% (max. 1
     optional objective per heist); radio check (max. 2 answers per round, Normal and Hard only); 3×3 perk tree (costs
     1/2/3, max. 3 equipped); keycard; safe + Grater (45 s); Panic Pack.
-  - **Wait:** Big Cheese tier, van recall on maps 2–3, arrival timers, Prank Arsenal.
+  - **Wait:** Big Cheese tier, random van recall, Prank Arsenal. **Update (`advisor-maps.md`):** maps 2–3 do get one
+    fixed **lockdown exit** in the beta (Conveyor Express → barge; Tulip Balloon), built with the arrival mechanism.
 - **M6 — Payout rounding:** **round half up**, once, on each player's final amount (`math.floor(x + 0.5)`); never round
   in between. 3,000 shared by four → 1,088 each.
 
