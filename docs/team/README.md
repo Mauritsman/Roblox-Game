@@ -17,7 +17,7 @@ Goal: a **beta-ready** Roblox game with **multiple maps (heists)**. Direction (a
 | `mechanics` | Designs and builds gameplay: round, loot, carrying, escape, capture/rescue, guards, dog, Karel, gadgets | gameplay `src/server/Services/*`, `src/shared/Logic/*`, gameplay controllers |
 | `map` | Level design and building: routes, loot spots, hiding spots, escape routes, randomisation anchors, props, new heists | `src/server/Map/*`, `tools/props.json` |
 | `ux` | HUD, menus, onboarding, mobile buttons, results screen, sound and "juice" | `src/client/Lib/Hud*`, UI controllers, `src/shared/Sounds.luau` |
-| `meta` | Saving (DataStore), money, progression, hideout/lobby, shop, analytics | `src/server/Services/{Data,Economy,Lobby,Shop,Analytics}*` |
+| `meta` | Saving (DataStore), money, progression and perks, hideout/lobby, heist board, shop, analytics | `src/server/Services/{Data,Economy,Progression,Lobby,Shop,Analytics}*` |
 | `tester` | Tests in Studio (the only role with Studio access), writes test scenarios, bug reports, previews | `tools/studio_tests/`, `docs/team/bugs.md` |
 
 Shared files (`src/shared/Config.luau`, `Tags.luau`, `Net.luau`, `default.project.json`): everyone may edit them, but only

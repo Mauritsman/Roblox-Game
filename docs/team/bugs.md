@@ -6,7 +6,7 @@ to `fixed (<commit>)`; the tester re-runs the scenario and sets `verified`.
 
 | Id | Severity | Title | Owner | Status |
 |---|---|---|---|---|
-| B-001 | medium | All in-world signs are drawn at 8 px (unreadable) | map | fixed (pending commit) |
+| B-001 | medium | All in-world signs are drawn at 8 px (unreadable) | map | fixed (3b97fb9), verified by orchestrator (all 8 labels TextScaled + TextFits) |
 | B-002 | medium | Shop front doorway is too narrow for pathfinding agents with radius 2 | map | open |
 | B-003 | low | Guard can catch a player without ever showing "!" (Alert lasts 0 frames) | mechanics | open |
 | B-004 | low | Bubble Blaster is called "BUBBLEBLASTER" in the prompt and toasts but "BUBBLE" on its sign | mechanics | open |
